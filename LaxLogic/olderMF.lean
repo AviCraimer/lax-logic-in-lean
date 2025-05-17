@@ -81,10 +81,10 @@ def isIPLFormula : PLLFormula → Prop
 
 @[match_pattern] -- is this needed, and if so, why?
 inductive LaxNDτ: (List PLLFormula)→ PLLFormula → Type -- ND for PLL, proof term version
-  | idenτ : (Γ Δ : List PLLFormula) → (φ : PLLFormula) → LaxNDτ (Γ ++ φ :: Δ) φ
+  | idenτ : (Γ Δ : List PLLFormula) → (φ : PLLFormula) → LaxNDτ (Γ ++ [φ] ++ Δ) φ
   | falsoElimτ  : {Γ : List PLLFormula} → (φ : PLLFormula) → LaxNDτ Γ falsePLL → LaxNDτ Γ φ
   | impIntroτ  : {Γ Δ : List PLLFormula} → {φ ψ : PLLFormula} →
-      LaxNDτ (Γ ++ φ :: Δ) ψ → LaxNDτ (Γ ++ Δ) (ifThen φ ψ)
+      LaxNDτ (Γ ++ [φ] ++ Δ) ψ → LaxNDτ (Γ ++ Δ) (ifThen φ ψ)
   | impElimτ   : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxNDτ Γ (ifThen φ ψ) → LaxNDτ Γ φ → LaxNDτ Γ ψ
   | andIntroτ  : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxNDτ Γ φ → LaxNDτ Γ ψ → LaxNDτ Γ (and φ ψ)
   | andElim1τ  : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxNDτ Γ (and φ ψ) → LaxNDτ Γ φ
@@ -92,27 +92,20 @@ inductive LaxNDτ: (List PLLFormula)→ PLLFormula → Type -- ND for PLL, proof
   | orIntro1τ  : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxNDτ Γ φ → LaxNDτ Γ (or φ ψ)
   | orIntro2τ  : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxNDτ Γ ψ → LaxNDτ Γ (or φ ψ)
   | orElimτ    : {Γ Δ : List PLLFormula} → {φ ψ χ : PLLFormula} →
-      LaxNDτ (Γ ++ φ :: Δ) χ →
-      LaxNDτ (Γ ++ ψ :: Δ) χ → LaxNDτ (Γ ++ Δ) χ
+      LaxNDτ (Γ ++ [φ] ++ Δ) χ →
+      LaxNDτ (Γ ++ [ψ] ++ Δ) χ → LaxNDτ (Γ ++ Δ) χ
   | laxIntroτ  : {Γ : List PLLFormula} → {φ : PLLFormula} → LaxNDτ Γ φ → LaxNDτ Γ (somehow φ)
   | laxElimτ  : {Γ Δ : List PLLFormula} → {φ ψ : PLLFormula} →
-      LaxNDτ (Γ ++ Δ) (somehow φ) → LaxNDτ (Γ ++ φ :: Δ) (somehow ψ) → LaxNDτ (Γ ++ Δ) (somehow ψ)
+      LaxNDτ (Γ ++ Δ) (somehow φ) → LaxNDτ (Γ ++ [φ] ++ Δ) (somehow ψ) → LaxNDτ (Γ ++ Δ) (somehow ψ)
 
 open LaxNDτ
 
--- this next is a kind of Cut rule
-def impInContext : {Γ Δ : List PLLFormula} → {φ ψ : PLLFormula} →
-      LaxNDτ (Γ ++ Δ) φ → LaxNDτ (Γ ++ φ :: Δ) ψ → LaxNDτ (Γ ++ Δ) ψ := by
-      intros Γ Δ φ ψ prf1 prf2
-      apply @impElimτ _ φ ψ
-      apply impIntroτ; exact prf2; exact prf1
-
 -- Define what it means for a PLL proof to be an IPL proof
 -- more inference could be requested
-def isIPLProof : (Γ : List PLLFormula) → (φ : PLLFormula) → (prf : LaxNDτ Γ φ) → Prop
+def isIPLProof : (Γ : List PLLFormula) → (φ : PLLFormula) → LaxNDτ Γ φ → Prop
   | _, _,  idenτ Γ Δ φ     => isIPLFormula φ -- only you could have a proof in IPL using lax formulae
   | _, _,  falsoElimτ _ prf  => isIPLProof _ falsePLL prf
-  | _, _,  @impIntroτ Γ Δ φ ψ prf => isIPLProof (Γ ++ φ :: Δ) ψ prf
+  | _, _,  @impIntroτ Γ Δ φ ψ prf => isIPLProof (Γ ++ [φ] ++ Δ) ψ prf
   | _, _,  @impElimτ Γ _ _ prf1 prf2  => isIPLProof Γ _ prf1 ∧ isIPLProof _ _ prf2
   | _, _,  @andIntroτ _ _ _ prf1 prf2 => isIPLProof _ _ prf1 ∧ isIPLProof _ _ prf2
   | _, _,  @andElim1τ _ _ _ prf     => isIPLProof _ _ prf
@@ -122,64 +115,5 @@ def isIPLProof : (Γ : List PLLFormula) → (φ : PLLFormula) → (prf : LaxNDτ
   | _, _,  orElimτ prf1 prf2 => isIPLProof _ _ prf1 ∧ isIPLProof _ _ prf2
   | _, _,  laxIntroτ _  => false
   | _, _,  laxElimτ _ _ => false
-
-@[simp]
-def eraseSomehow : PLLFormula → PLLFormula
-  | PLLFormula.prop a => prop a
-  | falsePLL    => falsePLL
-  | ifThen φ ψ  => ifThen (eraseSomehow φ) (eraseSomehow ψ)
-  | PLLFormula.and φ ψ     => and (eraseSomehow φ) (eraseSomehow ψ)
-  | PLLFormula.or φ ψ      => or (eraseSomehow φ) (eraseSomehow ψ)
-  | PLLFormula.somehow φ   => eraseSomehow φ
-
-theorem map_append_distrib {α β : Type} (f : α → β) (xs ys : List α) (z : α):
-  List.map f (xs ++ z :: ys) = List.map f xs ++ f z :: List.map f ys := by
-  simp [List.map_append]
-
--- the construction below would show conservativity but for the issue with recursor 'LaxNDτ.rec'
-def erasePLLProof {Γ : List PLLFormula} {φ : PLLFormula}
-  (h : LaxNDτ Γ φ) :
-  LaxNDτ (List.map eraseSomehow Γ) (eraseSomehow φ) := by
-  induction h
-  case idenτ G D f =>
-    simp [map_append_distrib] -- Use simp to handle the equality
-    apply idenτ
-  case impIntroτ prf =>
-    simp
-    apply impIntroτ
-    simp[map_append_distrib] at prf
-    exact prf
-  case falsoElimτ prf =>
-    apply falsoElimτ; exact prf
-  case impElimτ prf1 prf2 =>
-    apply impElimτ; exact prf1; exact prf2
-  case andIntroτ prf1 prf2 =>
-    apply andIntroτ; exact prf1; exact prf2
-  case andElim1τ prf =>
-    apply andElim1τ; exact prf
-  case andElim2τ prf =>
-    apply andElim2τ; exact prf
-  case orIntro1τ prf =>
-    apply orIntro1τ; exact prf
-  case orIntro2τ prf =>
-    apply orIntro2τ; exact prf
-  case orElimτ prf1 prf2 =>
-    simp
-    apply orElimτ
-    simp[map_append_distrib] at prf1
-    exact prf1
-    simp[map_append_distrib] at prf2
-    exact prf2
-  case laxIntroτ prf =>
-    simp; exact prf  -- the somehow has somehow gone :-)
-  case laxElimτ prf1 prf2 =>
-    simp[map_append_distrib] at prf1
-    simp[map_append_distrib] at prf2
-    simp
-    apply impInContext
-    exact prf1; exact prf2
-
-theorem PLLconservative : (Γ : List PLLFormula) → (φ : PLLFormula) → (prf : LaxNDτ Γ φ) →
-  isIPLProof (Γ.map eraseSomehow) (eraseSomehow φ) (erasePLLProof prf) := sorry
 
 end Conservativity
