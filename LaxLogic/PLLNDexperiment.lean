@@ -136,6 +136,78 @@ theorem map_append_distrib {α β : Type} (f : α → β) (xs ys : List α) (z :
   List.map f (xs ++ z :: ys) = List.map f xs ++ f z :: List.map f ys := by
   simp [List.map_append]
 
+section recursors
+
+def erasePLLProof {Γ : List PLLFormula} {φ : PLLFormula} (h : LaxNDτ Γ φ) :
+  LaxNDτ (List.map eraseSomehow Γ) (eraseSomehow φ) :=
+  match h with
+  | idenτ G D f =>
+    -- Handle identity rule: Γ ++ [φ] ++ Δ ⊢ φ becomes erase(Γ) ++ erase(φ) ++ erase(Δ) ⊢ erase(φ)
+    let G' := List.map eraseSomehow G
+    let D' := List.map eraseSomehow D
+    let f' := eraseSomehow f
+    have h1 : List.map eraseSomehow (G ++ f :: D) = G' ++ f' :: D' := by sorry
+ /-      simp [List.map_append, List.map_cons]
+  -/
+    cast h1 (idenτ G' D' f')
+
+  | impIntroτ prf =>
+    -- Implication introduction: Γ ++ Δ ⊢ φ → ψ becomes erase(Γ) ++ erase(Δ) ⊢ erase(φ) → erase(ψ)
+    let prf' := erasePLLProof prf
+    have h1 {Δ : List PLLFormula} : List.map eraseSomehow (Γ ++ Δ) = List.map eraseSomehow Γ ++ List.map eraseSomehow Δ := by
+      simp [List.map_append]
+    cast (congrArg (fun x => LaxNDτ x _) h1) (impIntroτ prf')
+
+  | falsoElimτ φ prf =>
+    -- False elimination: Γ ⊢ ⊥ → Γ ⊢ φ becomes erase(Γ) ⊢ erase(φ)
+    falsoElimτ (eraseSomehow φ) (erasePLLProof prf)
+
+  | impElimτ prf1 prf2 =>
+    -- Implication elimination: Combine erased proofs
+    impElimτ (erasePLLProof prf1) (erasePLLProof prf2)
+
+  | andIntroτ prf1 prf2 =>
+    -- Conjunction introduction: Combine erased proofs
+    andIntroτ (erasePLLProof prf1) (erasePLLProof prf2)
+
+  | andElim1τ prf =>
+    -- Conjunction elimination (left)
+    andElim1τ (erasePLLProof prf)
+
+  | andElim2τ prf =>
+    -- Conjunction elimination (right)
+    andElim2τ (erasePLLProof prf)
+
+  | orIntro1τ prf =>
+    -- Disjunction introduction (left)
+    orIntro1τ (erasePLLProof prf)
+
+  | orIntro2τ prf =>
+    -- Disjunction introduction (right)
+    orIntro2τ (erasePLLProof prf)
+
+  | orElimτ prf1 prf2 =>
+    -- Disjunction elimination: Combine erased proofs
+    let prf1' := erasePLLProof prf1
+    let prf2' := erasePLLProof prf2
+    have h1 {Δ : List PLLFormula} : List.map eraseSomehow (Γ ++ Δ) = List.map eraseSomehow Γ ++ List.map eraseSomehow Δ := by
+      simp [List.map_append]
+    cast (congrArg (fun x => LaxNDτ x _) h1) (orElimτ prf1' prf2')
+
+  | laxIntroτ prf =>
+    -- Lax introduction: Erase the inner somehow
+    erasePLLProof prf
+
+  | laxElimτ prf1 prf2 =>
+    -- Lax elimination: Combine erased proofs
+    let prf1' := erasePLLProof prf1
+    let prf2' := erasePLLProof prf2
+    have h1 : List.map eraseSomehow (Γ ++ Δ) = List.map eraseSomehow Γ ++ List.map eraseSomehow Δ := by
+      simp [List.map_append]
+    cast (congrArg (fun x => LaxNDτ x _) h1) (impInContext prf1' prf2')
+
+end recursors
+
 -- the construction below would show conservativity but for the issue with recursor 'LaxNDτ.rec'
 def erasePLLProof {Γ : List PLLFormula} {φ : PLLFormula}
   (h : LaxNDτ Γ φ) :
