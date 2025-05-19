@@ -132,9 +132,25 @@ def eraseSomehow : PLLFormula → PLLFormula
   | PLLFormula.or φ ψ      => or (eraseSomehow φ) (eraseSomehow ψ)
   | PLLFormula.somehow φ   => eraseSomehow φ
 
+lemma eraseOuter (φ : PLLFormula) : eraseSomehow (somehow φ) = eraseSomehow φ := by
+      simp[eraseSomehow]
+
 theorem map_append_distrib {α β : Type} (f : α → β) (xs ys : List α) (z : α):
   List.map f (xs ++ z :: ys) = List.map f xs ++ f z :: List.map f ys := by
   simp [List.map_append]
+
+def congrArg2 {α β γ : Sort} (f : α → β → γ) {a₁ a₂ : α} {b₁ b₂ : β}
+  (ha : a₁ = a₂) (hb : b₁ = b₂) : f a₁ b₁ = f a₂ b₂ :=
+  Eq.trans (congrArg (f a₁) hb) (congrArg (fun a => f a b₂) ha)
+
+def congrArg2Dep {α : Sort} {β : α → Sort} {γ : (a : α) → β a → Sort}
+  (f : (a : α) → (b : β a) → γ a b)
+  {a₁ a₂ : α} (ha : a₁ = a₂)
+  {b₁ : β a₁} {b₂ : β a₂} (hb : cast (congrArg β ha) b₁ = b₂) :
+  f a₁ b₁ = cast (congrArg (fun a => γ a (cast (congrArg β ha) b₁)) ha) (f a₂ b₂) := by
+  subst ha
+  subst hb
+  rfl
 
 section recursors
 
@@ -146,7 +162,7 @@ def erasePLLProof {Γ : List PLLFormula} {φ : PLLFormula} (h : LaxNDτ Γ φ) :
     let G' := List.map eraseSomehow G
     let D' := List.map eraseSomehow D
     let f' := eraseSomehow f
-    have h1 : List.map eraseSomehow (G ++ f :: D) = G' ++ f' :: D' := by sorry
+    have h1 : List.map eraseSomehow (G ++ f :: D) = G' ++ f' :: D' := by sorry -- make general lemma outside
  /-      simp [List.map_append, List.map_cons]
   -/
     cast h1 (idenτ G' D' f')
@@ -186,26 +202,72 @@ def erasePLLProof {Γ : List PLLFormula} {φ : PLLFormula} (h : LaxNDτ Γ φ) :
     -- Disjunction introduction (right)
     orIntro2τ (erasePLLProof prf)
 
-  | orElimτ prf1 prf2 =>
+  | @orElimτ Γ Δ φ ψ χ prf1 prf2 =>
     -- Disjunction elimination: Combine erased proofs
     let prf1' := erasePLLProof prf1
     let prf2' := erasePLLProof prf2
-    have h1 {Δ : List PLLFormula} : List.map eraseSomehow (Γ ++ Δ) = List.map eraseSomehow Γ ++ List.map eraseSomehow Δ := by
+    have h1 {Δ : List PLLFormula} : List.map eraseSomehow (Γ ++ Δ) =
+      List.map eraseSomehow Γ ++ List.map eraseSomehow Δ := by
       simp [List.map_append]
     cast (congrArg (fun x => LaxNDτ x _) h1) (orElimτ prf1' prf2')
 
-  | laxIntroτ prf =>
+  | @laxIntroτ Γ φ prf =>
     -- Lax introduction: Erase the inner somehow
-    erasePLLProof prf
+    @erasePLLProof Γ φ prf -- what gives here?
 
-  | laxElimτ prf1 prf2 =>
+  | @laxElimτ Γ Δ φ ψ prf1 prf2 =>
+  -- For laxElimτ, we need multiple casts
+  let prf1' := erasePLLProof prf1
+  let prf2' := erasePLLProof prf2
+
+  -- First, handle the context equality
+  have h_context1 : List.map eraseSomehow (Γ ++ Δ) = List.map eraseSomehow Γ ++ List.map eraseSomehow Δ := by
+    simp [List.map_append]
+
+  -- Then, handle the formula equality for the first premise
+  have h_formula1 : eraseSomehow (somehow φ) = eraseSomehow φ := by
+    simp [eraseSomehow]
+
+  let prf1_ctx_fixed := cast (congrArg (fun x => LaxNDτ x _) h_context1) prf1'
+
+  -- Cast the first premise to match the expected type
+  let prf1_fixed := cast (congrArg (fun x => LaxNDτ _ x) h_formula1) prf1_ctx_fixed
+  -- For prf2', we need to handle the context transformation
+  -- The context in prf2' is (Γ ++ [φ] ++ Δ), which needs to be transformed to
+  -- (List.map eraseSomehow Γ ++ [eraseSomehow φ] ++ List.map eraseSomehow Δ)
+  -- let prf1_fix := cast (congrArg2 (fun x y => LaxNDτ x y) h_context1 h_formula1) prf1'
+
+  have h_context2 : List.map eraseSomehow (Γ ++ φ :: Δ) =
+                    List.map eraseSomehow Γ ++ eraseSomehow φ :: List.map eraseSomehow Δ := by
+    simp [List.map_append]
+
+have h_formula2 : eraseSomehow (somehow ψ) = eraseSomehow ψ := by
+    simp [eraseSomehow]
+
+  -- Cast prf2' to fix its context
+  let prf2_cxt_fixed := cast (congrArg (fun x => LaxNDτ x _) h_context2) prf2'
+
+  let prf2_fixed := cast (congrArg (fun x => LaxNDτ _ x) h_formula2) prf2_cxt_fixed
+-- imvert h1_contezt and h_formula2 and ?put them together
+  @impInContext (List.map eraseSomehow Γ) (List.map eraseSomehow Δ) (eraseSomehow φ) (eraseSomehow ψ) prf1_fixed prf2_fixed
+
+  -- Now we can use impInContext with the properly cast arguments
+  -- impInContext prf1_fixed prf2_fixed
+
+  -- Now we can use impInContext with the properly cast arguments
+  -- impInContext prf1_fixed prf2'
+
+ /-  | @laxElimτ Γ Δ φ ψ prf1 prf2 =>
     -- Lax elimination: Combine erased proofs
     let prf1' := erasePLLProof prf1
     let prf2' := erasePLLProof prf2
-    have h1 : List.map eraseSomehow (Γ ++ Δ) = List.map eraseSomehow Γ ++ List.map eraseSomehow Δ := by
+    have h1 (Δ : List PLLFormula) : List.map eraseSomehow (Γ ++ Δ) = List.map eraseSomehow Γ ++ List.map eraseSomehow Δ := by
       simp [List.map_append]
-    cast (congrArg (fun x => LaxNDτ x _) h1) (impInContext prf1' prf2')
-
+    let casting' := (congrArg (fun x => LaxNDτ x _) (h1 Δ))
+    cast (congrArg (fun x => LaxNDτ x _) (h1 Δ))
+      (@impInContext (List.map eraseSomehow Γ)
+      (List.map eraseSomehow Δ) (eraseSomehow φ) ψ prf1' prf2')
+ -/
 end recursors
 
 -- the construction below would show conservativity but for the issue with recursor 'LaxNDτ.rec'
