@@ -1,3 +1,5 @@
+
+-- import Mathlib.Tactic.Core
 import LaxLogic.PLLFormula
 import LaxLogic.PLLAxiom
 
@@ -156,20 +158,6 @@ lemma eraseOuter (φ : PLLFormula) : eraseSomehow (somehow φ) = eraseSomehow φ
 theorem map_append_distrib {α β : Type} (f : α → β) (xs ys : List α) (z : α):
   List.map f (xs ++ z :: ys) = List.map f xs ++ f z :: List.map f ys := by
   simp [List.map_append]
-
-def congrArg2 {α β γ : Sort} (f : α → β → γ) {a₁ a₂ : α} {b₁ b₂ : β}
-  (ha : a₁ = a₂) (hb : b₁ = b₂) : f a₁ b₁ = f a₂ b₂ :=
-  Eq.trans (congrArg (f a₁) hb) (congrArg (fun a => f a b₂) ha)
-
--- not useful
-def congrArg2Dep {α : Sort} {β : α → Sort} {γ : (a : α) → β a → Sort}
-  (f : (a : α) → (b : β a) → γ a b)
-  {a₁ a₂ : α} (ha : a₁ = a₂)
-  {b₁ : β a₁} {b₂ : β a₂} (hb : cast (congrArg β ha) b₁ = b₂) :
-  f a₁ b₁ = cast (congrArg (fun a => γ a (cast (congrArg β ha) b₁)) ha) (f a₂ b₂) := by
-  subst ha
-  subst hb
-  rfl
 
 section recursors
 
@@ -337,16 +325,37 @@ end recursors
     exact prf1; exact prf2
  -/
 
+section Casting
+
 @[simp]
 lemma isIPLerase (φ : PLLFormula) : isIPLFormula (eraseSomehow φ) := by
   induction φ
-  simp[isIPLFormula]
-  simp[isIPLFormula, eraseSomehow]
-  simp[isIPLFormula, eraseSomehow]; constructor; assumption; assumption
-  simp[isIPLFormula, eraseSomehow]; constructor; assumption; assumption
-  simp[isIPLFormula, eraseSomehow]; constructor; assumption; assumption
-  simp[isIPLFormula, eraseSomehow]; assumption
+  all_goals simp [isIPLFormula]
+  constructor; assumption; assumption
+  constructor; assumption; assumption
+  constructor; assumption; assumption
+  assumption
 
+-- variable (α β : Sort)
+@[norm_cast] theorem eraseSomehow_context (Γ Δ : List PLLFormula) :
+  List.map eraseSomehow (Γ ++ Δ) = List.map eraseSomehow Γ ++ List.map eraseSomehow Δ := by
+  simp [List.map_append]
+
+@[norm_cast] theorem eraseSomehow_somehow (φ : PLLFormula) :
+  eraseSomehow (somehow φ) = eraseSomehow φ := by
+  simp [eraseSomehow]
+
+theorem isIPLProof_cast_eq {Γ₁ Γ₂ : List PLLFormula} {φ₁ φ₂ : PLLFormula}
+  {prf : LaxNDτ Γ₁ φ₁} (h : Γ₁ = Γ₂ ∧ φ₁ = φ₂) :
+  isIPLProof (cast (by simp [h.1, h.2]) prf) = isIPLProof prf := by
+  cases h
+  subst h_left
+  subst h_right
+  simp
+
+end Casting
+
+-- this is the main theorem
 theorem PLLconservative : {Γ : List PLLFormula} → {φ : PLLFormula} → (prf : LaxNDτ Γ φ) →
   isIPLProof (erasePLLProof prf) := by
   intros Γ φ prf; -- unfold isIPLProof
@@ -358,6 +367,11 @@ theorem PLLconservative : {Γ : List PLLFormula} → {φ : PLLFormula} → (prf 
     simp [eraseSomehow, erasePLLProof, isIPLFormula, isIPLProof/- , cast_eq -/];
     have h : isIPLProof (idenτ (List.map eraseSomehow Γ') (List.map eraseSomehow Δ') (eraseSomehow φ')) := by
       simp
+    norm_cast at h;
+    have k {α β : Sort}{casting : α = β} :
+      (idenτ (List.map eraseSomehow Γ') (List.map eraseSomehow Δ') (eraseSomehow φ')) =
+      (cast casting (idenτ (List.map eraseSomehow Γ') (List.map eraseSomehow Δ') (eraseSomehow φ')))
+    let tmp := isIPLProof_cast _ _ h
     -- apply isIPLProof_cast
   --  simp[h]
   --  simp only [cast_eq]
