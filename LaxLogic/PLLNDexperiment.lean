@@ -124,6 +124,23 @@ def isIPLProof : {Γ : List PLLFormula} → {φ : PLLFormula} → (prf : LaxNDτ
   | _, _,  laxIntroτ _  => false
   | _, _,  laxElimτ _ _ => false
 
+def isIPLProof_robust {Γ : List PLLFormula} {φ : PLLFormula} (prf : LaxNDτ Γ φ) : Prop :=
+  match prf with
+  | idenτ Γ Δ φ => isIPLFormula φ
+  | _ => false -- very incomplete and next fails
+ -- | cast _ prf' => isIPLProof_robust prf'
+  -- Other cases
+
+-- @[simp]
+theorem isIPLProof_cast {Γ₁ Γ₂ : List PLLFormula} {φ₁ φ₂ : PLLFormula}
+  {prf₁ : LaxNDτ Γ₁ φ₁} {prf₂ : LaxNDτ Γ₂ φ₂}
+  (h_ctx : Γ₁ = Γ₂) (h_form : φ₁ = φ₂) (h_cast : cast (by simp [h_ctx, h_form]) prf₁ = prf₂) :
+  isIPLProof prf₁ = isIPLProof prf₂ := by
+  subst h_ctx
+  subst h_form
+  subst h_cast
+  rfl
+
 @[simp]
 def eraseSomehow : PLLFormula → PLLFormula
   | PLLFormula.prop a => prop a
@@ -320,17 +337,34 @@ end recursors
     exact prf1; exact prf2
  -/
 
-theorem PLLconservative : (Γ : List PLLFormula) → (φ : PLLFormula) → (prf : LaxNDτ Γ φ) →
-  isIPLProof (Γ.map eraseSomehow) (eraseSomehow φ) (erasePLLProof prf) := by
+@[simp]
+lemma isIPLerase (φ : PLLFormula) : isIPLFormula (eraseSomehow φ) := by
+  induction φ
+  simp[isIPLFormula]
+  simp[isIPLFormula, eraseSomehow]
+  simp[isIPLFormula, eraseSomehow]; constructor; assumption; assumption
+  simp[isIPLFormula, eraseSomehow]; constructor; assumption; assumption
+  simp[isIPLFormula, eraseSomehow]; constructor; assumption; assumption
+  simp[isIPLFormula, eraseSomehow]; assumption
+
+theorem PLLconservative : {Γ : List PLLFormula} → {φ : PLLFormula} → (prf : LaxNDτ Γ φ) →
+  isIPLProof (erasePLLProof prf) := by
   intros Γ φ prf; -- unfold isIPLProof
   -- let tmp := erasePLLProof prf -- no we have this already
   -- simp
   induction prf
   case idenτ Γ' Δ' φ' =>
-    simp [eraseSomehow, erasePLLProof, isIPLFormula, isIPLProof]; sorry
+    -- unfold isIPLProof
+    simp [eraseSomehow, erasePLLProof, isIPLFormula, isIPLProof/- , cast_eq -/];
+    have h : isIPLProof (idenτ (List.map eraseSomehow Γ') (List.map eraseSomehow Δ') (eraseSomehow φ')) := by
+      simp
+    -- apply isIPLProof_cast
+  --  simp[h]
+  --  simp only [cast_eq]
+    sorry
 
-  unfold isIPLFormula
-  simp; unfold erasePLLProof; simp
+  -- unfold isIPLFormula
+  -- simp; unfold erasePLLProof; simp
   all_goals sorry
 
 end Conservativity
