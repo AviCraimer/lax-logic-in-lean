@@ -1,5 +1,4 @@
 
--- import Mathlib.Tactic.Core
 import LaxLogic.PLLFormula
 import LaxLogic.PLLAxiom
 
