@@ -10,18 +10,22 @@ inductive LaxND : (List PLLFormula)→ PLLFormula → Prop -- Natural deduction 
   | falsoElim : {Γ : List PLLFormula} → (φ : PLLFormula) → LaxND Γ falsePLL → LaxND Γ φ
   | impIntro : {Γ Δ : List PLLFormula} → {φ ψ : PLLFormula} →
       LaxND (Γ ++ φ :: Δ) ψ → LaxND (Γ ++ Δ) (ifThen φ ψ)
-  | impElim  : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxND Γ (ifThen φ ψ) → LaxND Γ φ → LaxND Γ ψ
-  | andIntro : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxND Γ φ → LaxND Γ ψ → LaxND Γ (and φ ψ)
+  | impElim  : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxND Γ (ifThen φ ψ) →
+    LaxND Γ φ → LaxND Γ ψ
+  | andIntro : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxND Γ φ → LaxND Γ ψ →
+    LaxND Γ (and φ ψ)
   | andElim1 : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxND Γ (and φ ψ) → LaxND Γ φ
   | andElim2 : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxND Γ (and φ ψ) → LaxND Γ ψ
   | orIntro1 : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxND Γ φ → LaxND Γ (or φ ψ)
   | orIntro2 : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxND Γ ψ → LaxND Γ (or φ ψ)
   | orElim   : {Γ Δ : List PLLFormula} → {φ ψ χ : PLLFormula} →
       LaxND (Γ ++ φ :: Δ) χ →
-      LaxND (Γ ++ [ψ] ++ Δ) χ → LaxND (Γ ++ Δ) χ
-  | laxIntro : {Γ : List PLLFormula} → {φ : PLLFormula} → LaxND Γ φ → LaxND Γ (somehow φ)
+      LaxND (Γ ++ ψ :: Δ) χ → LaxND (Γ ++ Δ) χ
+  | laxIntro : {Γ : List PLLFormula} → {φ : PLLFormula} → LaxND Γ φ →
+      LaxND Γ (somehow φ)
   | laxElim : {Γ Δ : List PLLFormula} → {φ ψ : PLLFormula} →
-      LaxND (Γ ++ Δ) (somehow φ) → LaxND (Γ ++ φ :: Δ) (somehow ψ) → LaxND (Γ ++ Δ) (somehow ψ)
+      LaxND (Γ ++ Δ) (somehow φ) → LaxND (Γ ++ φ :: Δ) (somehow ψ) →
+      LaxND (Γ ++ Δ) (somehow ψ)
 --  | laxFlatten : {Γ : List PLLFormula} → {φ : PLLFormula} → LaxND Γ (somehow (somehow φ)) → LaxND Γ (somehow φ)
 -- this last is derivable
 
@@ -112,17 +116,32 @@ def impInContext : {Γ Δ : List PLLFormula} → {φ ψ : PLLFormula} →
 
 -- Define what it means for a PLL proof to be an IPL proof
 -- more inference could be requested
-def isIPLProof : (Γ : List PLLFormula) → (φ : PLLFormula) → (prf : LaxNDτ Γ φ) → Prop
+def isIPLProof1 : (Γ : List PLLFormula) → (φ : PLLFormula) → (prf : LaxNDτ Γ φ) → Prop
   | _, _,  idenτ Γ Δ φ     => isIPLFormula φ -- only you could have a proof in IPL using lax formulae
-  | _, _,  falsoElimτ _ prf  => isIPLProof _ falsePLL prf
-  | _, _,  @impIntroτ Γ Δ φ ψ prf => isIPLProof (Γ ++ φ :: Δ) ψ prf
-  | _, _,  @impElimτ Γ _ _ prf1 prf2  => isIPLProof Γ _ prf1 ∧ isIPLProof _ _ prf2
-  | _, _,  @andIntroτ _ _ _ prf1 prf2 => isIPLProof _ _ prf1 ∧ isIPLProof _ _ prf2
-  | _, _,  @andElim1τ _ _ _ prf     => isIPLProof _ _ prf
-  | _, _,  andElim2τ prf => isIPLProof _ _ prf
-  | _, _,  orIntro1τ prf => isIPLProof _ _ prf
-  | _, _,  orIntro2τ prf => isIPLProof _ _ prf
-  | _, _,  orElimτ prf1 prf2 => isIPLProof _ _ prf1 ∧ isIPLProof _ _ prf2
+  | _, _,  falsoElimτ _ prf  => isIPLProof1 _ falsePLL prf
+  | _, _,  @impIntroτ Γ Δ φ ψ prf => isIPLProof1 (Γ ++ φ :: Δ) ψ prf
+  | _, _,  @impElimτ Γ _ _ prf1 prf2  => isIPLProof1 Γ _ prf1 ∧ isIPLProof1 _ _ prf2
+  | _, _,  @andIntroτ _ _ _ prf1 prf2 => isIPLProof1 _ _ prf1 ∧ isIPLProof1 _ _ prf2
+  | _, _,  @andElim1τ _ _ _ prf     => isIPLProof1 _ _ prf
+  | _, _,  andElim2τ prf => isIPLProof1 _ _ prf
+  | _, _,  orIntro1τ prf => isIPLProof1 _ _ prf
+  | _, _,  orIntro2τ prf => isIPLProof1 _ _ prf
+  | _, _,  orElimτ prf1 prf2 => isIPLProof1 _ _ prf1 ∧ isIPLProof1 _ _ prf2
+  | _, _,  laxIntroτ _  => false
+  | _, _,  laxElimτ _ _ => false
+
+-- Define what it means for a PLL proof to be an IPL proof
+def isIPLProof : {Γ : List PLLFormula} → {φ : PLLFormula} → (prf : LaxNDτ Γ φ) → Prop
+  | _, _,  idenτ Γ Δ φ     => isIPLFormula φ -- only you could have a proof in IPL using lax formulae
+  | _, _,  falsoElimτ _ prf  => isIPLProof prf
+  | _, _,  @impIntroτ Γ Δ φ ψ prf => isIPLProof prf
+  | _, _,  @impElimτ Γ _ _ prf1 prf2  => isIPLProof prf1 ∧ isIPLProof prf2
+  | _, _,  @andIntroτ _ _ _ prf1 prf2 => isIPLProof prf1 ∧ isIPLProof prf2
+  | _, _,  @andElim1τ _ _ _ prf     => isIPLProof prf
+  | _, _,  andElim2τ prf => isIPLProof prf
+  | _, _,  orIntro1τ prf => isIPLProof prf
+  | _, _,  orIntro2τ prf => isIPLProof prf
+  | _, _,  orElimτ prf1 prf2 => isIPLProof prf1 ∧ isIPLProof prf2
   | _, _,  laxIntroτ _  => false
   | _, _,  laxElimτ _ _ => false
 
@@ -307,7 +326,8 @@ def erasePLLProofUnimplementable {Γ : List PLLFormula} {φ : PLLFormula}
     apply impInContext
     exact prf1; exact prf2
  -/
-theorem PLLconservative : (Γ : List PLLFormula) → (φ : PLLFormula) → (prf : LaxNDτ Γ φ) →
-  isIPLProof (Γ.map eraseSomehow) (eraseSomehow φ) (erasePLLProof prf) := sorry
+theorem PLLconservative : {Γ : List PLLFormula} → {φ : PLLFormula} →
+  (prf : LaxNDτ Γ φ) →
+  isIPLProof (erasePLLProof prf) := sorry
 
 end Conservativity
