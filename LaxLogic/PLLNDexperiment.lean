@@ -20,7 +20,7 @@ inductive LaxND : (List PLLFormula)→ PLLFormula → Prop -- Natural deduction 
   | orIntro2 : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxND Γ ψ → LaxND Γ (or φ ψ)
   | orElim   : {Γ Δ : List PLLFormula} → {φ ψ χ : PLLFormula} →
       LaxND (Γ ++ φ :: Δ) χ →
-      LaxND (Γ ++ [ψ] ++ Δ) χ → LaxND (Γ ++ Δ) χ
+      LaxND (Γ ++ ψ :: Δ) χ → LaxND (Γ ++ Δ) χ
   | laxIntro : {Γ : List PLLFormula} → {φ : PLLFormula} → LaxND Γ φ → LaxND Γ (somehow φ)
   | laxElim : {Γ Δ : List PLLFormula} → {φ ψ : PLLFormula} →
       LaxND (Γ ++ Δ) (somehow φ) → LaxND (Γ ++ φ :: Δ) (somehow ψ) → LaxND (Γ ++ Δ) (somehow ψ)
@@ -114,7 +114,7 @@ def impInContext : {Γ Δ : List PLLFormula} → {φ ψ : PLLFormula} →
 @[simp]
 def isIPLProof : {Γ : List PLLFormula} → {φ : PLLFormula} → (prf : LaxNDτ Γ φ) → Prop
   | _, _,  idenτ Γ Δ φ     => isIPLFormula φ -- only you could have a proof in IPL using lax formulae
-  | _, _,  falsoElimτ _ prf  => isIPLProof /- _ falsePLL -/ prf
+  | _, _,  falsoElimτ _ prf  => isIPLProof prf
   | _, _,  impIntroτ prf => isIPLProof prf
   | _, _,  impElimτ prf1 prf2  => isIPLProof prf1 ∧ isIPLProof prf2
   | _, _,  andIntroτ prf1 prf2 => isIPLProof prf1 ∧ isIPLProof prf2
