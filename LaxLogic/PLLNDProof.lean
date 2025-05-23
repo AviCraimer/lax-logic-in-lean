@@ -85,8 +85,10 @@ inductive LaxNDτ: (List PLLFormula)→ PLLFormula → Type -- ND for PLL, proof
   | falsoElimτ  : {Γ : List PLLFormula} → (φ : PLLFormula) → LaxNDτ Γ falsePLL → LaxNDτ Γ φ
   | impIntroτ  : {Γ Δ : List PLLFormula} → {φ ψ : PLLFormula} →
       LaxNDτ (Γ ++ φ :: Δ) ψ → LaxNDτ (Γ ++ Δ) (ifThen φ ψ)
-  | impElimτ   : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxNDτ Γ (ifThen φ ψ) → LaxNDτ Γ φ → LaxNDτ Γ ψ
-  | andIntroτ  : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxNDτ Γ φ → LaxNDτ Γ ψ → LaxNDτ Γ (and φ ψ)
+  | impElimτ   : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxNDτ Γ (ifThen φ ψ) →
+    LaxNDτ Γ φ → LaxNDτ Γ ψ
+  | andIntroτ  : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxNDτ Γ φ → LaxNDτ Γ ψ →
+    LaxNDτ Γ (and φ ψ)
   | andElim1τ  : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxNDτ Γ (and φ ψ) → LaxNDτ Γ φ
   | andElim2τ  : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxNDτ Γ (and φ ψ) → LaxNDτ Γ ψ
   | orIntro1τ  : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxNDτ Γ φ → LaxNDτ Γ (or φ ψ)
@@ -96,7 +98,8 @@ inductive LaxNDτ: (List PLLFormula)→ PLLFormula → Type -- ND for PLL, proof
       LaxNDτ (Γ ++ ψ :: Δ) χ → LaxNDτ (Γ ++ Δ) χ
   | laxIntroτ  : {Γ : List PLLFormula} → {φ : PLLFormula} → LaxNDτ Γ φ → LaxNDτ Γ (somehow φ)
   | laxElimτ  : {Γ Δ : List PLLFormula} → {φ ψ : PLLFormula} →
-      LaxNDτ (Γ ++ Δ) (somehow φ) → LaxNDτ (Γ ++ φ :: Δ) (somehow ψ) → LaxNDτ (Γ ++ Δ) (somehow ψ)
+      LaxNDτ (Γ ++ Δ) (somehow φ) → LaxNDτ (Γ ++ φ :: Δ) (somehow ψ) →
+      LaxNDτ (Γ ++ Δ) (somehow ψ)
 
 open LaxNDτ
 
