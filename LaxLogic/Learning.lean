@@ -27,3 +27,32 @@ regarding proof-theoretic formalization in Lean 4.
 
 
 #eval falsePLL
+
+inductive LaxMin: (List PLLFormula)→ PLLFormula → Type -- ND for Minimal Lax logic, proof terms
+  | iden : (Γ Δ : List PLLFormula) → (φ : PLLFormula) → LaxMin (Γ ++ φ :: Δ) φ
+  | falsoElim : {Γ : List PLLFormula} → (φ : PLLFormula) → LaxMin Γ falsePLL → LaxMin Γ φ
+  | impIntro : {Γ Δ : List PLLFormula} → {φ ψ : PLLFormula} →
+      LaxMin (Γ ++ φ :: Δ) ψ → LaxMin (Γ ++ Δ) (ifThen φ ψ)
+  | impElim : {Γ : List PLLFormula} → {φ ψ : PLLFormula} → LaxMin Γ (ifThen φ ψ) →
+      LaxMin Γ φ → LaxMin Γ ψ
+  | laxIntro : {Γ : List PLLFormula} → {φ : PLLFormula} → LaxMin Γ φ → LaxMin Γ (somehow φ)
+  | laxElim : {Γ Δ : List PLLFormula} → {φ ψ : PLLFormula} →
+      LaxMin (Γ ++ Δ) (somehow φ) → LaxMin (Γ ++ φ :: Δ) (somehow ψ) → LaxMin (Γ ++ Δ) (somehow ψ)
+
+open LaxMin
+
+def Oimp (φ ψ : PLLFormula) : LaxMin [] (ifThen (somehow (φ.ifThen ψ)) ((somehow φ).ifThen (somehow ψ))) := by
+  apply @impIntro []; simp
+  apply @impIntro []; simp
+  apply @laxElim [φ.somehow, (φ.ifThen ψ).somehow] [] φ ψ; simp
+  apply iden [] [(φ.ifThen ψ).somehow] φ.somehow; simp
+  apply @laxElim [φ.somehow, (φ.ifThen ψ).somehow, φ] [] φ ; simp
+  apply iden [] [(φ.ifThen ψ).somehow, φ] φ.somehow; simp
+  apply @laxElim [φ.somehow, (φ.ifThen ψ).somehow, φ, φ] [] (φ.ifThen ψ); simp
+  apply iden [φ.somehow] [φ, φ]; simp
+  apply laxIntro
+  apply @impElim [φ.somehow, (φ.ifThen ψ).somehow, φ, φ, φ.ifThen ψ] φ ψ
+  apply iden [φ.somehow, (φ.ifThen ψ).somehow, φ, φ] [] (φ.ifThen ψ)
+  apply iden [φ.somehow, (φ.ifThen ψ).somehow, φ] [φ.ifThen ψ] φ
+
+#check {φ ψ : PLLFormula} -> LaxMin [φ.somehow, (φ.ifThen ψ).somehow, φ, φ, φ.ifThen ψ] φ
