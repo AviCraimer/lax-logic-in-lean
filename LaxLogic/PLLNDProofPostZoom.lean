@@ -86,7 +86,7 @@ def isIPLFormula : PLLFormula → Prop
 def isIPLFormulaC : PLLFormula → Bool
   | PLLFormula.prop _  => true
   | falsePLL    => true
-  | ifThen φ ψ  => isIPLFormulaC φ && isIPLFormulaC ψ
+  | ifThen φ ψ  => isIPLFormulaC φ ∧ isIPLFormulaC ψ
   | PLLFormula.and φ ψ => isIPLFormulaC φ && isIPLFormulaC ψ
   | PLLFormula.or φ ψ  => isIPLFormulaC φ && isIPLFormulaC ψ
   | somehow _   => false
@@ -358,6 +358,7 @@ lemma eraseSomehow_id_on_IPL : ∀ φ, isIPLFormula φ → eraseSomehow φ = φ
 | PLLFormula.or φ ψ, ⟨hφ, hψ⟩ =>
     by simp [eraseSomehow, eraseSomehow_id_on_IPL φ hφ, eraseSomehow_id_on_IPL ψ hψ]
 
+
 theorem PLLconservative_sigma -- makes no difference; we cannot use structure of witness
   {Γ : List PLLFormula} {φ : PLLFormula}
   (h : LaxNDτ Γ φ) :
@@ -365,11 +366,11 @@ theorem PLLconservative_sigma -- makes no difference; we cannot use structure of
   induction h with
   | idenτ G D f =>
     let prf := idenτ (List.map eraseSomehow G) (List.map eraseSomehow D) (eraseSomehow f)
-    rw [← map_append_distrib] at prf
+    rw [← map_append_distrib] at prf -- rewrite the premise rather than the goal
     -- simp [map_append_distrib] -- cannot just use simp to handle the type mismatch
-    refine ⟨ prf, ?_ ⟩
-  all_goals sorry
-
+    refine ⟨ prf, ?_ ⟩ -- yes, that's fine but we lose the structure of the witness
+    sorry
+  | _ => sorry
 
 theorem PLLconservative {Γ : List PLLFormula} {φ : PLLFormula}
   (h : LaxNDτ Γ φ) :
