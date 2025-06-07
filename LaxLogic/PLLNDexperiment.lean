@@ -251,6 +251,7 @@ def erasePLLProof {Γ : Context} {φ : PLLFormula} (h : LaxND Γ φ) :
 
   ans_fix
 
+universe u -- for the next theorem
 -- this is the main theorem
 theorem PLLconservative : {Γ : Context} → {φ : PLLFormula} → (prf : LaxND Γ φ) →
   isIPLProof (erasePLLProof prf) := by
@@ -264,9 +265,11 @@ theorem PLLconservative : {Γ : Context} → {φ : PLLFormula} → (prf : LaxND 
     have h : isIPLProof (iden (image eraseSomehow Γ') (eraseSomehow φ')) := by
       simp
     norm_cast at h; -- did nothing but didn't fail
-    have k {α β : Sort}{casting : α = β} :
-      (iden (image eraseSomehow Γ') (eraseSomehow φ')) =
-      (cast casting (iden (image eraseSomehow Γ') (eraseSomehow φ')))
+    have k {α β : Sort u}{casting : α = β}(f : α)(g : β) : -- totally unsound!
+      /- (iden (image eraseSomehow Γ') (eraseSomehow φ')) -/ g =
+      (cast casting /- (iden (image eraseSomehow Γ') (eraseSomehow φ')) -/ f) := by sorry
+    let dodgy := k (iden (image eraseSomehow Γ') (eraseSomehow φ')) ((iden (image eraseSomehow Γ') (eraseSomehow φ'))
+    )
     let tmp := isIPLProofList_cast _ _ h
     -- apply isIPLProofList_cast
   --  simp[h]
