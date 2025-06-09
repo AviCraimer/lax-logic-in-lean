@@ -23,7 +23,7 @@ section Utilities
 lemma move_singletons {Γ : Finset PLLFormula} {φ ψ : PLLFormula} :
   Γ ∪ {φ} ∪ {ψ} = Γ ∪ {ψ} ∪ {φ} := by
   apply union_right_comm
-
+#check union_insert
 lemma image_add_singleton (Γ : Context) (φ : PLLFormula) (f : PLLFormula → PLLFormula)
   : image f (Γ ∪ {φ}) = image f Γ ∪ {f φ} := by
       simp[image_union] -- done!
@@ -251,7 +251,140 @@ def erasePLLProof {Γ : Context} {φ : PLLFormula} (h : LaxND Γ φ) :
 
   ans_fix
 
-universe u -- for the next theorem
+section Casting
+
+-- 0) good this checks; can we use it?
+def congrArg2 {α β γ : Sort*} (f : α → β → γ) {a₁ a₂ : α} {b₁ b₂ : β}
+  (ha : a₁ = a₂) (hb : b₁ = b₂) : f a₁ b₁ = f a₂ b₂ :=
+by cases ha; cases hb; rfl
+
+-- 1) checks but is useless
+lemma cast_congrArg_context_id
+  {Γ₁ Γ₂ : Context} {φ : PLLFormula} (h : Γ₁ = Γ₂) (x : LaxND Γ₁ φ) :
+  cast (congrArg (fun Γ => LaxND Γ φ) h) x = (cast (congrArg (fun Γ => LaxND Γ φ) h) x : LaxND Γ₂ φ) :=
+rfl
+
+/- -- 1) nope
+lemma cast_congrArg_context_inv
+  {Γ₁ Γ₂ : Context} {φ : PLLFormula} (h : Γ₁ = Γ₂) (x : LaxND Γ₁ φ) :
+  cast (congrArg (fun Γ => LaxND Γ φ) h) x = (cast h x : LaxND Γ₂ φ) :=
+by cases h; rfl
+
+-- 2) nope
+lemma cast_congrArg_formula_inv
+  {Γ : Context} {φ₁ φ₂ : PLLFormula} (h : φ₁ = φ₂) (x : LaxND Γ φ₁) :
+  cast (congrArg (fun φ => LaxND Γ φ) h) x = (cast h x : LaxND Γ φ₂) :=
+by cases h; rfl
+ -/
+
+-- 3) good this works
+lemma cast_congrArg_context_cancel
+  {Γ₁ Γ₂ : Context} {φ : PLLFormula} (h : Γ₁ = Γ₂) (x : LaxND Γ₁ φ) :
+  cast (congrArg (fun Γ => LaxND Γ φ) (h.symm)) (cast (congrArg (fun Γ => LaxND Γ φ) h) x) = x :=
+by cases h; rfl
+
+-- 4) fixed
+lemma cast_congrArg_formula_cancel
+  {Γ : Context} {φ₁ φ₂ : PLLFormula} (h : φ₁ = φ₂) (x : LaxND Γ φ₁) :
+  cast (congrArg (fun φ => LaxND Γ φ) h.symm) (cast (congrArg (fun φ => LaxND Γ φ) h) x) = x :=
+by cases h; rfl
+
+-- 6) good this works
+lemma cast_congrArg2_cancel_left
+  {Γ₁ Γ₂ : Context} {φ₁ φ₂ : PLLFormula} (hΓ : Γ₁ = Γ₂) (hφ : φ₁ = φ₂)
+  (x : LaxND Γ₁ φ₁) :
+  cast (congrArg2 LaxND hΓ.symm hφ.symm) (cast (congrArg2 LaxND hΓ hφ) x) = x :=
+by cases hΓ; cases hφ; rfl
+-- and conversely:
+lemma cast_congrArg2_cancel_right
+  {Γ₁ Γ₂ : Context} {φ₁ φ₂ : PLLFormula}
+  (hΓ : Γ₁ = Γ₂) (hφ : φ₁ = φ₂) (x : LaxND Γ₂ φ₂) :
+  cast (congrArg2 LaxND hΓ hφ) (cast (congrArg2 LaxND hΓ.symm hφ.symm) x) = x :=
+by cases hΓ; cases hφ; rfl
+
+-- 5a) good this works
+lemma isIPLProof_cast_eq {Γ₁ Γ₂ : Context} {φ₁ φ₂ : PLLFormula}
+  {prf : LaxND Γ₁ φ₁} (hΓ : Γ₁ = Γ₂) (hφ : φ₁ = φ₂) :
+  isIPLProof (cast (congrArg2 LaxND hΓ hφ) prf) = isIPLProof prf :=
+by cases hΓ; cases hφ; rfl
+
+/- -- 5b) not yet
+theorem isIPLProof_cast_eq {Γ₁ Γ₂ : Context} {φ₁ φ₂ : PLLFormula}
+  {prf : LaxND Γ₁ φ₁} (h : Γ₁ = Γ₂ ∧ φ₁ = φ₂) :
+  isIPLProof (cast (congrArg2 LaxND h.1 h.2) prf) = isIPLProof prf := by
+  cases h with | h_left h_right =>
+  subst h_left
+  subst h_right
+  simp
+
+-- 5c) nope
+theorem isIPLProof_cast_eq {Γ₁ Γ₂ : Context} {φ₁ φ₂ : PLLFormula}
+  {prf : LaxND Γ₁ φ₁} (h : Γ₁ = Γ₂ ∧ φ₁ = φ₂) :
+  isIPLProof (cast (by simp [h.1, h.2]) prf) = isIPLProof prf := by
+  cases h
+  subst h_left
+  subst h_right
+  simp
+ -/
+-- filepath: /Users/matthew/Lean/Sources/lax-logic-in-lean/LaxLogic/PLLNDexperiment.lean
+
+def cast_ctx {Γ₁ Γ₂ : Context} {φ : PLLFormula} (h : Γ₁ = Γ₂) (x : LaxND Γ₁ φ) : LaxND Γ₂ φ :=
+  cast (congrArg (fun Γ => LaxND Γ φ) h) x
+
+def cast_formula {Γ : Context} {φ₁ φ₂ : PLLFormula} (h : φ₁ = φ₂) (x : LaxND Γ φ₁) : LaxND Γ φ₂ :=
+  cast (congrArg (fun φ => LaxND Γ φ) h) x
+
+def cast_both {Γ₁ Γ₂ : Context} {φ₁ φ₂ : PLLFormula} (hΓ : Γ₁ = Γ₂) (hφ : φ₁ = φ₂) (x : LaxND Γ₁ φ₁) : LaxND Γ₂ φ₂ :=
+  cast (congrArg2 LaxND hΓ hφ) x
+
+@[simp]
+lemma cast_ctx_cancel {Γ₁ Γ₂ : Context} {φ : PLLFormula} (h : Γ₁ = Γ₂) (x : LaxND Γ₁ φ) :
+  cast_ctx h.symm (cast_ctx h x) = x :=
+by cases h; rfl
+
+@[simp]
+lemma cast_formula_cancel {Γ : Context} {φ₁ φ₂ : PLLFormula} (h : φ₁ = φ₂) (x : LaxND Γ φ₁) :
+  cast_formula h.symm (cast_formula h x) = x :=
+by cases h; rfl
+
+@[simp]
+lemma cast_both_cancel_left {Γ₁ Γ₂ : Context} {φ₁ φ₂ : PLLFormula}
+  (hΓ : Γ₁ = Γ₂) (hφ : φ₁ = φ₂) (x : LaxND Γ₁ φ₁) :
+  cast_both hΓ.symm hφ.symm (cast_both hΓ hφ x) = x :=
+by cases hΓ; cases hφ; rfl
+
+@[simp]
+lemma cast_both_cancel_right {Γ₁ Γ₂ : Context} {φ₁ φ₂ : PLLFormula}
+  (hΓ : Γ₁ = Γ₂) (hφ : φ₁ = φ₂) (x : LaxND Γ₂ φ₂) :
+  cast_both hΓ hφ (cast_both hΓ.symm hφ.symm x) = x :=
+by cases hΓ; cases hφ; rfl
+
+@[simp]
+lemma isIPLProof_cast_ctx_eq {Γ₁ Γ₂ : Context} {φ : PLLFormula}
+  {prf : LaxND Γ₁ φ} (hΓ : Γ₁ = Γ₂) :
+  isIPLProof (cast_ctx hΓ prf) = isIPLProof prf :=
+by cases hΓ; rfl
+
+@[simp]
+lemma isIPLProof_cast_formula_eq {Γ : Context} {φ₁ φ₂ : PLLFormula}
+  {prf : LaxND Γ φ₁} (hφ : φ₁ = φ₂) :
+  isIPLProof (cast_formula hφ prf) = isIPLProof prf :=
+by cases hφ; rfl
+
+@[simp]
+lemma isIPLProof_cast_both_eq {Γ₁ Γ₂ : Context} {φ₁ φ₂ : PLLFormula}
+  {prf : LaxND Γ₁ φ₁} (hΓ : Γ₁ = Γ₂) (hφ : φ₁ = φ₂) :
+  isIPLProof (cast_both hΓ hφ prf) = isIPLProof prf :=
+by cases hΓ; cases hφ; rfl
+
+@[simp]
+lemma cast_iden {Γ Γ' : Context} {φ φ' : PLLFormula}
+   (hφ : φ = φ') (hΓ : Γ ∪ {φ} = Γ'∪ {φ'}) :
+  cast (congrArg2 LaxND hΓ hφ) (iden Γ φ) = iden Γ' φ' :=
+by cases hΓ; cases hφ; rfl
+end Casting
+
+universe u -- for the next theorem, will be deleted later
 -- this is the main theorem
 theorem PLLconservative : {Γ : Context} → {φ : PLLFormula} → (prf : LaxND Γ φ) →
   isIPLProof (erasePLLProof prf) := by
@@ -265,11 +398,13 @@ theorem PLLconservative : {Γ : Context} → {φ : PLLFormula} → (prf : LaxND 
     have h : isIPLProof (iden (image eraseSomehow Γ') (eraseSomehow φ')) := by
       simp
     norm_cast at h; -- did nothing but didn't fail
+    simp at h -- [isIPLProof_cast_formula_eq, isIPLProof_cast_ctx_eq] -- already in simp
+    -- well that did something to the context but not the goal which is what we want
     have k {α β : Sort u}{casting : α = β}(f : α)(g : β) : -- totally unsound!
       /- (iden (image eraseSomehow Γ') (eraseSomehow φ')) -/ g =
       (cast casting /- (iden (image eraseSomehow Γ') (eraseSomehow φ')) -/ f) := by sorry
-    let dodgy := k (iden (image eraseSomehow Γ') (eraseSomehow φ')) ((iden (image eraseSomehow Γ') (eraseSomehow φ'))
-    )
+    let dodgy := k (iden (image eraseSomehow Γ') (eraseSomehow φ')) ((iden (image eraseSomehow Γ') (eraseSomehow φ')))
+
     let tmp := isIPLProofList_cast _ _ h
     -- apply isIPLProofList_cast
   --  simp[h]
@@ -603,7 +738,7 @@ theorem isIPLProofList_cast_eq {Γ₁ Γ₂ : List PLLFormula} {φ₁ φ₂ : PL
 end Casting
 
 -- this is the main theorem
-theorem PLLconservative : {Γ : List PLLFormula} → {φ : PLLFormula} → (prf : LaxNDListτ Γ φ) →
+theorem PLLconservative2 : {Γ : List PLLFormula} → {φ : PLLFormula} → (prf : LaxNDListτ Γ φ) →
   isIPLProofList (erasePLLProof prf) := by
   intros Γ φ prf; -- unfold isIPLProofList
   -- let tmp := erasePLLProof prf -- no we have this already
