@@ -28,9 +28,6 @@ import LaxLogic.PLLAxiom
 open Lean Meta Elab Tactic
 open PLLFormula
 
-
-open PLLFormula
-
 -- Use Finset as the Cxt
 def Cxt := Finset PLLFormula
 open Finset
@@ -42,7 +39,7 @@ instance : Union Cxt := inferInstanceAs (Union (Finset PLLFormula))
 instance : Singleton PLLFormula Cxt := inferInstanceAs (Singleton PLLFormula (Finset PLLFormula))
 instance : EmptyCollection Cxt := inferInstanceAs (EmptyCollection (Finset PLLFormula))
 
-section Tactics
+section TacticsExperimental
 
 elab "finset_ext" : tactic => do
   try
@@ -99,7 +96,7 @@ def buildNormalizedFinset1 (vars : Array Expr) (singlets : Array Expr)
   else
     mkAppM ``Finset.empty #[elementType]
 
-  def buildNormalizedFinset (vars : Array Expr) (singlets : Array Expr)
+  /- def buildNormalizedFinset (vars : Array Expr) (singlets : Array Expr)
     (contextExpr : Expr) : MetaM Expr := do
   -- Get element type from context
   let contextType ← inferType contextExpr
@@ -123,7 +120,7 @@ def buildNormalizedFinset1 (vars : Array Expr) (singlets : Array Expr)
     mkAppM ``Union.union #[acc, term]) emptySet
 
   pure result
-
+ -/
 
   -- Build from there with consistent mkAppM usage
   let varUnion ← vars.foldlM (fun acc v => mkAppM ``Union.union #[acc, v]) initialSet
@@ -170,7 +167,7 @@ elab "norm_finset_enhanced" target:(ppSpace colGt term)? : tactic => do
     | none => singlets
 
   -- Build normalized LHS
-  let normalizedLhs ← buildNormalizedFinset vars orderedSinglets elementType
+  let normalizedLhs ← buildNormalizedFinset1 vars orderedSinglets elementType
 
   -- Create new goal
   let newGoalType ← mkEq normalizedLhs rhs
@@ -201,7 +198,7 @@ partial def collectFinset (e : Lean.Expr) : MetaM (Array Expr × Array Expr) := 
 def buildUnion (lhs rhs : Expr) : MetaM Expr :=
     mkAppM ``Union.union #[lhs, rhs]
 
-def buildNormalizedFinset' (vars : Array Expr) (singlets : Array Expr)
+def buildNormalizedFinset3 (vars : Array Expr) (singlets : Array Expr)
     (elementType : Expr) : MetaM Expr := do
   -- Use mkApp with explicit universe for empty set
   let u ← getLevel elementType
@@ -265,27 +262,10 @@ let gOpt ← match g with
     pure [newGoal]
   -- evalTactic (← `(tactic| finset_ext))
 
-#check mkAppM
-
-elab "solve_finset_context" : tactic => do
-  try evalTactic (← `(tactic| rw [union_assoc]))
-  catch _ => pure ()
-  try evalTactic (← `(tactic| rw [←merge_singletons]))
-  catch _ => pure ()
-  try evalTactic (← `(tactic| rw [drop_empty]))
-  catch _ => pure ()
-  try evalTactic (← `(tactic| rw [move_singletons]))
-  catch _ => pure ()
-  try evalTactic (← `(tactic| rw [shift_singletons]))
-  catch _ => pure ()
-  try evalTactic (← `(tactic| aesop))
-  catch _ => pure ()
-
-end Tactics
+end TacticsExperimental
 
 section Testing
 
-end Testing
 
 #check {a b : Cxt} →  (a ∪ b) = b ∪ a
 
@@ -308,6 +288,8 @@ end Testing
 #check Finset.univ
 #check Finset.biUnion
 
+end Testing
+
 -- Minimal Lax Logic ND system with Finset Cxt
 inductive LaxMin : Cxt → PLLFormula → Type
   | iden (Γ : Cxt) (φ : PLLFormula) : LaxMin (Γ ∪ {φ}) φ
@@ -320,7 +302,7 @@ inductive LaxMin : Cxt → PLLFormula → Type
 
 open LaxMin
 
-section Tactics
+section TacticsExperimental
 
 -- Specialized tactic for LaxMin goals
 elab "norm_lax_context" : tactic => do
@@ -342,7 +324,7 @@ elab "norm_lax_context" : tactic => do
 
     -- Normalize the context
     let (vars, singlets) ← collectFinsetTerms context
-    let normalizedContext ← buildNormalizedFinset vars singlets elementType
+    let normalizedContext ← buildNormalizedFinset1 vars singlets elementType
 
     -- Create new goal with normalized context
     let newGoalType ← mkAppM ``LaxMin #[normalizedContext, formula]
@@ -351,13 +333,8 @@ elab "norm_lax_context" : tactic => do
   else
     throwError "Expected LaxMin goal"
 
-elab "solve_lax_goal" : tactic => do
-  try evalTactic (← `(tactic| solve_finset_context))
-  catch _ => pure ()
-  try evalTactic (← `(tactic| apply iden))
-  catch _ => throwError "Could not solve with iden"
+end TacticsExperimental
 
-end Tactics
 
 def isIPLFormula : PLLFormula → Prop
   | PLLFormula.prop _  => true
@@ -420,7 +397,6 @@ lemma isIPLProof_cast_eq {Γ₁ Γ₂ : Cxt} {φ₁ φ₂ : PLLFormula}
   isIPLProof (cast (congrArg2 LaxMin hΓ hφ) prf) = isIPLProof prf :=
 by cases hΓ; cases hφ; rfl
 
-
 -- Some basic cast helpers for working with Cxt and formula equalities
 def cast_ctx {Γ₁ Γ₂ : Cxt} {φ : PLLFormula} (h : Γ₁ = Γ₂) (x : LaxMin Γ₁ φ) : LaxMin Γ₂ φ :=
   cast (congrArg (fun Γ => LaxMin Γ φ) h) x
@@ -458,12 +434,8 @@ end Casting
 section FinsetLemmas
 
 lemma merge_singletons (Γ : Cxt) (a b : PLLFormula) : (Γ ∪ {a} ∪ {b} : Finset PLLFormula) = Γ ∪ {a, b} := by
-    -- aesop
-  solve_finset_context
-
-example (a b c : PLLFormula) : ({a} ∪ {b} ∪ {c} : Finset PLLFormula) = {c, b, a} := by
-  solve_finset_context
-  -- finset_ext
+  aesop
+  -- solve_finset_context -- this uses merge_singletons!
 
 -- simp [union_insert, insert_eq, union_assoc, union_comm, Finset.union_assoc]
 lemma drop_empty (Γ : Cxt) : ({} : Cxt) ∪ Γ = Γ := by
@@ -471,23 +443,58 @@ lemma drop_empty (Γ : Cxt) : ({} : Cxt) ∪ Γ = Γ := by
 
 lemma move_singletons (Γ : Finset PLLFormula) (φ ψ : PLLFormula) :
   Γ ∪ {φ} ∪ {ψ} = Γ ∪ {ψ} ∪ {φ} := by
-  solve_finset_context -- apply union_right_comm
+  -- solve_finset_context -- this uses move_singletons!
+  apply union_right_comm
 
 lemma shift_singletons (Γ : Finset PLLFormula) (φ : PLLFormula) :
   Γ ∪ {φ} = {φ} ∪ Γ := by
-  solve_finset_context -- apply union_comm
+  -- solve_finset_context -- this uses shift_singletons!
+  apply union_comm
 
---@[simp] -- breaks results below
+section Tactics
+
+/-- solve is a misnomer here; at best it simplifies matters -/
+elab "solve_finset_context" : tactic => do
+  try -- is this really worth trying?
+    evalTactic (← `(tactic| ext x : 1;
+      simp only [Finset.mem_union, Finset.mem_insert, Finset.mem_singleton]; itauto))
+  catch _ => pure ()
+  --  throwError "finset_ext tactic failed: goal is not a Finset equality or tactic did not succeed."
+  try evalTactic (← `(tactic| aesop))
+  catch _ => pure ()
+  try evalTactic (← `(tactic| rw [union_assoc]))
+  catch _ => pure ()
+  try evalTactic (← `(tactic| rw [←merge_singletons]))
+  catch _ => pure ()
+  try evalTactic (← `(tactic| rw [drop_empty]))
+  catch _ => pure ()
+    try evalTactic (← `(tactic| aesop))
+  catch _ => pure ()
+  -- might as well try aesop again if any of the above worked
+  -- next two are inadvisable as general simplifications
+/-   try evalTactic (← `(tactic| rw [move_singletons]))
+  catch _ => pure ()
+  try evalTactic (← `(tactic| rw [shift_singletons]))
+  catch _ => pure ()
+-/
+elab "solve_lax_goal" : tactic => do
+  try evalTactic (← `(tactic| solve_finset_context))
+  catch _ => pure ()
+  try evalTactic (← `(tactic| apply iden))
+  catch _ => throwError "Could not solve with iden"
+
+end Tactics
+
+-- Some basic lemmas about Finset operations
+@[simp] -- might break results below but this is the right direction
 lemma union_singleton_assoc (Γ : Cxt) (φ ψ : PLLFormula) :
-  (Γ ∪ {φ}) ∪ {ψ} = Γ ∪ {φ, ψ} := by
+  Γ ∪ {φ, ψ} = (Γ ∪ {φ}) ∪ {ψ} := by
   solve_finset_context
-
- /-  trans Γ ∪ ({φ} ∪ {ψ})
+/-
+  trans Γ ∪ ({φ} ∪ {ψ})
   · exact union_assoc _ _ _
-  · aesop -- rw[merge_singletons]
- -/
-
-#print union_singleton_assoc
+  · rw[merge_singletons]
+-/
 
 example (a b c : PLLFormula) : ({a} ∪ {b} ∪ {c} : Finset PLLFormula) = {c, b, a} := by
   solve_finset_context -- finset_ext
@@ -501,18 +508,16 @@ def Oimp (φ ψ : PLLFormula) : LaxMin ∅ (ifThen (somehow (ifThen φ ψ)) (ifT
   apply laxElim
   apply iden --∅ (ifThen φ ψ)
   apply laxElim (φ.ifThen ψ)
-  solve_finset_context -- made no progress here
-  --solve_lax_goal
-  simp[drop_empty]
-  -- change of proof from previous version
+  solve_finset_context -- made some progress here
   simp[union_comm {(φ.ifThen ψ).somehow}]
   simp[move_singletons {φ.somehow} (φ.ifThen ψ).somehow φ, ←union_assoc]
+
   apply iden
   apply laxIntro
   apply @impElim _ φ ψ
-  simp[drop_empty]
+  -- simp[drop_empty] -- this is not needed
   apply iden
-  simp[drop_empty]
+  solve_finset_context
   simp[move_singletons ({(φ.ifThen ψ).somehow} ∪ {φ.somehow}) φ, ←union_assoc]
   apply iden
 
@@ -541,15 +546,16 @@ def OimpC (Γ : Cxt)(φ ψ : PLLFormula) : LaxMin Γ (ifThen (somehow (ifThen φ
   apply laxElim (φ.ifThen ψ)
   -- simp[drop_empty]
   -- change of proof from previous version
+  solve_finset_context -- made some progress here
   simp[union_comm (Γ ∪ {(φ.ifThen ψ).somehow})]
   simp[move_singletons {φ.somehow} (φ.ifThen ψ).somehow φ, ←union_assoc]
   apply iden
   apply laxIntro
   apply @impElim _ φ ψ
-  simp[drop_empty]
+  --solve_finset_context
+  -- simp[drop_empty]
   apply iden
-  simp[drop_empty]
-  simp[move_singletons ({(φ.ifThen ψ).somehow} ∪ {φ.somehow}) φ, ←union_assoc]
+  -- simp[drop_empty]
+  solve_finset_context
+  simp[move_singletons]-- ({(φ.ifThen ψ).somehow} ∪ {φ.somehow}) φ, ←union_assoc]
   apply iden
-
-#check {φ ψ : PLLFormula} -> LaxMin {φ.somehow, (φ.ifThen ψ).somehow, φ, φ, φ.ifThen ψ} φ
