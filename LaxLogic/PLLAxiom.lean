@@ -48,7 +48,7 @@ def get (ax: PLLAxiom): PLLFormula :=
     | somehowR M => ifThen M (somehow M)
     | somehowM M => ifThen (somehow (somehow M)) (somehow M)
     | somehowS M N => ifThen (and (somehow M) (somehow N)) (somehow (and M N))
--- stardard axioms for propostinal intuistionalist logic, source: https://homepage.mi-ras.ru/~sk/lehre/penn2017/lecture1.pdf
+-- standard axioms for propositional intuitionistic logic, source: https://homepage.mi-ras.ru/~sk/lehre/penn2017/lecture1.pdf
   -- 1. A ⊃ (B ⊃ A)
     | impK A B =>  ifThen A (ifThen B A)
   -- 2. (A ⊃ (B ⊃ C)) ⊃ ((A ⊃ B) ⊃ (A ⊃ C))
