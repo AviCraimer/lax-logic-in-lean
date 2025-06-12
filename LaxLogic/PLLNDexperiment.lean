@@ -38,19 +38,19 @@ def isIPLFormula : PLLFormula → Prop
   | somehow _   => false
 
 @[simp]
-def eraseSomehow : PLLFormula → PLLFormula
+def zapSomehow : PLLFormula → PLLFormula
   | PLLFormula.prop a => prop a
   | falsePLL    => falsePLL
-  | ifThen φ ψ  => ifThen (eraseSomehow φ) (eraseSomehow ψ)
-  | PLLFormula.and φ ψ     => and (eraseSomehow φ) (eraseSomehow ψ)
-  | PLLFormula.or φ ψ      => or (eraseSomehow φ) (eraseSomehow ψ)
-  | PLLFormula.somehow φ   => eraseSomehow φ
+  | ifThen φ ψ  => ifThen (zapSomehow φ) (zapSomehow ψ)
+  | PLLFormula.and φ ψ     => and (zapSomehow φ) (zapSomehow ψ)
+  | PLLFormula.or φ ψ      => or (zapSomehow φ) (zapSomehow ψ)
+  | PLLFormula.somehow φ   => zapSomehow φ
 
-lemma eraseOuter (φ : PLLFormula) : eraseSomehow (somehow φ) = eraseSomehow φ := by
-      simp[eraseSomehow]
+lemma zapOuter (φ : PLLFormula) : zapSomehow (somehow φ) = zapSomehow φ := by
+      simp[zapSomehow]
 
 @[simp]
-lemma isIPLerase (φ : PLLFormula) : isIPLFormula (eraseSomehow φ) := by
+lemma isIPLzap (φ : PLLFormula) : isIPLFormula (zapSomehow φ) := by
   induction φ
   all_goals simp [isIPLFormula]
   constructor; assumption; assumption
@@ -150,103 +150,103 @@ def isIPLProof : {Γ : Context} → {φ : PLLFormula} → (prf : LaxND Γ φ) �
   | _, _,  laxIntro _  => false
   | _, _,  laxElim _ _ => false
 
-def erasePLLProof {Γ : Context} {φ : PLLFormula} (h : LaxND Γ φ) :
-  LaxND (image eraseSomehow Γ) (eraseSomehow φ) :=
+def zapPLLProof {Γ : Context} {φ : PLLFormula} (h : LaxND Γ φ) :
+  LaxND (image zapSomehow Γ) (zapSomehow φ) :=
   match h with
   | iden Γ φ =>
-    -- Handle identity rule: Γ ++ φ :: Δ ⊢ φ becomes erase(Γ) ++ erase(φ) :: erase(Δ) ⊢ erase(φ)
-    -- let Γ' := image eraseSomehow Γ
-    -- let Δ' := image eraseSomehow Δ
-    -- let φ' := eraseSomehow φ
-    cast (congrArg (fun x => LaxND x _) (Eq.symm (image_add_singleton Γ φ eraseSomehow))) <|
-        (iden (image eraseSomehow Γ) (eraseSomehow φ))
+    -- Handle identity rule: Γ ++ φ :: Δ ⊢ φ becomes zap(Γ) ++ zap(φ) :: zap(Δ) ⊢ zap(φ)
+    -- let Γ' := image zapSomehow Γ
+    -- let Δ' := image zapSomehow Δ
+    -- let φ' := zapSomehow φ
+    cast (congrArg (fun x => LaxND x _) (Eq.symm (image_add_singleton Γ φ zapSomehow))) <|
+        (iden (image zapSomehow Γ) (zapSomehow φ))
 
   | @impIntro Γ φ ψ prf =>
-    -- Implication introduction: Γ ++ Δ ⊢ φ → ψ becomes erase(Γ) ++ erase(Δ) ⊢ erase(φ) → erase(ψ)
-    let prf' := erasePLLProof prf
-    let prf_fix := cast (congrArg (fun x => LaxND x _) (image_add_singleton Γ φ eraseSomehow)) <|
-        prf' --(iden (image eraseSomehow Γ) (eraseSomehow φ))
+    -- Implication introduction: Γ ++ Δ ⊢ φ → ψ becomes zap(Γ) ++ zap(Δ) ⊢ zap(φ) → zap(ψ)
+    let prf' := zapPLLProof prf
+    let prf_fix := cast (congrArg (fun x => LaxND x _) (image_add_singleton Γ φ zapSomehow)) <|
+        prf' --(iden (image zapSomehow Γ) (zapSomehow φ))
     impIntro prf_fix
 
   | falsoElim φ prf =>
-    -- False elimination: Γ ⊢ ⊥ → Γ ⊢ φ becomes erase(Γ) ⊢ ⊥ → erase(Γ) ⊢ erase(φ)
-    falsoElim (eraseSomehow φ) (erasePLLProof prf)
+    -- False elimination: Γ ⊢ ⊥ → Γ ⊢ φ becomes zap(Γ) ⊢ ⊥ → zap(Γ) ⊢ zap(φ)
+    falsoElim (zapSomehow φ) (zapPLLProof prf)
 
   | impElim prf1 prf2 =>
-    -- Implication elimination: Combine erased proofs
-    impElim (erasePLLProof prf1) (erasePLLProof prf2)
+    -- Implication elimination: Combine zapd proofs
+    impElim (zapPLLProof prf1) (zapPLLProof prf2)
 
   | andIntro prf1 prf2 =>
-    -- Conjunction introduction: Combine erased proofs
-    andIntro (erasePLLProof prf1) (erasePLLProof prf2)
+    -- Conjunction introduction: Combine zapd proofs
+    andIntro (zapPLLProof prf1) (zapPLLProof prf2)
 
   | andElim1 prf =>
     -- Conjunction elimination (left)
-    andElim1 (erasePLLProof prf)
+    andElim1 (zapPLLProof prf)
 
   | andElim2 prf =>
     -- Conjunction elimination (right)
-    andElim2 (erasePLLProof prf)
+    andElim2 (zapPLLProof prf)
 
   | orIntro1 prf =>
     -- Disjunction introduction (left)
-    orIntro1 (erasePLLProof prf)
+    orIntro1 (zapPLLProof prf)
 
   | orIntro2 prf =>
     -- Disjunction introduction (right)
-    orIntro2 (erasePLLProof prf)
+    orIntro2 (zapPLLProof prf)
 
   | @orElim Γ φ ψ χ prf1 prf2 =>
-    -- Disjunction elimination: Combine erased proofs
-    let prf1' := erasePLLProof prf1
-    let prf2' := erasePLLProof prf2
-    have h1 : image eraseSomehow (Γ ∪ {φ}) =
-      image eraseSomehow Γ ∪ {eraseSomehow φ}  := by
-      apply image_add_singleton -- simp [eraseSomehow, image_append]
+    -- Disjunction elimination: Combine zapd proofs
+    let prf1' := zapPLLProof prf1
+    let prf2' := zapPLLProof prf2
+    have h1 : image zapSomehow (Γ ∪ {φ}) =
+      image zapSomehow Γ ∪ {zapSomehow φ}  := by
+      apply image_add_singleton -- simp [zapSomehow, image_append]
     let prf1_cxt_fix := cast (congrArg (fun x => LaxND x _) h1) prf1'
-    have h2 : image eraseSomehow (Γ ∪ {ψ}) =
-      image eraseSomehow Γ ∪ {eraseSomehow ψ} := by
+    have h2 : image zapSomehow (Γ ∪ {ψ}) =
+      image zapSomehow Γ ∪ {zapSomehow ψ} := by
       apply image_add_singleton
     let prf2_cxt_fix := cast (congrArg (fun x => LaxND x _) h2) prf2'
     let ans := orElim prf1_cxt_fix prf2_cxt_fix
     ans
 
   | @laxIntro Γ φ prf =>
-    -- Lax introduction: Erase the inner somehow
-    @erasePLLProof Γ φ prf
+    -- Lax introduction: zap the inner somehow
+    @zapPLLProof Γ φ prf
 
   | @laxElim Γ φ ψ prf1 prf2 =>
   -- For laxElim, we need multiple casts
-  let prf1' := erasePLLProof prf1
-  let prf2' := erasePLLProof prf2
+  let prf1' := zapPLLProof prf1
+  let prf2' := zapPLLProof prf2
 
 /-   -- First, handle the context equality -- um no longer needed
   have h_context1 (Δ : Context):
-    image eraseSomehow (Γ ∪ Δ) = image eraseSomehow Γ ∪ image eraseSomehow Δ := by
+    image zapSomehow (Γ ∪ Δ) = image zapSomehow Γ ∪ image zapSomehow Δ := by
     simp[image_union] -- simp [image_append]
  -/
   -- handle the formula equality for the first premise
-  have h_formula1 : eraseSomehow (somehow φ) = eraseSomehow φ := by
-    simp [eraseSomehow]
+  have h_formula1 : zapSomehow (somehow φ) = zapSomehow φ := by
+    simp [zapSomehow]
   -- let prf1_ctx_fix := cast (congrArg (fun x => LaxND x _) h_context1) prf1'
   -- Cast the first premise to match the expected type
   let prf1_fix := cast (congrArg (fun x => LaxND _ x) h_formula1) prf1'
 
   -- For prf2', we need to handle the context transformation
   -- The context in prf2' is (Γ ++ φ :: Δ), which needs to be transformed to
-  -- (image eraseSomehow Γ ++ eraseSomehow φ :: image eraseSomehow Δ)
-  have h_context2 : image eraseSomehow (Γ ∪ {φ}) =
-                    image eraseSomehow Γ ∪ {eraseSomehow φ} := by
+  -- (image zapSomehow Γ ++ zapSomehow φ :: image zapSomehow Δ)
+  have h_context2 : image zapSomehow (Γ ∪ {φ}) =
+                    image zapSomehow Γ ∪ {zapSomehow φ} := by
     simp [image_union, image_add_singleton]
-  have h_formula2 : eraseSomehow (somehow ψ) = eraseSomehow ψ := by
-    simp [eraseSomehow]
+  have h_formula2 : zapSomehow (somehow ψ) = zapSomehow ψ := by
+    simp [zapSomehow]
 
   -- Cast prf2' to fix its context
   let prf2_cxt_fix := cast (congrArg (fun x => LaxND x _) h_context2) prf2'
   let prf2_fix := cast (congrArg (fun x => LaxND _ x) h_formula2) prf2_cxt_fix
 
    -- Now we can use impInContext with the properly cast arguments
-  let ans := @impInContext _ (eraseSomehow φ) (eraseSomehow ψ) prf1_fix prf2_fix -- notice no laxElim
+  let ans := @impInContext _ (zapSomehow φ) (zapSomehow ψ) prf1_fix prf2_fix -- notice no laxElim
   let ans_fix := cast (congrArg (fun x => LaxND _ x) (Eq.symm h_formula2)) ans
 
   ans_fix
@@ -387,23 +387,23 @@ end Casting
 
 -- this is the main theorem
 theorem PLLconservative : {Γ : Context} → {φ : PLLFormula} → (prf : LaxND Γ φ) →
-  isIPLProof (erasePLLProof prf) := by
+  isIPLProof (zapPLLProof prf) := by
   intros Γ φ prf; -- unfold isIPLProofList
-  -- let tmp := erasePLLProof prf -- no we have this already
+  -- let tmp := zapPLLProof prf -- no we have this already
   -- simp
   induction prf
   case iden Γ' φ' =>
     -- unfold isIPLProofList
-    simp [eraseSomehow, erasePLLProof, isIPLFormula, isIPLProof/- , cast_eq -/];
-    have h : isIPLProof (iden (image eraseSomehow Γ') (eraseSomehow φ')) := by
+    simp [zapSomehow, zapPLLProof, isIPLFormula, isIPLProof/- , cast_eq -/];
+    have h : isIPLProof (iden (image zapSomehow Γ') (zapSomehow φ')) := by
       simp
     norm_cast at h; -- did nothing but didn't fail
     simp at h -- [isIPLProof_cast_formula_eq, isIPLProof_cast_ctx_eq] -- already in simp
     -- well that did something to the context but not the goal which is what we want
     have k {α β : Sort}{casting : α = β}(f : α)(g : β) : -- totally unsound!
-      /- (iden (image eraseSomehow Γ') (eraseSomehow φ')) -/ g =
-      (cast casting /- (iden (image eraseSomehow Γ') (eraseSomehow φ')) -/ f) := by sorry
-    -- let dodgy := k (iden (image eraseSomehow Γ') (eraseSomehow φ')) ((iden (image eraseSomehow Γ') (eraseSomehow φ')))
+      /- (iden (image zapSomehow Γ') (zapSomehow φ')) -/ g =
+      (cast casting /- (iden (image zapSomehow Γ') (zapSomehow φ')) -/ f) := by sorry
+    -- let dodgy := k (iden (image zapSomehow Γ') (zapSomehow φ')) ((iden (image zapSomehow Γ') (zapSomehow φ')))
 
     -- let tmp := isIPLProofList_cast _ _ h
     -- apply isIPLProofList_cast
@@ -412,7 +412,7 @@ theorem PLLconservative : {Γ : Context} → {φ : PLLFormula} → (prf : LaxND 
     sorry
 
   -- unfold isIPLFormula
-  -- simp; unfold erasePLLProof; simp
+  -- simp; unfold zapPLLProof; simp
   all_goals sorry
 end Contexts
 
@@ -564,109 +564,109 @@ theorem isIPLProofList_cast {Γ₁ Γ₂ : List PLLFormula} {φ₁ φ₂ : PLLFo
 
 section recursors
 
-def erasePLLProofList {Γ : List PLLFormula} {φ : PLLFormula} (h : LaxNDListτ Γ φ) :
-  LaxNDListτ (List.map eraseSomehow Γ) (eraseSomehow φ) :=
+def zapPLLProofList {Γ : List PLLFormula} {φ : PLLFormula} (h : LaxNDListτ Γ φ) :
+  LaxNDListτ (List.map zapSomehow Γ) (zapSomehow φ) :=
   match h with
   | moveτ Γ Δ φ ψ prf =>
     -- Handle the move/exchange rule by recursively erasing the inner proof
-    let prf' := erasePLLProofList prf
-    have mapCxt : List.map eraseSomehow (φ :: Γ ++ Δ) =
-      eraseSomehow φ :: List.map eraseSomehow Γ ++ List.map eraseSomehow Δ := by
+    let prf' := zapPLLProofList prf
+    have mapCxt : List.map zapSomehow (φ :: Γ ++ Δ) =
+      zapSomehow φ :: List.map zapSomehow Γ ++ List.map zapSomehow Δ := by
       simp [List.map_append, List.map_cons]
     let castingPush := cast (congrArg (fun x => LaxNDListτ x _) mapCxt)
     let prfCxtFix := castingPush prf'
-    have reduced : (eraseSomehow φ :: List.map eraseSomehow Γ ++ List.map eraseSomehow Δ) ⊢τ eraseSomehow ψ := prfCxtFix
-    let mover := moveτ (List.map eraseSomehow Γ) (List.map eraseSomehow Δ) (eraseSomehow φ) (eraseSomehow ψ)
+    have reduced : (zapSomehow φ :: List.map zapSomehow Γ ++ List.map zapSomehow Δ) ⊢τ zapSomehow ψ := prfCxtFix
+    let mover := moveτ (List.map zapSomehow Γ) (List.map zapSomehow Δ) (zapSomehow φ) (zapSomehow ψ)
     let moved := mover reduced
-    have mapInvCxt : (List.map eraseSomehow Γ ++ eraseSomehow φ :: List.map eraseSomehow Δ) =
-      List.map eraseSomehow (Γ ++ φ :: Δ) := by
+    have mapInvCxt : (List.map zapSomehow Γ ++ zapSomehow φ :: List.map zapSomehow Δ) =
+      List.map zapSomehow (Γ ++ φ :: Δ) := by
       simp [List.map_append, List.map_cons]
     let castingPull := cast (congrArg (fun x => LaxNDListτ x _) mapInvCxt)
     let final := castingPull moved
     final
 
   | idenτ Γ φ =>
-    -- Handle identity rule: Γ ++ φ :: Δ ⊢ φ becomes erase(Γ) ++ erase(φ) :: erase(Δ) ⊢ erase(φ)
-    let Γ' := List.map eraseSomehow Γ
-    -- let Δ' := List.map eraseSomehow Δ
-    let φ' := eraseSomehow φ
+    -- Handle identity rule: Γ ++ φ :: Δ ⊢ φ becomes zap(Γ) ++ zap(φ) :: zap(Δ) ⊢ zap(φ)
+    let Γ' := List.map zapSomehow Γ
+    -- let Δ' := List.map zapSomehow Δ
+    let φ' := zapSomehow φ
     -- how do we actually use definitions above to simplify statement of h1?
-    have h1 : List.map eraseSomehow (φ ::Γ) = eraseSomehow φ :: List.map eraseSomehow Γ := by
+    have h1 : List.map zapSomehow (φ ::Γ) = zapSomehow φ :: List.map zapSomehow Γ := by
       simp[List.map_append, List.map_cons]
     cast (congrArg (fun x => LaxNDListτ x _) (Eq.symm h1))
-        (idenτ (List.map eraseSomehow Γ) (eraseSomehow φ))
+        (idenτ (List.map zapSomehow Γ) (zapSomehow φ))
 
   | @impIntroτ Γ φ ψ prf =>
-    -- Implication introduction: Γ ++ Δ ⊢ φ → ψ becomes erase(Γ) ++ erase(Δ) ⊢ erase(φ) → erase(ψ)
-    impIntroτ (erasePLLProofList prf)
+    -- Implication introduction: Γ ++ Δ ⊢ φ → ψ becomes zap(Γ) ++ zap(Δ) ⊢ zap(φ) → zap(ψ)
+    impIntroτ (zapPLLProofList prf)
 
   | falsoElimτ φ prf =>
-    -- False elimination: Γ ⊢ ⊥ → Γ ⊢ φ becomes erase(Γ) ⊢ ⊥ → erase(Γ) ⊢ erase(φ)
-    falsoElimτ (eraseSomehow φ) (erasePLLProofList prf)
+    -- False elimination: Γ ⊢ ⊥ → Γ ⊢ φ becomes zap(Γ) ⊢ ⊥ → zap(Γ) ⊢ zap(φ)
+    falsoElimτ (zapSomehow φ) (zapPLLProofList prf)
 
   | impElimτ prf1 prf2 =>
-    -- Implication elimination: Combine erased proofs
-    impElimτ (erasePLLProofList prf1) (erasePLLProofList prf2)
+    -- Implication elimination: Combine zapd proofs
+    impElimτ (zapPLLProofList prf1) (zapPLLProofList prf2)
 
   | andIntroτ prf1 prf2 =>
-    -- Conjunction introduction: Combine erased proofs
-    andIntroτ (erasePLLProofList prf1) (erasePLLProofList prf2)
+    -- Conjunction introduction: Combine zapd proofs
+    andIntroτ (zapPLLProofList prf1) (zapPLLProofList prf2)
 
   | andElim1τ prf =>
     -- Conjunction elimination (left)
-    andElim1τ (erasePLLProofList prf)
+    andElim1τ (zapPLLProofList prf)
 
   | andElim2τ prf =>
     -- Conjunction elimination (right)
-    andElim2τ (erasePLLProofList prf)
+    andElim2τ (zapPLLProofList prf)
 
   | orIntro1τ prf =>
     -- Disjunction introduction (left)
-    orIntro1τ (erasePLLProofList prf)
+    orIntro1τ (zapPLLProofList prf)
 
   | orIntro2τ prf =>
     -- Disjunction introduction (right)
-    orIntro2τ (erasePLLProofList prf)
+    orIntro2τ (zapPLLProofList prf)
 
   | @orElimτ Γ φ ψ χ prf1 prf2 =>
-    -- Disjunction elimination: Combine erased proofs
-    let prf1' := erasePLLProofList prf1
-    let prf2' := erasePLLProofList prf2
-    have h1 : List.map eraseSomehow (φ :: Γ) =
-      eraseSomehow φ ::List.map eraseSomehow Γ := by
-      simp [eraseSomehow, List.map_append]
+    -- Disjunction elimination: Combine zapd proofs
+    let prf1' := zapPLLProofList prf1
+    let prf2' := zapPLLProofList prf2
+    have h1 : List.map zapSomehow (φ :: Γ) =
+      zapSomehow φ ::List.map zapSomehow Γ := by
+      simp [zapSomehow, List.map_append]
     let prf1_cxt_fix := cast (congrArg (fun x => LaxNDListτ x _) h1) prf1'
-    have h2 : List.map eraseSomehow (ψ :: Γ) =
-      eraseSomehow ψ :: List.map eraseSomehow Γ := by
-      simp [eraseSomehow, List.map_append]
+    have h2 : List.map zapSomehow (ψ :: Γ) =
+      zapSomehow ψ :: List.map zapSomehow Γ := by
+      simp [zapSomehow, List.map_append]
     let prf2_cxt_fix := cast (congrArg (fun x => LaxNDListτ x _) h2) prf2'
     let ans := orElimτ prf1_cxt_fix prf2_cxt_fix
     ans
 
   | @laxIntroτ Γ φ prf =>
-    -- Lax introduction: Erase the inner somehow
-    @erasePLLProofList Γ φ prf
+    -- Lax introduction: zap the inner somehow
+    @zapPLLProofList Γ φ prf
 
   | @laxElimτ Γ φ ψ prf1 prf2 =>
   -- For laxElimτ, we need multiple casts
-  let prf1' := erasePLLProofList prf1
-  let prf2' := erasePLLProofList prf2
+  let prf1' := zapPLLProofList prf1
+  let prf2' := zapPLLProofList prf2
 
   -- Handle the formula equality for the first premise
-  have h_formula1 : eraseSomehow (somehow φ) = eraseSomehow φ := by
-    simp [eraseSomehow]
+  have h_formula1 : zapSomehow (somehow φ) = zapSomehow φ := by
+    simp [zapSomehow]
   -- Cast the first premise to match the expected type
   let prf1_fix := cast (congrArg (fun x => LaxNDListτ _ x) h_formula1) prf1'
 
   -- For prf2', we need to handle the context transformation
-  -- The context in prf2' is List.map eraseSomehow (φ :: Γ),
+  -- The context in prf2' is List.map zapSomehow (φ :: Γ),
   -- which needs to be transformed to
-  -- eraseSomehow φ :: List.map eraseSomehow Γ
-  have h_context2 : List.map eraseSomehow (φ :: Γ) =
-                    eraseSomehow φ :: List.map eraseSomehow Γ := by
+  -- zapSomehow φ :: List.map zapSomehow Γ
+  have h_context2 : List.map zapSomehow (φ :: Γ) =
+                    zapSomehow φ :: List.map zapSomehow Γ := by
     simp [List.map_append]
-  have h_formula2 : eraseSomehow (somehow ψ) = eraseSomehow ψ := by
-    simp [eraseSomehow]
+  have h_formula2 : zapSomehow (somehow ψ) = zapSomehow ψ := by
+    simp [zapSomehow]
 
   -- Cast prf2' to fix its context
   let prf2_cxt_fix := cast (congrArg (fun x => LaxNDListτ x _) h_context2) prf2'
@@ -682,9 +682,9 @@ def erasePLLProofList {Γ : List PLLFormula} {φ : PLLFormula} (h : LaxNDListτ 
 end recursors
 
 -- the construction below would show conservativity but for the issue with recursor 'LaxNDListτ.rec'
-/- def erasePLLProofFail {Γ : List PLLFormula} {φ : PLLFormula}
+/- def zapPLLProofFail {Γ : List PLLFormula} {φ : PLLFormula}
   (h : LaxNDListτ Γ φ) :
-  LaxNDListτ (List.map eraseSomehow Γ) (eraseSomehow φ) := by
+  LaxNDListτ (List.map zapSomehow Γ) (zapSomehow φ) := by
   induction h
   case idenτ Γ Δ φ =>
     simp [map_append_distrib] -- Use simp to handle the equality
@@ -731,14 +731,14 @@ section Casting
 
 -- variable (α β : Sort)
 -- @[norm_cast]
-theorem eraseSomehow_context (Γ Δ : List PLLFormula) :
-  List.map eraseSomehow (Γ ++ Δ) = List.map eraseSomehow Γ ++ List.map eraseSomehow Δ := by
+theorem zapSomehow_context (Γ Δ : List PLLFormula) :
+  List.map zapSomehow (Γ ++ Δ) = List.map zapSomehow Γ ++ List.map zapSomehow Δ := by
   simp [List.map_append]
 
 -- @[norm_cast]
-theorem eraseSomehow_somehow (φ : PLLFormula) :
-  eraseSomehow (somehow φ) = eraseSomehow φ := by
-  simp [eraseSomehow]
+theorem zapSomehow_somehow (φ : PLLFormula) :
+  zapSomehow (somehow φ) = zapSomehow φ := by
+  simp [zapSomehow]
 
 /- theorem isIPLProofList_cast_eq {Γ₁ Γ₂ : List PLLFormula} {φ₁ φ₂ : PLLFormula}
   {prf : LaxNDListτ Γ₁ φ₁} (h : Γ₁ = Γ₂ ∧ φ₁ = φ₂) :
@@ -752,22 +752,69 @@ end Casting
 
 -- this is the main theorem; not working yet
 theorem PLLconservative2 : {Γ : List PLLFormula} → {φ : PLLFormula} → (prf : LaxNDListτ Γ φ) →
-  isIPLProofList (erasePLLProofList prf) := by
+  isIPLProofList (zapPLLProofList prf) := by
   intros Γ φ prf; -- unfold isIPLProofList
-  -- let tmp := erasePLLProof prf -- no we have this already
+  -- let tmp := zapPLLProof prf -- no we have this already
   -- simp
   induction prf
   case idenτ Γ' φ' =>
     -- unfold isIPLProofList
-    simp [eraseSomehow, erasePLLProof, isIPLFormula, isIPLProofList/- , cast_eq -/]
-    have h : isIPLProofList (idenτ (List.map eraseSomehow Γ') (eraseSomehow φ')) := by
+    simp [zapSomehow, zapPLLProof, isIPLFormula, isIPLProofList/- , cast_eq -/]
+    have h : isIPLProofList (idenτ (List.map zapSomehow Γ') (zapSomehow φ')) := by
       simp
-    norm_cast at h -- THIS ACTUALLY SOLVED THE GOAL!!
-    /- have k {α β : Sort}{casting : α = β} :
-      (idenτ (List.map eraseSomehow Γ') (eraseSomehow φ')) =
-      (cast casting (idenτ (List.map eraseSomehow Γ') (eraseSomehow φ')))
-    let tmp := isIPLProofList_cast _ _ h -/
+    exact h
+    -- norm_cast at h -- THIS SOLVED THE GOAL!! but so did exact h
 
-  all_goals sorry
+  case falsoElimτ Γ' φ' p =>
+    simp [zapSomehow, zapPLLProofList, isIPLFormula, isIPLProofList]
+    exact p
+
+  case moveτ Γ φ ψ prf p =>
+    -- unfold isIPLProofList
+    simp [zapSomehow, zapPLLProofList, isIPLFormula, isIPLProofList]
+
+    have h : isIPLProofList (zapPLLProofList prf) := by
+      apply p -- pointless it's the same term
+    sorry -- exact h
+
+  case impIntroτ =>
+    simp [zapSomehow, zapPLLProofList, isIPLFormula, isIPLProofList]
+    trivial
+
+  case impElimτ prf1 prf2 =>
+    simp [zapSomehow, zapPLLProofList, isIPLFormula, isIPLProofList]
+    trivial
+
+  case andIntroτ prf1 prf2 =>
+    simp [zapSomehow, zapPLLProofList, isIPLFormula, isIPLProofList]
+    trivial
+
+  case andElim1τ prf =>
+    simp [zapSomehow, zapPLLProofList, isIPLFormula, isIPLProofList]
+    exact prf
+
+  case andElim2τ prf =>
+    simp [zapSomehow, zapPLLProofList, isIPLFormula, isIPLProofList]
+    exact prf
+
+  case orIntro1τ prf =>
+    simp [zapSomehow, zapPLLProofList, isIPLFormula, isIPLProofList]
+    exact prf
+
+  case orIntro2τ prf =>
+    simp [zapSomehow, zapPLLProofList, isIPLFormula, isIPLProofList]
+    exact prf
+
+  case orElimτ prf1 prf2 =>
+    simp [zapSomehow, zapPLLProofList, isIPLFormula, isIPLProofList]
+    trivial
+
+  case laxIntroτ prf =>
+    simp [zapSomehow, zapPLLProofList, isIPLFormula, isIPLProofList]
+    exact prf
+
+  case laxElimτ prf1 prf2 =>
+    simp [zapSomehow, zapPLLProofList, isIPLFormula, isIPLProofList]
+    constructor;exact prf2; exact prf1
 
 end Conservativity
