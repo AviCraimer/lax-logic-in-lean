@@ -21,6 +21,8 @@ def  formulas (proof:  PLLProof): List PLLFormula :=
   | axiomStep prev ax =>  prev.formulas ++ [ax.get]
   | modusPonens prev conditional =>  prev.formulas ++ [conditional.consequent]
 
+-- TODO: Make formualsOf to be a set. Better for proofs.
+
 -- It is convinient to provide steps in a non-nested format
 inductive ProofStepInstruction where
   | axiomInstruction (ax: PLLAxiom)
