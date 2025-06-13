@@ -12,14 +12,50 @@ inductive  PLLProof where
   deriving Inhabited, DecidableEq, BEq
 
 namespace PLLProof
--- Gets a list of PLL formulas that are in the proof, no validation here
+
+-- An intuitionistic proof is one that does not use any intuitionistic axioms.
+
+def isIntuitionisticProof (p: PLLProof) : Prop :=
+match p with
+ | emptyProof => True
+ | axiomStep prev ax => (PLLAxiom.isIntuitionistAxiom ax) ∧ prev.isIntuitionisticProof
+ | modusPonens prev _ => prev.isIntuitionisticProof
 
 @[simp]
-def  formulas (proof:  PLLProof): List PLLFormula :=
+def IntuitionisticProof := {p: PLLProof | isIntuitionisticProof p }
+
+
+-- Gets a list of PLL formulas that are in the proof, no validation here
+@[simp]
+def  formulasOf (proof:  PLLProof): Set PLLFormula :=
+  match proof with
+  | emptyProof => {}
+  | axiomStep prev ax =>  prev.formulasOf ∪  {ax.get}
+  | modusPonens prev conditional =>  prev.formulasOf ∪ {conditional.consequent}
+
+lemma intu_proof_somehow_free (iProof: IntuitionisticProof) : PLLFormula.setIsSomehowFree  iProof.val.formulasOf := by
+  simp [setIsSomehowFree, formulasOf]
+  intro F1 F1_prop F2 F2_prop F3
+  obtain ⟨proof, isIntuProof⟩ := iProof
+  simp_all only
+  simp_all only [IntuitionisticProof, Set.mem_setOf_eq]
+  apply Aesop.BuiltinRules.not_intro
+  intro a
+  subst a
+  simp [isIntuitionisticProof] at isIntuProof
+  -- I need to prove that all formulas that are gotten by intuitionsitc axioms are somehow free.
+
+
+-- Gets a list of PLL formulas that are in the proof, no validation here
+@[simp]
+def  formulaList (proof:  PLLProof): List PLLFormula :=
   match proof with
   | emptyProof => []
-  | axiomStep prev ax =>  prev.formulas ++ [ax.get]
-  | modusPonens prev conditional =>  prev.formulas ++ [conditional.consequent]
+  | axiomStep prev ax =>  prev.formulaList ++ [ax.get]
+  | modusPonens prev conditional =>  prev.formulaList ++ [conditional.consequent]
+
+
+
 
 -- TODO: Make formualsOf to be a set. Better for proofs.
 
@@ -87,23 +123,23 @@ def  isValid (proof:  PLLProof) : Prop :=
   -- Any axiom step is valid
   | axiomStep prev _  => isValid prev
   -- Modus ponens is valid if both the antecedant and the consequent at in the previous steps.
-  | modusPonens prev conditional => conditional.antecedant ∈ prev.formulas ∧ conditional.val ∈ prev.formulas
+  | modusPonens prev conditional => conditional.antecedant ∈ prev.formulaList ∧ conditional.val ∈ prev.formulaList
 
 @[simp]
 def  isEmpty (proof:  PLLProof):= proof = emptyProof
 
-lemma  non_empty_formulas (proof:  PLLProof) (h: ¬proof.isEmpty) : proof.formulas ≠ [] := by
+lemma  non_empty_formulas (proof:  PLLProof) (h: ¬proof.isEmpty) : proof.formulaList ≠ [] := by
     induction proof with
     | emptyProof => contradiction
-    | axiomStep prev ax => simp [formulas]
-    | modusPonens prev conditional => simp [formulas]
+    | axiomStep prev ax => simp [formulaList]
+    | modusPonens prev conditional => simp [formulaList]
 
 def  NonEmpty := {p: PLLProof // ¬ p.isEmpty}
 
 @[simp]
 def  NonEmpty.conclusion (p: NonEmpty) : PLLFormula :=
     let h := non_empty_formulas p.val p.prop
-    p.val.formulas.getLast h
+    p.val.formulaList.getLast h
 
 
 -- Helper for when the proof is non-empty
@@ -113,27 +149,50 @@ private def  isProofOf_ (proof : NonEmpty) (target: PLLFormula)   : Prop :=
 
 
 -- Check that a given proof is a proof of a given formula
-@[simp]
-def  isProofOf (proof :  PLLProof)  (target: PLLFormula)  : Prop :=
+
+def  isProofOf (proof :  PLLProof)  (conclusion: PLLFormula)  : Prop :=
   match proof with
   | emptyProof => False
-  | axiomStep prev ax => isProofOf_  ⟨ axiomStep prev ax, by simp [isEmpty]⟩ target
-  | modusPonens prev ax => isProofOf_  ⟨ modusPonens prev ax, by simp [isEmpty] ⟩ target
+  | axiomStep prev ax => isProofOf_  ⟨ axiomStep prev ax, by simp [isEmpty]⟩ conclusion
+  | modusPonens prev ax => isProofOf_  ⟨ modusPonens prev ax, by simp [isEmpty] ⟩ conclusion
 
-inductive ValidProof where
-  | mk (proof: PLLProof)(target: PLLFormula) (valid: proof.isProofOf target)
 
-def ValidProof.proof (vp: ValidProof): PLLProof :=
-  match vp with
-  |mk proof _ _ => proof
+structure ProofOf where
+  proof : PLLProof
+  conclusion : PLLFormula
+  prop: proof.isProofOf conclusion
 
-def ValidProof.conclusion (vp: ValidProof): PLLFormula :=
-  match vp with
-  |mk _ target _ => target
 
-def ValidProof.validation (vp: ValidProof): vp.proof.isProofOf vp.conclusion :=
-  match vp with
-  |mk _ _ h => h
+def isPLLTheorem (F:PLLFormula) := ∃ (p: ProofOf), F =  p.conclusion
+def PLLTheorem := { F:PLLFormula | isPLLTheorem F}
+
+
+def isIntuitionisticTheorem (F: PLLFormula) :=  ∃ (p: IntuitionisticProof), isProofOf p F
+
+@[simp]
+def IntuitionisticTheorem := {F: PLLFormula | isIntuitionisticTheorem F}
+
+
+lemma intuitionistic_theorem_somehow_free : ∀ (iTheo: IntuitionisticTheorem),  iTheo.val = iTheo.val.eraseSomehow.val := by
+  simp [eraseSomehow ]
+  intro F h
+  simp [isIntuitionisticTheorem  ] at h
+
+
+
+
+
+
+
+
+
+
+
+
+-- theorem conservativity_axiom_R (M: PLLFormula) : ((PLLAxiom.somehowR M).get).eraseSomehow   := sorry
+
+
+
 
 -- Remove the last formula from a proof
 @[simp]
@@ -142,6 +201,7 @@ def undoStep (proof: PLLProof): PLLProof :=
   | emptyProof => emptyProof
   | axiomStep prev _ => prev
   | modusPonens prev _ => prev
+
 
 
 
@@ -186,14 +246,14 @@ simp [isEmpty, test1, fromInstructions, fromInstructions.fromReverse]
 
 def A := prop ("A")
 #eval PLLProof.NonEmpty.conclusion ⟨ (test1 A), by exact test1b A⟩
-#eval  (test1 A).formulas
+#eval  (test1 A).formulaList
 
 -- Returns a valid proof
-def test1c (A: PLLFormula): ValidProof :=
+def test1c (A: PLLFormula): ProofOf :=
   let proof := test1 A
   let nonEmpty : PLLProof.NonEmpty := ⟨proof, (by exact test1b A)⟩
   let target := nonEmpty.conclusion
-  ValidProof.mk proof target (by
+  ProofOf.mk proof target (by
   simp  [proof, target, nonEmpty ]  )
 
-lemma test1d (A: PLLFormula) : (test1 A).isProofOf (ifThen (ifThen A A )  (ifThen A A ) ) := by simp
+lemma test1d (A: PLLFormula) : (test1 A).isProofOf (ifThen (ifThen A A )  (ifThen A A ) ) := by simp [isProofOf]

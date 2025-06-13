@@ -58,7 +58,7 @@ def Conditional.consequent (F: Conditional) :=
   | ⟨or a b, p⟩  => by simp_all only [reduceCtorEq, exists_const]
   | ⟨somehow a, p⟩ => by simp_all only [reduceCtorEq, exists_const]
 
-@[simp]
+
 def subformulasOf (F: PLLFormula) : Set PLLFormula :=
     match F with
     | PLLFormula.prop str   => {PLLFormula.prop str }
@@ -78,6 +78,8 @@ def SomehowFormula := {F: PLLFormula // isSomehowFormula F}
 def isSomehowFree (F: PLLFormula): Prop := ∀ (P: F.subformulasOf), ¬ isSomehowFormula P
 
 def SomehowFree := {F: PLLFormula // isSomehowFree F}
+
+def setIsSomehowFree (S: Set PLLFormula) : Prop := ∀ (F:S),  F.val.isSomehowFree
 
 @[simp]
 private def eraseSomehowRaw (F: PLLFormula) : PLLFormula   :=
