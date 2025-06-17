@@ -72,7 +72,6 @@ def formulas (ax: PLLAxiom) : List PLLFormula :=
 
 
 
-
 -- Gets the formula for the axiom
 
 def get (ax: PLLAxiom): PLLFormula :=
