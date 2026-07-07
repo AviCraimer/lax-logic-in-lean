@@ -1,1 +1,4 @@
 /.lake
+LaxLogic/Verso_manual.pdf
+*.code-workspace
+.claude/settings.local.json
