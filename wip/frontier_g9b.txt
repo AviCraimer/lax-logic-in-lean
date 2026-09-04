@@ -1,0 +1,58 @@
+# === round-9 stratum generation (g9b) ===
+# REGRESSION (shape agreement): replay: 1152 records, 1152 agree, 0 changed (0 new hits), 0 unregenerable
+# == g9-gimp : D=(◯x⊃y)⊃z, antecedent FRESH, chained γ-clause — July's Sk shape
+#   seed=21996 sf=(◯p) ⊃ r ⋄ ((◯r) ⊃ s) ⊃ t D=((◯r) ⊃ s) ⊃ t |S|=10 d=1 J=5 room=7 b=3 fs=4 ft=4 lg=0 drop=(◯r) ⊃ s ctx=(◯p) ⊃ r ⋄ ◯p ⋄ p ⋄ r ⋄ ((◯r) ⊃ s) ⊃ t ⋄ ◯r ⋄ s ⋄ t ⋄ ◯(((◯r) ⊃ s) ⊃ t) gate=ok
+#   seed=22005 sf=(◯r) ⊃ s ⋄ ((◯s) ⊃ t) ⊃ p D=((◯s) ⊃ t) ⊃ p |S|=10 d=1 J=5 room=7 b=3 fs=4 ft=4 lg=0 drop=(◯s) ⊃ t ctx=(◯r) ⊃ s ⋄ ◯r ⋄ r ⋄ s ⋄ ((◯s) ⊃ t) ⊃ p ⋄ ◯s ⋄ t ⋄ p ⋄ ◯(((◯s) ⊃ t) ⊃ p) gate=ok
+#   seed=22014 sf=(◯t) ⊃ p ⋄ ((◯p) ⊃ r) ⊃ s D=((◯p) ⊃ r) ⊃ s |S|=10 d=1 J=5 room=7 b=3 fs=4 ft=4 lg=0 drop=(◯p) ⊃ r ctx=(◯t) ⊃ p ⋄ ◯t ⋄ t ⋄ p ⋄ ((◯p) ⊃ r) ⊃ s ⋄ ◯p ⋄ r ⋄ s ⋄ ◯(((◯p) ⊃ r) ⊃ s) gate=ok
+#   seed=22023 sf=(◯s) ⊃ t ⋄ ((◯t) ⊃ p) ⊃ r D=((◯t) ⊃ p) ⊃ r |S|=10 d=1 J=5 room=7 b=3 fs=4 ft=4 lg=0 drop=(◯t) ⊃ p ctx=(◯s) ⊃ t ⋄ ◯s ⋄ s ⋄ t ⋄ ((◯t) ⊃ p) ⊃ r ⋄ ◯t ⋄ p ⋄ r ⋄ ◯(((◯t) ⊃ p) ⊃ r) gate=ok
+# == g9-gimpX : D=(◯x⊃y)⊃z, antecedent FRESH plus one hot drop, chained γ-clause
+#   seed=22995 sf=(◯d) ⊃ a ⋄ ((◯a) ⊃ b) ⊃ c D=((◯a) ⊃ b) ⊃ c |S|=10 d=2 J=5 room=14 b=3 fs=4 ft=4 lg=2 drop=(◯a) ⊃ b ⋄ a ctx=(◯d) ⊃ a ⋄ ◯d ⋄ d ⋄ ((◯a) ⊃ b) ⊃ c ⋄ ◯a ⋄ b ⋄ c ⋄ ◯(((◯a) ⊃ b) ⊃ c) gate=ok
+#   seed=23004 sf=(◯d) ⊃ a ⋄ ((◯a) ⊃ b) ⊃ c D=((◯a) ⊃ b) ⊃ c |S|=10 d=2 J=5 room=14 b=3 fs=4 ft=4 lg=2 drop=(◯a) ⊃ b ⋄ a ctx=(◯d) ⊃ a ⋄ ◯d ⋄ d ⋄ ((◯a) ⊃ b) ⊃ c ⋄ ◯a ⋄ b ⋄ c ⋄ ◯(((◯a) ⊃ b) ⊃ c) gate=ok
+#   seed=23013 sf=(◯b) ⊃ c ⋄ ((◯c) ⊃ d) ⊃ a D=((◯c) ⊃ d) ⊃ a |S|=10 d=2 J=5 room=14 b=3 fs=4 ft=4 lg=1 drop=(◯c) ⊃ d ⋄ b ctx=(◯b) ⊃ c ⋄ ◯b ⋄ c ⋄ ((◯c) ⊃ d) ⊃ a ⋄ ◯c ⋄ d ⋄ a ⋄ ◯(((◯c) ⊃ d) ⊃ a) gate=ok
+#   seed=23022 sf=(◯b) ⊃ c ⋄ ((◯c) ⊃ d) ⊃ a D=((◯c) ⊃ d) ⊃ a |S|=10 d=2 J=5 room=14 b=3 fs=4 ft=4 lg=1 drop=(◯c) ⊃ d ⋄ ((◯c) ⊃ d) ⊃ a ctx=(◯b) ⊃ c ⋄ ◯b ⋄ b ⋄ c ⋄ ◯c ⋄ d ⋄ a ⋄ ◯(((◯c) ⊃ d) ⊃ a) gate=ok
+# == g9-gimp0 : D=(◯x⊃y)⊃z, antecedent FRESH, no γ-clause
+#   seed=23994 sf=((◯d) ⊃ a) ⊃ b D=((◯d) ⊃ a) ⊃ b |S|=7 d=2 J=3 room=10 b=3 fs=4 ft=4 lg=0 drop=(◯d) ⊃ a ⋄ b ctx=((◯d) ⊃ a) ⊃ b ⋄ ◯d ⋄ d ⋄ a ⋄ ◯(((◯d) ⊃ a) ⊃ b) gate=ok
+#   seed=24003 sf=((◯c) ⊃ d) ⊃ a D=((◯c) ⊃ d) ⊃ a |S|=7 d=2 J=3 room=10 b=3 fs=4 ft=4 lg=1 drop=(◯c) ⊃ d ⋄ c ctx=((◯c) ⊃ d) ⊃ a ⋄ ◯c ⋄ d ⋄ a ⋄ ◯(((◯c) ⊃ d) ⊃ a) gate=ok
+#   seed=24012 sf=((◯d) ⊃ a) ⊃ b D=((◯d) ⊃ a) ⊃ b |S|=7 d=2 J=3 room=10 b=3 fs=4 ft=4 lg=0 drop=(◯d) ⊃ a ⋄ b ctx=((◯d) ⊃ a) ⊃ b ⋄ ◯d ⋄ d ⋄ a ⋄ ◯(((◯d) ⊃ a) ⊃ b) gate=ok
+#   seed=24021 sf=((◯b) ⊃ c) ⊃ d D=((◯b) ⊃ c) ⊃ d |S|=7 d=2 J=3 room=10 b=3 fs=4 ft=4 lg=1 drop=(◯b) ⊃ c ⋄ ((◯b) ⊃ c) ⊃ d ctx=◯b ⋄ b ⋄ c ⋄ d ⋄ ◯(((◯b) ⊃ c) ⊃ d) gate=ok
+# == g9-gimpP : CONTROL: the same shape with the antecedent PRESENT
+#   seed=24993 sf=(◯a) ⊃ b ⋄ ((◯b) ⊃ c) ⊃ d D=((◯b) ⊃ c) ⊃ d |S|=10 d=1 J=5 room=7 b=3 fs=4 ft=4 lg=2 drop=b ctx=(◯a) ⊃ b ⋄ ◯a ⋄ a ⋄ ((◯b) ⊃ c) ⊃ d ⋄ (◯b) ⊃ c ⋄ ◯b ⋄ c ⋄ d ⋄ ◯(((◯b) ⊃ c) ⊃ d) gate=ok
+#   seed=25002 sf=(◯c) ⊃ d ⋄ ((◯d) ⊃ a) ⊃ b D=((◯d) ⊃ a) ⊃ b |S|=10 d=1 J=5 room=7 b=3 fs=4 ft=4 lg=0 drop=b ctx=(◯c) ⊃ d ⋄ ◯c ⋄ c ⋄ d ⋄ ((◯d) ⊃ a) ⊃ b ⋄ (◯d) ⊃ a ⋄ ◯d ⋄ a ⋄ ◯(((◯d) ⊃ a) ⊃ b) gate=ok
+#   seed=25011 sf=(◯b) ⊃ c ⋄ ((◯c) ⊃ d) ⊃ a D=((◯c) ⊃ d) ⊃ a |S|=10 d=1 J=5 room=7 b=3 fs=4 ft=4 lg=1 drop=((◯c) ⊃ d) ⊃ a ctx=(◯b) ⊃ c ⋄ ◯b ⋄ b ⋄ c ⋄ (◯c) ⊃ d ⋄ ◯c ⋄ d ⋄ a ⋄ ◯(((◯c) ⊃ d) ⊃ a) gate=ok
+#   seed=25020 sf=(◯b) ⊃ c ⋄ ((◯c) ⊃ d) ⊃ a D=((◯c) ⊃ d) ⊃ a |S|=10 d=1 J=5 room=7 b=3 fs=4 ft=4 lg=2 drop=c ctx=(◯b) ⊃ c ⋄ ◯b ⋄ b ⋄ ((◯c) ⊃ d) ⊃ a ⋄ (◯c) ⊃ d ⋄ ◯c ⋄ d ⋄ a ⋄ ◯(((◯c) ⊃ d) ⊃ a) gate=ok
+# == g9-bare : D=(◯x⊃y)⊃z, antecedent fresh, CONTEXT EMPTIED
+#   seed=25992 sf=((◯d) ⊃ a) ⊃ b D=((◯d) ⊃ a) ⊃ b |S|=7 d=7 J=3 room=35 b=3 fs=4 ft=4 lg=0 drop=(◯d) ⊃ a ⋄ ◯(((◯d) ⊃ a) ⊃ b) ⋄ a ⋄ ◯d ⋄ b ⋄ d ⋄ ((◯d) ⊃ a) ⊃ b ctx= gate=ok
+#   seed=26001 sf=((◯a) ⊃ b) ⊃ c D=((◯a) ⊃ b) ⊃ c |S|=7 d=7 J=3 room=35 b=3 fs=4 ft=4 lg=0 drop=(◯a) ⊃ b ⋄ ◯a ⋄ ◯(((◯a) ⊃ b) ⊃ c) ⋄ b ⋄ c ⋄ ((◯a) ⊃ b) ⊃ c ⋄ a ctx= gate=ok
+#   seed=26010 sf=((◯b) ⊃ c) ⊃ d D=((◯b) ⊃ c) ⊃ d |S|=7 d=7 J=3 room=35 b=3 fs=4 ft=4 lg=0 drop=(◯b) ⊃ c ⋄ ◯(((◯b) ⊃ c) ⊃ d) ⋄ ◯b ⋄ c ⋄ b ⋄ ((◯b) ⊃ c) ⊃ d ⋄ d ctx= gate=ok
+#   seed=26019 sf=((◯a) ⊃ b) ⊃ c D=((◯a) ⊃ b) ⊃ c |S|=7 d=7 J=3 room=35 b=3 fs=4 ft=4 lg=0 drop=(◯a) ⊃ b ⋄ ◯(((◯a) ⊃ b) ⊃ c) ⋄ ◯a ⋄ b ⋄ c ⋄ ((◯a) ⊃ b) ⊃ c ⋄ a ctx= gate=ok
+# == g9-bareG : July's Sk shape with the CONTEXT EMPTIED
+#   seed=27000 sf=(◯s) ⊃ t ⋄ ((◯t) ⊃ p) ⊃ r D=((◯t) ⊃ p) ⊃ r |S|=10 d=10 J=5 room=70 b=3 fs=4 ft=4 lg=0 drop=(◯t) ⊃ p ⋄ ◯t ⋄ ◯s ⋄ (◯s) ⊃ t ⋄ ◯(((◯t) ⊃ p) ⊃ r) ⋄ p ⋄ s ⋄ ((◯t) ⊃ p) ⊃ r ⋄ t ⋄ r ctx= gate=ok
+#   seed=27009 sf=(◯t) ⊃ p ⋄ ((◯p) ⊃ r) ⊃ s D=((◯p) ⊃ r) ⊃ s |S|=10 d=10 J=5 room=70 b=3 fs=4 ft=4 lg=0 drop=(◯p) ⊃ r ⋄ ◯(((◯p) ⊃ r) ⊃ s) ⋄ ◯p ⋄ r ⋄ (◯t) ⊃ p ⋄ ◯t ⋄ t ⋄ s ⋄ ((◯p) ⊃ r) ⊃ s ⋄ p ctx= gate=ok
+#   seed=27018 sf=(◯s) ⊃ t ⋄ ((◯t) ⊃ p) ⊃ r D=((◯t) ⊃ p) ⊃ r |S|=10 d=10 J=5 room=70 b=3 fs=4 ft=4 lg=0 drop=(◯t) ⊃ p ⋄ p ⋄ ◯t ⋄ ◯(((◯t) ⊃ p) ⊃ r) ⋄ ◯s ⋄ (◯s) ⊃ t ⋄ ((◯t) ⊃ p) ⊃ r ⋄ t ⋄ s ⋄ r ctx= gate=ok
+#   seed=27027 sf=(◯r) ⊃ s ⋄ ((◯s) ⊃ t) ⊃ p D=((◯s) ⊃ t) ⊃ p |S|=10 d=10 J=5 room=70 b=3 fs=4 ft=4 lg=0 drop=(◯s) ⊃ t ⋄ t ⋄ ◯r ⋄ (◯r) ⊃ s ⋄ ◯(((◯s) ⊃ t) ⊃ p) ⋄ ◯s ⋄ ((◯s) ⊃ t) ⊃ p ⋄ p ⋄ s ⋄ r ctx= gate=ok
+# == g9-bareJ : the ROUND-8 stratum shape with the CONTEXT EMPTIED
+#   seed=27999 sf=(◯a) ⊃ c ⋄ (b ⊃ c) ⊃ a ⋄ c ⊃ a D=(b ⊃ c) ⊃ a |S|=9 d=9 J=3 room=45 b=3 fs=4 ft=4 lg=0 drop=◯((b ⊃ c) ⊃ a) ⋄ c ⊃ a ⋄ (◯a) ⊃ c ⋄ ◯a ⋄ b ⊃ c ⋄ b ⋄ a ⋄ (b ⊃ c) ⊃ a ⋄ c ctx= gate=ok
+#   seed=28008 sf=(◯a) ⊃ c ⋄ (a ⊃ b) ⊃ c ⋄ b ⊃ c D=(a ⊃ b) ⊃ c |S|=9 d=9 J=3 room=45 b=3 fs=4 ft=4 lg=0 drop=◯((a ⊃ b) ⊃ c) ⋄ (◯a) ⊃ c ⋄ b ⊃ c ⋄ ◯a ⋄ a ⊃ b ⋄ a ⋄ (a ⊃ b) ⊃ c ⋄ c ⋄ b ctx= gate=ok
+#   seed=28017 sf=(◯b) ⊃ a ⋄ (c ⊃ a) ⊃ b ⋄ a ⊃ b D=(c ⊃ a) ⊃ b |S|=9 d=9 J=3 room=45 b=3 fs=4 ft=4 lg=0 drop=a ⊃ b ⋄ c ⊃ a ⋄ (◯b) ⊃ a ⋄ ◯((c ⊃ a) ⊃ b) ⋄ ◯b ⋄ c ⋄ a ⋄ (c ⊃ a) ⊃ b ⋄ b ctx= gate=ok
+#   seed=28026 sf=(◯c) ⊃ b ⋄ (c ⊃ a) ⊃ b ⋄ a ⊃ b D=(c ⊃ a) ⊃ b |S|=9 d=9 J=3 room=45 b=3 fs=4 ft=4 lg=0 drop=◯((c ⊃ a) ⊃ b) ⋄ ◯c ⋄ a ⊃ b ⋄ c ⊃ a ⋄ (◯c) ⊃ b ⋄ b ⋄ c ⋄ a ⋄ (c ⊃ a) ⊃ b ctx= gate=ok
+# === generating the g9 campaign into the corpus ===
+# === generating the g9b (bare-context) campaign into the corpus ===
+# === g9b done ===
+# === round-9 stratum generation (g9b) ===
+# == g9-bareF : emptied context, fuels lifted by 3 — THE ROUND-9 REFUTING REGION
+#   seed=28998 sf=((◯c) ⊃ d) ⊃ a D=((◯c) ⊃ d) ⊃ a |S|=7 d=7 J=3 room=35 b=2 fs=6 ft=6 lg=0 drop=(◯c) ⊃ d ⋄ ◯c ⋄ d ⋄ ◯(((◯c) ⊃ d) ⊃ a) ⋄ c ⋄ ((◯c) ⊃ d) ⊃ a ⋄ a ctx= gate=ok
+#   seed=29007 sf=((◯c) ⊃ d) ⊃ a D=((◯c) ⊃ d) ⊃ a |S|=7 d=7 J=3 room=35 b=2 fs=6 ft=6 lg=0 drop=(◯c) ⊃ d ⋄ d ⋄ ◯(((◯c) ⊃ d) ⊃ a) ⋄ ◯c ⋄ a ⋄ c ⋄ ((◯c) ⊃ d) ⊃ a ctx= gate=ok
+#   seed=29016 sf=((◯d) ⊃ a) ⊃ b D=((◯d) ⊃ a) ⊃ b |S|=7 d=7 J=3 room=35 b=2 fs=6 ft=6 lg=0 drop=(◯d) ⊃ a ⋄ ◯d ⋄ ◯(((◯d) ⊃ a) ⊃ b) ⋄ a ⋄ ((◯d) ⊃ a) ⊃ b ⋄ d ⋄ b ctx= gate=ok
+#   seed=29025 sf=((◯c) ⊃ d) ⊃ a D=((◯c) ⊃ d) ⊃ a |S|=7 d=7 J=3 room=35 b=2 fs=6 ft=6 lg=0 drop=(◯c) ⊃ d ⋄ d ⋄ ◯(((◯c) ⊃ d) ⊃ a) ⋄ ◯c ⋄ a ⋄ ((◯c) ⊃ d) ⊃ a ⋄ c ctx= gate=ok
+# == g9-bareFG : July's Sk shape, emptied context, fuels lifted by 3
+#   seed=29997 sf=(◯s) ⊃ t ⋄ ((◯t) ⊃ p) ⊃ r D=((◯t) ⊃ p) ⊃ r |S|=10 d=10 J=5 room=70 b=2 fs=6 ft=6 lg=0 drop=(◯t) ⊃ p ⋄ ◯s ⋄ (◯s) ⊃ t ⋄ p ⋄ ◯(((◯t) ⊃ p) ⊃ r) ⋄ ◯t ⋄ r ⋄ ((◯t) ⊃ p) ⊃ r ⋄ s ⋄ t ctx= gate=ok
+#   seed=30006 sf=(◯t) ⊃ p ⋄ ((◯p) ⊃ r) ⊃ s D=((◯p) ⊃ r) ⊃ s |S|=10 d=10 J=5 room=70 b=2 fs=6 ft=6 lg=0 drop=(◯p) ⊃ r ⋄ (◯t) ⊃ p ⋄ ◯(((◯p) ⊃ r) ⊃ s) ⋄ ◯t ⋄ ◯p ⋄ r ⋄ ((◯p) ⊃ r) ⊃ s ⋄ p ⋄ t ⋄ s ctx= gate=ok
+#   seed=30015 sf=(◯p) ⊃ r ⋄ ((◯r) ⊃ s) ⊃ t D=((◯r) ⊃ s) ⊃ t |S|=10 d=10 J=5 room=70 b=2 fs=6 ft=6 lg=0 drop=(◯r) ⊃ s ⋄ ◯(((◯r) ⊃ s) ⊃ t) ⋄ ◯r ⋄ ◯p ⋄ s ⋄ (◯p) ⊃ r ⋄ p ⋄ t ⋄ r ⋄ ((◯r) ⊃ s) ⊃ t ctx= gate=ok
+#   seed=30024 sf=(◯t) ⊃ p ⋄ ((◯p) ⊃ r) ⊃ s D=((◯p) ⊃ r) ⊃ s |S|=10 d=10 J=5 room=70 b=2 fs=6 ft=6 lg=0 drop=(◯p) ⊃ r ⋄ r ⋄ ◯t ⋄ ◯(((◯p) ⊃ r) ⊃ s) ⋄ (◯t) ⊃ p ⋄ ◯p ⋄ ((◯p) ⊃ r) ⊃ s ⋄ p ⋄ t ⋄ s ctx= gate=ok
+# == g9-bareFJ : the round-8 stratum shape, emptied context, fuels lifted by 3
+#   seed=30996 sf=(◯a) ⊃ c ⋄ (c ⊃ a) ⊃ b ⋄ a ⊃ b D=(c ⊃ a) ⊃ b |S|=9 d=9 J=3 room=45 b=2 fs=6 ft=6 lg=0 drop=◯((c ⊃ a) ⊃ b) ⋄ c ⊃ a ⋄ (◯a) ⊃ c ⋄ a ⊃ b ⋄ ◯a ⋄ (c ⊃ a) ⊃ b ⋄ a ⋄ c ⋄ b ctx= gate=ok
+#   seed=31005 sf=(◯b) ⊃ b ⋄ (a ⊃ b) ⊃ c ⋄ b ⊃ c D=(a ⊃ b) ⊃ c |S|=9 d=9 J=3 room=45 b=2 fs=6 ft=6 lg=0 drop=◯((a ⊃ b) ⊃ c) ⋄ a ⋄ ◯b ⋄ b ⊃ c ⋄ a ⊃ b ⋄ (◯b) ⊃ b ⋄ b ⋄ c ⋄ (a ⊃ b) ⊃ c ctx= gate=ok
+#   seed=31014 sf=(◯a) ⊃ b ⋄ (a ⊃ b) ⊃ c ⋄ b ⊃ c D=(a ⊃ b) ⊃ c |S|=9 d=9 J=3 room=45 b=2 fs=6 ft=6 lg=0 drop=b ⊃ c ⋄ ◯a ⋄ (◯a) ⊃ b ⋄ a ⊃ b ⋄ ◯((a ⊃ b) ⊃ c) ⋄ b ⋄ c ⋄ (a ⊃ b) ⊃ c ⋄ a ctx= gate=ok
+#   seed=31023 sf=(◯b) ⊃ b ⋄ (c ⊃ a) ⊃ b ⋄ a ⊃ b D=(c ⊃ a) ⊃ b |S|=9 d=9 J=3 room=45 b=2 fs=6 ft=6 lg=0 drop=◯b ⋄ (◯b) ⊃ b ⋄ ◯((c ⊃ a) ⊃ b) ⋄ a ⊃ b ⋄ c ⋄ c ⊃ a ⋄ (c ⊃ a) ⊃ b ⋄ a ⋄ b ctx= gate=ok
+# === generating the g9c (fuel-untied) campaign into the corpus ===
+# === g9b done ===

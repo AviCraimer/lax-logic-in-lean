@@ -1,0 +1,66 @@
+To do for testgen 12/6/96
+=========================
+
+Estimated time for all tasks to date: 20 hours ie 3 days.
+Estimated time for a basic implementation: 8 hours ie 1 day.
+
+* update lexer to handle nested comments.  
+  (0.5 hr)
+
+* change grammar and thus .grm file to allow spaces in all names and to
+  allow linebreaks, spaces and tabs to be freely interspersed.  
+  ** need separators between CAP and FUNCTION
+  ** and between NUMBER and VAR in choices
+  ** can now implement different lexical strategies before and after
+     separators; problem is that lexer needs two more states
+  ** don't forget to update the absyn file if needed
+  (2 hrs)
+
+* update the documentation to reflect the change in syntax
+  ** include a summary of lexical matters for next year's project
+  (3 hrs)
+
+* devise a case study (Gilbert's?) to use for next year
+  (1 hr + 1 hr documentation = 2hrs)
+
+* use indexing to locate categories and their names; ie change the
+  semantics to make the test frame datastructures smaller
+  (0.5 hr + 1 hr documentation = 1.5hrs)
+
+* implement/employ some list processing functions to handle sets
+  ** can use the eqset functor instead
+  (0.5 hr)
+
+* implement the basic construction of flagged and unflagged frames 
+  (1.5 hrs)
+
+* implement the validity relation |=
+  (0.5 hr)
+
+* filter out the non-valid frames
+  (1 hr)
+
+* pretty-print the test specs
+  (1.5 hrs)
+
+* pretty-print the test frames
+  (1 hr)
+
+* implement diagnostics (properties used, number of frames saved by adding
+  constraints and/or flags, count of categories etc., check on uniqueness
+  of names, report on no. of choices used out of total number of choices
+  etc.) 
+  (5 hrs)
+
+* ?remove distinction between Parameters and Environments, replacing with a
+  single keyword "Categories" ?
+  (0.5 hrs)
+
+* create a standalone function or functions
+  (3 hrs)
+
+* add on line documentation
+  (2 hrs)
+
+* contact Gilbert with suggestions
+  (1 hr)

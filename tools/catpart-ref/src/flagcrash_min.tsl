@@ -1,0 +1,8 @@
+B Function: flagcrash
+  Categories:
+  1 onlyflagged
+    * only_choice [single]
+  2 plain
+    * a
+    * b
+EndFunction;

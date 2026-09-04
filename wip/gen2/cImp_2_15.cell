@@ -1,0 +1,5 @@
+1
+cImp_2_15
+theorem cImp_2_15 : Interd (q2.ifThen q15) q1 :=
+  ⟨topD,
+   (ofG4 (.impR (.impR (.orR1 (.laxL (A := q0) (.tail _ (.head _)) (.botL (.head _)))))))⟩

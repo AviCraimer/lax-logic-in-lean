@@ -1,0 +1,39 @@
+# Blueprint Pages — PUBLISHING IS MANUAL ONLY.
+#
+# There is deliberately NO `push:` trigger.  No commit to any branch can
+# publish this site; deploying is an explicit act via "Run workflow" in the
+# Actions tab (or `gh workflow run pages.yml --ref <branch>`).  That keeps a
+# routine campaign commit from putting a work-in-progress state on the public
+# site, and it means the published site always reflects a moment someone
+# chose.
+#
+# `pull_request` is kept because it BUILDS without deploying: the deploy job
+# is guarded by `github.event_name != 'pull_request'`, so a PR run is a free
+# check that the blueprint still compiles and renders.  Drop it too if even
+# that is unwanted.
+#
+# The ref you dispatch against must (a) contain the blueprint and (b) be
+# listed in the github-pages environment's deployment branch policy.
+#
+# lean_action_ci.yml is untouched and shares no trigger with this file.
+name: Blueprint Pages
+
+on:
+  pull_request:
+    paths:
+      - 'LaxBlueprint/**'
+      - 'LaxBlueprintMain.lean'
+      - 'scripts/ci-pages.sh'
+      - '.github/workflows/pages.yml'
+      - '.github/workflows/blueprint-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  pages:
+    uses: ./.github/workflows/blueprint-pages.yml
+    secrets: inherit

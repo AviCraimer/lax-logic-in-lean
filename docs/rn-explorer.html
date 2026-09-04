@@ -1,0 +1,2075 @@
+<meta charset="utf-8">
+<title>RN(◯,{}) — the ladder and the dictionary</title>
+
+<style>
+  :root {
+    --ink:        #13181a;
+    --ink-soft:   #55625c;
+    --paper:      #f4f7f4;
+    --panel:      #ffffff;
+    --rule:       #ccd7cf;
+    --green:      #2c7a4b;
+    --green-fill: #dcefe2;
+    --green-text: #245f3b;
+    --slate:      #64717c;
+    --slate-fill: #e7ebee;
+    --rust:       #b0530a;
+    --rust-fill:  #fbeadb;
+    --chain:      #4a6b8a;
+    --chain-fill: #e3ebf3;
+    --chain-text: #35526c;
+    --anti:       #a8752c;
+    --anti-fill:  #f8efdc;
+    --anti-text:  #825516;
+    --zig:        #7a5b8f;
+    --zig-fill:   #efe7f4;
+    --shadow:     0 1px 2px rgba(19,24,26,.06), 0 8px 24px rgba(19,24,26,.05);
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+    --sans:  ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono:  ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #e4eae5; --ink-soft: #94a49b; --paper: #101513; --panel: #171d1a;
+      --rule: #2e3a34; --green: #55ab74; --green-fill: #17301f; --green-text: #7cc796;
+      --slate: #8797a3; --slate-fill: #1d2429; --rust: #d9822b; --rust-fill: #2b1d10;
+      --chain: #7fa6c8; --chain-fill: #16222c; --chain-text: #a0c3de;
+      --anti: #d2a24c; --anti-fill: #2a2112; --anti-text: #e2ba6a;
+      --zig: #a98cc0; --zig-fill: #241a2b;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #e4eae5; --ink-soft: #94a49b; --paper: #101513; --panel: #171d1a;
+    --rule: #2e3a34; --green: #55ab74; --green-fill: #17301f; --green-text: #7cc796;
+    --slate: #8797a3; --slate-fill: #1d2429; --rust: #d9822b; --rust-fill: #2b1d10;
+    --chain: #7fa6c8; --chain-fill: #16222c; --chain-text: #a0c3de;
+    --anti: #d2a24c; --anti-fill: #2a2112; --anti-text: #e2ba6a;
+    --zig: #a98cc0; --zig-fill: #241a2b;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+  }
+  :root[data-theme="light"] {
+    --ink: #13181a; --ink-soft: #55625c; --paper: #f4f7f4; --panel: #ffffff;
+    --rule: #ccd7cf; --green: #2c7a4b; --green-fill: #dcefe2; --green-text: #245f3b;
+    --slate: #64717c; --slate-fill: #e7ebee; --rust: #b0530a; --rust-fill: #fbeadb;
+    --chain: #4a6b8a; --chain-fill: #e3ebf3; --chain-text: #35526c;
+    --anti: #a8752c; --anti-fill: #f8efdc; --anti-text: #825516;
+    --zig: #7a5b8f; --zig-fill: #efe7f4;
+    --shadow: 0 1px 2px rgba(19,24,26,.06), 0 8px 24px rgba(19,24,26,.05);
+  }
+
+  body { margin:0; background: var(--paper); color: var(--ink);
+         font-family: var(--sans); font-size: 15px; line-height: 1.55; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 20px 56px; }
+
+  header { border-bottom: 1px solid var(--rule); padding-bottom: 18px; margin-bottom: 22px; }
+  h1 { font-family: var(--serif); font-weight: 600; font-size: 30px; line-height: 1.2;
+       margin: 0 0 6px; letter-spacing: -.01em; text-wrap: balance; }
+  .sub { color: var(--ink-soft); max-width: 66ch; margin: 0; }
+  .eyebrow { font-size: 11px; letter-spacing: .13em; text-transform: uppercase;
+             color: var(--green); font-weight: 600; margin: 0 0 8px; }
+
+  .tabs { display:flex; gap:4px; margin: 20px 0 18px; border-bottom: 1px solid var(--rule); }
+  .tab { appearance:none; background:none; border:0; border-bottom: 2px solid transparent;
+         font-family: var(--sans); font-size: 14px; color: var(--ink-soft);
+         padding: 9px 14px; cursor:pointer; margin-bottom:-1px; }
+  .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--green); font-weight:600; }
+  .tab:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; border-radius:4px; }
+
+  .cols { display:grid; grid-template-columns: 280px minmax(0,1fr); gap: 22px; align-items:start; }
+  @media (max-width: 860px) { .cols { grid-template-columns: minmax(0,1fr); } }
+
+  .rail { display:flex; flex-direction:column; gap: 16px; position:sticky; top: 16px; }
+  .card { background: var(--panel); border: 1px solid var(--rule); border-radius: 10px;
+          padding: 14px 16px; box-shadow: var(--shadow); }
+  .card h2 { font-family: var(--sans); font-size: 11px; letter-spacing: .11em;
+             text-transform: uppercase; color: var(--ink-soft); margin: 0 0 10px; font-weight: 600; }
+
+  label.ctl { display:block; font-size: 13px; color: var(--ink-soft); margin-bottom: 6px; }
+  input[type=range] { width: 100%; accent-color: var(--green); }
+  .nval { font-family: var(--mono); font-variant-numeric: tabular-nums;
+          font-size: 20px; color: var(--ink); font-weight: 600; }
+  .presets { display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; }
+  .chip { appearance:none; font-family: var(--mono); font-size:12px; cursor:pointer;
+          background: var(--paper); color: var(--ink-soft);
+          border:1px solid var(--rule); border-radius: 999px; padding: 3px 10px; }
+  .chip:hover { border-color: var(--green); color: var(--green); }
+  .chip:focus-visible { outline: 2px solid var(--green); outline-offset:1px; }
+
+  .legend { display:flex; flex-direction:column; gap: 8px; font-size: 13px; }
+  .lrow { display:flex; gap:9px; align-items:flex-start; }
+  .sw { width:15px; height:15px; border-radius:4px; flex:none; margin-top:2px; }
+  .sw.g { background: var(--green-fill); border:1.5px solid var(--green); }
+  .sw.o { background: var(--slate-fill); border:1.5px solid var(--slate); }
+  .sw.p { background: var(--rust-fill); border:1.5px solid var(--rust); }
+  .sw.u { background: transparent; border:1.5px dashed var(--slate); }
+  .sw.c { background: var(--chain-fill); border:1.5px solid var(--chain); }
+  .sw.a { background: var(--anti-fill);  border:1.5px solid var(--anti); }
+  .sw.z { background: var(--zig-fill);   border:1.5px solid var(--zig); }
+  .sw.br { background: none; border:0; border-left: 2px solid var(--anti);
+           border-radius:0; width: 7px; }
+  .sw.jpp { border-radius:50%; background: var(--panel); border:1.6px solid var(--green); }
+  .sw.jpv { border-radius:50%; background: var(--panel); border:1.6px solid var(--ink-soft); }
+  .sw.jpr { border-radius:50%; background: var(--rust); border:1.6px solid var(--rust); }
+  .jglyph { display:inline-block; width:15px; height:15px; flex:none; margin-top:2px;
+            border:1.2px solid var(--ink-soft); border-radius:50%; background: var(--panel);
+            text-align:center; line-height:13px; font-size:10px; color: var(--ink); }
+  .chip[aria-pressed="true"] { background: var(--green-fill); color: var(--green-text);
+                               border-color: var(--green); font-weight:600; }
+  table.grid { border-collapse: collapse; font-family: var(--mono); font-size: 11px;
+               font-variant-numeric: tabular-nums; margin: 10px; }
+  table.grid th { color: var(--ink-soft); font-weight:600; padding: 3px 6px; }
+  table.grid td { text-align:center; padding: 3px 5px; border:1px solid var(--rule);
+                  cursor: pointer; min-width: 30px; }
+  td.cert { background: var(--green-fill); color: var(--green-text); }
+  td.pcll { background: var(--rust-fill); color: var(--rust); font-weight:700; }
+  td.open { background: transparent; color: var(--ink-soft); }
+  td.none { background: var(--slate-fill); color: transparent; cursor: default; }
+  .swl { width:22px; flex:none; margin-top:9px; border-top:1.6px solid var(--slate); }
+  .swl.d { border-top-style: dashed; }
+  .swl.x { border-top:2.4px solid var(--rust); }
+
+  .stats { display:grid; grid-template-columns: 1fr auto; gap: 3px 10px; font-size: 13px; }
+  .stats dt { color: var(--ink-soft); }
+  .stats dd { margin:0; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+  .check { font-size: 12.5px; padding: 8px 10px; border-radius: 7px; line-height:1.45;
+           background: var(--green-fill); color: var(--green-text); border:1px solid var(--green); }
+  .check.bad { background: var(--rust-fill); color: var(--rust); border-color: var(--rust); }
+  .check.warn { background: var(--anti-fill); color: var(--anti-text); border-color: var(--anti); font-weight:600; }
+
+  .stage { background: var(--panel); border:1px solid var(--rule); border-radius: 10px;
+           box-shadow: var(--shadow); overflow: auto; max-height: 74vh; position:relative; }
+  .stage svg { display:block; }
+
+  input[type=checkbox] { accent-color: var(--green); }
+  .toolbar { display:flex; gap:6px; flex-wrap:wrap; margin: 0 0 10px; }
+  .opctl { display:flex; align-items:flex-start; gap:8px; font-size:13px;
+           color:var(--ink-soft); margin: 0 0 9px; cursor:pointer; }
+  .opctl input { margin-top:3px; flex:none; }
+  .opctl:last-of-type { margin-bottom: 2px; }
+
+  .stage-wrap { position:relative; }
+  .stage-wrap.expanded, .stage-wrap:fullscreen {
+    display:flex; flex-direction:column; gap:10px; background: var(--paper);
+    width:100vw; height:100vh; padding:18px; box-sizing:border-box; overflow:auto;
+  }
+  .stage-wrap.expanded { position:fixed; inset:0; z-index:1000; }
+  .stage-wrap.expanded .stage, .stage-wrap:fullscreen .stage {
+    flex:1 1 auto; min-height:0; max-height:none; display:flex;
+  }
+  .stage-wrap.expanded .stage svg, .stage-wrap:fullscreen .stage svg {
+    width:100%; height:100%; margin:auto;
+  }
+  .stage-wrap.expanded .stage table, .stage-wrap:fullscreen .stage table { margin:auto; }
+
+  .print-tab-title { display:none; }
+
+  @media print {
+    .no-print { display:none !important; }
+    body { background:#fff; color:#000; }
+    .wrap { max-width:none; padding:6px 10px; }
+    .cols { grid-template-columns: minmax(0,1fr); }
+    .rail { position:static; }
+    .stage { overflow:visible !important; max-height:none !important;
+             box-shadow:none; border-color:#999; }
+    .stage svg { width:100%; height:auto; }
+    .card { box-shadow:none; border-color:#999; break-inside:avoid; }
+    section[hidden] { display:none !important; }
+    .print-tab-title { display:block; font-family:var(--serif); font-size:19px;
+                        margin:0 0 10px; color:#000; }
+    @page { margin:14mm; }
+  }
+
+  .readout { margin-top: 12px; font-family: var(--serif); font-size: 15px;
+             min-height: 3.1em; color: var(--ink); }
+  .readout .muted { font-family: var(--sans); font-size:13px; color: var(--ink-soft); }
+  .fml { font-family: var(--serif); }
+
+  .node { cursor: pointer; }
+  .node rect { transition: filter .12s ease; }
+  .node:hover rect { filter: brightness(.97); }
+  :root[data-theme="dark"] .node:hover rect,
+  .node:hover rect { filter: brightness(1.06); }
+  .stage.jp-focus .node:not(.jp-proved):not(.jp-prime) { opacity: .16; }
+  .stage.jp-focus .node:not(.jp-proved):not(.jp-prime):hover { opacity: .5; }
+
+  .scopeline { font-size: 12px; color: var(--ink-soft); margin: 8px 0 0; line-height: 1.5; }
+  .gradebox { font-size: 12.5px; padding: 8px 10px; border-radius: 7px; line-height:1.5;
+              margin-top: 8px; }
+  .gradebox.g-proved  { background: var(--green-fill); color: var(--green-text); border:1px solid var(--green); }
+  .gradebox.g-prime   { background: var(--slate-fill); color: var(--ink); border:1px solid var(--slate); }
+  .gradebox.g-reduc   { background: var(--rust-fill);  color: var(--rust);  border:1px solid var(--rust); }
+  .gradebox.g-untested{ background: transparent; color: var(--ink-soft); border:1px dashed var(--rule); }
+
+  .note { font-size: 13.5px; color: var(--ink-soft); max-width: 68ch; margin: 18px 0 0; }
+  .note code { font-family: var(--mono); font-size: 12.5px;
+               background: var(--slate-fill); padding: 1px 5px; border-radius: 4px; }
+  .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+             overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+<h2 class="sr-only">Interactive Hasse diagrams for the Rieger–Nishimura ladder embedded in the variable-free fragment of propositional lax logic, and for the fifteen known classes of that fragment.</h2>
+
+<header>
+  <p class="eyebrow">Propositional lax logic · variable-free fragment</p>
+  <h1>RN(◯,{}) — the ladder and the dictionary</h1>
+  <p style="font-family:var(--mono);font-size:11px;color:var(--ink-soft);margin:0 0 8px">explorer v12 · 2026-08-06 · six points PROVED visible (wip/visible.lean), odd-rung refutation general in k</p>
+  <p class="sub">Two views of the same lattice. The <strong>ladder</strong> is the image of
+  <span class="fml">h : p ↦ ◯⊥</span>, drawn to any depth from the certified order predicate.
+  The <strong>dictionary</strong> is the fifteen classes found by closing under ∧, ∨, ⊃, ◯ —
+  where the ladder is only part of the picture.</p>
+</header>
+
+<div class="tabs" role="tablist">
+  <button class="tab" id="tab-ladder" role="tab" aria-selected="true" aria-controls="p-ladder">Ladder — image of h</button>
+  <button class="tab" id="tab-dict" role="tab" aria-selected="false" aria-controls="p-dict">Dictionary — 15 classes + the ◯-chain</button>
+  <button class="tab" id="tab-fam" role="tab" aria-selected="false" aria-controls="p-fam">Families — the combs</button>
+  <button class="tab" id="tab-tab" role="tab" aria-selected="false" aria-controls="p-tab">Operation tables — 347 cells</button>
+</div>
+
+<p class="note" style="margin:-6px 0 14px;font-size:12.5px">Labels across the tabs: all three
+tabs now use <strong>one</strong> numbering. <span class="fml">t n</span> = the class of ladder
+rung <span class="fml">n</span>, whose minimal representative formula is
+<span class="fml">t(n)</span>; <span class="fml">⊤</span> = the top class. Everything else is
+named by a family letter carrying a level index <span class="fml">k ≥ 1</span>:
+<span class="fml">c k = ◯t(2k+1)</span> (chain),
+<span class="fml">g k = c k ⊃ t(2k+1)</span> (antichain),
+<span class="fml">s k = c k ∨ t(2k+2)</span> (chain),
+<span class="fml">r k = t(2k+4) ⊃ c k</span> (antichain),
+<span class="fml">◯g k</span> (antichain),
+<span class="fml">w k = g k ∧ t(2k+4)</span> (zigzag; <span class="fml">w1</span> was
+<span class="fml">w15</span>); and the sixteenth class the operation tables
+discovered is the meet <span class="fml">g1 ∧ t6</span> — which is exactly
+<span class="fml">w1</span>.
+Old names are shown as "was qN" throughout; the Lean source keeps the old q-names, bridged by
+theorems <code>sC_one_q9</code>, <code>rC_one_q14</code>, <code>bg_one_q13</code>,
+<code>gap_one_q8</code>, <code>chainF_one_q5</code>, <code>q10_rn6</code>,
+<code>q6_rn4</code>, <code>q11_rn7</code>.
+Version shown top: if it reads lower than the version you were told, force-reload (⇧+reload).
+New tab: <strong>Families — the picture of everything proved.</strong></p>
+
+<!-- ───────────────────────── LADDER ───────────────────────── -->
+<section id="p-ladder" role="tabpanel" aria-labelledby="tab-ladder">
+  <div class="cols">
+    <div class="rail">
+      <div class="card">
+        <h2>Rungs shown</h2>
+        <div class="nval" id="nval">9</div>
+        <label class="ctl" for="nrange">t 0 … t N</label>
+        <input type="range" id="nrange" min="3" max="201" step="1" value="9"/>
+        <div class="presets">
+          <button class="chip" data-n="9">9</button>
+          <button class="chip" data-n="21">21</button>
+          <button class="chip" data-n="51">51</button>
+          <button class="chip" data-n="101">101</button>
+          <button class="chip" data-n="201">201</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Computed</h2>
+        <dl class="stats">
+          <dt>elements</dt><dd id="s-n">9</dd>
+          <dt>covers</dt><dd id="s-cov">11</dd>
+          <dt>comparable pairs</dt><dd id="s-cmp">–</dd>
+          <dt>widest antichain</dt><dd id="s-w">–</dd>
+          <dt>compute time</dt><dd id="s-ms">–</dd>
+          <dt>named in dictionary</dt><dd id="s-in">8</dd>
+          <dt>beyond it</dt><dd id="s-out">1</dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h2>Minimal forms</h2>
+        <p style="font-size:13px;margin:0 0 8px;color:var(--ink-soft)">Found by enumerating
+        ◯-free formulas by truth set. The nodes themselves are labeled
+        <span class="fml">t n</span>, and <span class="fml">t(n)</span> is the smallest known
+        representative of that class — same class, smaller formula. The minimal recursion,
+        valid from <span class="fml">k ≥ 1</span> over the base
+        <span class="fml">t(1) = ◯⊥</span>, <span class="fml">t(2) = ¬◯⊥</span>,
+        <span class="fml">t(3) = t(1) ∨ t(2)</span>, <span class="fml">t(4) = t(2) ⊃ t(1)</span>, is —</p>
+        <div class="fml" style="font-size:13px;line-height:1.7">
+          t(2k+4) = t(2k+2) ⊃ t(2k−1)<br>t(2k+3) = t(2k) ∨ t(2k+2)
+        </div>
+        <p style="font-size:13px;margin:8px 0 0;color:var(--ink-soft)">— it never re-expands
+        the large odd rung, where the textbook recursion
+        <span class="fml">rn(2k+4) = rn(2k+3) ⊃ rn(2k+1)</span> does; both weights, minimal
+        and textbook, appear in the readout when you click a node.
+        <span class="fml">t 8</span>–<span class="fml">t 13</span> come out 2–4× smaller.
+        Click a node.</p>
+      </div>
+      <div class="card">
+        <h2>Key</h2>
+        <div class="legend">
+          <div class="lrow"><span class="sw g"></span><span><span class="fml">t 0</span> – <span class="fml">t 7</span> — also a dictionary class</span></div>
+          <div class="lrow"><span class="sw u" style="border-color:var(--green)"></span><span><span class="fml">t 8</span> and up — certified distinct, but outside the dictionary</span></div>
+          <div class="lrow"><span class="sw jpp"></span><span><strong>join-prime, PROVED</strong> — <span class="fml">t 1, t 2, t 4, t 6</span>, by two mechanisms (see below)</span></div>
+          <div class="lrow"><span class="sw jpv"></span><span><strong>join-prime</strong>, verified against the shown rungs — a <em>visible point</em> of the dual (a ring)</span></div>
+          <div class="lrow"><span class="sw jpr"></span><span><strong>join-reducible</strong>, REFUTED by a witnessing pair — not a point of the dual (a dot); every odd rung from <span class="fml">t 3</span> up is REFUTED by a single theorem general in <span class="fml">k</span></span></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Visible points</h2>
+        <p style="font-size:12.5px;margin:0 0 8px;color:var(--ink-soft)">A point <span class="fml">a</span>
+        names a point of the Esakia dual directly iff <span class="fml">a</span> is
+        <strong>join-prime</strong>: <span class="fml">a ≤ x ∨ y ⟹ a ≤ x or a ≤ y</span>. Tested here by
+        brute force over every pair of rungs shown — recomputed live as N changes.</p>
+        <label class="opctl" style="margin-bottom:0"><input type="checkbox" id="tog-jp-ladder">
+          <span>Show only join-prime (visible) rungs</span></label>
+        <p class="scopeline" id="jp-scope-ladder"></p>
+      </div>
+      <div class="card">
+        <h2>Why six points are PROVED</h2>
+        <div style="color:var(--ink-soft);font-size:12.5px">
+        <p style="margin:0 0 8px"><code>wip/visible.lean</code> (sorry-free, landed <code>adb7ad5</code>)
+        proves join-primality outright — not just verified-in-scope — for
+        <span class="fml">⊤</span>, <span class="fml">t1</span>, <span class="fml">t2</span>,
+        <span class="fml">t4</span>, <span class="fml">t6</span>, by way of a class of formulas called
+        <strong>Harrop</strong> (no <span class="fml">∨</span> in a strictly positive position): every
+        Harrop formula is join-prime, because a cut-free derivation of a hypothesis-Harrop sequent
+        ending in <span class="fml">x ∨ y</span> can only ever end in <span class="fml">orR1</span> or
+        <span class="fml">orR2</span> (<code>harrop_sc</code>, <code>primeAll_of_harrop</code>).</p>
+        <p style="margin:0 0 8px"><strong>Mechanism 1 — the box helps for free.</strong>
+        <span class="fml">◯A</span> is Harrop for <em>arbitrary</em> <span class="fml">A</span>, not only
+        Harrop <span class="fml">A</span>: the lax left rule <span class="fml">laxL</span> has a
+        succedent restricted to <span class="fml">◯</span>-formulas, so it can never fire when the goal
+        is a disjunction — <strong>a boxed hypothesis can never help produce a disjunction</strong>. This
+        is stronger than the plain-IPC analogy predicts (◯ has no IPC counterpart), and it is what makes
+        <span class="fml">t1 = ◯⊥</span>, <span class="fml">t2 = ¬◯⊥</span> and
+        <span class="fml">t4 = (◯⊥ ∨ ¬◯⊥) ⊃ ◯⊥</span> immediate.</p>
+        <p style="margin:0">
+        <strong>Mechanism 2 — rescue by interderivability.</strong> <span class="fml">t6</span> is
+        <em>not</em> itself Harrop — its consequent <span class="fml">t3 = ◯⊥ ∨ ¬◯⊥</span> is a
+        disjunction — but join-primality is a property of the interderivability class
+        (<code>PrimeAll.of_interd</code>), and <span class="fml">t6 ⊣⊢ ¬¬◯⊥ ⊃ ◯⊥</span>
+        (<code>rnSub_six_interd</code>), whose consequent <em>is</em> Harrop. The underlying law is
+        axiom-free and general in <span class="fml">A</span>:
+        <span class="fml">((A∨¬A) ∨ ((A∨¬A) ⊃ A)) ⊃ (A∨¬A) &nbsp;⊣⊢&nbsp; ¬¬A ⊃ A</span>
+        (<code>interd_rn6_dneg</code>).</p>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Self-check</h2>
+        <div class="check" id="selfcheck">…</div>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="print-tab-title">Ladder — image of h</h2>
+      <div class="stage-wrap" id="wrap-ladder">
+        <div class="toolbar no-print">
+          <button class="chip" type="button" id="fs-ladder">Full screen</button>
+          <button class="chip" type="button" id="dlsvg-ladder">Download SVG</button>
+          <button class="chip" type="button" id="dlpng-ladder">Download PNG</button>
+          <button class="chip" type="button" id="pr-ladder">Print</button>
+        </div>
+        <div class="stage" id="stage-ladder"></div>
+      </div>
+      <p class="readout" id="read-ladder"><span class="muted">Click any node (<span class="fml">t n</span>) for its truth set.</span></p>
+    </div>
+  </div>
+
+  <p class="note">Everything here is recomputed in the page from the same arithmetic the Lean
+  proof uses — <code>rn 0 = ∅</code>, <code>rn(2k+1) = {w ≤ k}</code>,
+  <code>rn(2k+2) = {w &lt; k} ∪ {k+1}</code>, and <code>rn i ⊢ rn j</code> iff truth-set inclusion
+  (<code>rnSub_order</code>). Nothing is read from a stored table, so any N is as trustworthy as N = 9.
+  The minimal forms and the pinned cross-relations shown when you click a node come from
+  <code>wip/rungPinned.lean</code> — 14 kernel-checked theorems, proof terms one way and
+  checked finite countermodels the other.</p>
+</section>
+
+<!-- ─────────────────────── DICTIONARY ─────────────────────── -->
+<section id="p-dict" role="tabpanel" aria-labelledby="tab-dict" hidden>
+  <div class="cols">
+    <div class="rail">
+      <div class="card">
+        <h2>Legend</h2>
+        <div class="legend">
+          <div class="lrow"><span class="sw g"></span><span>In the image of <span class="fml">h : p ↦ ◯⊥</span> — certified interderivable with a rung: the <span class="fml">t n</span> nodes</span></div>
+          <div class="lrow"><span class="sw c"></span><span>Chain family — infinitely many, totally ordered: <span class="fml">c k</span>, <span class="fml">s k</span></span></div>
+          <div class="lrow"><span class="sw a"></span><span>Antichain family — infinitely many, pairwise incomparable: <span class="fml">g k</span>, <span class="fml">r k</span>, <span class="fml">◯g k</span></span></div>
+          <div class="lrow"><span class="sw o"></span><span>Outside the rungs — the top class <span class="fml">⊤</span></span></div>
+          <div class="lrow"><span class="swl"></span><span>Certified cover</span></div>
+          <div class="lrow"><span class="swl d"></span><span>Relation certified; whether anything sits strictly between depends on one of the 2 remaining open cells</span></div>
+          <div class="lrow"><span class="swl x"></span><span>Where distribution fails</span></div>
+          <div class="lrow"><span class="swl" style="border-top:2px dashed var(--green)"></span><span>The ◯-chain: infinitely many further classes, strict at every step, all below ⊤ — not covers</span></div>
+          <div class="lrow"><span class="sw jpp"></span><span><strong>join-prime, PROVED</strong> — <span class="fml">⊤, t1, t2, t4, t6</span> (<code>visible_top</code>, <code>visible_rnSub_{one,two,four,six}</code>, <code>wip/visible.lean</code>): visible points</span></div>
+          <div class="lrow"><span class="sw jpv"></span><span><strong>join-prime, verified in scope</strong> — no counterexample found among the 14 classes with a certified operation table</span></div>
+          <div class="lrow"><span class="sw jpr"></span><span><strong>join-reducible, REFUTED</strong> — witnessing pair found; click for it</span></div>
+          <div class="lrow"><span class="swl" style="opacity:.4"></span><span>No ring/dot at all — not tested: no certified join table reaches this class</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>State of the order</h2>
+        <dl class="stats">
+          <dt>classes</dt><dd>15 + ∞ (chain)</dd>
+          <dt>order cells</dt><dd>225</dd>
+          <dt>settled</dt><dd id="d-set">223</dd>
+          <dt>unsettled</dt><dd id="d-unk">2</dd>
+          <dt>in image of h</dt><dd>8</dd>
+          <dt>im h</dt><dd>= rungs ∪ {⊤} ✓</dd>
+          <dt>width</dt><dd>∞ (gap family) ✓</dd>
+          <dt>floor</dt><dd>none (gap meets) ✓</dd>
+        </dl>
+        <label class="opctl" style="margin:10px 0 0"><input type="checkbox" id="tog-jp-dict">
+          <span>Show only join-prime (visible) classes</span></label>
+        <p class="scopeline" id="jp-scope-dict"></p>
+      </div>
+      <div class="card">
+        <h2>No floor either</h2>
+        <div style="color:var(--ink-soft);font-size:12.5px">
+        Height (the ladder climbs forever) and width (the gap antichain, infinite) are only two
+        of the three ways RN(◯,{}) is infinite. The third is <strong>depth</strong>: the finite
+        meets of the gap family, <span class="fml">Gmeet n = g1 ∧ g2 ∧ … ∧ g(n+1)</span>, form a
+        chain that <strong>descends strictly forever</strong>
+        (<code>Gmeet_le</code>, <code>Gmeet_desc_strict</code>, <code>wip/uiObstruct.lean</code>)
+        with <strong>no floor</strong> — no formula sits below every <span class="fml">g k</span>,
+        in PLL or even restricted to variable-free formulas
+        (<code>gap_no_glb</code>, <code>L_no_greatest</code>, <code>wip/floor.lean</code>).
+        RN(◯,{}) is not a complete lattice. Drawn as a new column in the
+        <strong>Families</strong> tab, below <span class="fml">g1</span>.</div>
+      </div>
+      <div class="card">
+        <h2>The invisible points</h2>
+        <div style="color:var(--ink-soft);font-size:12.5px">
+        <p style="margin:0 0 8px">Every <span class="fml">a</span> gives a principal filter
+        <span class="fml">↑a = {x : a ≤ x}</span> — always a filter, proper iff
+        <span class="fml">a ≠ ⊥</span>. It is <strong>prime</strong> — names a point of the Esakia
+        dual <span class="fml">X</span> directly — iff <span class="fml">a</span> is join-prime (the
+        rings and dots on the diagrams). Prime filters that are <em>not</em> of this principal form
+        are the <strong>invisible points</strong>: points of <span class="fml">X</span> that no
+        formula names.</p>
+        <p style="margin:0 0 8px"><strong>Existence.</strong> <span class="fml">X</span> is compact
+        (Esakia/Priestley duality); a compact space that is also discrete is finite; RN(◯,{}) is
+        infinite — the rungs escape forever, so the algebra never stabilises
+        (<code>exists_escaping_rungs</code>, <code>closed_lax_infinite</code>,
+        <code>PLLLaxInfinite.lean</code>) — so <span class="fml">X</span> is not finite, hence not
+        discrete. Non-principal prime filters are the general shape of what a non-discrete point
+        looks like; the gap family below is a concrete one.</p>
+        <p style="margin:0 0 8px"><strong>The gap family.</strong> Each
+        <span class="fml">g k = ◯t(2k+1) ⊃ t(2k+1)</span> names a clopen upset
+        <span class="fml">φ(g k)</span>. The intersection <span class="fml">⋂ₖ φ(g k)</span> is a
+        <strong>closed</strong> upset of <span class="fml">X</span> — an intersection of clopens —
+        and it is <strong>nonempty</strong>: every finite sub-intersection is
+        <span class="fml">φ(Gmeet n)</span> for a genuine, non-⊥ class of RN(◯,{}), and
+        compactness turns that finite-intersection property into a nonempty limit. It is
+        <strong>not clopen</strong>: <code>gap_no_glb</code> proves no formula derives every
+        <span class="fml">g k</span> while being derived by every other common lower bound — over
+        all of PLL — and its variable-free reading <code>L_no_greatest</code> says the same for
+        RN(◯,{}) itself (both <code>wip/floor.lean</code>, sorry-free). Dually: no clopen upset
+        inside <span class="fml">⋂ₖ φ(g k)</span> is the largest one — if one were, its formula
+        would be the missing glb. So some points of that closed set are unnamed by any formula: the
+        missing interpolant would have to live at one of them.</p>
+        <p style="margin:0 0 8px"><strong>Open.</strong> Is the filter
+        <span class="fml">⋃ₙ ↑Gmeet n</span> itself prime — equivalently, does
+        <span class="fml">⋂ₖ φ(g k)</span> have a <em>least</em> point? If so, the whole descending
+        chain converges on one invisible point. Nothing here settles it.</p>
+        <p style="margin:0 0 8px"><strong>Completing the order.</strong> RN(◯,{}) is not a complete
+        lattice — <code>gap_no_glb</code>/<code>L_no_greatest</code> are proofs that a specific
+        infimum is missing. The standard way to name what an order is missing is an
+        <strong>order completion</strong>: MacNeille's is the smallest one, adding exactly the joins
+        and meets needed, as new elements of a <em>larger</em> lattice. It is usually credited to
+        Funayama (1959, <em>Nagoya Math. J.</em> 15, 71–81) that the MacNeille completion of a
+        Heyting algebra is again a Heyting algebra — in fact a complete one, a frame. Checked here
+        against a citable secondary source, Bezhanishvili, Gabelaia &amp; Jibladze, "Funayama's
+        theorem revisited" (<em>Algebra Universalis</em> 70 (2013), 271–286), who state that the
+        variety of all Heyting algebras is one of only three varieties closed under MacNeille
+        completion — not checked against Funayama's original 1959 paper directly, and not checked
+        against anything in this repository: nothing here computes or names the MacNeille
+        completion of RN(◯,{}).</p>
+        <div class="check warn">This does <u>not</u> give uniform interpolation. MacNeille
+        completion adds the missing meet as a new <em>element</em> of a bigger lattice — not a
+        <em>formula</em> of PLL. Uniform interpolation demands an actual formula, inside the
+        algebra RN(◯,{}) already has. Order-completeness names what is missing; uniform
+        interpolation demands that nothing be missing. <code>gap_no_glb</code>/<code>L_no_greatest</code>
+        are an order-completeness failure, and they obstruct uniform interpolation exactly because
+        the missing interpolant would have to <em>be</em> that missing meet, written as a formula —
+        and by these theorems, no such formula exists anywhere in PLL.</div>
+        <p style="margin:8px 0 0"><strong>A different completion.</strong> The completion uniform
+        interpolation actually corresponds to is Robinson's <strong>model completion</strong> — a
+        model-theoretic notion, about the first-order theory of a whole variety of algebras, not
+        about filling gaps in one particular order. Pitts (1992, <em>J. Symbolic Logic</em> 57,
+        33–52) proved IPC has uniform interpolation, with <span class="fml">∀p</span>,
+        <span class="fml">∃p</span> as adjoints to substitution; Ghilardi &amp; Zawadowski recast
+        this as: a variety of Heyting or modal algebras has uniform interpolation exactly when the
+        first-order theory of that variety admits a model completion — the positive case for
+        Heyting algebras/IPC, the negative case for S4, where they prove no model completion exists
+        (<em>Sheaves, Games, and Model Completions</em>, Trends in Logic 14, Springer 2002;
+        "Undefinability of Propositional Quantifiers in the Modal System S4",
+        <em>Studia Logica</em> 55 (1995), 259–271). Reported here from that literature, independent
+        of the order-completion discussion above and not checked against this repository — the two
+        completions should not be run together.</p>
+        </div>
+      </div>
+      <div class="card">
+        <h2>◯ leaves the image</h2>
+        <div class="legend" style="font-family:var(--serif)">
+          <div>◯t2 = ◯t3 = c1 <span style="color:var(--ink-soft);font-family:var(--sans);font-size:12px">(was q5)</span></div>
+          <div>◯t5 = c2 <span style="color:var(--ink-soft);font-family:var(--sans);font-size:12px">(was q12)</span></div>
+          <div style="color:var(--ink-soft);font-family:var(--sans);font-size:12.5px">
+            but ◯t4 = t4 and ◯t6 = t6 — fixed points.</div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>The classification, proved</h2>
+        <div style="color:var(--ink-soft);font-size:12.5px">
+          Every ◯-free one-variable formula is, after <span class="fml">p ↦ ◯⊥</span>,
+          interderivable with a rung or with ⊤
+          (<code>image_classification</code>, sorry-free). So "off the rungs and
+          not ⊤" now literally means <strong>outside im h</strong> — the caveat
+          on <span class="fml">c1</span> (was q5), <span class="fml">c3 = ◯t7</span>
+          (was ◯q11) and the chain is gone, and it also decides cells:
+          <span class="fml">t6 ⊬ t4</span> (was <span class="fml">q10 ⊬ q6</span>)
+          falls out with no countermodel
+          (<code>q10_not_q6</code>).</div>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="print-tab-title">Dictionary — 15 classes + the ◯-chain</h2>
+      <div class="stage-wrap" id="wrap-dict">
+        <div class="toolbar no-print">
+          <button class="chip" type="button" id="fs-dict">Full screen</button>
+          <button class="chip" type="button" id="dlsvg-dict">Download SVG</button>
+          <button class="chip" type="button" id="dlpng-dict">Download PNG</button>
+          <button class="chip" type="button" id="pr-dict">Print</button>
+        </div>
+        <div class="stage" id="stage-dict"></div>
+      </div>
+      <p class="readout" id="read-dict"><span class="muted">Click any class for its formula, kind and rung.</span></p>
+    </div>
+  </div>
+
+  <p class="note">The order is now settled in 224 of 225 cells — the last open cell is
+  <span class="fml">r1 ⊢ ◯g1</span> (was <span class="fml">q14 ⊢ q13</span>).
+  <span class="fml">c2 ⊢ t7</span> (was <span class="fml">q12 ⊢ q11</span>) fell to the
+  non-confluent five-world battery, which also produced the biggest structural news:
+  <span class="fml">c3 (= ◯t7)</span> is a <strong>new class</strong> (<code>cBox11_settled</code>),
+  strictly above <span class="fml">t7</span>, so the dictionary is not closed under ◯. Beyond it
+  stretches an infinite strictly ascending chain — the boxed odd rungs
+  <span class="fml">c1 = ◯t3 &lt; c2 = ◯t5 &lt; c3 = ◯t7 &lt; …</span>, strict at every step
+  (<code>chain_step_strict</code>), pairwise distinct — now drawn at the right edge of
+  the diagram. Since the classification <span class="fml">im h = rungs ∪ {⊤}</span> is
+  mechanised (<code>image_classification</code>), every one of them is off the image
+  outright: the complement of the ladder image is <strong>infinite, with no caveat</strong>
+  (<code>complement_infinite_final</code>). The width question is settled too: the collapse
+  statements <span class="fml">g k = c k ⊃ t(2k+1)</span> — level-k generalisations of
+  <span class="fml">g1</span> (was <span class="fml">q8</span>, <code>gap_one_q8</code>) — are
+  pairwise incomparable for k ≥ 2
+  (<code>width_infinite</code>), so RN(◯,{}) holds an infinite <em>antichain</em> alongside the
+  infinite chain: its width is <strong>unbounded</strong>, and each <span class="fml">g k</span>
+  is a further new class, off the image and off the chain
+  (<code>gap_off_image</code>, <code>gap_not_chain</code>). The orange edge is
+  <span class="fml">s1 &lt; c2</span> (was <span class="fml">q9 &lt; q12</span>): since
+  <span class="fml">◯(t3 ∨ t4) = c2</span> while
+  <span class="fml">◯t3 ∨ ◯t4 = s1</span>, that strict gap <em>is</em> the failure of
+  distribution, refuted by a five-world countermodel (<code>distr_4_3_not_derivable</code>).</p>
+</section>
+
+<!-- ──────────────────────── FAMILIES ──────────────────────── -->
+<section id="p-fam" role="tabpanel" aria-labelledby="tab-fam" hidden>
+  <div class="cols">
+    <div class="rail">
+      <div class="card">
+        <h2>Legend</h2>
+        <div class="legend">
+          <div class="lrow"><span class="sw g"></span><span><span class="fml">t n</span> — a ladder rung,
+            in <span class="fml">im h</span>. Odd rungs make the spine; even rungs hang to its left.</span></div>
+          <div class="lrow"><span class="sw c"></span><span>Chain families <span class="fml">c k</span>,
+            <span class="fml">s k</span> — totally ordered, strict at every step</span></div>
+          <div class="lrow"><span class="sw a"></span><span>Antichain families <span class="fml">g k</span>,
+            <span class="fml">r k</span>, <span class="fml">◯g k</span> — pairwise incomparable</span></div>
+          <div class="lrow"><span class="sw z"></span><span>Zigzag family <span class="fml">w k</span> —
+            comparable only two levels apart</span></div>
+          <div class="lrow"><span class="sw o"></span><span><span class="fml">⊤</span> — above everything drawn</span></div>
+          <div class="lrow"><span class="swl" style="border-top:1.6px solid var(--ink-soft)"></span><span>Solid — a proved strict <span class="fml">≤</span></span></div>
+          <div class="lrow"><span class="swl" style="border-top:1.8px dashed var(--chain)"></span><span>Dashed blue — a proved <span class="fml">≤</span> crossing families</span></div>
+          <div class="lrow"><span class="swl" style="border-top:2px dashed var(--rust)"></span><span>Dashed rust, arrowhead, <span class="fml">◯</span> at the midpoint — applying the box</span></div>
+          <div class="lrow"><span class="swl" style="border-top:2px dotted var(--slate)"></span><span>Dotted grey — a <strong>level-1 accident</strong>: true for k = 1, provably false from k = 2</span></div>
+          <div class="lrow"><span class="sw br"></span><span>Amber bracket — that whole column is an antichain
+            (<span class="fml">pairwise ⊬</span>): the missing edges are deliberate</span></div>
+          <div class="lrow"><span class="jglyph">∧</span><span>A small <span class="fml">∧</span>/<span class="fml">∨</span>
+            circle on a node = that node <strong>is</strong> the meet/join of the two nodes its thin curves
+            come from — a proved identity, not just an inequality</span></div>
+          <div class="lrow"><span class="swl" style="border-top:1.6px dashed var(--ink-soft);opacity:.7"></span><span>Faded
+            dashed stub ending in <span class="fml">⋮</span>, in the column's own colour — that
+            family continues beyond what's drawn: every comb repeats verbatim at levels
+            <span class="fml">k = 4, 5, …</span>, and the gap column additionally continues
+            <em>downward</em> below <span class="fml">g1</span>, forever, with no floor</span></div>
+          <div class="lrow"><span class="sw jpp"></span><span><strong>join-prime, PROVED</strong> — <span class="fml">⊤, t1, t2, t4, t6</span> (<code>wip/visible.lean</code>) — see "Why six points are PROVED" in the Ladder tab</span></div>
+          <div class="lrow"><span class="sw jpv"></span><span><strong>join-prime, verified in scope</strong> — no counterexample found among the classes this tab can test; <span class="fml">t8, t10</span> are additionally PROVED prime against every rung-shaped pair (<code>rnSub_even_prime_on_rungs</code>)</span></div>
+          <div class="lrow"><span class="sw jpr"></span><span><strong>join-reducible, REFUTED</strong> — witnessing pair found; every odd rung from <span class="fml">t3</span> up is REFUTED by one theorem general in k (<code>not_joinPrime_rnSub_odd</code>)</span></div>
+          <div class="lrow"><span class="swl" style="opacity:.4"></span><span>No ring/dot — not tested: this class has no certified join data in the page (every <span class="fml">k ≥ 2</span> family class, and <span class="fml">w</span>, <span class="fml">Gmeet</span>)</span></div>
+        </div>
+      </div>
+      <div class="card no-print">
+        <h2>Operation links</h2>
+        <label class="opctl"><input type="checkbox" id="tog-box" checked>
+          <span>Rust dashed <span class="fml">◯</span> arrows — applying the box</span></label>
+        <label class="opctl"><input type="checkbox" id="tog-join" checked>
+          <span>Thin <span class="fml">∧</span>/<span class="fml">∨</span> curves and glyphs —
+          meet/join identities</span></label>
+        <div class="presets">
+          <button class="chip" type="button" id="tog-all-on">All on</button>
+          <button class="chip" type="button" id="tog-all-off">All off</button>
+        </div>
+        <p style="font-size:12px;margin:9px 0 0;color:var(--ink-soft)">The order edges — solid,
+        dashed blue, dotted grey — stay on regardless: those <em>are</em> the order.</p>
+        <label class="opctl" style="margin:9px 0 0"><input type="checkbox" id="tog-jp-fam">
+          <span>Show only join-prime (visible) classes</span></label>
+        <p class="scopeline" id="jp-scope-fam"></p>
+      </div>
+      <div class="card">
+        <h2>Fold-back laws</h2>
+        <div class="fml" style="font-size:13.5px;line-height:1.8">
+          ◯s k = c (k+1)
+            <span style="font-family:var(--mono);font-size:10.5px;color:var(--ink-soft)">box_sC</span><br>
+          c k ∧ g k = t(2k+1)
+            <span style="font-family:var(--mono);font-size:10.5px;color:var(--ink-soft)">chain_meet_gap</span><br>
+          (X ⊃ g k) = g k &nbsp;for any X ≥ c k
+            <span style="font-family:var(--mono);font-size:10.5px;color:var(--ink-soft)">imp_gap_collapse</span><br>
+          ◯t4 = t4, &nbsp;◯t6 = t6
+        </div>
+        <p style="font-size:12.5px;margin:9px 0 0;color:var(--ink-soft)">In particular
+        <span class="fml">◯g k ⊃ g k = g k</span>: the second-order gap collapses
+        (<span style="font-family:var(--mono);font-size:11px">gap2_collapse</span>). The first law is the
+        one to look at in the picture — <span class="fml">◯</span> applied to
+        <span class="fml">s k</span> does not stay at level k, it lands on the chain
+        <em>one level up</em>.</p>
+        <p style="font-size:12.5px;margin:9px 0 0;color:var(--ink-soft)">One level further down than
+        anything drawn: <span class="fml">g0 = ◯t1 ⊃ t1 = ◯◯⊥ ⊃ ◯⊥</span> is PROVED join-prime
+        (<span style="font-family:var(--mono);font-size:11px">visible_gap_zero</span>) but
+        <strong>degenerate</strong> — idempotency of <span class="fml">◯</span> makes
+        <span class="fml">g0 ⊣⊢ ⊤</span>
+        (<span style="font-family:var(--mono);font-size:11px">interd_gap_zero_top</span>), so it
+        collapses onto the already-drawn <span class="fml">⊤</span> rather than being a new point,
+        and isn't drawn separately for that reason. From <span class="fml">g1</span> up (what
+        <em>is</em> drawn) the Harrop route doesn't reach at all — see the click-readout on
+        <span class="fml">g1</span>.</p>
+      </div>
+      <div class="card">
+        <h2>Level-1 accidents</h2>
+        <p style="font-size:13px;margin:0;color:var(--ink-soft)">
+        <span class="fml">t5 ⊢ g1</span>, <span class="fml">t4 ⊢ g1</span> and
+        <span class="fml">c1 ⊢ t6</span> hold at level 1 and <strong>provably fail</strong> from level 2
+        (<span style="font-family:var(--mono);font-size:11px">odd_not_le_gap</span>,
+        <span style="font-family:var(--mono);font-size:11px">even_not_le_gap</span>,
+        <span style="font-family:var(--mono);font-size:11px">chain_not_le_even</span>). They are the dotted
+        grey edges: level 1 is not a typical level, and reading the general shape off it is exactly the
+        mistake these three theorems close.</p>
+      </div>
+      <div class="card">
+        <h2>Open</h2>
+        <p style="font-size:13px;margin:0;color:var(--ink-soft)">
+        The co-gaps <span class="fml">g k ⊃ c k</span>: strictly above <span class="fml">c k</span>
+        (<span style="font-family:var(--mono);font-size:11px">dC_not_le_chain</span>), off the image —
+        their order structure with each other is open. Also open:
+        <span class="fml">r k</span> against <span class="fml">w k</span>, and everything at the levels
+        this picture does not show.</p>
+      </div>
+      <div class="card">
+        <h2>The descending chain — no floor</h2>
+        <p style="font-size:13px;margin:0 0 8px;color:var(--ink-soft)">
+        Below <span class="fml">g1</span> hangs a new column: the finite meets
+        <span class="fml">Gmeet n = g1 ∧ g2 ∧ … ∧ g(n+1)</span>. Each is strictly
+        <em>below</em> the last —
+        <span class="fml">Gmeet(n+1) ⊢ Gmeet n</span> but not conversely
+        (<span style="font-family:var(--mono);font-size:11px">Gmeet_le</span>,
+        <span style="font-family:var(--mono);font-size:11px">Gmeet_desc_strict</span>,
+        <code>wip/uiObstruct.lean</code>) — an infinite strictly <strong>descending</strong>
+        chain, the mirror image of the ascending <span class="fml">◯</span>-chain in the
+        Dictionary tab.</p>
+        <p style="font-size:13px;margin:0;color:var(--ink-soft)">
+        It has <strong>no floor</strong>: no formula lies below every
+        <span class="fml">Gmeet n</span>, in the whole of PLL, let alone variable-free
+        (<span style="font-family:var(--mono);font-size:11px">gap_no_glb</span>,
+        <span style="font-family:var(--mono);font-size:11px">L_no_greatest</span>,
+        <code>wip/floor.lean</code>) — so RN(◯,{}) is <strong>not a complete lattice</strong>,
+        even though the antichain alone has a common lower bound
+        (<span class="fml">t3</span>, <span style="font-family:var(--mono);font-size:11px">t3_below_gap</span>)
+        and every individual meet exists as a formula. (<span class="fml">g2 ⊢ g1</span>
+        — <span style="font-family:var(--mono);font-size:11px">gap_two_le_one</span> — is why the
+        antichain proper is drawn from <span class="fml">k = 2</span>: <span class="fml">g1</span>
+        is strictly above it.)</p>
+        <p style="font-size:12.5px;margin:8px 0 0;color:var(--ink-soft)">What this misses is a
+        <em>point</em> of the Esakia dual, not just a formula — see "The invisible points" in the
+        Dictionary tab: the closed set <span class="fml">⋂ₖ φ(g k)</span> is nonempty by
+        compactness but not clopen, and completing the order (MacNeille) is not the same question
+        as uniform interpolation.</p>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="print-tab-title">Families — the combs</h2>
+      <div class="stage-wrap" id="wrap-fam">
+        <div class="toolbar no-print">
+          <button class="chip" type="button" id="fs-fam">Full screen</button>
+          <button class="chip" type="button" id="dlsvg-fam">Download SVG</button>
+          <button class="chip" type="button" id="dlpng-fam">Download PNG</button>
+          <button class="chip" type="button" id="pr-fam">Print</button>
+        </div>
+        <div class="stage" id="stage-fam"></div>
+      </div>
+      <p class="readout" id="read-fam"><span class="muted">Click any node for its formula in
+      <span class="fml">t</span>-notation, its family, its old q-name and the Lean theorems that
+      pin it.</span></p>
+    </div>
+  </div>
+
+  <p class="note">One picture of the whole known structure. The green spine is the ladder — the odd rungs
+  <span class="fml">t1, t3, t5, t7, t9</span> in a chain, the even rungs hanging left. Off each odd rung
+  <span class="fml">t(2k+1)</span> hangs a <strong>comb</strong>: the six families, all of them defined
+  from that rung, all of them repeating verbatim at every level k ≥ 1. What the picture is for is the
+  contrast between the two kinds of column — the blue columns
+  (<span class="fml">c</span>, <span class="fml">s</span>) are joined bottom to top because they are chains,
+  the amber columns (<span class="fml">g</span>, <span class="fml">r</span>, <span class="fml">◯g</span>)
+  carry a bracket instead of edges because they are antichains, and the violet
+  <span class="fml">w</span> column is neither: it skips a level
+  (<span class="fml">w1 ≤ w3</span> but <span class="fml">w1 ⊬ w2</span>). Everything drawn solid,
+  dashed or dotted here is machine-checked; the only thing that is not is what the "Open" card says
+  is not.</p>
+</section>
+
+<!-- ───────────────────────── TABLES ───────────────────────── -->
+<section id="p-tab" role="tabpanel" aria-labelledby="tab-tab" hidden>
+  <div class="cols">
+    <div class="rail">
+      <div class="card">
+        <h2>Connective</h2>
+        <div class="presets" id="opbtns">
+          <button class="chip opb" data-op="0" aria-pressed="true">∧</button>
+          <button class="chip opb" data-op="1" aria-pressed="false">∨</button>
+          <button class="chip opb" data-op="2" aria-pressed="false">⊃</button>
+          <button class="chip opb" data-op="3" aria-pressed="false">◯</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Status of the table</h2>
+        <div class="legend">
+          <div class="lrow"><span class="sw g"></span><span><strong id="t-cert">345</strong> certified — a kernel-checked <span class="fml">InterdU</span> in <code>rncCells.lean</code></span></div>
+          <div class="lrow"><span class="sw p"></span><span><strong>2</strong> hold in PCLL only — no PLL proof exists, and one of them is refuted in PLL</span></div>
+          <div class="lrow"><span class="sw g"></span><span id="t-unitline"></span></div>
+          <div class="lrow"><span class="sw u"></span><span id="t-openline"></span></div>
+          <div class="lrow"><span class="sw o"></span><span id="t-noneline"></span></div>
+        </div>
+        <p style="font-size:12px;margin:9px 0 0;color:var(--ink-soft)">"Open" (pale <span class="fml">?</span>)
+        does <strong>not</strong> mean not attempted: the probe ran on every one of those cells and
+        came back with neither a proof nor a refutation, bounded by a search budget
+        (<code>Config.findBudget</code> in the <code>PLLSearch</code> harness — the pass that turns
+        settled cells into kernel proofs alone used <span class="fml">findBudget = 50000</span>,
+        <code>wip/rncHarvest.lean</code>); a bigger budget could in principle still settle some of
+        them. The blank <span class="fml">·</span> cells are a different thing again — see below.</p>
+      </div>
+      <div class="card">
+        <h2>Reading it</h2>
+        <p style="font-size:13px;margin:0;color:var(--ink-soft)">
+        A row and a column give the class of <span class="fml">row ∘ column</span>. The
+        representatives are labeled <span class="fml">t</span>/<span class="fml">c</span>/<span
+        class="fml">g</span>/<span class="fml">s</span>/<span class="fml">r</span> exactly as in
+        the glossary at the top. The quotient has 15 of them:
+        <span class="fml">c2</span> (was <span class="fml">q12</span>) is absent because PCLL
+        identifies it with <span class="fml">s1</span> (was <span class="fml">q9</span>) — which
+        is exactly the distribution collapse. The extra header
+        <span class="fml">g1∧t6</span> (was <span class="fml">w15</span>) is a
+        <em>sixteenth</em> class the harvest itself discovered — that meet lands outside the
+        fifteen (<code>def w15 : PLLFormula := q8.and q10</code>, wip/rncCells.lean). The Lean
+        certificates in <code>wip/rncCells.lean</code> use the old q-names. Click
+        any header or cell for the full formulas.</p>
+      </div>
+    </div>
+    <div>
+      <h2 class="print-tab-title">Operation tables — 347 cells</h2>
+      <div class="stage-wrap" id="wrap-tab">
+        <div class="toolbar no-print">
+          <button class="chip" type="button" id="fs-tab">Full screen</button>
+          <button class="chip" type="button" id="pr-tab">Print</button>
+        </div>
+        <div class="stage" id="stage-tab"></div>
+      </div>
+      <p class="readout" id="read-tab"><span class="muted">Click a cell for the equation it records.</span></p>
+    </div>
+  </div>
+  <p class="note">These 347 cells were probe output until they were re-derived and pinned: each
+  certified cell is now a proof term the kernel checks. The two PCLL-only cells are
+  <span class="fml">◯t5 ≡ s1</span> (was <span class="fml">◯q7 ≡ q9</span>) and
+  <span class="fml">◯s1 ≡ s1</span> (was <span class="fml">◯q9 ≡ q9</span>) — the harvester found
+  them by failing, without being told where to look.</p>
+</section>
+</div>
+
+<script>
+"use strict";
+
+/* ── the certified arithmetic, transcribed from wip/ladder8.lean ── */
+function rungMem(n, w) {
+  if (n === 0) return false;
+  if (n % 2 === 1) return w <= (n - 1) / 2;
+  return (w + 1 <= (n - 2) / 2) || (w === (n - 2) / 2 + 1);
+}
+function truthSet(n) {
+  const s = [];
+  for (let w = 0; w <= n; w++) if (rungMem(n, w)) s.push(w);
+  return s;
+}
+
+function buildOrder(N) {
+  const sets = [], le = [];
+  for (let i = 0; i <= N; i++) sets.push(truthSet(i));
+  for (let i = 0; i <= N; i++) {
+    const row = new Uint8Array(N + 1);
+    const si = sets[i];
+    for (let j = 0; j <= N; j++) {
+      let ok = 1;
+      for (let k = 0; k < si.length; k++) if (!rungMem(j, si[k])) { ok = 0; break; }
+      row[j] = ok;
+    }
+    le.push(row);
+  }
+  return { sets, le };
+}
+
+function covers(N, le) {
+  const out = [];
+  for (let i = 0; i <= N; i++) for (let j = 0; j <= N; j++) {
+    if (i === j || !le[i][j] || le[j][i]) continue;
+    let mid = false;
+    for (let m = 0; m <= N; m++) {
+      if (m === i || m === j) continue;
+      if (le[i][m] && !le[m][i] && le[m][j] && !le[j][m]) { mid = true; break; }
+    }
+    if (!mid) out.push([i, j]);
+  }
+  return out;
+}
+
+function widestAntichain(N, le) {
+  /* the ladder's antichains are small; greedy over levels is exact enough to
+     report, so we brute-force maximal antichains among consecutive indices */
+  let best = 1;
+  for (let i = 0; i <= N; i++) {
+    let run = [i];
+    for (let j = i + 1; j <= N; j++) {
+      if (run.every(x => !le[x][j] && !le[j][x])) run.push(j);
+    }
+    if (run.length > best) best = run.length;
+  }
+  return best;
+}
+
+const CERTIFIED_COVERS_9 =
+  "0-1,0-2,1-3,1-4,2-3,3-5,3-6,4-5,5-7,5-8,6-7";
+
+const SVGNS = "http://www.w3.org/2000/svg";
+function el(tag, attrs, text) {
+  const e = document.createElementNS(SVGNS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+
+/* ── ladder rendering ── */
+function renderLadder(N) {
+  const t0 = performance.now();
+  const { sets, le } = buildOrder(N);
+  const cov = covers(N, le);
+  const ms = Math.round(performance.now() - t0);
+
+  let cmp = 0;
+  for (let i = 0; i <= N; i++) for (let j = 0; j <= N; j++)
+    if (i !== j && le[i][j]) cmp++;
+
+  document.getElementById("s-n").textContent = N + 1;
+  document.getElementById("s-cov").textContent = cov.length;
+  document.getElementById("s-cmp").textContent = cmp;
+  document.getElementById("s-w").textContent = widestAntichain(N, le);
+  document.getElementById("s-ms").textContent = ms + " ms";
+  document.getElementById("s-in").textContent = Math.min(N + 1, 8);
+  document.getElementById("s-out").textContent = Math.max(0, N - 7);
+
+  /* self-check against the Lean theorem covers9_eq */
+  const c9 = covers(8, buildOrder(8).le).map(c => c[0] + "-" + c[1]).sort().join(",");
+  const box = document.getElementById("selfcheck");
+  if (c9 === CERTIFIED_COVERS_9.split(",").sort().join(",")) {
+    box.className = "check";
+    box.innerHTML = "The eleven covers computed here for t 0…t 8 match <strong>covers9_eq</strong>, "
+      + "the Lean theorem proved by <code>decide</code>.";
+  } else {
+    box.className = "check bad";
+    box.textContent = "MISMATCH with covers9_eq — the page and the proof disagree. Do not trust this drawing.";
+  }
+
+  /* join-primality: exact truth-set arithmetic over every rung shown, live in N */
+  const rungList = []; for (let n = 0; n <= N; n++) rungList.push(n);
+  const jpRaw = sweepLadderJoinPrime(rungList, n => sets[n], le);
+  const jp = {}; rungList.forEach(n => jp[n] = enrichByRung(n, mergeJPVerdict(undefined, jpRaw[n])));
+  const jpTotalPairs = ((N + 1) * (N + 2)) / 2;
+  document.getElementById("jp-scope-ladder").innerHTML =
+    `checked: all ${N + 1} rungs shown, ${jpTotalPairs} pairs, recomputed live from the truth-set `
+    + `arithmetic above — no missing data at this scope.`;
+
+  /* layout: odd rungs left column, even rungs right, t 0 centred at the foot */
+  const COLL = 120, COLR = 300, VS = 54, TOP = 34;
+  const levels = Math.floor((N - 1) / 2) + 1;
+  const H = TOP + levels * VS + 70;
+  const W = 420;
+  const pos = {};
+  pos[0] = [(COLL + COLR) / 2, H - 34];
+  for (let n = 1; n <= N; n++) {
+    const k = n % 2 === 1 ? (n - 1) / 2 : (n - 2) / 2;
+    const y = H - 34 - (k + 1) * VS;
+    pos[n] = [n % 2 === 1 ? COLL : COLR, y];
+  }
+
+  const svg = el("svg", {
+    viewBox: `0 0 ${W} ${H}`, width: W, height: H,
+    role: "img",
+    "aria-label": `Hasse diagram of the ladder classes t 0 to t ${N} (Rieger-Nishimura rungs 0 to ${N})`
+  });
+
+  const gE = el("g", {});
+  for (const [i, j] of cov) {
+    const [x1, y1] = pos[i], [x2, y2] = pos[j];
+    gE.appendChild(el("line", {
+      x1, y1, x2, y2, stroke: "var(--rule)", "stroke-width": 1.5
+    }));
+  }
+  svg.appendChild(gE);
+
+  const showFml = N <= 9;
+  for (let n = 0; n <= N; n++) {
+    const [cx, cy] = pos[n];
+    const g = el("g", { class: "node", tabindex: "0",
+      "aria-label": `t ${n} — rung ${n}, textbook form rn ${n}, truth set ${sets[n].join(" ") || "empty"}` });
+    const w = 54, h = 26;
+    g.appendChild(el("rect", {
+      x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx: 6,
+      fill: n <= 7 ? "var(--green-fill)" : "none",
+      stroke: "var(--green)", "stroke-width": n <= 7 ? 1.4 : 1.2,
+      "stroke-dasharray": n <= 7 ? "" : "3 2"
+    }));
+    const label = el("text", {
+      x: cx, y: cy + 4, "text-anchor": "middle",
+      "font-family": "var(--mono)", "font-size": "12.5",
+      fill: "var(--green-text)"
+    }, "t " + n);
+    g.appendChild(label);
+    const v = jp[n];
+    addPrimeGlyph(g, cx, cy, w / 2, h / 2, v);
+    const show = () => {
+      const s = sets[n];
+      const m = TMIN[n];
+      const p = PINNED[n];
+      let extra = "";
+      if (m) {
+        extra = `<br><span class="muted">minimal form &nbsp;</span>`
+          + `<span class="fml">${m[1] || m[0]}</span>`
+          + `<span class="muted"> &nbsp;weight ${m[2]}`
+          + (m[3] > m[2] ? ` — textbook form is ${m[3]}` : "") + `</span>`;
+      }
+      if (p) {
+        const bits = [];
+        if (p.below) bits.push(p.below.join(", ") + " strictly below");
+        if (p.above) bits.push("strictly below " + p.above.join(", "));
+        if (p.nle) bits.push("not below " + p.nle.join(", "));
+        if (p.open) bits.push("open against " + p.open.join(", "));
+        extra += `<br><span class="muted">pinned: ${bits.join(" · ")}</span>`;
+      }
+      const jpNameOf = k => "t " + k;
+      const jpFormOf = k => `{ ${sets[k].join(", ") || "∅"} }`;
+      document.getElementById("read-ladder").innerHTML =
+        `<strong>t ${n}</strong> &nbsp; truth set { ${s.join(", ") || "∅"} }`
+        + `<span class="muted"> &nbsp;·&nbsp; textbook form rn ${n}</span>` + extra
+        + (showFml && DICT_OF_RUNG[n] !== undefined
+            ? ` &nbsp;·&nbsp; = ${DICT[DICT_OF_RUNG[n]].f} <span class="muted">(dictionary node, was q${DICT_OF_RUNG[n]})</span>`
+            : "")
+        + `<br><span class="muted">${n === 0 ? "the bottom of the lattice"
+            : n % 2 === 1 ? "odd rung — a join; two upper covers"
+                          : "even rung — an implication; one upper cover"}`
+        + (n > 7 ? " · <strong>beyond the dictionary</strong> — no dictionary class names it"
+                 : " · in the dictionary") + `</span>`
+        + `<br>` + jpVerdictHtml("t " + n, v, jpNameOf, jpFormOf)
+        + (n === 0 ? ` <span class="muted">(⊥ is join-prime trivially: ⊥ ≤ everything, so the `
+                     + `disjunct "⊥ ≤ x" always holds)</span>` : "");
+    };
+    g.addEventListener("click", show);
+    g.addEventListener("focus", show);
+    svg.appendChild(g);
+  }
+
+  const stage = document.getElementById("stage-ladder");
+  stage.replaceChildren(svg);
+  stage.scrollTop = stage.scrollHeight;
+  stage.classList.toggle("jp-focus", document.getElementById("tog-jp-ladder").checked);
+}
+
+/* ── dictionary data ── */
+
+/* the uniform naming, aligned with the DICT indices below: t n for the class of
+   rung n, ⊤ for the top, family letters for everything else. The old q-names are
+   kept as "was qN" in every readout — the Lean source still uses them.           */
+const NEWNAME = ["t0","⊤","t1","t2","t3","c1","t4","t5","g1","s1","t6","t7","c2","◯g1","r1",
+                 "c3","c4","ck ⋮"];
+/* what kind of thing each class is — shown as a sub-line on the node, and used
+   for the colour accent (im h = green, chain = --chain, antichain = --anti)      */
+const KIND = [
+  "im h · ⊥", "⊤", "im h · atom", "im h · negation", "im h · join",
+  "chain c · box", "im h · implication", "im h · join",
+  "antichain g · implication", "chain s · join", "im h · implication",
+  "im h · join", "chain c · box", "antichain ◯g · box", "antichain r · implication",
+  "chain c · box", "chain c · box", "chain c · box"
+];
+
+const DICT = [
+  { f: "⊥",                          x: 380, y: 670, w: 60  },
+  { f: "⊤",                          x: 380, y: 54,  w: 60  },
+  { f: "◯⊥",                         x: 285, y: 582, w: 70  },
+  { f: "¬◯⊥",                        x: 490, y: 582, w: 80  },
+  { f: "◯⊥ ∨ ¬◯⊥",                   x: 295, y: 494, w: 130 },
+  { f: "◯¬◯⊥",                       x: 150, y: 406, w: 90  },
+  { f: "¬¬◯⊥",                       x: 500, y: 494, w: 86  },
+  { f: "¬◯⊥ ∨ ¬¬◯⊥",                 x: 405, y: 406, w: 150 },
+  { f: "◯¬◯⊥ ⊃ (◯⊥ ∨ ¬◯⊥)",          x: 620, y: 318, w: 196 },
+  { f: "◯¬◯⊥ ∨ ¬¬◯⊥",                x: 315, y: 318, w: 150 },
+  { f: "¬¬◯⊥ ⊃ ◯⊥",                  x: 105, y: 318, w: 126 },
+  { f: "¬¬◯⊥ ∨ (¬¬◯⊥ ⊃ ◯⊥)",         x: 195, y: 230, w: 210 },
+  { f: "◯(¬◯⊥ ∨ ¬¬◯⊥)",              x: 445, y: 230, w: 166 },
+  { f: "◯(◯¬◯⊥ ⊃ (◯⊥ ∨ ¬◯⊥))",       x: 610, y: 142, w: 230 },
+  { f: "(¬¬◯⊥ ⊃ ◯⊥) ⊃ ◯¬◯⊥",         x: 330, y: 142, w: 190 },
+  /* the ◯-chain of boxed odd rungs, mechanised in chainStrict/chainOff/rnClassify:
+     c k = ◯t(2k+1); c1 (was q5), c2 (was q12), c3 (was ◯q11), and beyond the
+     dictionary it never stops. */
+  { f: "◯t7", tag: "c3",  x: 880, y: 230, w: 70,
+    desc: "c3 = ◯t7 = ◯(rung 7) — the 16th class (cBox11_settled); off the image (boxq11_off_image)" },
+  { f: "◯t9", tag: "c4",  x: 880, y: 156, w: 70,
+    desc: "c4 = ◯t9 = ◯(rung 9) — strictly above c3 (chain_lt_strict); off the image (chain_off_image)" },
+  { f: "◯t(2k+1)  ⋮", tag: "ck ⋮ (all k)", x: 880, y: 92, w: 96,
+    desc: "the whole chain c k: pairwise distinct (chain_pairwise), every one off the image — RN(◯,{}) ∖ im h is infinite (complement_infinite_final)" }
+];
+const RUNG_OF_DICT = { 0:0, 2:1, 3:2, 4:3, 6:4, 7:5, 10:6, 11:7 };
+const DICT_OF_RUNG = { 0:0, 1:2, 2:3, 3:4, 4:6, 5:7, 6:10, 7:11 };
+
+/* [from, to, style] — "s" certified cover, "d" cover depends on an open cell, "x" distribution failure */
+const DICT_EDGES = [
+  [0,2,"s"],[0,3,"s"],[2,4,"s"],[2,6,"s"],[3,4,"s"],[4,5,"s"],[4,7,"s"],
+  [6,7,"s"],[5,9,"s"],[5,10,"s"],[7,9,"s"],[7,8,"s"],[9,11,"d"],[9,12,"x"],
+  [10,11,"s"],[8,13,"s"],[11,1,"s"],[12,14,"s"],[12,13,"d"],[14,1,"d"],[13,1,"s"],
+  /* the ◯-chain: every step proved strict (chain_step_strict / chain_lt_strict) */
+  [12,15,"s"],[15,16,"s"],[16,17,"s"],[17,1,"c"]
+];
+
+function renderDict() {
+  /* join-primality over the 14 classes with a full certified table, merged with
+     exact truth-set arithmetic over t0..t7 (the rungs this tab draws) — the same
+     merge the Families tab uses, and for the same reason: the RNC/PCLL table has
+     open cells the DICTIONARY's own certified covers already settle (e.g.
+     t7 ⊃ t6 is open in the harvested table, but t6 < t7 is a certified cover), so
+     table-only would under-report and could even disagree with the Families tab
+     for the very same class. ⊤ (index 1) is forced to PROVED regardless — its
+     join-primality is the disjunction property, true of the whole infinite
+     algebra, not scope-limited. c2/c3/c4/the general ◯-chain (indices 12, 15, 16,
+     17) carry no join arithmetic at all: untested.                          */
+  const dictTableRaw = sweepTableJoinPrime(REPS_SCOPE);
+  const dictLadderRaw = sweepLadderJoinPrime([0,1,2,3,4,5,6,7], truthSet);
+  const dictJP = {};
+  for (let i = 0; i <= 17; i++) {
+    if (i === 1) { dictJP[i] = { status: "proved" }; continue; }
+    const rung = RUNG_OF_DICT[i];
+    let v = enrichByRung(rung, mergeJPVerdict(dictTableRaw[i], rung !== undefined ? dictLadderRaw[rung] : undefined));
+    if (i === 8 && v.status === "prime") v = Object.assign({}, v, { harropNote: true }); // g1
+    dictJP[i] = v;
+  }
+  const dictTotalPairs = (REPS_SCOPE.length * (REPS_SCOPE.length + 1)) / 2;
+  document.getElementById("jp-scope-dict").innerHTML =
+    `checked: ${REPS_SCOPE.length} classes with a full certified ∨/⊃ table `
+    + `(t0–t7, ⊤, c1, g1, s1, r1, ◯g1), ${dictTotalPairs} pairs. Of these, 5 (⊤, t1, t2, t4, t6) are `
+    + `additionally PROVED — a theorem, not scope-limited (<code>wip/visible.lean</code>). c2, c3, c4 `
+    + `and the general ◯-chain are not tested — no certified join table reaches them.`;
+
+  const svg = el("svg", {
+    viewBox: "0 0 960 700", width: 960, height: 700,
+    role: "img",
+    "aria-label": "Hasse diagram of the fifteen variable-free classes, with the infinite chain of boxed odd rungs beyond them"
+  });
+  const gE = el("g", {});
+  for (const [i, j, st] of DICT_EDGES) {
+    const a = DICT[i], b = DICT[j];
+    const attrs = { x1: a.x, y1: a.y, x2: b.x, y2: b.y, fill: "none" };
+    if (st === "x") { attrs.stroke = "var(--rust)"; attrs["stroke-width"] = 2.4; }
+    else if (st === "c") { attrs.stroke = "var(--green)"; attrs["stroke-width"] = 1.6;
+                           attrs["stroke-dasharray"] = "1.5 4"; }
+    else { attrs.stroke = "var(--rule)"; attrs["stroke-width"] = 1.5;
+           if (st === "d") attrs["stroke-dasharray"] = "4 3"; }
+    gE.appendChild(el("line", attrs));
+  }
+  svg.appendChild(gE);
+
+  DICT.forEach((d, i) => {
+    const inImg = RUNG_OF_DICT[i] !== undefined;
+    const name = NEWNAME[i];
+    const kind = KIND[i];
+    /* family accent: im h stays green, ⊤ stays slate, the two new families get
+       their own colour as well as their own kind word */
+    const fam = inImg ? "im"
+              : i === 1 ? "top"
+              : kind.startsWith("chain") ? "chain" : "anti";
+    const ACC = {
+      im:    ["var(--green-fill)", "var(--green)", "var(--green-text)", 1.4],
+      top:   ["var(--slate-fill)", "var(--slate)", "var(--ink-soft)",   1.2],
+      chain: ["var(--chain-fill)", "var(--chain)", "var(--chain-text)", 1.4],
+      anti:  ["var(--anti-fill)",  "var(--anti)",  "var(--anti-text)",  1.4]
+    }[fam];
+    const was = i <= 14 ? `was q${i}` : "";
+    const sub = i <= 14
+      ? (inImg ? `${name} · rung ${RUNG_OF_DICT[i]} · ${was}` : `${name} · ${was}`)
+      : (d.tag ?? name);
+    const g = el("g", { class: "node", tabindex: "0",
+      "aria-label": `class ${name}${was ? `, ${was}` : ""}, ${kind}, ${d.f}`
+        + `${inImg ? `, rung ${RUNG_OF_DICT[i]}` : ", outside the image"}` });
+    g.appendChild(el("rect", {
+      x: d.x - d.w / 2, y: d.y - 22, width: d.w, height: 46, rx: 6,
+      fill: ACC[0], stroke: ACC[1], "stroke-width": ACC[3]
+    }));
+    g.appendChild(el("text", {
+      x: d.x, y: d.y - 7, "text-anchor": "middle",
+      "font-family": "var(--serif)",
+      "font-size": d.w >= 190 ? "10.5" : "12", fill: "var(--ink)"
+    }, d.f));
+    g.appendChild(el("text", {
+      x: d.x, y: d.y + 6, "text-anchor": "middle",
+      "font-family": "var(--mono)", "font-size": "9",
+      fill: ACC[2]
+    }, sub));
+    g.appendChild(el("text", {
+      x: d.x, y: d.y + 17, "text-anchor": "middle",
+      "font-family": "var(--sans)", "font-size": "8", fill: ACC[2]
+    }, kind));
+    const v = dictJP[i];
+    addPrimeGlyph(g, d.x, d.y, d.w / 2, 22, v);
+    const show = () => {
+      const nameOf = v.wkind === "rung" ? (k => "t " + k) : (k => NEWNAME[k]);
+      const formOf = v.wkind === "rung" ? (k => `{ ${truthSet(k).join(", ") || "∅"} }`) : (k => DICT[k].f);
+      document.getElementById("read-dict").innerHTML =
+        `<strong>${d.tag ?? name}</strong> &nbsp; ${d.f}`
+        + ` <span class="muted">— ${kind}</span><br><span class="muted">`
+        + (was ? `${was} — ` : "")
+        + (d.desc ?? (inImg
+            ? `rung ${RUNG_OF_DICT[i]} of the ladder — in the image of h`
+            : `outside the image of h — and by the mechanised classification (image_classification), every class is a rung or ⊤ or off the image outright`))
+        + `</span>`
+        + `<br>` + jpVerdictHtml(name, v, nameOf, formOf);
+    };
+    g.addEventListener("click", show);
+    g.addEventListener("focus", show);
+    svg.appendChild(g);
+  });
+
+  document.getElementById("stage-dict").replaceChildren(svg);
+  document.getElementById("stage-dict").classList.toggle("jp-focus",
+    document.getElementById("tog-jp-dict").checked);
+}
+
+/* ─────────────────── families: the combs ───────────────────
+   One record per drawn class. The spine is the ladder; off each odd rung
+   t(2k+1) hangs the comb of the six families, identical at every level
+   k = 1, 2, 3. Colour = family kind, not level.                         */
+const FAM_ACC = {
+  t:     ["var(--green-fill)", "var(--green)", "var(--green-text)", 1.4],
+  top:   ["var(--slate-fill)", "var(--slate)", "var(--ink-soft)",   1.2],
+  chain: ["var(--chain-fill)", "var(--chain)", "var(--chain-text)", 1.4],
+  anti:  ["var(--anti-fill)",  "var(--anti)",  "var(--anti-text)",  1.4],
+  zig:   ["var(--zig-fill)",   "var(--zig)",   "var(--zig)",        1.4]
+};
+const GRP_KIND = {
+  t:   "im h — a ladder rung",
+  top: "the top class — above everything drawn",
+  c:   "chain family · c k = ◯t(2k+1) — totally ordered, strict at every step",
+  s:   "chain family · s k = c k ∨ t(2k+2) — a chain, and ◯s k = c (k+1)",
+  g:   "antichain family · g k = c k ⊃ t(2k+1) — pairwise incomparable",
+  r:   "antichain family · r k = t(2k+4) ⊃ c k — pairwise incomparable",
+  bg:  "antichain family · ◯g k — pairwise incomparable",
+  w:   "zigzag family · w k = g k ∧ t(2k+4) — w j ≤ w k iff k ≥ j+2"
+};
+const GRP_THM = {
+  t:   "rnSub_order, image_classification",
+  top: "image_classification",
+  c:   "chain_lt_strict, chain_step_strict",
+  s:   "sC_strict, box_sC",
+  g:   "gap_incomparable, width_infinite",
+  r:   "rC_incomparable",
+  bg:  "bg_incomparable",
+  w:   "wC_le, wC_strict, wC_succ_not_le",
+  gm:  "Gmeet_le, Gmeet_desc_strict, gap_no_glb, L_no_greatest"
+};
+GRP_KIND.gm = "descending meet-chain · Gmeet n = g1 ∧ … ∧ g(n+1) — strictly decreasing, no floor";
+/* operation-links visibility state, toggled from the Families rail; not persisted
+   (session-only, per the brief) */
+let famShowBox = true, famShowJoin = true;
+const FAMN = [], FAMBY = {};
+(function buildFamilies() {
+  const add = o => {
+    o.kind = o.kind || GRP_KIND[o.grp];
+    o.thm  = GRP_THM[o.grp];
+    o.sub  = o.sub === undefined ? o.form : o.sub;
+    FAMN.push(o); FAMBY[o.id] = o;
+  };
+  /* the spine: odd rungs at x 340, even rungs hanging left at x 250 */
+  [ /* id     x    y   w   h  minimal form  was */
+    ["t0" , 340, 735, 52, 26, "⊥",        "q0" ],
+    ["t1" , 340, 680, 58, 28, "◯⊥",       "q2" ],
+    ["t2" , 250, 640, 52, 26, "¬◯⊥",      "q3" ],
+    ["t3" , 340, 590, 58, 28, "t1 ∨ t2",  "q4" ],
+    ["t4" , 250, 520, 52, 26, "t2 ⊃ t1",  "q6" ],
+    ["t5" , 340, 430, 58, 28, "t2 ∨ t4",  "q7" ],
+    ["t6" , 250, 355, 52, 26, "t4 ⊃ t1",  "q10"],
+    ["t7" , 340, 270, 58, 28, "t4 ∨ t6",  "q11"],
+    ["t8" , 250, 195, 52, 26, "t6 ⊃ t3",  ""   ],
+    ["t9" , 340, 110, 58, 28, "t6 ∨ t8",  ""   ],
+    ["t10", 250,  58, 52, 26, "t8 ⊃ t5",  ""   ]
+  ].forEach(([id, x, y, w, h, form, old]) => {
+    const n = +id.slice(1);
+    add({ id, name: id, x, y, w, h, fam: "t", grp: "t", form, old,
+          kind: "im h — ladder rung " + n
+                + (n === 0 ? " (the bottom, ⊥)"
+                   : n % 2 ? " (a join — two upper covers)"
+                           : " (an implication — one upper cover)")
+                + (n === 4 || n === 6 ? " · ◯-fixed: ◯t" + n + " = t" + n : "") });
+  });
+  add({ id: "top", name: "⊤", x: 340, y: 32, w: 48, h: 26,
+        fam: "top", grp: "top", form: "⊤", sub: "", old: "q1" });
+  /* the three combs */
+  for (let k = 1; k <= 3; k++) {
+    const ay = 750 - 160 * k, o = 2 * k + 1;
+    add({ id: "c" + k, name: "c" + k, x: 520, y: ay -  58, w: 60, h: 30,
+          fam: "chain", grp: "c", form: "◯t" + o,
+          old: ({ 1: "q5", 2: "q12", 3: "◯q11" })[k] });
+    add({ id: "g" + k, name: "g" + k, x: 700, y: ay -  58, w: 60, h: 30,
+          fam: "anti",  grp: "g", form: "◯t" + o + " ⊃ t" + o,
+          old: k === 1 ? "q8" : "" });
+    add({ id: "s" + k, name: "s" + k, x: 600, y: ay - 122, w: 60, h: 30,
+          fam: "chain", grp: "s", form: "◯t" + o + " ∨ t" + (o + 1),
+          old: k === 1 ? "q9" : "" });
+    add({ id: "r" + k, name: "r" + k, x: 420, y: ay - 146, w: 60, h: 30,
+          fam: "anti",  grp: "r", form: "t" + (o + 3) + " ⊃ ◯t" + o,
+          old: k === 1 ? "q14" : "" });
+    add({ id: "bg" + k, name: "◯g" + k, x: 890, y: ay - 160, w: 66, h: 30,
+          fam: "anti",  grp: "bg", form: "◯(◯t" + o + " ⊃ t" + o + ")",
+          old: k === 1 ? "q13" : "" });
+    add({ id: "w" + k, name: "w" + k, x: 800, y: ay -  14, w: 60, h: 30,
+          fam: "zig",   grp: "w", form: "g" + k + " ∧ t" + (o + 3),
+          sub: "g" + k + " ∧ t" + (o + 3),
+          exp: "(◯t" + o + " ⊃ t" + o + ") ∧ t" + (o + 3),
+          old: k === 1 ? "w15" : "" });
+  }
+  /* the descending meet-chain below g1: Gmeet 0 = g1 itself (already drawn), then the
+     partial meets that never reach the next gap (Gmeet_strict) and so descend forever
+     with no floor (gap_no_glb, L_no_greatest) — wip/uiObstruct.lean, wip/floor.lean.   */
+  add({ id: "gm1", name: "Gmeet 1", x: 700, y: 600, w: 78, h: 32,
+        fam: "chain", grp: "gm", form: "g1 ∧ g2", sub: "g1 ∧ g2" });
+  add({ id: "gm2", name: "Gmeet 2", x: 700, y: 666, w: 90, h: 32,
+        fam: "chain", grp: "gm", form: "g1 ∧ g2 ∧ g3", sub: "g1 ∧ g2 ∧ g3" });
+})();
+
+/* does (x,y) land in a node box we are not allowed to cross? */
+function famHit(x, y, skip) {
+  for (const n of FAMN) {
+    if (skip.indexOf(n.id) >= 0) continue;
+    if (Math.abs(x - n.x) <= n.w / 2 + 4 && Math.abs(y - n.y) <= n.h / 2 + 4) return true;
+  }
+  return false;
+}
+/* a quadratic curve a → b that misses every node box: try increasing
+   perpendicular bows and keep the first clean one (deterministic)      */
+function famCurve(a, b, skip, offsets) {
+  const cand = offsets ||
+    [0, 20, -20, 34, -34, 52, -52, 72, -72, 95, -95, 125, -125, 160, -160, 200, -200];
+  const dx = b.x - a.x, dy = b.y - a.y, L = Math.hypot(dx, dy) || 1;
+  let best = null;
+  for (const off of cand) {
+    const cx = (a.x + b.x) / 2 - dy / L * off, cy = (a.y + b.y) / 2 + dx / L * off;
+    let bad = 0;
+    for (let i = 1; i < 25; i++) {
+      const t = i / 25, u = 1 - t;
+      if (famHit(u * u * a.x + 2 * u * t * cx + t * t * b.x,
+                 u * u * a.y + 2 * u * t * cy + t * t * b.y, skip)) bad++;
+    }
+    if (bad === 0) return { cx, cy, bad: 0 };
+    if (!best || bad < best.bad) best = { cx, cy, bad };
+  }
+  return best;
+}
+/* where a ray aimed at n's centre crosses n's (padded) box */
+function famEdgePt(n, fx, fy, pad) {
+  const dx = n.x - fx, dy = n.y - fy;
+  if (!dx && !dy) return { x: n.x, y: n.y };
+  const s = Math.min(dx ? (n.w / 2 + pad) / Math.abs(dx) : Infinity,
+                     dy ? (n.h / 2 + pad) / Math.abs(dy) : Infinity);
+  return { x: n.x - dx * s, y: n.y - dy * s };
+}
+const fam1 = v => Math.round(v * 10) / 10;
+const famQ = (a, c, b) =>
+  `M ${fam1(a.x)} ${fam1(a.y)} Q ${fam1(c.cx)} ${fam1(c.cy)} ${fam1(b.x)} ${fam1(b.y)}`;
+
+/* a faded dashed stub ending in "⋮" — the page's ellipsis/faded-edge idiom for
+   "this continues beyond what's drawn", reused per family colour. dir -1 = up
+   (more levels), dir +1 = down (the gap family's descending meet-chain).      */
+function famStub(gE, n, dir, color, label) {
+  const x = n.x, y0 = n.y + dir * (n.h / 2 + 3), y1 = y0 + dir * 28;
+  gE.appendChild(el("line", { x1: x, y1: y0, x2: x, y2: y1, stroke: color,
+    "stroke-width": 1.6, "stroke-dasharray": "1.5 4", opacity: ".65" }));
+  gE.appendChild(el("text", { x, y: y1 + dir * 11, "text-anchor": "middle",
+    "font-family": "var(--serif)", "font-size": "13", fill: color, opacity: ".85" }, "⋮"));
+  if (label) gE.appendChild(el("text", { x, y: y1 + dir * 25, "text-anchor": "middle",
+    "font-family": "var(--sans)", "font-size": "8", fill: color, opacity: ".85" }, label));
+}
+
+function renderFamilies() {
+  const N = id => FAMBY[id];
+
+  /* join-primality: the 14-class certified table (t0..t7, ⊤, c1, g1, s1, r1, ◯g1 —
+     the level-1 instances, reusing the same table as the Dictionary tab) merged
+     with exact truth-set arithmetic over t0..t10 (so t8, t9, t10 get tested too,
+     against the other rungs, though not against the family classes — no join
+     between the two kinds is known to the page). Everything at level k ≥ 2, plus
+     w and Gmeet, has no join data at all: untested.                            */
+  const famTableRaw = sweepTableJoinPrime(REPS_SCOPE);
+  const famRungs = [0,1,2,3,4,5,6,7,8,9,10];
+  const famLadderRaw = sweepLadderJoinPrime(famRungs, truthSet);
+  const FAM_REPS_ID = { top: 1, c1: 5, g1: 8, s1: 9, r1: 14, bg1: 13 };
+  function famVerdict(id) {
+    const tr = /^t(\d+)$/.exec(id);
+    if (tr) {
+      const rung = +tr[1];
+      const tbl = rung <= 7 ? famTableRaw[DICT_OF_RUNG[rung]] : undefined;
+      return enrichByRung(rung, mergeJPVerdict(tbl, famLadderRaw[rung]));
+    }
+    if (id === "top") return { status: "proved" };
+    if (id === "g1") {
+      const v = mergeJPVerdict(famTableRaw[FAM_REPS_ID.g1], undefined);
+      return v.status === "prime" ? Object.assign({}, v, { harropNote: true }) : v;
+    }
+    if (FAM_REPS_ID[id] !== undefined) return mergeJPVerdict(famTableRaw[FAM_REPS_ID[id]], undefined);
+    return { status: "untested" };
+  }
+  document.getElementById("jp-scope-fam").innerHTML =
+    `checked: 17 of the classes drawn — t0–t10 (11 rungs, truth-set arithmetic, cross-checked `
+    + `against the table for t0–t7), ⊤, c1, g1, s1, r1, ◯g1 (the certified table). Not tested: `
+    + `every level <span class="fml">k ≥ 2</span> family class, and the whole `
+    + `<span class="fml">w</span> and <span class="fml">Gmeet</span> columns — no join is known `
+    + `between a family class and anything outside its own certified table.`;
+
+  const svg = el("svg", {
+    viewBox: "0 0 1000 780", width: 1000, height: 780, role: "img",
+    "aria-label": "The ladder spine of odd rungs t1 to t9 with even rungs to its left, and at each of "
+      + "the odd rungs t3, t5, t7 a comb of the six families c, g, s, r, box-g and w, with meet and "
+      + "join junctions, box arrows, the level-1 accidents, faded stubs marking that every comb "
+      + "continues upward, and a descending meet-chain below g1 that continues downward with no floor"
+  });
+  const defs = el("defs", {});
+  const mk = el("marker", { id: "famBoxArrow", viewBox: "0 0 10 10", refX: "8.6", refY: "5",
+                            markerWidth: "6", markerHeight: "6", orient: "auto" });
+  mk.appendChild(el("path", { d: "M 0 1.4 L 9 5 L 0 8.6 z", fill: "var(--rust)" }));
+  defs.appendChild(mk);
+  svg.appendChild(defs);
+
+  const gE = el("g", {}), gB = el("g", { id: "famBoxArrows" }), gJ = el("g", { id: "famJoinLinks" }),
+        gR = el("g", {}), gN = el("g", {}),
+        gTB = el("g", { id: "famBoxLabels" }), gTJ = el("g", { id: "famJoinLabels" });
+  const seg = (a, b, at) =>
+    el("line", Object.assign({ x1: a.x, y1: a.y, x2: b.x, y2: b.y }, at));
+
+  /* ── the ladder itself ── */
+  [["t0","t1"],["t0","t2"],["t1","t3"],["t2","t3"],["t1","t4"],["t3","t5"],
+   ["t4","t5"],["t3","t6"],["t5","t7"],["t6","t7"],["t5","t8"],["t7","t9"],
+   ["t8","t9"],["t7","t10"]].forEach(([i, j]) =>
+    gE.appendChild(seg(N(i), N(j), { stroke: "var(--green)", "stroke-width": 1.7 })));
+  ["t9","t10"].forEach(i => gE.appendChild(seg(N(i), N("top"),
+    { stroke: "var(--slate)", "stroke-width": 1.2, "stroke-dasharray": "2 4" })));
+
+  /* ── the combs: every edge here is a proved strict ≤ ── */
+  for (let k = 1; k <= 3; k++) {
+    const a = "t" + (2 * k + 1);
+    [[a, "c" + k], [a, "g" + k], ["c" + k, "s" + k],
+     ["c" + k, "bg" + k], ["g" + k, "bg" + k], ["c" + k, "r" + k]]
+      .forEach(([i, j]) => gE.appendChild(seg(N(i), N(j),
+        { stroke: "var(--ink-soft)", "stroke-width": 1.3, opacity: ".75" })));
+  }
+  /* the two chain rails, and the proved crossings s k < c (k+1) */
+  [["c1","c2"],["c2","c3"],["s1","s2"],["s2","s3"]].forEach(([i, j]) =>
+    gE.appendChild(seg(N(i), N(j), { stroke: "var(--chain)", "stroke-width": 1.8 })));
+  [["s1","c2"],["s2","c3"]].forEach(([i, j]) =>
+    gE.appendChild(seg(N(i), N(j), { stroke: "var(--chain)", "stroke-width": 1.6,
+                                     "stroke-dasharray": "5 3" })));
+  /* the zigzag rail: w1 ≤ w3 only — it has to step over w2 */
+  const wc = famCurve(N("w1"), N("w3"), ["w1", "w3"],
+                      [-72, -95, -125, -160, 72, 95, 125]);
+  gE.appendChild(el("path", { d: famQ(N("w1"), wc, N("w3")), fill: "none",
+    stroke: "var(--zig)", "stroke-width": 1.8 }));
+  /* the three level-1 accidents */
+  [["t5","g1"],["t4","g1"],["c1","t6"]].forEach(([i, j]) => {
+    const c = famCurve(N(i), N(j), [i, j]);
+    const p0 = famEdgePt(N(i), c.cx, c.cy, 2), p1 = famEdgePt(N(j), c.cx, c.cy, 2);
+    gE.appendChild(el("path", { d: famQ(p0, c, p1), fill: "none",
+      stroke: "var(--slate)", "stroke-width": 1.4, "stroke-dasharray": "2 3" }));
+  });
+  /* the descending meet-chain below g1: Gmeet0 = g1, Gmeet1 = g1∧g2, Gmeet2 = g1∧g2∧g3 —
+     each strictly below the last (Gmeet_le, Gmeet_desc_strict), drawn in the same style as
+     the chain rails above; it has no floor (gap_no_glb, L_no_greatest), so it is capped with
+     the descent stub rather than a top node. */
+  [["g1","gm1"],["gm1","gm2"]].forEach(([i, j]) =>
+    gE.appendChild(seg(N(i), N(j), { stroke: "var(--chain)", "stroke-width": 1.8 })));
+  famStub(gE, N("gm2"), 1, "var(--chain)", "no floor");
+  /* every comb repeats verbatim at levels k = 4, 5, … — marked with the same faded-stub
+     idiom, upward, at each column's own colour; this is the OTHER direction from the
+     descending chain above, so the families/combs picture now extends both ways.        */
+  [["c3","var(--chain)"], ["s3","var(--chain)"], ["g3","var(--anti)"],
+   ["r3","var(--anti)"], ["bg3","var(--anti)"], ["w3","var(--zig)"]]
+    .forEach(([id, color]) => famStub(gE, N(id), -1, color));
+  gN.appendChild(el("text", { x: 200, y: 66, "text-anchor": "end", "font-family": "var(--sans)",
+    "font-size": "9.5", fill: "var(--ink-soft)" }, "k = 4, 5, … ⋮"));
+  svg.appendChild(gE);
+
+  /* ── ◯-arrows: applying the box ── */
+  [["t3","c1"],["t5","c2"],["t7","c3"],["s1","c2"],["s2","c3"],
+   ["g1","bg1"],["g2","bg2"],["g3","bg3"]].forEach(([i, j]) => {
+    const c = famCurve(N(i), N(j), [i, j], [28, -28, 44, -44, 64, -64, 88, -88, 120, -120]);
+    const p0 = famEdgePt(N(i), c.cx, c.cy, 3), p1 = famEdgePt(N(j), c.cx, c.cy, 8);
+    gB.appendChild(el("path", { d: famQ(p0, c, p1), fill: "none",
+      stroke: "var(--rust)", "stroke-width": 1.6, "stroke-dasharray": "5 3",
+      "marker-end": "url(#famBoxArrow)" }));
+    const mx = .25 * p0.x + .5 * c.cx + .25 * p1.x,
+          my = .25 * p0.y + .5 * c.cy + .25 * p1.y;
+    gTB.appendChild(el("circle", { cx: fam1(mx), cy: fam1(my), r: 7.5, fill: "var(--panel)" }));
+    gTB.appendChild(el("text", { x: fam1(mx), y: fam1(my + 3.2), "text-anchor": "middle",
+      "font-family": "var(--serif)", "font-size": "10", fill: "var(--rust)" }, "◯"));
+  });
+  svg.appendChild(gB);
+
+  /* ── meet and join junctions: the glyph sits ON the result node ── */
+  const JUNC = [];
+  for (let k = 1; k <= 3; k++) {
+    JUNC.push(["∧", "t" + (2 * k + 1), "up",   ["c" + k, "g" + k]]);
+    JUNC.push(["∨", "s" + k,           "down", ["c" + k, "t" + (2 * k + 2)]]);
+    JUNC.push(["∧", "w" + k,           "up",   ["g" + k, "t" + (2 * k + 4)]]);
+  }
+  const JOFF = [22, -22, 36, -36, 54, -54, 75, -75, 100, -100, 140, -140, 190, -190];
+  JUNC.forEach(([sym, id, side, ops]) => {
+    /* the glyph rides on the border: tangent to it, so it covers no label, and
+       nudged off centre so the edge through the node's centre line survives */
+    const n = N(id), j = { x: n.x + 15,
+                           y: n.y + (side === "up" ? -1 : 1) * (n.h / 2 + 6) };
+    ops.forEach(o => {
+      const c = famCurve(N(o), j, [o, id], JOFF);
+      const p0 = famEdgePt(N(o), c.cx, c.cy, 1);
+      gJ.appendChild(el("path", { d: famQ(p0, c, j), fill: "none",
+        stroke: "var(--ink-soft)", "stroke-width": 1, opacity: ".5" }));
+    });
+    gTJ.appendChild(el("circle", { cx: j.x, cy: j.y, r: 7, fill: "var(--panel)",
+      stroke: "var(--ink-soft)", "stroke-width": 1.1 }));
+    gTJ.appendChild(el("text", { x: j.x, y: j.y + 3.3, "text-anchor": "middle",
+      "font-family": "var(--serif)", "font-size": "10", fill: "var(--ink)" }, sym));
+  });
+  svg.appendChild(gJ);
+
+  /* ── the antichain brackets: absence of edges, made deliberate ── */
+  [[466, "r",  "pairwise ⊬", null],
+   [740, "g",  "pairwise ⊬", 250],
+   [940, "bg", "pairwise ⊬", 180],
+   [848, "w",  "zigzag: wj ≤ wk iff k ≥ j+2", 520]].forEach(([x, grp, label, ly]) => {
+    const ys = [1, 2, 3].map(k => N(grp + k).y);
+    const y0 = Math.min.apply(null, ys) - 20, y1 = Math.max.apply(null, ys) + 20;
+    const col = grp === "w" ? "var(--zig)" : "var(--anti)";
+    gR.appendChild(el("path", {
+      d: `M ${x - 5} ${y0} L ${x} ${y0} L ${x} ${y1} L ${x - 5} ${y1}`,
+      fill: "none", stroke: col, "stroke-width": 1.1 }));
+    const my = ly === null ? (y0 + y1) / 2 : ly;
+    gR.appendChild(el("text", { x: x + 11, y: my, "text-anchor": "middle",
+      "font-family": "var(--sans)", "font-size": "8.5", fill: col,
+      transform: `rotate(-90 ${x + 11} ${my})` }, label));
+  });
+  svg.appendChild(gR);
+
+  /* ── the nodes ── */
+  FAMN.forEach(n => {
+    const A = FAM_ACC[n.fam];
+    const g = el("g", { class: "node", tabindex: "0",
+      "aria-label": `${n.name}, ${n.form}, ${n.kind}${n.old ? ", was " + n.old : ""}` });
+    g.appendChild(el("rect", { x: n.x - n.w / 2, y: n.y - n.h / 2, width: n.w, height: n.h,
+      rx: 6, fill: A[0], stroke: A[1], "stroke-width": A[3] }));
+    g.appendChild(el("text", { x: n.x, y: n.sub ? n.y - 1 : n.y + 4, "text-anchor": "middle",
+      "font-family": "var(--mono)", "font-size": "11.5", fill: A[2] }, n.name));
+    if (n.sub) g.appendChild(el("text", { x: n.x, y: n.y + 9.5, "text-anchor": "middle",
+      "font-family": "var(--serif)", "font-size": "8", fill: A[2] }, n.sub));
+    const v = famVerdict(n.id);
+    addPrimeGlyph(g, n.x, n.y, n.w / 2, n.h / 2, v);
+    const show = () => {
+      const nameOf = v.wkind === "rung" ? (k => "t " + k) : (k => NEWNAME[k]);
+      const formOf = v.wkind === "rung" ? (k => `{ ${truthSet(k).join(", ") || "∅"} }`) : (k => DICT[k].f);
+      document.getElementById("read-fam").innerHTML =
+        `<strong>${n.name}</strong> &nbsp; <span class="fml">${n.form}</span>`
+        + (n.exp ? ` <span class="muted">= ${n.exp}</span>` : "")
+        + `<br><span class="muted">${n.kind}</span>`
+        + `<br><span class="muted">`
+        + (n.old ? `was ${n.old}` : "no old q-name — beyond the dictionary")
+        + ` &nbsp;·&nbsp; Lean: <span style="font-family:var(--mono);font-size:12px">`
+        + `${n.thm}</span></span>`
+        + `<br>` + jpVerdictHtml(n.name, v, nameOf, formOf);
+    };
+    g.addEventListener("click", show);
+    g.addEventListener("focus", show);
+    gN.appendChild(g);
+  });
+  /* ◯-fixed badges, level captions, and the note by ⊤ */
+  ["t4", "t6"].forEach(id => {
+    const n = N(id);
+    gN.appendChild(el("text", { x: n.x - n.w / 2 - 6, y: n.y + 3, "text-anchor": "end",
+      "font-family": "var(--sans)", "font-size": "8.5", fill: "var(--rust)" }, "◯-fixed"));
+  });
+  for (let k = 1; k <= 3; k++)
+    gN.appendChild(el("text", { x: 200, y: 750 - 160 * k + 4, "text-anchor": "end",
+      "font-family": "var(--sans)", "font-size": "9.5", fill: "var(--ink-soft)" },
+      "level k = " + k));
+  gN.appendChild(el("text", { x: 386, y: 30, "font-family": "var(--sans)",
+    "font-size": "9.5", fill: "var(--ink-soft)" },
+    "⊤ — above everything drawn; below it the ladder never stops"));
+  svg.appendChild(gN);
+  svg.appendChild(gTB);  /* ◯ marks ride on top of the boxes */
+  svg.appendChild(gTJ);  /* junction glyphs ride on top of the boxes */
+
+  /* operation-links visibility follows the two checkboxes in the rail */
+  gB.style.display = famShowBox ? "" : "none";
+  gTB.style.display = famShowBox ? "" : "none";
+  gJ.style.display = famShowJoin ? "" : "none";
+  gTJ.style.display = famShowJoin ? "" : "none";
+
+  document.getElementById("stage-fam").replaceChildren(svg);
+  document.getElementById("stage-fam").classList.toggle("jp-focus",
+    document.getElementById("tog-jp-fam").checked);
+}
+
+/* ── wiring ── */
+const range = document.getElementById("nrange");
+range.addEventListener("input", () => {
+  document.getElementById("nval").textContent = range.value;
+  renderLadder(parseInt(range.value, 10));
+});
+/* scoped to chips that actually carry a rung count: plain ".chip" would also match
+   the op buttons, the toggle/export chips below, etc. and silently reset N (a latent
+   bug this scoping also happens to fix — see the final report) */
+document.querySelectorAll(".chip[data-n]").forEach(c =>
+  c.addEventListener("click", () => {
+    range.value = c.dataset.n;
+    range.dispatchEvent(new Event("input"));
+  }));
+
+/* "show only visible points" — each toggle just re-renders its own tab, which
+   re-reads the checkbox at the end and (de)dims the non-join-prime nodes.    */
+document.getElementById("tog-jp-ladder").addEventListener("change",
+  () => renderLadder(parseInt(range.value, 10)));
+document.getElementById("tog-jp-dict").addEventListener("change", renderDict);
+document.getElementById("tog-jp-fam").addEventListener("change", renderFamilies);
+
+const tabs = [["tab-ladder","p-ladder"],["tab-dict","p-dict"],
+              ["tab-fam","p-fam"],["tab-tab","p-tab"]];
+tabs.forEach(([tid, pid]) =>
+  document.getElementById(tid).addEventListener("click", () => {
+    tabs.forEach(([t, p]) => {
+      const on = t === tid;
+      document.getElementById(t).setAttribute("aria-selected", on ? "true" : "false");
+      document.getElementById(p).hidden = !on;
+    });
+  }));
+
+/* ── operation-links toggle (Families tab) ── */
+const togBox = document.getElementById("tog-box"), togJoin = document.getElementById("tog-join");
+function applyOpLinks() {
+  famShowBox = togBox.checked; famShowJoin = togJoin.checked;
+  const setG = (id, show) => { const g = document.getElementById(id);
+    if (g) g.style.display = show ? "" : "none"; };
+  setG("famBoxArrows", famShowBox); setG("famBoxLabels", famShowBox);
+  setG("famJoinLinks", famShowJoin); setG("famJoinLabels", famShowJoin);
+}
+togBox.addEventListener("change", applyOpLinks);
+togJoin.addEventListener("change", applyOpLinks);
+document.getElementById("tog-all-on").addEventListener("click", () => {
+  togBox.checked = true; togJoin.checked = true; applyOpLinks();
+});
+document.getElementById("tog-all-off").addEventListener("click", () => {
+  togBox.checked = false; togJoin.checked = false; applyOpLinks();
+});
+
+/* ── full screen, with a graceful fallback to an in-page expanded view ── */
+function wireFullscreen(wrapId, btnId) {
+  const wrap = document.getElementById(wrapId), btn = document.getElementById(btnId);
+  if (!wrap || !btn) return;
+  const isOn = () => document.fullscreenElement === wrap || wrap.classList.contains("expanded");
+  const sync = () => { btn.textContent = isOn() ? "Exit full screen" : "Full screen"; };
+  function enter() {
+    const req = wrap.requestFullscreen || wrap.webkitRequestFullscreen;
+    if (req) {
+      Promise.resolve(req.call(wrap)).catch(() => wrap.classList.add("expanded")).then(sync);
+      /* Safari's webkitRequestFullscreen has no promise return; sync via the event too */
+    } else {
+      wrap.classList.add("expanded");
+    }
+    sync();
+  }
+  function exit() {
+    if (document.fullscreenElement === wrap) {
+      const ex = document.exitFullscreen || document.webkitExitFullscreen;
+      if (ex) ex.call(document);
+    }
+    wrap.classList.remove("expanded");
+    sync();
+  }
+  btn.addEventListener("click", () => (isOn() ? exit() : enter()));
+  document.addEventListener("fullscreenchange", sync);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && wrap.classList.contains("expanded")) exit();
+  });
+}
+
+/* ── SVG / PNG export, no libraries: serialise the live SVG, inlining the current
+   theme's CSS custom properties so the exported file renders correctly standalone
+   (a plain var(--x) reference means nothing once detached from this page's :root). ── */
+const THEME_VARS = ["--ink","--ink-soft","--paper","--panel","--rule","--green","--green-fill",
+  "--green-text","--slate","--slate-fill","--rust","--rust-fill","--chain","--chain-fill",
+  "--chain-text","--anti","--anti-fill","--anti-text","--zig","--zig-fill"];
+function snapshotThemeCss() {
+  const cs = getComputedStyle(document.documentElement);
+  return ":root{" + THEME_VARS.map(v => v + ":" + (cs.getPropertyValue(v).trim() || "#888") + ";").join("") + "}";
+}
+function exportableSvg(svgEl) {
+  const clone = svgEl.cloneNode(true);
+  clone.setAttribute("xmlns", SVGNS);
+  const style = document.createElementNS(SVGNS, "style");
+  style.textContent = snapshotThemeCss();
+  clone.insertBefore(style, clone.firstChild);
+  const vb = (clone.getAttribute("viewBox") || "0 0 100 100").split(/\s+/).map(Number);
+  const bg = document.createElementNS(SVGNS, "rect");
+  bg.setAttribute("x", vb[0]); bg.setAttribute("y", vb[1]);
+  bg.setAttribute("width", vb[2]); bg.setAttribute("height", vb[3]);
+  bg.setAttribute("fill", "var(--panel)");
+  clone.insertBefore(bg, style.nextSibling);
+  return clone;
+}
+function svgSource(svgEl) {
+  return '<?xml version="1.0" encoding="UTF-8"?>\n' + new XMLSerializer().serializeToString(exportableSvg(svgEl));
+}
+function triggerDownload(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+function downloadSVG(svgEl, filename) {
+  triggerDownload(new Blob([svgSource(svgEl)], { type: "image/svg+xml;charset=utf-8" }), filename);
+}
+function downloadPNG(svgEl, filename) {
+  const scale = 2;
+  const xml = svgSource(svgEl);
+  const url = URL.createObjectURL(new Blob([xml], { type: "image/svg+xml;charset=utf-8" }));
+  const img = new Image();
+  img.onload = () => {
+    const vb = svgEl.viewBox && svgEl.viewBox.baseVal;
+    const w = (vb && vb.width) || img.width, h = (vb && vb.height) || img.height;
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(w * scale); canvas.height = Math.round(h * scale);
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    URL.revokeObjectURL(url);
+    canvas.toBlob(blob => {
+      if (blob) triggerDownload(blob, filename);
+      else alert("PNG export is not available in this browser — try Download SVG instead.");
+    }, "image/png");
+  };
+  img.onerror = () => { URL.revokeObjectURL(url);
+    alert("PNG export is not available in this browser — try Download SVG instead."); };
+  img.src = url;
+}
+function wireExport(prefix, stageId, withSvg) {
+  wireFullscreen("wrap-" + prefix, "fs-" + prefix);
+  const printBtn = document.getElementById("pr-" + prefix);
+  if (printBtn) printBtn.addEventListener("click", () => window.print());
+  if (!withSvg) return;
+  const getSvg = () => document.getElementById(stageId).querySelector("svg");
+  const svgBtn = document.getElementById("dlsvg-" + prefix);
+  const pngBtn = document.getElementById("dlpng-" + prefix);
+  if (svgBtn) svgBtn.addEventListener("click", () => {
+    const s = getSvg(); if (s) downloadSVG(s, "rn-explorer-" + prefix + ".svg");
+  });
+  if (pngBtn) pngBtn.addEventListener("click", () => {
+    const s = getSvg(); if (s) downloadPNG(s, "rn-explorer-" + prefix + ".png");
+  });
+}
+wireExport("ladder", "stage-ladder", true);
+wireExport("dict", "stage-dict", true);
+wireExport("fam", "stage-fam", true);
+wireExport("tab", "stage-tab", false);
+
+/* ── minimal representatives, from wip/rungPinned.lean ──
+   [compact form, full expansion or null, weight, textbook weight]      */
+const TMIN = {
+  0:["⊥",null,1,1], 1:["◯⊥",null,1,1], 2:["¬◯⊥",null,3,3],
+  3:["t1 ∨ t2","◯⊥ ∨ ¬◯⊥",5,5],
+  4:["t2 ⊃ t1","¬◯⊥ ⊃ ◯⊥",5,5],
+  5:["t2 ∨ t4","¬◯⊥ ∨ (¬◯⊥ ⊃ ◯⊥)",9,9],
+  6:["t4 ⊃ t1","(¬◯⊥ ⊃ ◯⊥) ⊃ ◯⊥",7,7],
+  7:["t4 ∨ t6","(¬◯⊥ ⊃ ◯⊥) ∨ ((¬◯⊥ ⊃ ◯⊥) ⊃ ◯⊥)",13,16],
+  8:["t6 ⊃ t3","((¬◯⊥ ⊃ ◯⊥) ⊃ ◯⊥) ⊃ (◯⊥ ∨ ¬◯⊥)",13,28],
+  9:["t6 ∨ t8",null,21,45],
+  10:["t8 ⊃ t5",null,23,62],
+  11:["t8 ∨ t10",null,37,108],
+  12:["t10 ⊃ t7",null,37,154],
+  13:["t10 ∨ t12",null,61,263]
+};
+/* pinned cross-relations (wip/rungPinned.lean) — displayed in the new naming;
+   the Lean statements there are phrased with the old q-names
+   (q1 = ⊤, q5 = c1, q8 = g1, q9 = s1, q12 = c2, q13 = ◯g1, q14 = r1)            */
+const PINNED = {
+  8: {above:["⊤","g1","◯g1","r1"], nle:["c1"], open:["s1","c2"]},
+  9: {above:["⊤"], below:["c1","s1"], nle:["c2"], open:["g1","◯g1","r1"]}
+};
+
+/* ── PCLL operation tables, harvested from wip/rnc_c_out.txt ──
+   cells: [op, i, j, k, pcllOnly]   open: [op, i, j]
+   op 0 ∧, 1 ∨, 2 ⊃, 3 ◯ (j unused)                                   */
+const RNC = {"cells":[[0,0,0,0,0],[1,0,0,0,0],[2,0,0,1,0],[0,0,1,0,0],[1,0,1,1,0],[2,0,1,1,0],[0,0,2,0,0],[1,0,2,2,0],[2,0,2,1,0],[0,0,3,0,0],[1,0,3,3,0],[2,0,3,1,0],[0,0,4,0,0],[1,0,4,4,0],[2,0,4,1,0],[0,0,5,0,0],[1,0,5,5,0],[2,0,5,1,0],[0,0,6,0,0],[1,0,6,6,0],[2,0,6,1,0],[0,0,7,0,0],[1,0,7,7,0],[2,0,7,1,0],[0,0,8,0,0],[1,0,8,8,0],[2,0,8,1,0],[0,0,9,0,0],[1,0,9,9,0],[2,0,9,1,0],[0,0,10,0,0],[1,0,10,10,0],[2,0,10,1,0],[0,0,11,0,0],[1,0,11,11,0],[2,0,11,1,0],[0,0,13,0,0],[2,0,13,1,0],[0,0,14,0,0],[2,0,14,1,0],[0,0,15,0,0],[2,0,15,1,0],[2,1,0,0,0],[0,1,1,1,0],[1,1,1,1,0],[2,1,1,1,0],[0,1,2,2,0],[1,1,2,1,0],[2,1,2,2,0],[0,1,3,3,0],[1,1,3,1,0],[2,1,3,3,0],[0,1,4,4,0],[1,1,4,1,0],[2,1,4,4,0],[0,1,5,5,0],[1,1,5,1,0],[2,1,5,5,0],[0,1,6,6,0],[1,1,6,1,0],[2,1,6,6,0],[0,1,7,7,0],[1,1,7,1,0],[2,1,7,7,0],[0,1,8,8,0],[1,1,8,1,0],[2,1,8,8,0],[0,1,9,9,0],[1,1,9,1,0],[2,1,9,9,0],[0,1,10,10,0],[1,1,10,1,0],[2,1,10,10,0],[0,1,11,11,0],[1,1,11,1,0],[2,1,11,11,0],[1,1,13,1,0],[1,1,14,1,0],[1,1,15,1,0],[2,2,0,3,0],[2,2,1,1,0],[0,2,2,2,0],[1,2,2,2,0],[2,2,2,1,0],[0,2,3,0,0],[1,2,3,4,0],[2,2,3,3,0],[0,2,4,2,0],[1,2,4,4,0],[2,2,4,1,0],[0,2,5,2,0],[1,2,5,5,0],[2,2,5,1,0],[0,2,6,2,0],[1,2,6,6,0],[2,2,6,1,0],[0,2,7,2,0],[1,2,7,7,0],[2,2,7,1,0],[0,2,8,2,0],[1,2,8,8,0],[2,2,8,1,0],[0,2,9,2,0],[1,2,9,9,0],[2,2,9,1,0],[0,2,10,2,0],[1,2,10,10,0],[2,2,10,1,0],[0,2,11,2,0],[1,2,11,11,0],[2,2,11,1,0],[0,2,13,2,0],[2,2,13,1,0],[0,2,14,2,0],[2,2,14,1,0],[0,2,15,2,0],[2,2,15,1,0],[2,3,0,6,0],[2,3,1,1,0],[2,3,2,6,0],[0,3,3,3,0],[1,3,3,3,0],[2,3,3,1,0],[0,3,4,3,0],[1,3,4,4,0],[2,3,4,1,0],[0,3,5,3,0],[1,3,5,5,0],[2,3,5,1,0],[0,3,6,0,0],[1,3,6,7,0],[2,3,6,6,0],[0,3,7,3,0],[1,3,7,7,0],[2,3,7,1,0],[0,3,8,3,0],[1,3,8,8,0],[2,3,8,1,0],[0,3,9,3,0],[1,3,9,9,0],[2,3,9,1,0],[0,3,10,3,0],[1,3,10,10,0],[2,3,10,1,0],[0,3,11,3,0],[1,3,11,11,0],[2,3,11,1,0],[0,3,13,3,0],[2,3,13,1,0],[0,3,14,3,0],[2,3,14,1,0],[0,3,15,3,0],[2,3,15,1,0],[2,4,0,0,0],[2,4,1,1,0],[2,4,2,6,0],[2,4,3,3,0],[0,4,4,4,0],[1,4,4,4,0],[2,4,4,1,0],[0,4,5,4,0],[1,4,5,5,0],[2,4,5,1,0],[0,4,6,2,0],[1,4,6,7,0],[2,4,6,6,0],[0,4,7,4,0],[1,4,7,7,0],[2,4,7,1,0],[0,4,8,4,0],[1,4,8,8,0],[2,4,8,1,0],[0,4,9,4,0],[1,4,9,9,0],[2,4,9,1,0],[0,4,10,4,0],[1,4,10,10,0],[2,4,10,1,0],[0,4,11,4,0],[1,4,11,11,0],[2,4,11,1,0],[0,4,13,4,0],[2,4,13,1,0],[0,4,14,4,0],[2,4,14,1,0],[0,4,15,4,0],[2,4,15,1,0],[2,5,0,0,0],[2,5,1,1,0],[2,5,2,6,0],[2,5,3,3,0],[2,5,4,8,0],[0,5,5,5,0],[1,5,5,5,0],[2,5,5,1,0],[0,5,6,2,0],[1,5,6,9,0],[2,5,6,6,0],[0,5,7,4,0],[1,5,7,9,0],[2,5,7,8,0],[0,5,8,4,0],[0,5,9,5,0],[1,5,9,9,0],[2,5,9,1,0],[0,5,10,5,0],[1,5,10,10,0],[2,5,10,1,0],[0,5,11,5,0],[1,5,11,11,0],[2,5,11,1,0],[0,5,13,5,0],[2,5,13,1,0],[0,5,14,5,0],[2,5,14,1,0],[2,6,0,3,0],[2,6,1,1,0],[2,6,2,10,0],[2,6,3,3,0],[2,6,4,10,0],[2,6,5,10,0],[0,6,6,6,0],[1,6,6,6,0],[2,6,6,1,0],[0,6,7,6,0],[1,6,7,7,0],[2,6,7,1,0],[0,6,8,6,0],[2,6,8,1,0],[0,6,9,6,0],[1,6,9,9,0],[2,6,9,1,0],[0,6,10,2,0],[1,6,10,11,0],[2,6,10,10,0],[0,6,11,6,0],[1,6,11,11,0],[2,6,11,1,0],[0,6,13,6,0],[2,6,13,1,0],[0,6,14,6,0],[2,6,14,1,0],[0,6,15,2,0],[2,7,0,0,0],[2,7,1,1,0],[2,7,2,2,0],[2,7,3,3,0],[2,7,4,10,0],[2,7,5,10,0],[2,7,6,6,0],[0,7,7,7,0],[1,7,7,7,0],[2,7,7,1,0],[0,7,8,7,0],[2,7,8,1,0],[0,7,9,7,0],[1,7,9,9,0],[2,7,9,1,0],[0,7,10,4,0],[1,7,10,11,0],[2,7,10,10,0],[0,7,11,7,0],[1,7,11,11,0],[2,7,11,1,0],[0,7,13,7,0],[2,7,13,1,0],[0,7,14,7,0],[2,7,14,1,0],[2,8,0,0,0],[2,8,1,1,0],[2,8,2,2,0],[2,8,3,3,0],[2,8,6,6,0],[0,8,8,8,0],[1,8,8,8,0],[2,8,8,1,0],[0,8,9,7,0],[0,8,10,15,0],[0,8,13,8,0],[2,8,13,1,0],[2,9,0,0,0],[2,9,1,1,0],[2,9,2,2,0],[2,9,3,3,0],[2,9,5,10,0],[2,9,6,6,0],[0,9,9,9,0],[1,9,9,9,0],[2,9,9,1,0],[0,9,10,5,0],[1,9,10,11,0],[2,9,10,10,0],[0,9,11,9,0],[2,9,11,1,0],[0,9,13,9,0],[2,9,13,1,0],[0,9,14,9,0],[2,9,14,1,0],[2,10,0,0,0],[2,10,1,1,0],[2,10,2,6,0],[2,10,3,3,0],[2,10,6,6,0],[0,10,10,10,0],[1,10,10,10,0],[2,10,10,1,0],[0,10,11,10,0],[1,10,11,11,0],[2,10,11,1,0],[2,11,0,0,0],[2,11,1,1,0],[2,11,2,2,0],[2,11,3,3,0],[2,11,6,6,0],[0,11,11,11,0],[1,11,11,11,0],[2,11,11,1,0],[2,13,0,0,0],[2,13,1,1,0],[2,13,2,2,0],[2,13,3,3,0],[2,13,6,6,0],[2,13,13,1,0],[2,14,0,0,0],[2,14,1,1,0],[2,14,2,2,0],[2,14,3,3,0],[2,14,6,6,0],[2,15,0,0,0],[2,15,1,1,0],[2,15,2,6,0],[2,15,3,3,0],[2,15,6,6,0],[2,15,10,1,0],[2,15,11,1,0],[2,15,15,1,0],[3,0,0,2,0],[3,1,0,1,0],[3,2,0,2,0],[3,3,0,5,0],[3,4,0,5,0],[3,5,0,5,0],[3,6,0,6,0],[3,7,0,9,1],[3,8,0,13,0],[3,9,0,9,1],[3,10,0,10,0]],"open":[[1,0,13],[1,0,14],[1,0,15],[0,1,13],[2,1,13],[0,1,14],[2,1,14],[0,1,15],[2,1,15],[1,2,13],[1,2,14],[1,2,15],[1,3,13],[1,3,14],[1,3,15],[1,4,13],[1,4,14],[1,4,15],[1,5,8],[2,5,8],[1,5,13],[1,5,14],[0,5,15],[2,5,15],[1,6,8],[1,6,13],[1,6,14],[2,6,15],[1,7,8],[1,7,13],[1,7,14],[0,7,15],[2,7,15],[1,8,9],[1,8,10],[2,8,10],[1,8,11],[2,8,11],[1,8,13],[1,8,14],[0,8,15],[1,8,15],[2,8,15],[2,9,4],[2,9,7],[2,9,8],[1,9,11],[1,9,13],[1,9,14],[0,9,15],[2,9,15],[2,10,5],[2,10,8],[2,10,9],[1,10,13],[2,10,13],[0,10,14],[1,10,14],[2,10,14],[0,10,15],[1,10,15],[2,10,15],[2,11,4],[2,11,5],[2,11,8],[2,11,9],[2,11,10],[1,11,13],[2,11,13],[0,11,14],[1,11,14],[2,11,14],[0,11,15],[1,11,15],[2,11,15],[2,13,4],[2,13,7],[2,13,8],[2,13,10],[2,13,11],[0,13,13],[1,13,13],[0,13,14],[1,13,14],[0,13,15],[1,13,15],[2,13,15],[2,14,4],[2,14,5],[2,14,8],[2,14,9],[2,14,10],[2,14,11],[2,14,13],[0,14,14],[1,14,14],[2,14,14],[0,14,15],[1,14,15],[2,14,15],[2,15,8],[2,15,13],[0,15,15],[1,15,15],[3,11,0],[3,13,0],[3,14,0]]};
+const REPS = [0,1,2,3,4,5,6,7,8,9,10,11,13,14,15];
+/* table index 15 is the harvested meet w15 = q8 ∧ q10 = g1 ∧ t6 — not the DICT
+   node 15 (which is the chain class c3), so it is named separately here          */
+const RNAME  = i => i === 15 ? "g1∧t6" : NEWNAME[i];
+const OLDNAME = i => i === 15 ? "w15" : "q" + i;
+const KINDOF  = i => i === 15 ? "meet g1 ∧ t6" : KIND[i];
+/* full formula of class i — the dictionary's own strings, plus w15 = q8 ∧ q10 */
+const QFORM = i => i === 15
+  ? "(◯¬◯⊥ ⊃ (◯⊥ ∨ ¬◯⊥)) ∧ (¬¬◯⊥ ⊃ ◯⊥)"
+  : DICT[i].f;
+const OPSYM = ["∧","∨","⊃","◯"];
+const CELLMAP = {}; RNC.cells.forEach(c => CELLMAP[c[0]+","+c[1]+","+c[2]] = c);
+const OPENSET = new Set(RNC.open.map(c => c[0]+","+c[1]+","+c[2]));
+
+/* ── unit laws ──
+   ⊤ and ⊥ decide their whole row and column for every class whatever, so
+   those cells were never really open. Index 0 is ⊥ (labelled t0), 1 is ⊤.
+   x ⊃ ⊥ is deliberately NOT covered: those are genuine negations.        */
+function unitLaw(op, i, j) {
+  if (op === 3) return null;                       /* ◯ takes no second argument */
+  if (op === 0) {                                  /* ∧ */
+    if (i === 1) return j;                         /* ⊤ ∧ x = x */
+    if (j === 1) return i;                         /* x ∧ ⊤ = x */
+    if (i === 0 || j === 0) return 0;              /* ⊥ ∧ x = x ∧ ⊥ = ⊥ */
+  } else if (op === 1) {                           /* ∨ */
+    if (i === 1 || j === 1) return 1;              /* ⊤ ∨ x = x ∨ ⊤ = ⊤ */
+    if (i === 0) return j;                         /* ⊥ ∨ x = x */
+    if (j === 0) return i;                         /* x ∨ ⊥ = x */
+  } else {                                         /* ⊃ */
+    if (i === 1) return j;                         /* ⊤ ⊃ x = x */
+    if (j === 1) return 1;                         /* x ⊃ ⊤ = ⊤ */
+    if (i === 0) return 1;                         /* ⊥ ⊃ x = ⊤ */
+  }
+  return null;
+}
+const UNIT_CLOSED = RNC.open.filter(c => unitLaw(c[0], c[1], c[2]) !== null).length;
+/* how many drawn cells the unit laws decide that carry no Lean certificate */
+let UNIT_CELLS = 0;
+[0, 1, 2].forEach(op => REPS.forEach(i => REPS.forEach(j => {
+  if (!CELLMAP[op + "," + i + "," + j] && unitLaw(op, i, j) !== null) UNIT_CELLS++;
+})));
+/* the blank "·" cells: neither a certificate, a unit law, nor a probe verdict — see
+   the "Status of the table" card. Computed the same way renderTable decides td.none,
+   so the legend count can never drift out of step with what is actually drawn.      */
+let NONE_CELLS = 0;
+[0, 1, 2].forEach(op => REPS.forEach(i => REPS.forEach(j => {
+  const key = op + "," + i + "," + j;
+  if (!CELLMAP[key] && unitLaw(op, i, j) === null && !OPENSET.has(key)) NONE_CELLS++;
+})));
+REPS.forEach(i => { const key = "3," + i + ",0";
+  if (!CELLMAP[key] && !OPENSET.has(key)) NONE_CELLS++; });
+
+/* ── join-primality: which points of the Esakia dual are visible ──
+   a ↦ ↑a = {x : a ≤ x} is always a filter, proper iff a ≠ ⊥; it is PRIME —
+   names a point of the dual X directly — iff a is join-prime:
+     a ≤ x ∨ y  ⟹  a ≤ x  or  a ≤ y,     for every x, y.
+   Join-primality quantifies over the WHOLE algebra, and RN(◯,{}) is
+   infinite, so nothing here can be tested exhaustively. Two independent,
+   exact sources of arithmetic are used, and nothing is claimed beyond what
+   they actually decide:
+     · t-rungs: truth-set arithmetic (rungMem/truthSet, live in N) — the
+       same order predicate as rnSub_order. No missing data.
+     · the 14 classes with a full certified operation table — t0..t7, ⊤,
+       c1, g1, s1, r1, ◯g1 (REPS minus c2 and the harvested w15) — using the
+       kernel-checked ∧/∨/⊃ cells (RNC above) plus the unit laws. Open cells
+       and the 2 PCLL-only cells are UNKNOWN: never evidence either way.
+   Every other drawn class (c2, c3, c4, the general ◯-chain, and every
+   family class at level k ≥ 2, plus w and Gmeet) has no join arithmetic the
+   page holds at all — reported NOT TESTED, which is a different thing from
+   "verified": there is no data to look for a counterexample in.            */
+const REPS_SCOPE = [0,1,2,3,4,5,6,7,8,9,10,11,13,14]; // DICT indices with a full ⊃/∨ table
+const REPS_RUNG  = {0:0,2:1,3:2,4:3,6:4,7:5,10:6,11:7}; // -> rung number, for the 8 that overlap
+
+function tableLe(a, b) {                 // a ≤ b, from the ⊃ table: a ⊃ b ≡ ⊤
+  if (a === b) return true;
+  const u = unitLaw(2, a, b);
+  if (u !== null) return u === 1;
+  const c = CELLMAP["2," + a + "," + b];
+  if (c && !c[4]) return c[3] === 1;      // certified, non-PCLL-only
+  return null;                            // open, blank, or PCLL-only: unknown
+}
+function tableJoin(a, b) {               // a ∨ b, from the ∨ table (commutative: try both orders)
+  if (a === b) return a;
+  const u = unitLaw(1, a, b);
+  if (u !== null) return u;
+  const c = CELLMAP["1," + a + "," + b] || CELLMAP["1," + b + "," + a];
+  if (c && !c[4]) return c[3];
+  return null;
+}
+
+/* exact truth-set sweep over a list of rung numbers — no unknowns. Used for
+   the Ladder tab (live in N) and for t8..t10 in the Families tab.          */
+function sweepLadderJoinPrime(rungs, setsOf, le) {
+  const out = {};
+  rungs.forEach(a => out[a] = { pairs: 0, refuted: false, witness: null });
+  /* memoise truth sets (array, for iteration, and Set, for O(1) membership) —
+     this runs with N up to 201, so recomputing setsOf(k) inside the innermost
+     loop would be wasteful.                                                 */
+  const arrCache = new Map(), setCache = new Map();
+  const arrOf = k => { let a = arrCache.get(k); if (!a) { a = setsOf(k); arrCache.set(k, a); } return a; };
+  const setOf = k => { let s = setCache.get(k); if (!s) { s = new Set(arrOf(k)); setCache.set(k, s); } return s; };
+  const subset = (smallArr, bigSet) => smallArr.every(v => bigSet.has(v));
+  /* le(a,b) = a ≤ b: an O(1) lookup into the caller's precomputed order
+     matrix when given (renderLadder already builds one via buildOrder), else
+     an O(|a|) fallback via truth-set inclusion.                             */
+  const leOf = le ? ((a, b) => !!le[a][b]) : ((a, b) => subset(arrOf(a), setOf(b)));
+  for (let xi = 0; xi < rungs.length; xi++) for (let yi = xi; yi < rungs.length; yi++) {
+    const x = rungs[xi], y = rungs[yi];
+    let uxySet = null;                                     /* the join's truth set, lazy */
+    rungs.forEach(a => {
+      if (out[a].refuted) return;
+      /* x and y are each ≤ x∨y (upper-bound property of joins), so a ≤ x or
+         a ≤ y already forces the premise a ≤ x∨y — no need to touch the
+         union at all in that (common) case, and it can never be a
+         counterexample. The union is only computed, once per (x,y), on the
+         rare pairs where NEITHER disjunct holds — the only place a
+         counterexample could be hiding.                                    */
+      if (leOf(a, x) || leOf(a, y)) { out[a].pairs++; return; }
+      if (!uxySet) { uxySet = new Set(arrOf(x)); for (const v of arrOf(y)) uxySet.add(v); }
+      if (!subset(arrOf(a), uxySet)) return;                /* premise a ≤ x∨y false too */
+      out[a].pairs++;
+      out[a].refuted = true; out[a].witness = [x, y];
+    });
+  }
+  return out;
+}
+/* certified-table sweep over REPS_SCOPE — open/PCLL-only cells contribute to
+   `skipped`, never to a verdict.                                          */
+function sweepTableJoinPrime(ids) {
+  const out = {};
+  ids.forEach(a => out[a] = { pairs: 0, skipped: 0, refuted: false, witness: null });
+  for (let xi = 0; xi < ids.length; xi++) for (let yi = xi; yi < ids.length; yi++) {
+    const x = ids[xi], y = ids[yi];
+    const j = tableJoin(x, y);
+    if (j === null) { ids.forEach(a => out[a].skipped++); continue; }
+    ids.forEach(a => {
+      if (out[a].refuted) return;
+      const aj = tableLe(a, j);
+      if (aj === null) { out[a].skipped++; return; }
+      if (!aj) return;                                   /* premise a ≤ x∨y false */
+      const ax = tableLe(a, x), ay = tableLe(a, y);
+      if (ax === null || ay === null) { out[a].skipped++; return; }
+      out[a].pairs++;
+      if (!ax && !ay) { out[a].refuted = true; out[a].witness = [x, y]; }
+    });
+  }
+  return out;
+}
+function mergeJPVerdict(tbl, lad) {
+  if (tbl && tbl.refuted) return { status: "reducible", witness: tbl.witness, wkind: "table" };
+  if (lad && lad.refuted) return { status: "reducible", witness: lad.witness, wkind: "rung" };
+  if (tbl || lad) return { status: "prime",
+    pairs: (tbl ? tbl.pairs : 0) + (lad ? lad.pairs : 0),
+    skipped: (tbl ? tbl.skipped : 0) };
+  return { status: "untested" };
+}
+
+/* ── upgrades from wip/visible.lean (landed adb7ad5, sorry-free) ──
+   Four more rungs are now PROVED visible (not just verified-in-scope), by two
+   mechanisms: t1/t2/t4 are Harrop outright — PLL's laxL rule has a succedent
+   restricted to ◯-formulas, so it can never fire against a disjunctive goal,
+   hence a boxed hypothesis can never help produce a disjunction and
+   Harrop(◯A) holds for ANY A; t6 is not itself Harrop (its consequent t3 is a
+   disjunction) but join-primality only depends on the interderivability
+   class, and t6 ⊣⊢ ¬¬◯⊥ ⊃ ◯⊥, whose consequent IS Harrop. Full citations and
+   the general axiom-free law behind t6 are in the "Why these are PROVED"
+   card. The odd-rung refutation is now also a single theorem general in k
+   (not_joinPrime_rnSub_odd), and the even rungs from t8 up are additionally
+   proved prime against every RUNG-SHAPED disjunct specifically
+   (rnSub_even_prime_on_rungs) — short of full join-primality, which needs an
+   exactness (completeness) theorem for the whole closed fragment that is not
+   available.                                                                */
+const RUNG_PROVED = {
+  1: { thm: "visible_rnSub_one", harropThm: "harrop_rnSub_one",
+       note: "◯⊥ is Harrop outright, by the box rule: laxL's succedent restriction means a boxed hypothesis can never help produce a disjunction." },
+  2: { thm: "visible_rnSub_two", harropThm: "harrop_rnSub_two",
+       note: "¬◯⊥ = ◯⊥ ⊃ ⊥ is Harrop: an implication is Harrop whenever its consequent is, and ⊥ always is." },
+  4: { thm: "visible_rnSub_four", harropThm: "harrop_rnSub_four",
+       note: "(◯⊥ ∨ ¬◯⊥) ⊃ ◯⊥ is Harrop: the ∨ sits in the antecedent (a position Harrop doesn't restrict), and the consequent ◯⊥ is Harrop by the same box rule as t1." },
+  6: { thm: "visible_rnSub_six", harropThm: null,
+       note: "t6 itself is NOT Harrop — its consequent t3 = ◯⊥ ∨ ¬◯⊥ is a disjunction. But join-primality is invariant under interderivability, and t6 ⊣⊢ ¬¬◯⊥ ⊃ ◯⊥ (rnSub_six_interd), whose consequent ◯⊥ IS Harrop." }
+};
+/* attach the visible.lean upgrades to a base verdict, given the rung number
+   it names (undefined for non-rung classes, which this leaves untouched)    */
+function enrichByRung(rung, v) {
+  if (rung === undefined || rung === null || !v) return v;
+  if (RUNG_PROVED[rung]) return Object.assign({}, v, { status: "proved", rungProved: RUNG_PROVED[rung] });
+  if (rung >= 3 && rung % 2 === 1 && v.status === "reducible")
+    return Object.assign({}, v, { generalThm: "not_joinPrime_rnSub_odd" });
+  if (rung >= 8 && rung % 2 === 0 && v.status === "prime")
+    return Object.assign({}, v, { rungOnlyThm: "rnSub_even_prime_on_rungs" });
+  return v;
+}
+
+/* a small ring (join-prime) or filled dot (join-reducible) at a node's
+   corner — never a colour change to the node itself. Nothing drawn at all
+   for "untested": absence of data must not look like a verdict.           */
+function addPrimeGlyph(g, cx, cy, hw, hh, v) {
+  if (!v || v.status === "untested") return;
+  const gx = cx + hw - 3, gy = cy - hh + 3;
+  if (v.status === "reducible") {
+    g.appendChild(el("circle", { cx: gx, cy: gy, r: 3, fill: "var(--rust)", stroke: "none" }));
+  } else {
+    g.appendChild(el("circle", { cx: gx, cy: gy, r: 3.6, fill: "var(--panel)",
+      stroke: v.status === "proved" ? "var(--green)" : "var(--ink-soft)", "stroke-width": 1.5 }));
+  }
+  g.classList.add("jp-" + v.status);
+}
+/* readout text for a join-primality verdict, given a display name for each
+   witness id (so it works with either rung numbers or REPS/DICT indices)   */
+function jpVerdictHtml(name, v, nameOf, formOf) {
+  if (!v || v.status === "untested")
+    return `<span class="muted">join-primality: <strong>not tested</strong> — no certified `
+      + `join/order data reaches this class in the page.</span>`;
+  if (v.status === "proved") {
+    if (v.rungProved) {
+      const rp = v.rungProved;
+      return `<span class="muted"><strong>join-prime — PROVED</strong> `
+        + `(<code>${rp.thm}</code>${rp.harropThm ? `, via <code>${rp.harropThm}</code>: Harrop ⟹ join-prime, <code>primeAll_of_harrop</code>` : ", via the interderivability route, <code>primeAll_of_harrop_rep</code>"}). `
+        + `${rp.note} A visible point — wip/visible.lean.</span>`;
+    }
+    return `<span class="muted"><strong>join-prime — PROVED</strong> `
+      + `(<code>visible_top</code>, packaging <code>disjunction_property</code> — F&amp;M Lemma 2.7(i): `
+      + `${name} ≤ x ∨ y ⟹ ${name} ≤ x or ${name} ≤ y, for every x, y in RN(◯,{}) — not scope-limited). `
+      + `A visible point: ↑⊤ = {⊤}.</span>`;
+  }
+  if (v.status === "prime") {
+    let extra = "";
+    if (v.rungOnlyThm) extra = `<br><span class="muted">Additionally <strong>PROVED</strong> join-prime `
+      + `against every RUNG-shaped disjunct specifically — general in k, not scope-limited for that `
+      + `restricted claim (<code>${v.rungOnlyThm}</code>). Full join-primality, against arbitrary closed `
+      + `formulas, stays open: the ladder model is exact only for the ◯⊥-generated sublattice, and `
+      + `join-primality quantifies over all closed formulas.</span>`;
+    if (v.harropNote) extra += `<br><span class="muted">The Harrop route doesn't reach this element `
+      + `either — its own defining consequent is itself a disjunction (<code>harrop_gap_succ</code>), `
+      + `so this verdict rests only on the certified operation table below, not a general theorem: `
+      + `genuinely open beyond what's shown.</span>`;
+    return `<span class="muted"><strong>join-prime — verified against the displayed elements</strong> `
+      + `(no counterexample among ${v.pairs} pair${v.pairs === 1 ? "" : "s"} tested`
+      + (v.skipped ? `, ${v.skipped} left undetermined by open/PCLL-only cells` : "") + `). `
+      + `Evidence, not a proof — an element outside this page could still refute it.</span>` + extra;
+  }
+  const [x, y] = v.witness;
+  let extra = "";
+  if (v.generalThm) extra = `<br><span class="muted"><strong>PROVED</strong> in general: `
+    + `<code>${v.generalThm}</code> refutes every odd rung t(2k+3), k ≥ 0, in one theorem — this isn't `
+    + `just true up to the N shown, so raising N can never turn an odd rung prime.</span>`;
+  return `<span class="muted"><strong>join-reducible — REFUTED</strong>: witness `
+    + `<span class="fml">${nameOf(x)} = ${formOf(x)}</span>, `
+    + `<span class="fml">${nameOf(y)} = ${formOf(y)}</span> — `
+    + `${name} ≤ ${nameOf(x)} ∨ ${nameOf(y)} but ${name} ⊄ ${nameOf(x)} and ${name} ⊄ ${nameOf(y)}. `
+    + `Not a visible point: ↑${name} is a filter but not prime.</span>` + extra;
+}
+
+function renderTable(op) {
+  const t = document.createElement("table");
+  t.className = "grid";
+  const cols = op === 3 ? [0] : REPS;
+  const showForm = n => {
+    document.getElementById("read-tab").innerHTML =
+      `<strong>${RNAME(n)}</strong> &nbsp; ${QFORM(n)}`
+      + `<br><span class="muted">was ${OLDNAME(n)} &nbsp;·&nbsp; ${KINDOF(n)}</span>`;
+  };
+  const hr = t.insertRow();
+  hr.appendChild(document.createElement("th"));
+  if (op !== 3) cols.forEach(j => { const th=document.createElement("th"); th.textContent=RNAME(j);
+    th.style.cursor="pointer"; th.addEventListener("click", () => showForm(j)); hr.appendChild(th); });
+  else { const th=document.createElement("th"); th.textContent="◯ of it"; hr.appendChild(th); }
+  REPS.forEach(i => {
+    const tr = t.insertRow();
+    const th = document.createElement("th"); th.textContent = RNAME(i);
+    th.style.cursor="pointer"; th.addEventListener("click", () => showForm(i)); tr.appendChild(th);
+    cols.forEach(j => {
+      const jj = op===3 ? 0 : j;
+      const key = op+","+i+","+jj;
+      const c = CELLMAP[key];
+      const u = c ? null : unitLaw(op, i, jj);
+      const td = tr.insertCell();
+      if (c) { td.className = c[4] ? "pcll" : "cert"; td.textContent = RNAME(c[3]); }
+      else if (u !== null) { td.className = "cert"; td.textContent = RNAME(u); }
+      else if (OPENSET.has(key)) { td.className = "open"; td.textContent = "?"; }
+      else { td.className = "none"; td.textContent = "·"; }
+      if (c || u !== null || OPENSET.has(key)) td.addEventListener("click", () => {
+        const lhs = op===3 ? `◯${RNAME(i)}` : `${RNAME(i)} ${OPSYM[op]} ${RNAME(j)}`;
+        const oldLhs = op===3 ? `◯${OLDNAME(i)}` : `${OLDNAME(i)} ${OPSYM[op]} ${OLDNAME(j)}`;
+        const res = c ? c[3] : u;
+        const parts = op===3 ? [i] : [i, j];
+        if (res !== null && !parts.includes(res)) parts.push(res);
+        const forms = parts.map(n =>
+          `<span class="fml">${RNAME(n)}</span> = ${QFORM(n)}`).join(" &nbsp;·&nbsp; ");
+        document.getElementById("read-tab").innerHTML = (c
+          ? `<strong>${lhs} ≡ ${RNAME(c[3])}</strong><br><span class="muted">`
+            + (c[4] ? "holds in PCLL only — no PLL proof; this is where distribution does the work"
+                    : "certified: <code>InterdU</code> in wip/rncCells.lean, kernel-checked")
+            + "</span>"
+          : u !== null
+          ? `<strong>${lhs} ≡ ${RNAME(u)}</strong><br><span class="muted">`
+            + "by unit law (⊤ ∧ φ ≡ φ etc.) — holds for every class; Lean: "
+            + "<code>top_and_interd</code> / <code>bot_or_interd</code> family in wip/gap2.lean"
+            + "</span>"
+          : `<strong>${lhs} ≡ ?</strong><br><span class="muted">unsettled — the probe ran on this pair and derived neither direction within its search budget; not a proof, not a refutation, not skipped</span>`)
+          + `<br><span style="font-size:12px">${forms}</span>`
+          + `<br><span class="muted" style="font-size:12px">was: ${oldLhs} ≡ `
+          + (res !== null ? `${OLDNAME(res)} &nbsp;·&nbsp; ${KINDOF(res)}` : "?")
+          + `</span>`;
+      });
+    });
+  });
+  document.getElementById("stage-tab").replaceChildren(t);
+}
+document.querySelectorAll(".opb").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".opb").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+  renderTable(parseInt(b.dataset.op, 10));
+}));
+
+/* the ⊤ and ⊥ rows and columns are no longer shown as open: the unit laws settle
+   them for every class, so the count actually drawn as "open" (pale, "?") is lower
+   than the raw probe output — computed the same way renderTable decides td.open,
+   so this line and the table can never disagree with each other.                 */
+document.getElementById("t-openline").innerHTML =
+  `<strong>${RNC.open.length - UNIT_CLOSED}</strong> unsettled — the probe <em>ran</em> on every `
+  + `one of these (the ⊤/⊥ rows are closed by unit law instead) and came back with neither a `
+  + `proof nor a refutation, within its search budget. Not proved, not refuted, not skipped.`;
+document.getElementById("t-unitline").innerHTML =
+  `<strong>${UNIT_CELLS}</strong> more by <strong>unit law</strong> — the ⊤ and ⊥ row and column, `
+  + `where ⊤ ∧ φ ≡ φ and its siblings decide the cell for every class whatever. Same green, but the `
+  + `readout says which it is.`;
+document.getElementById("t-noneline").innerHTML =
+  `<strong>${NONE_CELLS}</strong> blank (<span class="fml">·</span>) — combinations the probe run `
+  + `never recorded at all: some are the commutative mirror of a pair already shown the other way `
+  + `round (<span class="fml">∧</span>, <span class="fml">∨</span> only), the rest are genuinely `
+  + `outside what this run covered. Different from "unsettled" above — these were not run.`;
+
+renderLadder(9);
+renderDict();
+renderFamilies();
+renderTable(0);
+</script>

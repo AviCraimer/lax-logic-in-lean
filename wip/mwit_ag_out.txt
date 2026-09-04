@@ -1,0 +1,53 @@
+=== MwitResidue/RankGap DEEP probe: lifted ladder truncations, rung pool to 90 ===
+models=294; rung pool: 90 rungs, max crank 46; rslope levels 0,3,9,21,45,…
+=== MODE Rdeep: 294 models, 174 confluent ===
+  [Rdeep heartbeat] iK=0/294 pairs=174 elapsed=2487ms configs=[0, 0] live=[0, 0] fails=[0, 0]
+  LIVE CONFIG reached [Rdeep/cl1={⊥,p,◯⊥,◯p}]: d=2 stab=5
+    K: n=9 ri=[(2, 0), (3, 0), (3, 1), (4, 0), (4, 1), (4, 2), (5, 0), (5, 1), (5, 2), (5, 3), (6, 0), (6, 1), (6, 2), (6, 3), (6, 4), (7, 0), (7, 1), (7, 2), (7, 3), (7, 4), (7, 5), (0, 8), (1, 8), (2, 8), (3, 8), (4, 8), (5, 8), (6, 8), (7, 8)] rm=[(0, 8), (1, 8), (2, 8)] fall=[8] val=[(0, p), (8, p)] (frame #3)
+    M: n=9 ri=[(2, 0), (3, 0), (3, 1), (4, 0), (4, 1), (4, 2), (5, 0), (5, 1), (5, 2), (5, 3), (6, 0), (6, 1), (6, 2), (6, 3), (6, 4), (7, 0), (7, 1), (7, 2), (7, 3), (7, 4), (7, 5), (0, 8), (1, 8), (2, 8), (3, 8), (4, 8), (5, 8), (6, 8), (7, 8)] rm=[(0, 8)] fall=[8] val=[] (frame #0)
+    k'=2 k=1 kv=0 κ=1 m'=0 m=0 u'=0 Δ={◯⊥,◯p} tr(kv)={p,◯⊥,◯p}
+  [Rdeep heartbeat] iK=25/294 pairs=4524 elapsed=54091ms configs=[42564, 89532] live=[6228, 0] fails=[0, 0]
+  [Rdeep heartbeat] iK=50/294 pairs=6786 elapsed=85843ms configs=[360192, 407160] live=[323856, 0] fails=[0, 0]
+  [Rdeep heartbeat] iK=75/294 pairs=11136 elapsed=146148ms configs=[952572, 1061028] live=[844932, 0] fails=[0, 0]
+  [Rdeep heartbeat] iK=125/294 pairs=17748 elapsed=250157ms configs=[2688240, 2948904] live=[2462136, 0] fails=[0, 0]
+  [Rdeep heartbeat] iK=175/294 pairs=23316 elapsed=360663ms configs=[5724120, 6070128] live=[5306256, 0] fails=[0, 0]
+  [Rdeep heartbeat] iK=225/294 pairs=28884 elapsed=441234ms configs=[6884928, 7230936] live=[5331168, 0] fails=[0, 0]
+=== MODE Rdeep RESULTS (pairs=30276) ===
+  stabilisation histogram: 5:30276 
+  cl1={⊥,p,◯⊥,◯p}:
+    configs=6884928 (LIVE: 5331168) | instances=53863082 GIVEN=53863082 OTHER=0 FAIL=0
+    LIVE-window instances=43959024 GIVEN=43959024 OTHER=0 FAIL=0
+    NON-RIGID (u' ≠ m): configs=1961316 (live 1833552) | instances=16025668 GIVEN=16025668 OTHER=0 FAIL=0
+    ALL-GROW instances=0 (live 0) | GIVEN=0 OTHER=0 FAIL=0
+    ALL-GROW winning answers: same-trace kb=k:0 kb=k':0 kb=κ:0 kb=kv:0 kb=other:0 | grown-T:0
+  cl3=Sub(◯(◯p⊃p))∪{⊥}∪boxOf:
+    configs=7230936 (LIVE: 0) | instances=64915168 GIVEN=64915168 OTHER=0 FAIL=0
+    LIVE-window instances=0 GIVEN=0 OTHER=0 FAIL=0
+    NON-RIGID (u' ≠ m): configs=1961316 (live 0) | instances=18584750 GIVEN=18584750 OTHER=0 FAIL=0
+    ALL-GROW instances=0 (live 0) | GIVEN=0 OTHER=0 FAIL=0
+    ALL-GROW winning answers: same-trace kb=k:0 kb=k':0 kb=κ:0 kb=kv:0 kb=other:0 | grown-T:0
+=== MODE Rdeep done in 457910 ms ===
+=== MODE Gdeep: 294 models, 174 confluent ===
+  [Gdeep heartbeat] iK=0/294 pairs=294 elapsed=3303ms configs=[0, 0] live=[0, 0] fails=[0, 0]
+  [Gdeep heartbeat] iK=25/294 pairs=7644 elapsed=73040ms configs=[43374, 90882] live=[0, 0] fails=[0, 0]
+  [Gdeep heartbeat] iK=50/294 pairs=11466 elapsed=114038ms configs=[389460, 436968] live=[0, 0] fails=[0, 0]
+  [Gdeep heartbeat] iK=75/294 pairs=18816 elapsed=191408ms configs=[1028346, 1138098] live=[0, 0] fails=[0, 0]
+  [Gdeep heartbeat] iK=125/294 pairs=29988 elapsed=322041ms configs=[2908296, 3171228] live=[0, 0] fails=[0, 0]
+  [Gdeep heartbeat] iK=175/294 pairs=39396 elapsed=457685ms configs=[6312216, 6660492] live=[0, 0] fails=[0, 0]
+  [Gdeep heartbeat] iK=225/294 pairs=48804 elapsed=567123ms configs=[8145918, 8494194] live=[0, 0] fails=[0, 0]
+=== MODE Gdeep RESULTS (pairs=51156) ===
+  stabilisation histogram: 0:2592 1:15480 2:21024 3:11088 4:648 7:36 8:144 9:36 10:72 11:36 
+  cl1={⊥,p,◯⊥,◯p}:
+    configs=8145918 (LIVE: 0) | instances=63108350 GIVEN=63108350 OTHER=0 FAIL=0
+    LIVE-window instances=0 GIVEN=0 OTHER=0 FAIL=0
+    NON-RIGID (u' ≠ m): configs=2238312 (live 0) | instances=18084384 GIVEN=18084384 OTHER=0 FAIL=0
+    ALL-GROW instances=0 (live 0) | GIVEN=0 OTHER=0 FAIL=0
+    ALL-GROW winning answers: same-trace kb=k:0 kb=k':0 kb=κ:0 kb=kv:0 kb=other:0 | grown-T:0
+  cl3=Sub(◯(◯p⊃p))∪{⊥}∪boxOf:
+    configs=8494194 (LIVE: 0) | instances=76343418 GIVEN=76343418 OTHER=0 FAIL=0
+    LIVE-window instances=0 GIVEN=0 OTHER=0 FAIL=0
+    NON-RIGID (u' ≠ m): configs=2238312 (live 0) | instances=21144136 GIVEN=21144136 OTHER=0 FAIL=0
+    ALL-GROW instances=0 (live 0) | GIVEN=0 OTHER=0 FAIL=0
+    ALL-GROW winning answers: same-trace kb=k:0 kb=k':0 kb=κ:0 kb=kv:0 kb=other:0 | grown-T:0
+=== MODE Gdeep done in 589145 ms ===
+EXIT=0

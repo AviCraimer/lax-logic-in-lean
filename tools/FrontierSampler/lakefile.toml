@@ -1,0 +1,20 @@
+name = "frontierSampler"
+version = "0.1.0"
+keywords = ["testing", "property-based-testing", "quickcheck"]
+defaultTargets = ["FrontierSampler"]
+
+[leanOptions]
+autoImplicit = false
+
+# NO DEPENDENCIES.  Generation is delegated through the `SeedGen` function
+# type, so `Plausible.Gen` (or any other generator) plugs in from the caller's
+# side with a one-line adapter (see README, "Using Plausible").  A package
+# that only wants the stratification / gating / corpus layer therefore pays
+# nothing for it.
+
+[[lean_lib]]
+name = "FrontierSampler"
+
+[[lean_exe]]
+name = "fsdemo"
+root = "FrontierSampler.Demo"

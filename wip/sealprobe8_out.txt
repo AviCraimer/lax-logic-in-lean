@@ -1,0 +1,4 @@
+== is the floor branch at a boxed goal true?  exhaustive stages ==
+
+fuel 2, C = ◯s   (hypothesis weight 492, goal weight 116)
+      bounded  (find 20k)              : ~ (positive stage cut at 20000)  (1504 ms)

@@ -1,0 +1,4 @@
+== roomhunt, stage sharp ==
+impgate/D fuel=3 c=room=3: P active=false |A@c|=167 (21 ms)
+impgate/D fuel=4 c=room=3: ~ active=true |A@c|=407 (88919 ms)
+impgate/D fuel=5 c=room=3: ~ active=true |A@c|=671 (227226 ms)

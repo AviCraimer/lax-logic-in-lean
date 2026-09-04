@@ -1,0 +1,23 @@
+===== THE OPEN CELL: q12 |- q9 =====
+  q12 = ◯(((◯False) ⊃ False) ∨ (((◯False) ⊃ False) ⊃ False))
+  q9  = (◯((◯False) ⊃ False)) ∨ (((◯False) ⊃ False) ⊃ False)
+  weights: q12 12, q9 12
+
+    bounded 200k             : ~ (closure 8 > cap 0)   (0 ms)
+    EXHAUSTIVE positive      : ~ (closure 8 > cap 0)   (0 ms)
+    EXHAUSTIVE + emitter 120 : ALL STAGES COMPLETE, NONE CERTIFIED (search exhausted, battery and emitter empty)   (19 ms)
+
+  the closed form:
+    |- q12 -> q9, exhaustive : ALL STAGES COMPLETE, NONE CERTIFIED (search exhausted, battery and emitter empty)   (821 ms)
+
+===== THE OTHER OPEN CELL THE LADDER HITS: box q11 (rung 7) =====
+  q11 = (((◯False) ⊃ False) ⊃ False) ∨ ((((◯False) ⊃ False) ⊃ False) ⊃ (◯False))
+    |- box q11, exhaustive   : ALL STAGES COMPLETE, NONE CERTIFIED (search exhausted, battery and emitter empty)   (16 ms)
+    box q11 |- q1 (= top)    : PROVED (2 nodes)   (1 ms)
+
+===== CONTROL: a cell known PROVED, same shape =====
+    |- q12 -> q10 (certified) : REFUTED  n=3 ri=[(0, 1), (1, 2), (0, 2)] rm=[(1, 2)] fall=[2] val=[] at 0
+[infallible=false, mutually-confluent=true]   (0 ms)
+
+===== done =====
+EXIT=0

@@ -1,0 +1,33 @@
+# === round-9 lift-through-the-box probe (g9x) ===
+# M2  2-chain, x y z at top: ROW f=3 refuted=true  UNBOXED f=4 refuted=true
+# N2  2-chain, x y at top, no z: ROW f=3 refuted=false  UNBOXED f=4 refuted=false
+# N3a 3-chain, rm full, x y at top: ROW f=3 refuted=false  UNBOXED f=4 refuted=false
+# N3b 3-chain, rm step-only, x y at top: ROW f=3 refuted=false  UNBOXED f=4 refuted=false
+# N3c 3-chain, rm=[(0,1),(1,2)], x y at 1 and 2: ROW f=3 refuted=false  UNBOXED f=4 refuted=false
+# N4a 4-chain, rm full, x y at top: ROW f=3 refuted=false  UNBOXED f=4 refuted=false
+# N4b 4-chain, rm step-only, x y at top: ROW f=3 refuted=false  UNBOXED f=4 refuted=false
+# N4c 4-chain, rm step-only, x y at 2 and 3: ROW f=3 refuted=false  UNBOXED f=4 refuted=false
+# N5a 5-chain, rm step-only, x y at top: ROW f=3 refuted=false  UNBOXED f=4 refuted=false
+# M2  2-chain, x y z at top: BD b=1 f4=false f5=false f6=false f7=false
+# N2  2-chain, x y at top, no z: BD b=1 f4=false f5=false f6=false f7=false
+# N3a 3-chain, rm full, x y at top: BD b=1 f4=false f5=false f6=false f7=false
+# N3b 3-chain, rm step-only, x y at top: BD b=1 f4=false f5=false f6=false f7=false
+# N3c 3-chain, rm=[(0,1),(1,2)], x y at 1 and 2: BD b=1 f4=false f5=false f6=false f7=false
+# N4a 4-chain, rm full, x y at top: BD b=1 f4=false f5=false f6=false f7=false
+# N4b 4-chain, rm step-only, x y at top: BD b=1 f4=false f5=false f6=false f7=false
+# N4c 4-chain, rm step-only, x y at 2 and 3: BD b=1 f4=false f5=false f6=false f7=false
+# N5a 5-chain, rm step-only, x y at top: BD b=1 f4=false f5=false f6=false f7=false
+# M2  2-chain, x y z at top: GRA b=2 c=1 f3=false f4=false f5=false f6=false
+# N2  2-chain, x y at top, no z: GRA b=2 c=1 f3=false f4=false f5=false f6=false
+# N3a 3-chain, rm full, x y at top: GRA b=2 c=1 f3=false f4=false f5=false f6=false
+# N3b 3-chain, rm step-only, x y at top: GRA b=2 c=1 f3=false f4=false f5=false f6=false
+# N3c 3-chain, rm=[(0,1),(1,2)], x y at 1 and 2: GRA b=2 c=1 f3=false f4=false f5=false f6=false
+# N4a 4-chain, rm full, x y at top: GRA b=2 c=1 f3=false f4=false f5=false f6=false
+# N4b 4-chain, rm step-only, x y at top: GRA b=2 c=1 f3=false f4=false f5=false f6=false
+# N4c 4-chain, rm step-only, x y at 2 and 3: GRA b=2 c=1 f3=false f4=false f5=false f6=false
+# N5a 5-chain, rm step-only, x y at top: GRA b=2 c=1 f3=false f4=false f5=false f6=false
+# BATTERY BD f=5 b=1 sz=1075
+#   battery quiet
+# BATTERY BD f=6 b=1 sz=1283
+#   battery quiet
+# === g9x done ===

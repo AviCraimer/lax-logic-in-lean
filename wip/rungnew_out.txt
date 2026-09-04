@@ -1,0 +1,15 @@
+===== do rungs 8+ give NEW classes? =====
+
+-- first, the small forms agree with rnSub on rungs 0..7 (sanity) --
+  s 0 vs rnSub 0: OK   (weights 1 vs 1)
+  s 1 vs rnSub 1: OK   (weights 2 vs 2)
+  s 2 vs rnSub 2: OK   (weights 4 vs 4)
+  s 3 vs rnSub 3: OK   (weights 7 vs 7)
+  s 4 vs rnSub 4: OK   (weights 6 vs 10)
+  s 5 vs rnSub 5: OK   (weights 11 vs 18)
+  s 6 vs rnSub 6: OK   (weights 9 vs 26)
+  s 7 vs rnSub 7: OK   (weights 16 vs 45)
+
+-- now rungs 8..13 against every dictionary class --
+  rung 8 (weight 28): NEW — matches none of the 15
+  rung 9 (weight 45): NEW — matches none of the 15

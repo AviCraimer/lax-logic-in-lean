@@ -1,0 +1,26 @@
+# === round-9 modal-predecessor probe (g9w) ===
+# P3a 3-chain rm=[(0,1),(1,2)] xyz@2: ROW@w0=false ROW@w1=false ◯ROW=false ROW⊢◯=false
+# P3b 3-chain rm full xyz@2: ROW@w0=true ROW@w1=true ◯ROW=false ROW⊢◯=false
+# P3c 3-chain rm=[(1,2)] xyz@2: ROW@w0=true ROW@w1=true ◯ROW=true ROW⊢◯=true
+# P3d 3-chain rm=[(0,1),(1,2)] xyz@1,2: ROW@w0=false ROW@w1=false ◯ROW=false ROW⊢◯=false
+# P4a 4-chain rm=[(0,1),(1,2),(2,3)] xyz@3: ROW@w0=false ROW@w1=false ◯ROW=false ROW⊢◯=false
+# P4b 4-chain rm full xyz@3: ROW@w0=true ROW@w1=true ◯ROW=false ROW⊢◯=false
+# P4c 4-chain rm=[(0,1),(1,2),(2,3)] xyz@2,3: ROW@w0=false ROW@w1=false ◯ROW=false ROW⊢◯=false
+# P4d 4-chain rm=[(0,1),(1,2),(1,3),(2,3)] xyz@3: ROW@w0=false ROW@w1=false ◯ROW=false ROW⊢◯=false
+# P3a 3-chain rm=[(0,1),(1,2)] xyz@2: BD b=1 f4=false f5=false f6=false f7=false
+# P3b 3-chain rm full xyz@2: BD b=1 f4=false f5=false f6=false f7=false
+# P3c 3-chain rm=[(1,2)] xyz@2: BD b=1 f4=false f5=true f6=true f7=true
+# P3d 3-chain rm=[(0,1),(1,2)] xyz@1,2: BD b=1 f4=false f5=false f6=false f7=false
+# P4a 4-chain rm=[(0,1),(1,2),(2,3)] xyz@3: BD b=1 f4=false f5=false f6=false f7=false
+# P4b 4-chain rm full xyz@3: BD b=1 f4=false f5=false f6=false f7=false
+# P4c 4-chain rm=[(0,1),(1,2),(2,3)] xyz@2,3: BD b=1 f4=false f5=false f6=false f7=false
+# P4d 4-chain rm=[(0,1),(1,2),(1,3),(2,3)] xyz@3: BD b=1 f4=false f5=false f6=false f7=false
+# P3a 3-chain rm=[(0,1),(1,2)] xyz@2: GRA b=2 c=1 f3=false f4=false f5=false f6=false
+# P3b 3-chain rm full xyz@2: GRA b=2 c=1 f3=false f4=false f5=false f6=false
+# P3c 3-chain rm=[(1,2)] xyz@2: GRA b=2 c=1 f3=false f4=true f5=true f6=true
+# P3d 3-chain rm=[(0,1),(1,2)] xyz@1,2: GRA b=2 c=1 f3=false f4=false f5=false f6=false
+# P4a 4-chain rm=[(0,1),(1,2),(2,3)] xyz@3: GRA b=2 c=1 f3=false f4=false f5=false f6=false
+# P4b 4-chain rm full xyz@3: GRA b=2 c=1 f3=false f4=false f5=false f6=false
+# P4c 4-chain rm=[(0,1),(1,2),(2,3)] xyz@2,3: GRA b=2 c=1 f3=false f4=false f5=false f6=false
+# P4d 4-chain rm=[(0,1),(1,2),(1,3),(2,3)] xyz@3: GRA b=2 c=1 f3=false f4=false f5=false f6=false
+# === g9w done ===

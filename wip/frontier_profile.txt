@@ -1,0 +1,204 @@
+# == d1-atom : γ-clause ◯E⊃B, atomic body and goal
+#   seed=1000 sf=(◯b) ⊃ a D=a |S|=5 d=1 J=2 room=4 b=4 fs=4 ft=5 lg=1 drop=b gate=ok
+#   seed=1009 sf=(◯b) ⊃ b D=b |S|=3 d=1 J=2 room=4 b=4 fs=4 ft=5 lg=2 drop=b gate=ok
+#   seed=1018 sf=(◯a) ⊃ b D=b |S|=5 d=1 J=2 room=4 b=4 fs=4 ft=5 lg=1 drop=a gate=ok
+#   seed=1027 sf=(◯a) ⊃ b D=a |S|=4 d=1 J=2 room=4 b=4 fs=4 ft=5 lg=1 drop=a gate=ok
+#   seed=1036 sf=(◯c) ⊃ c D=c |S|=3 d=1 J=2 room=4 b=4 fs=4 ft=5 lg=2 drop=c gate=ok
+#   seed=1045 sf=(◯c) ⊃ a D=c |S|=4 d=1 J=2 room=4 b=4 fs=4 ft=5 lg=1 drop=c gate=ok
+# == d1-jump : γ-clause ◯E⊃B, jump-shaped goal body
+#   seed=2000 sf=(◯c) ⊃ c D=(◯c) ⊃ c |S|=4 d=1 J=2 room=4 b=4 fs=1 ft=5 lg=1 drop=(◯c) ⊃ c gate=ok
+#   seed=2009 sf=(◯a) ⊃ c D=c |S|=5 d=1 J=2 room=4 b=4 fs=1 ft=5 lg=1 drop=a gate=ok
+#   seed=2018 sf=(◯a) ⊃ a D=◯a |S|=4 d=1 J=2 room=4 b=4 fs=1 ft=5 lg=1 drop=◯a gate=ok
+#   seed=2027 sf=(◯b) ⊃ b D=(◯b) ⊃ b |S|=4 d=1 J=2 room=4 b=4 fs=1 ft=5 lg=2 drop=b gate=ok
+#   seed=2036 sf=(◯c) ⊃ b D=◯c |S|=5 d=1 J=2 room=4 b=4 fs=1 ft=5 lg=1 drop=c gate=ok
+#   seed=2045 sf=(◯c) ⊃ a D=c |S|=4 d=1 J=2 room=4 b=4 fs=1 ft=5 lg=1 drop=a gate=ok
+# == d1-nbox : γ-clause ◯E⊃B, nested-box goal body
+#   seed=3000 sf=(◯b) ⊃ a D=◯b |S|=5 d=1 J=2 room=4 b=3 fs=4 ft=4 lg=1 drop=a gate=ok
+#   seed=3009 sf=(◯a) ⊃ c D=◯a |S|=5 d=1 J=2 room=4 b=3 fs=4 ft=4 lg=1 drop=c gate=ok
+#   seed=3018 sf=(◯c) ⊃ b D=◯c |S|=5 d=1 J=2 room=4 b=3 fs=4 ft=4 lg=1 drop=c gate=ok
+#   seed=3027 sf=(◯a) ⊃ a D=◯a |S|=4 d=1 J=2 room=4 b=3 fs=4 ft=4 lg=1 drop=◯a gate=ok
+#   seed=3036 sf=(◯b) ⊃ a D=◯b |S|=5 d=1 J=2 room=4 b=3 fs=4 ft=4 lg=1 drop=a gate=ok
+#   seed=3045 sf=(◯b) ⊃ b D=◯b |S|=4 d=1 J=2 room=4 b=3 fs=4 ft=4 lg=1 drop=◯b gate=ok
+# == d2-imp : γ-clause ◯◯E⊃B (THE S3 SHAPE), nested-box goal
+#   seed=4000 sf=(◯(◯b)) ⊃ a D=◯(◯b) |S|=6 d=1 J=2 room=4 b=3 fs=3 ft=4 lg=1 drop=a gate=ok
+#   seed=4009 sf=(◯(◯b)) ⊃ a D=◯b |S|=5 d=1 J=2 room=4 b=3 fs=3 ft=4 lg=1 drop=◯b gate=ok
+#   seed=4018 sf=(◯(◯c)) ⊃ a D=◯c |S|=5 d=1 J=2 room=4 b=3 fs=3 ft=4 lg=1 drop=◯c gate=ok
+#   seed=4027 sf=(◯(◯b)) ⊃ b D=◯(◯b) |S|=5 d=1 J=2 room=4 b=3 fs=3 ft=4 lg=1 drop=◯b gate=ok
+#   seed=4036 sf=(◯(◯c)) ⊃ c D=◯c |S|=4 d=1 J=2 room=4 b=3 fs=3 ft=4 lg=2 drop=c gate=ok
+#   seed=4045 sf=(◯(◯c)) ⊃ b D=◯c |S|=5 d=1 J=2 room=4 b=3 fs=3 ft=4 lg=1 drop=◯c gate=ok
+# == d2-jumpbody : γ-clause ◯◯((x⊃y)⊃z)⊃B, nested-box goal
+#   seed 5000: (no cell)
+#   seed 5009: (no cell)
+#   seed 5018: (no cell)
+#   seed 5027: (no cell)
+#   seed 5036: (no cell)
+#   seed 5045: (no cell)
+# == d2-atomgoal : γ-clause ◯◯E⊃B, atomic goal body
+#   seed=6000 sf=(◯(◯c)) ⊃ a D=a |S|=6 d=1 J=2 room=4 b=1 fs=2 ft=2 lg=1 drop=◯c gate=ok
+#   seed=6009 sf=(◯(◯a)) ⊃ a D=a |S|=4 d=1 J=2 room=4 b=1 fs=2 ft=2 lg=2 drop=a gate=ok
+#   seed=6018 sf=(◯(◯a)) ⊃ c D=c |S|=6 d=1 J=2 room=4 b=1 fs=2 ft=2 lg=1 drop=a gate=ok
+#   seed=6027 sf=(◯(◯b)) ⊃ b D=b |S|=4 d=1 J=2 room=4 b=1 fs=2 ft=2 lg=1 drop=◯b gate=ok
+#   seed=6036 sf=(◯(◯a)) ⊃ b D=a |S|=5 d=1 J=2 room=4 b=1 fs=2 ft=2 lg=1 drop=◯a gate=ok
+#   seed=6045 sf=(◯(◯b)) ⊃ c D=b |S|=5 d=1 J=2 room=4 b=1 fs=2 ft=2 lg=1 drop=c gate=ok
+# == d3-imp : γ-clause ◯◯◯E⊃B, nested-box goal
+#   seed=7000 sf=(◯(◯(◯c))) ⊃ a D=◯(◯(◯c)) |S|=7 d=1 J=2 room=4 b=1 fs=1 ft=2 lg=1 drop=◯(◯c) gate=ok
+#   seed=7009 sf=(◯(◯(◯c))) ⊃ a D=◯(◯c) |S|=6 d=1 J=2 room=4 b=1 fs=1 ft=2 lg=1 drop=◯c gate=ok
+#   seed=7018 sf=(◯(◯(◯c))) ⊃ a D=◯(◯c) |S|=6 d=1 J=2 room=4 b=1 fs=1 ft=2 lg=1 drop=◯c gate=ok
+#   seed=7027 sf=(◯(◯(◯c))) ⊃ a D=◯(◯(◯c)) |S|=7 d=1 J=2 room=4 b=1 fs=1 ft=2 lg=1 drop=a gate=ok
+#   seed=7036 sf=(◯(◯(◯a))) ⊃ a D=◯(◯a) |S|=5 d=1 J=2 room=4 b=1 fs=1 ft=2 lg=1 drop=◯a gate=ok
+#   seed=7045 sf=(◯(◯(◯a))) ⊃ a D=◯(◯(◯a)) |S|=6 d=1 J=2 room=4 b=1 fs=1 ft=2 lg=2 drop=a gate=ok
+# == d3-atomgoal : γ-clause ◯◯◯E⊃B, atomic goal body
+#   seed 8000: (no cell)
+#   seed 8009: (no cell)
+#   seed 8018: (no cell)
+#   seed 8027: (no cell)
+#   seed 8036: (no cell)
+#   seed 8045: (no cell)
+# == j1-nogamma : no γ-clause, one jump clause (J=1)
+#   seed=9000 sf=(a ⊃ b) ⊃ c ⋄ b ⊃ c D=(a ⊃ b) ⊃ c |S|=7 d=1 J=1 room=3 b=3 fs=4 ft=4 lg=0 drop=b gate=ok
+#   seed=9009 sf=(b ⊃ c) ⊃ a ⋄ c ⊃ a D=(b ⊃ c) ⊃ a |S|=7 d=1 J=1 room=3 b=3 fs=4 ft=4 lg=1 drop=a gate=ok
+#   seed=9018 sf=(a ⊃ b) ⊃ c ⋄ b ⊃ c D=(a ⊃ b) ⊃ c |S|=7 d=1 J=1 room=3 b=3 fs=4 ft=4 lg=1 drop=c gate=ok
+#   seed=9027 sf=(a ⊃ b) ⊃ c ⋄ b ⊃ c D=(a ⊃ b) ⊃ c |S|=7 d=1 J=1 room=3 b=3 fs=4 ft=4 lg=1 drop=(a ⊃ b) ⊃ c gate=ok
+#   seed=9036 sf=(a ⊃ b) ⊃ c ⋄ b ⊃ c D=(a ⊃ b) ⊃ c |S|=7 d=1 J=1 room=3 b=3 fs=4 ft=4 lg=1 drop=c gate=ok
+#   seed=9045 sf=(a ⊃ b) ⊃ c ⋄ b ⊃ c D=(a ⊃ b) ⊃ c |S|=7 d=1 J=1 room=3 b=3 fs=4 ft=4 lg=0 drop=b gate=ok
+# == j3-both : γ-clause ◯◯E⊃B plus a jump clause
+#   seed=10000 sf=(◯(◯b)) ⊃ c ⋄ (b ⊃ c) ⊃ a ⋄ c ⊃ a D=◯b |S|=9 d=1 J=3 room=5 b=4 fs=4 ft=5 lg=1 drop=c gate=ok
+#   seed=10009 sf=(◯(◯c)) ⊃ b ⋄ (c ⊃ a) ⊃ b ⋄ a ⊃ b D=◯c |S|=9 d=1 J=3 room=5 b=4 fs=4 ft=5 lg=2 drop=b gate=ok
+#   seed=10018 sf=(◯(◯b)) ⊃ a ⋄ (a ⊃ b) ⊃ c ⋄ b ⊃ c D=◯(◯b) |S|=10 d=1 J=3 room=5 b=4 fs=4 ft=5 lg=1 drop=a gate=ok
+#   seed=10027 sf=(◯(◯b)) ⊃ b ⋄ (c ⊃ a) ⊃ b ⋄ a ⊃ b D=◯(◯b) |S|=10 d=1 J=3 room=5 b=4 fs=4 ft=5 lg=0 drop=a gate=ok
+#   seed=10036 sf=(◯(◯a)) ⊃ b ⋄ (c ⊃ a) ⊃ b ⋄ a ⊃ b D=◯a |S|=9 d=1 J=3 room=5 b=4 fs=4 ft=5 lg=1 drop=◯a gate=ok
+#   seed=10045 sf=(◯(◯b)) ⊃ a ⋄ (a ⊃ b) ⊃ c ⋄ b ⊃ c D=◯b |S|=9 d=1 J=3 room=5 b=4 fs=4 ft=5 lg=1 drop=◯b gate=ok
+# == or1 : one ∨-member, ∨-carrying goal body
+#   seed=11000 sf=(◯(◯a)) ⊃ c ⋄ c ∨ a D=c ∨ a |S|=7 d=1 J=2 room=4 b=4 fs=1 ft=5 lg=1 drop=◯a gate=ok
+#   seed=11009 sf=(◯(◯c)) ⊃ a ⋄ a ∨ b D=a ∨ b |S|=8 d=1 J=2 room=4 b=4 fs=1 ft=5 lg=1 drop=a ∨ b gate=ok
+#   seed=11018 sf=(◯(◯c)) ⊃ b ⋄ b ∨ c D=b ∨ c |S|=7 d=1 J=2 room=4 b=4 fs=1 ft=5 lg=1 drop=b gate=ok
+#   seed=11027 sf=(◯(◯a)) ⊃ b ⋄ c ∨ a D=c ∨ a |S|=8 d=1 J=2 room=4 b=4 fs=1 ft=5 lg=1 drop=c ∨ a gate=ok
+#   seed=11036 sf=(◯(◯b)) ⊃ b ⋄ a ∨ b D=a ∨ b |S|=7 d=1 J=2 room=4 b=4 fs=1 ft=5 lg=1 drop=◯b gate=ok
+#   seed=11045 sf=(◯(◯b)) ⊃ a ⋄ b ∨ c D=b ∨ c |S|=8 d=1 J=2 room=4 b=4 fs=1 ft=5 lg=1 drop=a gate=ok
+# == or2 : two ∨-members, nested-box goal
+#   seed=12000 sf=(◯(◯a)) ⊃ b ⋄ b ∨ c ⋄ a ∨ b D=◯a |S|=8 d=1 J=2 room=4 b=3 fs=4 ft=4 lg=1 drop=◯a gate=ok
+#   seed=12009 sf=(◯(◯b)) ⊃ c ⋄ c ∨ a ⋄ c ∨ a D=◯b |S|=7 d=1 J=2 room=4 b=3 fs=4 ft=4 lg=1 drop=c gate=ok
+#   seed=12018 sf=(◯(◯c)) ⊃ b ⋄ b ∨ c ⋄ b ∨ c D=◯c |S|=6 d=1 J=2 room=4 b=3 fs=4 ft=4 lg=1 drop=c gate=ok
+#   seed=12027 sf=(◯(◯b)) ⊃ c ⋄ b ∨ c ⋄ a ∨ b D=◯b |S|=8 d=1 J=2 room=4 b=3 fs=4 ft=4 lg=1 drop=◯b gate=ok
+#   seed=12036 sf=(◯(◯c)) ⊃ c ⋄ c ∨ a ⋄ c ∨ a D=◯(◯c) |S|=7 d=1 J=2 room=4 b=3 fs=4 ft=4 lg=2 drop=c gate=ok
+#   seed=12045 sf=(◯(◯c)) ⊃ b ⋄ b ∨ c ⋄ a ∨ b D=◯c |S|=8 d=1 J=2 room=4 b=3 fs=4 ft=4 lg=1 drop=b gate=ok
+# == df2-d1 : defect 2 at nesting depth 1
+#   seed 13000: (no cell)
+#   seed 13009: (no cell)
+#   seed 13018: (no cell)
+#   seed 13027: (no cell)
+#   seed 13036: (no cell)
+#   seed 13045: (no cell)
+# == df2-d2 : defect 2 at nesting depth 2 (the S3 shape)
+#   seed 14000: (no cell)
+#   seed 14009: (no cell)
+#   seed 14018: (no cell)
+#   seed 14027: (no cell)
+#   seed 14036: (no cell)
+#   seed 14045: (no cell)
+# == pvar : eliminated variable p occurs in S, γ-depth 2
+#   seed=15000 sf=(◯(◯p)) ⊃ c D=◯(◯p) |S|=6 d=1 J=2 room=4 b=1 fs=2 ft=2 lg=1 drop=◯(◯p) gate=ok
+#   seed=15009 sf=(◯(◯b)) ⊃ c D=◯b |S|=5 d=1 J=2 room=4 b=1 fs=2 ft=2 lg=1 drop=◯b gate=ok
+#   seed=15018 sf=(◯(◯c)) ⊃ p D=◯(◯c) |S|=6 d=1 J=2 room=4 b=1 fs=2 ft=2 lg=1 drop=p gate=ok
+#   seed=15027 sf=(◯(◯p)) ⊃ b D=◯p |S|=5 d=1 J=2 room=4 b=1 fs=2 ft=2 lg=1 drop=◯p gate=ok
+#   seed=15036 sf=(◯(◯p)) ⊃ b D=◯p |S|=5 d=1 J=2 room=4 b=1 fs=2 ft=2 lg=1 drop=◯p gate=ok
+#   seed=15045 sf=(◯(◯p)) ⊃ b D=◯p |S|=5 d=1 J=2 room=4 b=1 fs=2 ft=2 lg=1 drop=p gate=ok
+# d1-atom/1000 b=4 ft=5 lg=1 act=false sz=324
+# d1-atom/1000 b=4 ft=6 lg=1 act=false sz=324
+# d1-atom/1000 b=4 ft=7 lg=1 act=false sz=324
+# d1-atom/1009 b=4 ft=5 lg=2 act=true sz=187345
+# d1-atom/1009 b=4 ft=6 lg=2 act=true sz=587615
+# d1-atom/1009 b=4 ft=7 PRED-SKIP lg=2
+# d1-atom/1018 b=4 ft=5 lg=1 act=false sz=324
+# d1-atom/1018 b=4 ft=6 lg=1 act=false sz=324
+# d1-atom/1018 b=4 ft=7 lg=1 act=false sz=324
+# d1-jump/2000 b=4 ft=5 lg=1 act=false sz=402
+# d1-jump/2000 b=4 ft=6 lg=1 act=false sz=402
+# d1-jump/2000 b=4 ft=7 lg=1 act=false sz=402
+# d1-jump/2009 b=4 ft=5 lg=1 act=false sz=324
+# d1-jump/2009 b=4 ft=6 lg=1 act=false sz=324
+# d1-jump/2009 b=4 ft=7 lg=1 act=false sz=324
+# d1-jump/2018 b=4 ft=5 lg=1 act=false sz=1030
+# d1-jump/2018 b=4 ft=6 lg=1 act=false sz=1030
+# d1-jump/2018 b=4 ft=7 lg=1 act=false sz=1030
+# d1-nbox/3000 b=3 ft=4 lg=1 act=true sz=23426
+# d1-nbox/3000 b=3 ft=5 lg=1 act=true sz=63752
+# d1-nbox/3000 b=3 ft=6 lg=1 act=true sz=120508
+# d1-nbox/3009 b=3 ft=4 lg=1 act=true sz=23426
+# d1-nbox/3009 b=3 ft=5 lg=1 act=true sz=63752
+# d1-nbox/3009 b=3 ft=6 lg=1 act=true sz=120508
+# d1-nbox/3018 b=3 ft=4 lg=1 act=false sz=1212
+# d1-nbox/3018 b=3 ft=5 lg=1 act=false sz=1212
+# d1-nbox/3018 b=3 ft=6 lg=1 act=false sz=1212
+# d2-imp/4000 b=3 ft=4 lg=1 act=true sz=53892
+# d2-imp/4000 b=3 ft=5 lg=1 act=true sz=217126
+# d2-imp/4000 b=3 ft=6 lg=1 act=true sz=658066
+# d2-imp/4009 b=3 ft=4 lg=1 act=false sz=1250
+# d2-imp/4009 b=3 ft=5 lg=1 act=false sz=1250
+# d2-imp/4009 b=3 ft=6 lg=1 act=false sz=1250
+# d2-imp/4018 b=3 ft=4 lg=1 act=false sz=1250
+# d2-imp/4018 b=3 ft=5 lg=1 act=false sz=1250
+# d2-imp/4018 b=3 ft=6 lg=1 act=false sz=1250
+# d2-atomgoal/6000 b=1 ft=2 lg=1 act=false sz=250
+# d2-atomgoal/6000 b=1 ft=3 lg=1 act=false sz=338
+# d2-atomgoal/6000 b=1 ft=4 lg=1 act=false sz=338
+# d2-atomgoal/6009 b=1 ft=2 lg=2 act=true sz=1575
+# d2-atomgoal/6009 b=1 ft=3 lg=2 act=true sz=5879
+# d2-atomgoal/6009 b=1 ft=4 lg=2 act=true sz=13755
+# d2-atomgoal/6018 b=1 ft=2 lg=1 act=false sz=236
+# d2-atomgoal/6018 b=1 ft=3 lg=1 act=false sz=324
+# d2-atomgoal/6018 b=1 ft=4 lg=1 act=false sz=324
+# d3-imp/7000 b=1 ft=2 lg=1 act=false sz=382
+# d3-imp/7000 b=1 ft=3 lg=1 act=false sz=1210
+# d3-imp/7000 b=1 ft=4 lg=1 act=false sz=3298
+# d3-imp/7009 b=1 ft=2 lg=1 act=false sz=382
+# d3-imp/7009 b=1 ft=3 lg=1 act=false sz=1210
+# d3-imp/7009 b=1 ft=4 lg=1 act=false sz=2770
+# d3-imp/7018 b=1 ft=2 lg=1 act=false sz=382
+# d3-imp/7018 b=1 ft=3 lg=1 act=false sz=1210
+# d3-imp/7018 b=1 ft=4 lg=1 act=false sz=2770
+# j1-nogamma/9000 b=3 ft=4 lg=0 act=false sz=645
+# j1-nogamma/9000 b=3 ft=5 lg=0 act=false sz=645
+# j1-nogamma/9000 b=3 ft=6 lg=0 act=false sz=645
+# j1-nogamma/9009 b=3 ft=4 lg=1 act=true sz=5181
+# j1-nogamma/9009 b=3 ft=5 lg=1 act=true sz=10387
+# j1-nogamma/9009 b=3 ft=6 lg=1 act=true sz=16707
+# j1-nogamma/9018 b=3 ft=4 lg=1 act=true sz=5181
+# j1-nogamma/9018 b=3 ft=5 lg=1 act=true sz=10387
+# j1-nogamma/9018 b=3 ft=6 lg=1 act=true sz=16707
+# j3-both/10000 b=4 ft=5 lg=1 act=true sz=451941
+# j3-both/10000 b=4 ft=6 lg=1 act=true sz=2070353
+# j3-both/10000 b=4 ft=7 lg=1 act=true sz=6988745
+# j3-both/10009 b=4 ft=5 lg=2 act=true sz=1259111
+# j3-both/10009 b=4 ft=6 lg=2 act=true sz=6168477
+# j3-both/10009 b=4 ft=7 PRED-SKIP lg=2
+# j3-both/10018 b=4 ft=5 lg=1 act=true sz=389665
+# j3-both/10018 b=4 ft=6 lg=1 act=true sz=1726243
+# j3-both/10018 b=4 ft=7 lg=1 act=true sz=5790307
+# or1/11000 b=4 ft=5 lg=1 act=false sz=410
+# or1/11000 b=4 ft=6 lg=1 act=false sz=410
+# or1/11000 b=4 ft=7 lg=1 act=false sz=410
+# or1/11009 b=4 ft=5 lg=1 act=false sz=470
+# or1/11009 b=4 ft=6 lg=1 act=false sz=470
+# or1/11009 b=4 ft=7 lg=1 act=false sz=470
+# or1/11018 b=4 ft=5 lg=1 act=true sz=309983
+# or1/11018 b=4 ft=6 lg=1 act=true sz=1276037
+# or1/11018 b=4 ft=7 lg=1 act=true sz=3869225
+# or2/12000 b=3 ft=4 lg=1 act=false sz=1470
+# or2/12000 b=3 ft=5 lg=1 act=false sz=1470
+# or2/12000 b=3 ft=6 lg=1 act=false sz=1470
+# or2/12009 b=3 ft=4 lg=1 act=true sz=52296
+# or2/12009 b=3 ft=5 lg=1 act=true sz=210978
+# or2/12009 b=3 ft=6 lg=1 act=true sz=614562
+# or2/12018 b=3 ft=4 lg=1 act=false sz=1212
+# or2/12018 b=3 ft=5 lg=1 act=false sz=1212
+# or2/12018 b=3 ft=6 lg=1 act=false sz=1212
+# pvar/15000 b=1 ft=2 lg=1 act=false sz=358
+# pvar/15000 b=1 ft=3 lg=1 act=false sz=1110
+# pvar/15000 b=1 ft=4 lg=1 act=false sz=2502
+# pvar/15009 b=1 ft=2 lg=1 act=false sz=382
+# pvar/15009 b=1 ft=3 lg=1 act=false sz=946
+# pvar/15009 b=1 ft=4 lg=1 act=false sz=1250
+# pvar/15018 b=1 ft=2 lg=1 act=true sz=884
+# pvar/15018 b=1 ft=3 lg=1 act=true sz=3538
+# pvar/15018 b=1 ft=4 lg=1 act=true sz=9942

@@ -1,0 +1,16 @@
+A Function: mid_test
+  Categories:
+  1 foo
+    * bar    [if foo][property bar]
+    * sly    [error]
+    * sty    [single]
+    * bly    [if not(foo)][property bly]
+  2 bar
+    * foo    [if (bar) or (pah)][property foo]
+    * foy    [single]
+    * fly    [error]
+    * fay    [property fay]
+  3 jar
+    * joo    [if bar]
+    * jar    [property jar]
+EndFunction;

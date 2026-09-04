@@ -1,0 +1,3 @@
+# REGRESSION (shape agreement): replay: 1072 records, 1072 agree, 0 changed (0 new hits), 0 unregenerable
+# RE-AIM (unboxed room-free descent): replay: 1072 records, 1072 agree, 0 changed (0 new hits), 0 unregenerable
+# RE-AIM II (ambient premise dropped): replay: 1072 records, 1072 agree, 0 changed (0 new hits), 0 unregenerable

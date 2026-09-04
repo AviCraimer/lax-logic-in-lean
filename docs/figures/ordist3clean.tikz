@@ -1,0 +1,7 @@
+\begin{tikzpicture}[every node/.style={circle,draw,minimum size=9mm,inner sep=1pt}]
+  \node[double,double distance=1.5pt,draw=red!70!black,label=above:{\scriptsize $∅$}] (w0) at (4.20,0.00) {$w_{0}$};
+  \node[label=above:{\scriptsize $p$}] (w1) at (2.00,3.00) {$w_{1}$};
+  \node[label=above:{\scriptsize $q$}] (w2) at (6.40,3.00) {$w_{2}$};
+  \draw[-{Stealth},dashed,gray] (w0) -- (w1);
+  \draw[-{Stealth}] (w0) -- (w2);
+\end{tikzpicture}

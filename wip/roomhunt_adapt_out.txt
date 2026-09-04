@@ -1,0 +1,89 @@
+== roomhunt, stage adapt ==
+tower0/D: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=1 blind=false  goalgate=[goal not b-gated]
+   fuel=6 c=3: ~ active=true |A@c|=767 room=3 LIVE (580 ms)
+   fuel=8 c=3: ~ active=true |A@c|=771 room=3 LIVE (929 ms)
+   fuel=7 c=4: ~ active=true |A@c|=2479 room=3 LIVE (1640 ms)
+   fuel=9 c=4: ~ active=true |A@c|=2555 room=3 LIVE (2880 ms)
+tower0/fresh-atom: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=1 blind=false  goalgate=[goal not b-gated]
+   fuel=6 c=3: ~ active=true |A@c|=767 room=3 LIVE (1444 ms)
+   fuel=8 c=3: ~ active=true |A@c|=771 room=3 LIVE (2748 ms)
+   fuel=7 c=4: ~ active=true |A@c|=2479 room=3 LIVE (4073 ms)
+   fuel=9 c=4: ~ active=true |A@c|=2555 room=3 LIVE (9129 ms)
+tower0/box-D: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=1 blind=false  goalgate=[BOX-GOAL (b-gated: goal disjunct + truncation)]
+   fuel=6 c=3: ~ active=true |A@c|=3690 room=3 LIVE (820 ms)
+   fuel=8 c=3: ~ active=true |A@c|=3898 room=3 LIVE (1693 ms)
+   fuel=7 c=4: ~ active=true |A@c|=11510 room=3 LIVE (2477 ms)
+   fuel=9 c=4: ~ active=true |A@c|=12658 room=3 LIVE (5521 ms)
+tower0/box-fresh: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=1 blind=false  goalgate=[BOX-GOAL (b-gated: goal disjunct + truncation)]
+   fuel=6 c=3: ~ active=true |A@c|=3690 room=3 LIVE (3296 ms)
+   fuel=8 c=3: ~ active=true |A@c|=3898 room=3 LIVE (7245 ms)
+   fuel=7 c=4: ~ active=true |A@c|=11510 room=3 LIVE (8875 ms)
+   fuel=9 c=4: ~ active=true |A@c|=12658 room=3 LIVE (23203 ms)
+tower0/impD-fresh: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=1 blind=false  goalgate=[imp-goal, fresh antecedent (not itself gated)]
+   fuel=6 c=3: ~ active=true |A@c|=2129 room=3 LIVE (1797 ms)
+   fuel=8 c=3: ~ active=true |A@c|=2333 room=3 LIVE (4667 ms)
+   fuel=7 c=4: ~ active=true |A@c|=6617 room=3 LIVE (4872 ms)
+   fuel=9 c=4: ~ active=true |A@c|=7677 room=3 LIVE (14488 ms)
+tower0/gateimp: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=1 blind=false  goalgate=[imp-goal, fresh antecedent (not itself gated)]
+   fuel=6 c=3: ~ active=true |A@c|=2129 room=3 LIVE (1779 ms)
+   fuel=8 c=3: ~ active=true |A@c|=2333 room=3 LIVE (4635 ms)
+   fuel=7 c=4: ~ active=true |A@c|=6617 room=3 LIVE (4866 ms)
+   fuel=9 c=4: ~ active=true |A@c|=7677 room=3 LIVE (14518 ms)
+tower1/D: |S|=3 defect=1 J=2 room=4 hbox=true liveGates=2 blind=false  goalgate=[goal not b-gated]
+   fuel=7 c=4: SKIP (|A@c|=260507)
+   fuel=9 c=4: SKIP (|A@c|=369083)
+   fuel=8 c=5: SKIP (|A@c|=2582280)
+   fuel=10 c=5: SKIP (|A@c|=4419312)
+tower1/fresh-atom: |S|=3 defect=1 J=2 room=4 hbox=true liveGates=2 blind=false  goalgate=[goal not b-gated]
+   fuel=7 c=4: SKIP (|A@c|=260507)
+   fuel=9 c=4: SKIP (|A@c|=369083)
+   fuel=8 c=5: SKIP (|A@c|=2582280)
+   fuel=10 c=5: SKIP (|A@c|=4419312)
+tower1/box-D: |S|=3 defect=1 J=2 room=4 hbox=true liveGates=2 blind=false  goalgate=[BOX-GOAL (b-gated: goal disjunct + truncation)]
+   fuel=7 c=4: SKIP (|A@c|=903649)
+   fuel=9 c=4: SKIP (|A@c|=1495217)
+   fuel=8 c=5: SKIP (|A@c|=8668662)
+   fuel=10 c=5: SKIP (|A@c|=17339158)
+tower1/box-fresh: |S|=3 defect=1 J=2 room=4 hbox=true liveGates=2 blind=false  goalgate=[BOX-GOAL (b-gated: goal disjunct + truncation)]
+   fuel=7 c=4: SKIP (|A@c|=903649)
+   fuel=9 c=4: SKIP (|A@c|=1495217)
+   fuel=8 c=5: SKIP (|A@c|=8668662)
+   fuel=10 c=5: SKIP (|A@c|=17339158)
+tower1/impD-fresh: |S|=3 defect=1 J=2 room=4 hbox=true liveGates=2 blind=false  goalgate=[imp-goal, fresh antecedent (not itself gated)]
+   fuel=7 c=4: SKIP (|A@c|=568953)
+   fuel=9 c=4: SKIP (|A@c|=1038649)
+   fuel=8 c=5: SKIP (|A@c|=5304640)
+   fuel=10 c=5: SKIP (|A@c|=11812376)
+tower1/gateimp: |S|=3 defect=1 J=2 room=4 hbox=true liveGates=2 blind=false  goalgate=[IMP-GOAL, antecedent present (b-gated)]
+   fuel=7 c=4: SKIP (|A@c|=1431325)
+   fuel=9 c=4: SKIP (|A@c|=3079745)
+   fuel=8 c=5: SKIP (|A@c|=19624534)
+   fuel=10 c=5: SKIP (|A@c|=54540970)
+tower2/D: |S|=4 defect=1 J=3 room=5 hbox=true liveGates=3 blind=false  goalgate=[goal not b-gated]
+   fuel=8 c=5: SKIP (|A@c|=75920544)
+   fuel=10 c=5: SKIP (|A@c|=245038032)
+   fuel=9 c=6: SKIP (|A@c|=1318453591)
+   fuel=11 c=6: SKIP (|A@c|=5388420815)
+tower2/fresh-atom: |S|=4 defect=1 J=3 room=5 hbox=true liveGates=3 blind=false  goalgate=[goal not b-gated]
+   fuel=8 c=5: SKIP (|A@c|=75920544)
+   fuel=10 c=5: SKIP (|A@c|=245038032)
+   fuel=9 c=6: SKIP (|A@c|=1318453591)
+   fuel=11 c=6: SKIP (|A@c|=5388420815)
+tower2/box-D: |S|=4 defect=1 J=3 room=5 hbox=true liveGates=3 blind=false  goalgate=[BOX-GOAL (b-gated: goal disjunct + truncation)]
+   fuel=8 c=5: SKIP (|A@c|=223305228)
+   fuel=10 c=5: SKIP (|A@c|=821982332)
+   fuel=9 c=6: SKIP (|A@c|=3778728337)
+   fuel=11 c=6: SKIP (|A@c|=17409449041)
+tower2/box-fresh: |S|=4 defect=1 J=3 room=5 hbox=true liveGates=3 blind=false  goalgate=[BOX-GOAL (b-gated: goal disjunct + truncation)]
+   fuel=8 c=5: SKIP (|A@c|=223305228)
+   fuel=10 c=5: SKIP (|A@c|=821982332)
+   fuel=9 c=6: SKIP (|A@c|=3778728337)
+   fuel=11 c=6: SKIP (|A@c|=17409449041)
+tower2/impD-fresh: |S|=4 defect=1 J=3 room=5 hbox=true liveGates=3 blind=false  goalgate=[imp-goal, fresh antecedent (not itself gated)]
+   fuel=8 c=5: SKIP (|A@c|=135026236)
+   fuel=10 c=5: SKIP (|A@c|=546732780)
+   fuel=9 c=6: SKIP (|A@c|=2232512785)
+   fuel=11 c=6: SKIP (|A@c|=11285913801)
+tower2/gateimp: |S|=4 defect=1 J=3 room=5 hbox=true liveGates=3 blind=false  goalgate=[IMP-GOAL, antecedent present (b-gated)]
+   fuel=8 c=5: SKIP (|A@c|=209254759)
+   fuel=10 c=5: SKIP (|A@c|=862083365)

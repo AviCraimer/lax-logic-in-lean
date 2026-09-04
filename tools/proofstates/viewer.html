@@ -1,0 +1,880 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__PSTATES_TITLE__</title>
+<style>
+/* ------------------------------------------------------------------ theme */
+:root{
+  --bg:#fbfbfa; --panel:#ffffff; --ink:#1a1a1a; --dim:#5b5f66; --line:#dcdfe4;
+  --accent:#1f5fa9; --accent-bg:#e8f0fb;
+  --add:#1a7f37; --add-bg:#e3f7e8; --del:#b3261e; --del-bg:#fdeceb;
+  --warn:#8a5a00; --warn-bg:#fdf3dd; --pin:#7a3fa8; --pin-bg:#f3ecfa;
+  --code:#f4f5f7;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "DejaVu Sans Mono", monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#16181c; --panel:#1d2025; --ink:#e6e8eb; --dim:#a0a6ae; --line:#333840;
+    --accent:#78b0f0; --accent-bg:#1b2a3d;
+    --add:#5cc271; --add-bg:#16301d; --del:#f08a84; --del-bg:#341b1a;
+    --warn:#e0b458; --warn-bg:#332a15; --pin:#c39ce6; --pin-bg:#2a1f36;
+    --code:#23262c;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--ink); font-family:var(--sans);
+  font-size:14px; line-height:1.45; height:100vh; display:flex; flex-direction:column;
+}
+button,select,input,textarea{font-family:inherit; font-size:inherit; color:inherit}
+button{
+  background:var(--panel); border:1px solid var(--line); border-radius:6px;
+  padding:4px 9px; cursor:pointer;
+}
+button:hover{background:var(--accent-bg); border-color:var(--accent)}
+button:disabled{opacity:.4; cursor:default; background:var(--panel); border-color:var(--line)}
+button.primary{background:var(--accent); color:#fff; border-color:var(--accent)}
+button.primary:hover{filter:brightness(1.1)}
+kbd{
+  font-family:var(--mono); font-size:11px; background:var(--code);
+  border:1px solid var(--line); border-bottom-width:2px; border-radius:4px; padding:0 4px;
+}
+
+/* ----------------------------------------------------------------- header */
+header{
+  padding:8px 12px; border-bottom:1px solid var(--line); background:var(--panel);
+  display:flex; flex-wrap:wrap; gap:6px 16px; align-items:baseline;
+}
+header h1{font-size:15px; margin:0; font-weight:650}
+header .meta{color:var(--dim); font-size:12px; font-family:var(--mono)}
+.badge{
+  font-size:11px; padding:1px 7px; border-radius:10px; border:1px solid var(--line);
+  font-weight:600;
+}
+.badge.ok{color:var(--add); background:var(--add-bg); border-color:var(--add)}
+.badge.bad{color:var(--del); background:var(--del-bg); border-color:var(--del)}
+
+/* ---------------------------------------------------------------- toolbar */
+#toolbar{
+  padding:7px 12px; border-bottom:1px solid var(--line); background:var(--panel);
+  display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+}
+#toolbar .grp{display:flex; gap:4px; align-items:center}
+#scrub{flex:1 1 220px; min-width:140px; accent-color:var(--accent)}
+#counter{font-family:var(--mono); font-size:12px; white-space:nowrap; color:var(--dim)}
+#playBtn{min-width:104px; font-weight:600}
+#playBtn.playing{background:var(--del-bg); border-color:var(--del); color:var(--del)}
+
+/* ------------------------------------------------------------------ frame */
+#frame{flex:1; display:grid; grid-template-columns:270px minmax(0,1fr) 300px; min-height:0}
+#nav,#pins{overflow:auto; background:var(--panel); padding:8px}
+#nav{border-right:1px solid var(--line)}
+#pins{border-left:1px solid var(--line)}
+#main{overflow:auto; padding:12px 14px; min-width:0}
+.panel-title{
+  font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--dim);
+  font-weight:700; margin:2px 0 6px;
+}
+
+/* -------------------------------------------------------------------- nav */
+#navFilter{width:100%; padding:4px 6px; border:1px solid var(--line); border-radius:6px;
+  background:var(--bg); margin-bottom:6px}
+.decl{
+  border:1px solid transparent; border-radius:6px; padding:3px 5px; cursor:pointer;
+  font-family:var(--mono); font-size:12px; word-break:break-all;
+}
+.decl:hover{background:var(--accent-bg)}
+.decl.cur{background:var(--accent-bg); border-color:var(--accent)}
+.decl .n{color:var(--dim); font-size:11px}
+.decl .flag{font-size:10px; padding:0 4px; border-radius:8px; margin-left:4px}
+.decl .flag.err{background:var(--del-bg); color:var(--del)}
+.decl .flag.sorry{background:var(--warn-bg); color:var(--warn)}
+.tree{margin:2px 0 8px 4px; border-left:1px dotted var(--line); padding-left:5px}
+.tnode{
+  font-family:var(--mono); font-size:11.5px; padding:1px 4px; border-radius:4px;
+  cursor:pointer; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.tnode:hover{background:var(--accent-bg)}
+.tnode.cur{background:var(--accent); color:#fff}
+.tnode .gc{color:var(--dim); font-size:10px}
+.tnode.cur .gc{color:#dbe7f7}
+.tnode.pinned::before{content:"\1F4CC "; font-size:9px}
+
+/* ------------------------------------------------------------------- main */
+.card{border:1px solid var(--line); border-radius:8px; background:var(--panel); margin-bottom:12px}
+.card > h2{
+  font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--dim);
+  margin:0; padding:6px 10px; border-bottom:1px solid var(--line); font-weight:700;
+  display:flex; justify-content:space-between; gap:8px; align-items:center;
+}
+.card .body{padding:8px 10px}
+pre{margin:0; font-family:var(--mono); font-size:12.5px; white-space:pre; overflow-x:auto}
+
+#tacticText{
+  font-family:var(--mono); font-size:13.5px; white-space:pre-wrap; word-break:break-word;
+  background:var(--accent-bg); border-left:3px solid var(--accent);
+  padding:6px 9px; border-radius:0 6px 6px 0;
+}
+#stepMeta{font-family:var(--mono); font-size:11.5px; color:var(--dim); margin-top:6px}
+#stepPos{text-transform:none; font-family:var(--mono); font-weight:600}
+.transit{font-weight:700; font-family:var(--mono)}
+.transit.close{color:var(--add)} .transit.split{color:var(--accent)} .transit.same{color:var(--dim)}
+
+/* source context */
+.srcline{display:flex; font-family:var(--mono); font-size:12px}
+.srcline .no{
+  color:var(--dim); text-align:right; min-width:4.5em; padding-right:8px;
+  user-select:none; border-right:1px solid var(--line); margin-right:8px; flex:none;
+}
+.srcline .tx{white-space:pre; overflow-x:auto}
+.srcline.hit{background:var(--accent-bg)}
+.srcline.hit .no{color:var(--accent); font-weight:700}
+
+/* goals */
+/* minmax(0,1fr), not 1fr: a wide pretty-printed goal must scroll inside its
+   own box rather than stretch the column and push the other one off-screen. */
+#goalCols{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px}
+@media (max-width:1100px){ #goalCols{grid-template-columns:minmax(0,1fr)} }
+.goalbox{border:1px solid var(--line); border-radius:7px; margin-bottom:8px; overflow:hidden}
+.goalbox > .gh{
+  font-size:11px; padding:3px 8px; background:var(--code); border-bottom:1px solid var(--line);
+  display:flex; justify-content:space-between; gap:8px; font-family:var(--mono);
+}
+.goalbox > .gb{padding:5px 8px; overflow-x:auto}
+.goalbox.new{border-color:var(--add)} .goalbox.new > .gh{background:var(--add-bg); color:var(--add)}
+.goalbox.closed{border-color:var(--del)} .goalbox.closed > .gh{background:var(--del-bg); color:var(--del)}
+.goalbox.changed{border-color:var(--accent)} .goalbox.changed > .gh{background:var(--accent-bg); color:var(--accent)}
+.gline{white-space:pre; font-family:var(--mono); font-size:12.5px; border-radius:3px; padding:0 3px}
+.gline.add{background:var(--add-bg); color:var(--add)}
+.gline.del{background:var(--del-bg); color:var(--del); text-decoration:line-through solid rgba(128,128,128,.5)}
+.empty{color:var(--dim); font-style:italic; padding:6px 8px}
+
+/* messages */
+.msg{border-radius:6px; padding:5px 8px; margin-bottom:6px; font-size:12.5px}
+.msg pre{white-space:pre-wrap; font-size:12px}
+.msg.error{background:var(--del-bg); border:1px solid var(--del); color:var(--del)}
+.msg.warning{background:var(--warn-bg); border:1px solid var(--warn); color:var(--warn)}
+.msg.information{background:var(--accent-bg); border:1px solid var(--accent); color:var(--accent)}
+.msg .where{font-family:var(--mono); font-size:11px; opacity:.85}
+
+/* ------------------------------------------------------------------- pins */
+#pinList{list-style:none; margin:0; padding:0}
+#pinList li{
+  border:1px solid var(--line); border-left:3px solid var(--pin); border-radius:6px;
+  padding:5px 6px; margin-bottom:7px; background:var(--bg);
+}
+#pinList li.cur{border-color:var(--pin); background:var(--pin-bg)}
+#pinList .ph{display:flex; justify-content:space-between; gap:4px; align-items:center}
+#pinList .loc{font-family:var(--mono); font-size:11px; cursor:pointer; color:var(--accent);
+  word-break:break-all}
+#pinList .tac{font-family:var(--mono); font-size:11px; color:var(--dim);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+#pinList textarea{
+  width:100%; min-height:38px; margin-top:4px; border:1px solid var(--line);
+  border-radius:4px; padding:3px 5px; background:var(--panel); resize:vertical;
+}
+#pinList .mini{padding:0 5px; font-size:11px; line-height:1.6}
+.exportrow{display:flex; gap:5px; flex-wrap:wrap; margin:6px 0}
+
+/* ------------------------------------------------------------------ misc */
+#legend{font-size:11.5px; color:var(--dim); padding:6px 12px; border-top:1px solid var(--line);
+  background:var(--panel); display:flex; gap:14px; flex-wrap:wrap}
+dialog{
+  border:1px solid var(--line); border-radius:10px; background:var(--panel); color:var(--ink);
+  max-width:min(760px,92vw); width:100%; padding:0;
+}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+dialog .dh{padding:8px 12px; border-bottom:1px solid var(--line); font-weight:650;
+  display:flex; justify-content:space-between; align-items:center}
+dialog .db{padding:10px 12px}
+dialog textarea{width:100%; height:46vh; font-family:var(--mono); font-size:12px;
+  border:1px solid var(--line); border-radius:6px; background:var(--bg); padding:6px}
+
+/* toggles for narrow windows */
+#narrowbar{display:none; gap:6px; padding:6px 12px; border-bottom:1px solid var(--line);
+  background:var(--panel)}
+@media (max-width:980px){
+  #frame{grid-template-columns:1fr}
+  #nav,#pins{display:none; border:0; border-bottom:1px solid var(--line); max-height:42vh}
+  body.show-nav #nav{display:block}
+  body.show-pins #pins{display:block}
+  #narrowbar{display:flex}
+}
+
+/* ------------------------------------------------------------------ print */
+#printout{display:none}
+@media print{
+  body{height:auto; display:block; background:#fff; color:#000}
+  header,#toolbar,#nav,#pins,#legend,#narrowbar,#main,dialog{display:none !important}
+  #printout{display:block; padding:0}
+  #printout h1{font-size:16pt} #printout h2{font-size:12pt; margin:14pt 0 4pt}
+  #printout pre{white-space:pre-wrap; font-size:9pt; border:1px solid #999;
+    padding:4pt; border-radius:3pt}
+  #printout .note{border-left:3pt solid #666; padding-left:6pt; font-style:italic}
+  #printout .pin{page-break-inside:avoid; border-bottom:1px solid #ccc; padding-bottom:8pt}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Proof states</h1>
+  <span class="meta" id="hFile"></span>
+  <span class="badge" id="hStatus"></span>
+  <span class="meta" id="hMeta"></span>
+</header>
+
+<div id="narrowbar">
+  <button id="tgNav">Structure</button>
+  <button id="tgPins">Pins</button>
+</div>
+
+<div id="toolbar">
+  <div class="grp">
+    <button id="firstBtn" title="First step (Home)">⏮</button>
+    <button id="prevBtn"  title="Previous step (←)">◀</button>
+    <button id="playBtn"  title="Play / pause (Space)">▶ Play</button>
+    <button id="nextBtn"  title="Next step (→)">▶</button>
+    <button id="lastBtn"  title="Last step (End)">⏭</button>
+  </div>
+  <input type="range" id="scrub" min="0" max="0" value="0" step="1" title="Scrub through the proof">
+  <span id="counter">0 / 0</span>
+  <div class="grp">
+    <label for="speed" style="font-size:12px;color:var(--dim)">sec/step</label>
+    <select id="speed">
+      <option value="8000">8</option>
+      <option value="5000">5</option>
+      <option value="3000" selected>3</option>
+      <option value="2000">2</option>
+      <option value="1000">1</option>
+      <option value="500">0.5</option>
+    </select>
+  </div>
+  <div class="grp">
+    <button id="pinBtn" class="primary" title="Pin this state (P)">📌 Pin state</button>
+    <button id="errBtn" title="Jump to the first error">⚠ First error</button>
+  </div>
+</div>
+
+<div id="frame">
+  <aside id="nav">
+    <div class="panel-title">Declarations &amp; tactic tree</div>
+    <input id="navFilter" placeholder="filter declarations / tactics…">
+    <div id="navList"></div>
+  </aside>
+
+  <main id="main">
+    <div class="card">
+      <h2><span>Tactic</span><span id="stepPos"></span></h2>
+      <div class="body">
+        <div id="tacticText"></div>
+        <div id="stepMeta"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Source</h2>
+      <div class="body" id="srcCtx"></div>
+    </div>
+
+    <div id="msgBox"></div>
+
+    <div class="card">
+      <h2><span>Proof state</span>
+        <span style="font-weight:400;text-transform:none;letter-spacing:0">
+          changes are highlighted: <span class="gline del">removed</span>
+          <span class="gline add">added</span></span></h2>
+      <div class="body">
+        <div id="goalCols">
+          <div><div class="panel-title" id="beforeTitle">Before</div><div id="beforeCol"></div></div>
+          <div><div class="panel-title" id="afterTitle">After</div><div id="afterCol"></div></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <aside id="pins">
+    <div class="panel-title">Pinned states (<span id="pinCount">0</span>)</div>
+    <div class="exportrow">
+      <button id="expMd">Export Markdown</button>
+      <button id="expJson">Export JSON</button>
+      <button id="printPins">Print sheet</button>
+      <button id="clearPins">Clear</button>
+    </div>
+    <ul id="pinList"></ul>
+    <div id="pinEmpty" class="empty">No pins yet. Press <kbd>P</kbd> or “Pin state”
+      to save the current proof state with a note.</div>
+  </aside>
+</div>
+
+<div id="legend">
+  <span><kbd>←</kbd><kbd>→</kbd> step</span>
+  <span><kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd> ten steps</span>
+  <span><kbd>↑</kbd><kbd>↓</kbd> declaration</span>
+  <span><kbd>Space</kbd> play / pause</span>
+  <span><kbd>Home</kbd><kbd>End</kbd> first / last</span>
+  <span><kbd>P</kbd> pin</span>
+  <span><kbd>N</kbd> focus note of last pin</span>
+  <span><kbd>Esc</kbd> stop</span>
+</div>
+
+<dialog id="dlg">
+  <div class="dh"><span id="dlgTitle">Export</span>
+    <span><button id="dlgCopy">Copy</button> <button id="dlgClose">Close</button></span></div>
+  <div class="db">
+    <p style="margin:0 0 6px;font-size:12px;color:var(--dim)" id="dlgHint"></p>
+    <textarea id="dlgText" readonly></textarea>
+  </div>
+</dialog>
+
+<div id="printout"></div>
+
+<script id="pstates-data" type="application/json">__PSTATES_DATA__</script>
+<script>
+"use strict";
+/* =====================================================================
+   Proof-state replay viewer.  Self-contained: no network, no CDN, no
+   fonts, no fetch.  The record was embedded above by `pstates`.
+   ===================================================================== */
+const D = JSON.parse(document.getElementById("pstates-data").textContent);
+/* The record uses short keys to keep the page small; give the goal text the
+   long name the rest of this script reads. */
+const GOALS = D.goals.map(g => ({ id: g.id, text: g.t }));
+const STEPS = D.steps, DECLS = D.decls, SRC = D.source, MSGS = D.msgs;
+
+let cur = 0;             // current step index
+let timer = null;        // play timer
+let pins = [];           // [{step, note}]
+
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+/* ------------------------------------------------------------- header --- */
+$("hFile").textContent = D.file + (D.declPat ? "   [--decl " + D.declPat + "]" : "");
+const st = $("hStatus");
+if (D.elaborationOk) { st.textContent = "elaborated cleanly"; st.className = "badge ok"; }
+else { st.textContent = "elaboration incomplete — partial record"; st.className = "badge bad"; }
+$("hMeta").textContent =
+  STEPS.length + " steps · " + DECLS.filter(d => d.n > 0).length + " declarations · "
+  + GOALS.length + " distinct goals · Lean " + D.leanVersion
+  + " · recorded in " + D.elapsedMs + " ms";
+
+/* ------------------------------------------------------------ helpers --- */
+function goalLines(g){ return g.text.split("\n"); }
+
+/* Longest-common-subsequence line diff.  Goals are tens of lines, so the
+   quadratic table is fine; we bail out on anything pathological. */
+function lineDiff(a, b){
+  const n = a.length, m = b.length;
+  if (n * m > 250000) return null;
+  const dp = [];
+  for (let i = 0; i <= n; i++) dp.push(new Int32Array(m + 1));
+  for (let i = n - 1; i >= 0; i--)
+    for (let j = m - 1; j >= 0; j--)
+      dp[i][j] = a[i] === b[j] ? dp[i+1][j+1] + 1 : Math.max(dp[i+1][j], dp[i][j+1]);
+  const ops = []; let i = 0, j = 0;
+  while (i < n && j < m){
+    if (a[i] === b[j]) { ops.push(["=", i, j]); i++; j++; }
+    else if (dp[i+1][j] >= dp[i][j+1]) { ops.push(["-", i, -1]); i++; }
+    else { ops.push(["+", -1, j]); j++; }
+  }
+  while (i < n) { ops.push(["-", i, -1]); i++; }
+  while (j < m) { ops.push(["+", -1, j]); j++; }
+  return ops;
+}
+
+/* How much two goals have in common, 0…1, by shared lines. */
+function similarity(a, b){
+  const ops = lineDiff(a, b);
+  if (!ops || (!a.length && !b.length)) return 0;
+  let same = 0;
+  for (const o of ops) if (o[0] === "=") same++;
+  return (2 * same) / (a.length + b.length);
+}
+
+/* Pair the goals before a step with the goals after it.
+   Most tactics replace the goal metavariable rather than reusing it, so
+   matching on the metavariable name alone would report every rewrite as
+   "one goal closed, one new goal" and no diff would ever be shown.  We match
+   on the name first (exact, cheap, and right when it applies) and then pair
+   whatever is left by textual similarity, best pairs first. */
+function pairGoals(bs, as){
+  const n = bs.length, m = as.length;
+  const pb = new Array(n).fill(-1), pa = new Array(m).fill(-1);
+  for (let i = 0; i < n; i++){
+    for (let j = 0; j < m; j++){
+      if (pa[j] < 0 && as[j].id === bs[i].id) { pb[i] = j; pa[j] = i; break; }
+    }
+  }
+  const ub = [], ua = [];
+  for (let i = 0; i < n; i++) if (pb[i] < 0) ub.push(i);
+  for (let j = 0; j < m; j++) if (pa[j] < 0) ua.push(j);
+  if (ub.length * ua.length <= 400){
+    const cand = [];
+    for (const i of ub) for (const j of ua){
+      const s = similarity(goalLines(bs[i]), goalLines(as[j]));
+      if (s >= 0.34) cand.push([s, i, j]);
+    }
+    cand.sort((x, y) => y[0] - x[0]);
+    for (const [, i, j] of cand) if (pb[i] < 0 && pa[j] < 0) { pb[i] = j; pa[j] = i; }
+  }
+  /* If exactly one goal on each side is still unmatched they must correspond,
+     however different they look: `intro` and `refine` routinely rewrite a goal
+     beyond textual recognition. */
+  const rb = [], ra = [];
+  for (let i = 0; i < n; i++) if (pb[i] < 0) rb.push(i);
+  for (let j = 0; j < m; j++) if (pa[j] < 0) ra.push(j);
+  if (rb.length === 1 && ra.length === 1) { pb[rb[0]] = ra[0]; pa[ra[0]] = rb[0]; }
+  return { pb, pa };
+}
+
+function renderGoal(g, cls, label, ops, side){
+  const div = document.createElement("div");
+  div.className = "goalbox " + cls;
+  const h = document.createElement("div"); h.className = "gh";
+  const a = document.createElement("span"); a.textContent = label;
+  const b = document.createElement("span"); b.textContent = g ? g.id : "";
+  h.append(a, b); div.append(h);
+  const body = document.createElement("div"); body.className = "gb";
+  if (!g) { body.innerHTML = '<span class="empty">—</span>'; div.append(body); return div; }
+  const lines = goalLines(g);
+  if (!ops) {
+    for (const L of lines){
+      const d = document.createElement("div"); d.className = "gline"; d.textContent = L;
+      body.append(d);
+    }
+  } else {
+    for (const [op, i, j] of ops){
+      if (side === "before" && op === "+") continue;
+      if (side === "after"  && op === "-") continue;
+      const idx = side === "before" ? (op === "+" ? j : i) : (op === "-" ? i : j);
+      const d = document.createElement("div");
+      d.className = "gline" + (op === "=" ? "" : (op === "+" ? " add" : " del"));
+      d.textContent = lines[idx] !== undefined ? lines[idx] : "";
+      body.append(d);
+    }
+  }
+  div.append(body);
+  return div;
+}
+
+/* --------------------------------------------------------------- main --- */
+function declOf(i){ return DECLS[STEPS[i].d]; }
+
+function render(){
+  if (!STEPS.length){
+    $("main").innerHTML = '<div class="empty">This file contains no recorded tactic steps.'
+      + (MSGS.length ? " There are " + MSGS.length + " messages; see the JSON record." : "")
+      + "</div>";
+    return;
+  }
+  const s = STEPS[cur], d = declOf(cur);
+
+  $("counter").textContent = (cur + 1) + " / " + STEPS.length;
+  $("scrub").value = cur;
+  $("stepPos").textContent = d.name + "   line " + s.l + ":" + s.co;
+  $("tacticText").textContent = s.tx;
+
+  const nb = s.b.length, na = s.a.length;
+  let kind = "same", word = "goals unchanged in number";
+  if (na === 0) { kind = "close"; word = "closes the goal" + (nb > 1 ? "s" : ""); }
+  else if (na > nb) { kind = "split"; word = "splits into " + na + " goals"; }
+  else if (na < nb) { kind = "close"; word = "discharges " + (nb - na) + " goal(s)"; }
+  $("stepMeta").innerHTML =
+    '<span class="transit ' + kind + '">' + nb + " → " + na + " &nbsp;" + esc(word) + "</span>"
+    + " · depth " + s.dep + " · " + esc(s.k) + " · step " + (cur + 1) + " of " + STEPS.length;
+
+  /* source context */
+  const ctx = $("srcCtx"); ctx.innerHTML = "";
+  const from = Math.max(1, s.l - 4), to = Math.min(SRC.length, s.el + 3);
+  for (let ln = from; ln <= to; ln++){
+    const row = document.createElement("div");
+    row.className = "srcline" + (ln >= s.l && ln <= s.el ? " hit" : "");
+    const no = document.createElement("span"); no.className = "no"; no.textContent = ln;
+    const tx = document.createElement("span"); tx.className = "tx";
+    tx.textContent = SRC[ln - 1] === undefined ? "" : SRC[ln - 1];
+    row.append(no, tx); ctx.append(row);
+  }
+
+  /* messages anchored here */
+  const mb = $("msgBox"); mb.innerHTML = "";
+  const here = MSGS.filter(m => String(m.step) === String(s.i));
+  for (const m of here){
+    const el = document.createElement("div");
+    el.className = "msg " + m.sev;
+    el.innerHTML = '<div class="where">' + m.sev + " at " + m.l + ":" + m.co + "</div><pre>"
+      + esc(m.tx) + "</pre>";
+    mb.append(el);
+  }
+
+  /* goals, with the before/after diff */
+  const bcol = $("beforeCol"), acol = $("afterCol");
+  bcol.innerHTML = ""; acol.innerHTML = "";
+  $("beforeTitle").textContent = "Before  (" + nb + " goal" + (nb === 1 ? "" : "s") + ")";
+  $("afterTitle").textContent  = "After  (" + na + " goal" + (na === 1 ? "" : "s") + ")";
+
+  const bs = s.b.map(i => GOALS[i]), as = s.a.map(i => GOALS[i]);
+  const { pb, pa } = pairGoals(bs, as);
+
+  if (!bs.length) bcol.innerHTML = '<div class="empty">no goals</div>';
+  bs.forEach((g, i) => {
+    const j = pb[i];
+    if (j < 0) bcol.append(renderGoal(g, "closed", "closed by this step", null, "before"));
+    else if (as[j].text === g.text) bcol.append(renderGoal(g, "", "unchanged", null, "before"));
+    else bcol.append(renderGoal(g, "changed", "changed",
+                                lineDiff(goalLines(g), goalLines(as[j])), "before"));
+  });
+
+  if (!as.length) acol.innerHTML = '<div class="empty">no goals — this branch is closed</div>';
+  as.forEach((g, j) => {
+    const i = pa[j];
+    if (i < 0) acol.append(renderGoal(g, "new", "new goal", null, "after"));
+    else if (bs[i].text === g.text) acol.append(renderGoal(g, "", "unchanged", null, "after"));
+    else acol.append(renderGoal(g, "changed", "changed",
+                                lineDiff(goalLines(bs[i]), goalLines(g)), "after"));
+  });
+
+  markNav();
+  renderPins();
+}
+
+/* ---------------------------------------------------------------- nav --- */
+let openDecl = -1;
+function buildNav(){
+  const filter = $("navFilter").value.trim().toLowerCase();
+  const list = $("navList"); list.innerHTML = "";
+  const hit = di => {
+    const d = DECLS[di];
+    if (d.n === 0) return false;
+    if (!filter) return true;
+    return d.name.toLowerCase().includes(filter)
+        || STEPS.some(s => s.d === di && s.tx.toLowerCase().includes(filter));
+  };
+  const hits = DECLS.map((_, di) => di).filter(hit);
+  /* A filter that narrows to one declaration expands it: otherwise the
+     single hit sits there closed and needs a second click. */
+  if (filter && hits.length === 1) openDecl = hits[0];
+  DECLS.forEach((d, di) => {
+    if (!hit(di)) return;
+    const mine = STEPS.filter(s => s.d === di);
+    const row = document.createElement("div");
+    row.className = "decl"; row.dataset.decl = di;
+    row.innerHTML = esc(d.name) + ' <span class="n">' + d.l + "–" + d.el + " · "
+      + d.n + " steps</span>"
+      + (d.broken ? ' <span class="flag err">error</span>' : "")
+      + (d.sorried ? ' <span class="flag sorry">sorry</span>' : "");
+    row.onclick = () => {
+      openDecl = (openDecl === di) ? -1 : di;
+      if (openDecl === di && Number(d.first) >= 0) go(Number(d.first));
+      buildNav(); markNav();
+    };
+    list.append(row);
+    if (openDecl === di){
+      const tree = document.createElement("div"); tree.className = "tree";
+      for (const s of mine){
+        if (filter && !s.tx.toLowerCase().includes(filter)
+            && !d.name.toLowerCase().includes(filter)) continue;
+        const n = document.createElement("div");
+        n.className = "tnode"; n.dataset.step = s.i;
+        n.style.paddingLeft = (2 + s.dep * 11) + "px";
+        const first = s.tx.split("\n")[0];
+        n.innerHTML = esc(first.length > 46 ? first.slice(0, 45) + "…" : first)
+          + ' <span class="gc">' + s.b.length + "→" + s.a.length + "</span>";
+        n.title = s.tx + "\n\n(line " + s.l + ", " + s.k + ")";
+        n.onclick = e => { e.stopPropagation(); go(s.i); };
+        tree.append(n);
+      }
+      list.append(tree);
+    }
+  });
+  markNav();
+}
+function markNav(){
+  if (!STEPS.length) return;
+  const s = STEPS[cur];
+  document.querySelectorAll(".decl").forEach(e =>
+    e.classList.toggle("cur", Number(e.dataset.decl) === s.d));
+  const pinned = new Set(pins.map(p => p.step));
+  document.querySelectorAll(".tnode").forEach(e => {
+    const i = Number(e.dataset.step);
+    e.classList.toggle("cur", i === cur);
+    e.classList.toggle("pinned", pinned.has(i));
+  });
+  const c = document.querySelector(".tnode.cur");
+  if (c) c.scrollIntoView({block:"nearest"});
+}
+
+/* -------------------------------------------------------------- moving -- */
+function go(i){
+  if (!STEPS.length) return;
+  cur = Math.max(0, Math.min(STEPS.length - 1, i));
+  const d = STEPS[cur].d;
+  if (openDecl !== d) { openDecl = d; buildNav(); }
+  render();
+  $("main").scrollTop = 0;
+}
+function step(n){ stop(); go(cur + n); }
+function play(){
+  if (timer) return;
+  timer = setInterval(() => {
+    if (cur >= STEPS.length - 1) { stop(); return; }
+    go(cur + 1);
+  }, Number($("speed").value));
+  $("playBtn").textContent = "⏸ Pause";
+  $("playBtn").classList.add("playing");
+}
+function stop(){
+  if (timer) clearInterval(timer);
+  timer = null;
+  $("playBtn").textContent = "▶ Play";
+  $("playBtn").classList.remove("playing");
+}
+function toggle(){ timer ? stop() : play(); }
+
+$("firstBtn").onclick = () => step(-1e9);
+$("prevBtn").onclick  = () => step(-1);
+$("nextBtn").onclick  = () => step(1);
+$("lastBtn").onclick  = () => step(1e9);
+$("playBtn").onclick  = toggle;
+$("scrub").oninput    = e => { stop(); go(Number(e.target.value)); };
+$("speed").onchange   = () => { if (timer) { stop(); play(); } };
+$("navFilter").oninput = buildNav;
+$("tgNav").onclick  = () => document.body.classList.toggle("show-nav");
+$("tgPins").onclick = () => document.body.classList.toggle("show-pins");
+$("errBtn").onclick = () => {
+  const m = MSGS.find(m => m.sev === "error" && Number(m.step) >= 0);
+  if (m) { stop(); go(Number(m.step)); }
+  else alert("No error is anchored to a recorded step in this file.");
+};
+
+function nextDecl(dir){
+  if (!STEPS.length) return;
+  const d = STEPS[cur].d;
+  let t = d + dir;
+  while (t >= 0 && t < DECLS.length && DECLS[t].n === 0) t += dir;
+  if (t < 0 || t >= DECLS.length) return;
+  stop(); openDecl = t; buildNav(); go(Number(DECLS[t].first));
+}
+
+document.addEventListener("keydown", e => {
+  const tag = (e.target.tagName || "").toLowerCase();
+  if (tag === "input" || tag === "textarea" || $("dlg").open) {
+    if (e.key === "Escape" && $("dlg").open) $("dlg").close();
+    return;
+  }
+  switch (e.key){
+    case "ArrowRight": step(e.shiftKey ? 10 : 1); e.preventDefault(); break;
+    case "ArrowLeft":  step(e.shiftKey ? -10 : -1); e.preventDefault(); break;
+    case "ArrowDown":  nextDecl(1); e.preventDefault(); break;
+    case "ArrowUp":    nextDecl(-1); e.preventDefault(); break;
+    case " ":          toggle(); e.preventDefault(); break;
+    case "Home":       step(-1e9); e.preventDefault(); break;
+    case "End":        step(1e9); e.preventDefault(); break;
+    case "Escape":     stop(); break;
+    case "p": case "P": addPin(); e.preventDefault(); break;
+    case "n": case "N": {
+      const ta = document.querySelector("#pinList li:last-child textarea");
+      if (ta) { ta.focus(); e.preventDefault(); }
+      break;
+    }
+  }
+});
+
+/* --------------------------------------------------------------- pins --- */
+const PINKEY = "pstates:" + D.file + ":" + D.declPat;
+function loadPins(){
+  try { pins = JSON.parse(localStorage.getItem(PINKEY) || "[]"); }
+  catch (e) { pins = []; }
+  if (!Array.isArray(pins)) pins = [];
+  pins = pins.filter(p => p && Number.isInteger(p.step) && p.step < STEPS.length);
+}
+function savePins(){ try { localStorage.setItem(PINKEY, JSON.stringify(pins)); } catch (e) {} }
+function addPin(){
+  if (!STEPS.length) return;
+  if (pins.some(p => p.step === cur)) { flashPin(cur); return; }
+  pins.push({ step: cur, note: "" });
+  savePins(); renderPins(); markNav();
+  const ta = document.querySelector("#pinList li:last-child textarea");
+  if (ta) { ta.scrollIntoView({block:"nearest"}); ta.focus(); }
+}
+function flashPin(i){
+  const li = document.querySelector('#pinList li[data-step="' + i + '"]');
+  if (li) { li.style.outline = "2px solid var(--pin)"; setTimeout(() => li.style.outline = "", 700); }
+}
+function renderPins(){
+  const ul = $("pinList"); ul.innerHTML = "";
+  $("pinCount").textContent = pins.length;
+  $("pinEmpty").style.display = pins.length ? "none" : "block";
+  pins.forEach((p, k) => {
+    const s = STEPS[p.step]; if (!s) return;
+    const d = DECLS[s.d];
+    const li = document.createElement("li");
+    li.dataset.step = p.step;
+    if (p.step === cur) li.classList.add("cur");
+    const head = document.createElement("div"); head.className = "ph";
+    const loc = document.createElement("span"); loc.className = "loc";
+    loc.textContent = d.name + " @ " + s.l + ":" + s.co;
+    loc.onclick = () => { stop(); go(p.step); };
+    const btns = document.createElement("span");
+    const up = document.createElement("button"); up.className = "mini"; up.textContent = "↑";
+    up.title = "Move up"; up.disabled = k === 0;
+    up.onclick = () => { const t = pins[k-1]; pins[k-1] = pins[k]; pins[k] = t; savePins(); renderPins(); };
+    const dn = document.createElement("button"); dn.className = "mini"; dn.textContent = "↓";
+    dn.title = "Move down"; dn.disabled = k === pins.length - 1;
+    dn.onclick = () => { const t = pins[k+1]; pins[k+1] = pins[k]; pins[k] = t; savePins(); renderPins(); };
+    const rm = document.createElement("button"); rm.className = "mini"; rm.textContent = "✕";
+    rm.title = "Remove pin";
+    rm.onclick = () => { pins.splice(k, 1); savePins(); renderPins(); markNav(); };
+    btns.append(up, dn, rm);
+    head.append(loc, btns);
+    const tac = document.createElement("div"); tac.className = "tac";
+    tac.textContent = s.tx.split("\n")[0];
+    const ta = document.createElement("textarea");
+    ta.placeholder = "note…"; ta.value = p.note || "";
+    ta.oninput = () => { p.note = ta.value; savePins(); };
+    li.append(head, tac, ta);
+    ul.append(li);
+  });
+}
+$("pinBtn").onclick = addPin;
+$("clearPins").onclick = () => {
+  if (pins.length && confirm("Remove all " + pins.length + " pins?")) {
+    pins = []; savePins(); renderPins(); markNav();
+  }
+};
+
+/* ------------------------------------------------------------ exports --- */
+function goalText(ids){
+  if (!ids.length) return "no goals";
+  return ids.map(i => GOALS[i].text).join("\n\n");
+}
+function pinsMarkdown(){
+  const L = [];
+  L.push("# Pinned proof states");
+  L.push("");
+  L.push("* file: `" + D.file + "`" + (D.declPat ? "  (filter `" + D.declPat + "`)" : ""));
+  L.push("* Lean " + D.leanVersion + ", " + STEPS.length + " recorded steps");
+  L.push("");
+  pins.forEach((p, k) => {
+    const s = STEPS[p.step], d = DECLS[s.d];
+    L.push("## " + (k + 1) + ". `" + d.name + "` — line " + s.l + ":" + s.co
+           + "  (step " + (p.step + 1) + " of " + STEPS.length + ")");
+    L.push("");
+    if (p.note && p.note.trim()) { L.push("> " + p.note.trim().split("\n").join("\n> ")); L.push(""); }
+    L.push("Tactic (`" + s.k + "`):");
+    L.push("");
+    L.push("```lean");
+    L.push(s.tx);
+    L.push("```");
+    L.push("");
+    L.push("Goals before (" + s.b.length + "):");
+    L.push("");
+    L.push("```");
+    L.push(goalText(s.b));
+    L.push("```");
+    L.push("");
+    L.push("Goals after (" + s.a.length + "):");
+    L.push("");
+    L.push("```");
+    L.push(goalText(s.a));
+    L.push("```");
+    L.push("");
+  });
+  return L.join("\n");
+}
+function pinsJson(){
+  return JSON.stringify({
+    file: D.file, declPat: D.declPat, leanVersion: D.leanVersion,
+    pins: pins.map((p, k) => {
+      const s = STEPS[p.step], d = DECLS[s.d];
+      return {
+        order: k + 1, step: p.step, note: p.note || "",
+        decl: d.name, line: s.l, col: s.co, endLine: s.el, kind: s.k, tactic: s.tx,
+        goalsBefore: s.b.map(i => GOALS[i]), goalsAfter: s.a.map(i => GOALS[i])
+      };
+    })
+  }, null, 2);
+}
+function offer(name, mime, text){
+  /* Try a real download; fall back to a dialog with selectable text, because
+     a page served under a strict CSP may refuse blob: URLs. */
+  let ok = false;
+  try {
+    const b = new Blob([text], {type: mime});
+    const u = URL.createObjectURL(b);
+    const a = document.createElement("a");
+    a.href = u; a.download = name; document.body.append(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(u), 4000);
+    ok = true;
+  } catch (e) { ok = false; }
+  $("dlgTitle").textContent = name;
+  $("dlgHint").textContent = ok
+    ? "Downloaded as " + name + ". The same text is below if the download was blocked."
+    : "Download unavailable in this context — copy the text below.";
+  $("dlgText").value = text;
+  $("dlg").showModal();
+}
+$("expMd").onclick = () => {
+  if (!pins.length) return alert("No pins to export.");
+  offer("pinned-proof-states.md", "text/markdown", pinsMarkdown());
+};
+$("expJson").onclick = () => {
+  if (!pins.length) return alert("No pins to export.");
+  offer("pinned-proof-states.json", "application/json", pinsJson());
+};
+$("dlgClose").onclick = () => $("dlg").close();
+$("dlgCopy").onclick = () => {
+  const t = $("dlgText"); t.readOnly = false; t.select();
+  try { document.execCommand("copy"); } catch (e) {}
+  t.readOnly = true;
+};
+$("printPins").onclick = () => {
+  const out = $("printout");
+  out.innerHTML = "";
+  const h = document.createElement("h1");
+  h.textContent = "Pinned proof states — " + D.file;
+  out.append(h);
+  const sub = document.createElement("div");
+  sub.textContent = "Lean " + D.leanVersion + " · " + STEPS.length + " recorded steps · "
+    + pins.length + " pins";
+  out.append(sub);
+  const src = pins.length ? pins : [{step: cur, note: "(current state)"}];
+  src.forEach((p, k) => {
+    const s = STEPS[p.step]; if (!s) return;
+    const d = DECLS[s.d];
+    const sec = document.createElement("div"); sec.className = "pin";
+    const h2 = document.createElement("h2");
+    h2.textContent = (k + 1) + ". " + d.name + " — line " + s.l + ":" + s.co;
+    sec.append(h2);
+    if (p.note && p.note.trim()){
+      const n = document.createElement("p"); n.className = "note"; n.textContent = p.note;
+      sec.append(n);
+    }
+    const t = document.createElement("pre"); t.textContent = s.tx; sec.append(t);
+    const g1 = document.createElement("pre");
+    g1.textContent = "BEFORE (" + s.b.length + ")\n" + goalText(s.b); sec.append(g1);
+    const g2 = document.createElement("pre");
+    g2.textContent = "AFTER (" + s.a.length + ")\n" + goalText(s.a); sec.append(g2);
+    out.append(sec);
+  });
+  window.print();
+};
+
+/* ---------------------------------------------------------------- init -- */
+$("scrub").max = Math.max(0, STEPS.length - 1);
+loadPins();
+if (STEPS.length){
+  openDecl = STEPS[0].d;
+  buildNav();
+  render();
+} else {
+  buildNav();
+  render();
+}
+</script>
+</body>
+</html>

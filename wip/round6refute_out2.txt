@@ -1,0 +1,189 @@
+== round 6, stage 6: deep settling (∨ two-sided w/ emitter; July 20k nodes) ==
+OR-BOX/miss-e DEEP: |S|=5 d=1 J=0 room=2 adm=true gates(jump/box/env)=0/0/0
+  fs=3 ft=3 b=1 SUB: P  act=false |s+a+t|=201 (1114 ms)
+  fs=2 ft=3 b=1 SUB: P  act=false |s+a+t|=173 (550 ms)
+  fs=1 ft=3 b=1 SUB: P  act=false |s+a+t|=125 (21 ms)
+  fs=2 ft=4 b=1 SUB: P  act=false |s+a+t|=189 (56 ms)
+  fs=4 ft=4 b=1 SUB: P  act=false |s+a+t|=233 (79 ms)
+  fs=4 ft=4 b=2 ROOM+: P  act=false |s+a+t|=233 (81 ms)
+  fs=3 ft=4 b=2 ROOM+: P  act=false |s+a+t|=217 (71 ms)
+  fs=1 ft=4 b=2 ROOM+: P  act=false |s+a+t|=141 (41 ms)
+  fs=2 ft=5 b=2 ROOM+: P  act=false |s+a+t|=189 (55 ms)
+  fs=5 ft=5 b=2 ROOM+: P  act=false |s+a+t|=233 (79 ms)
+  fs=5 ft=5 b=3 ROOM+: P  act=false |s+a+t|=233 (81 ms)
+  fs=4 ft=5 b=3 ROOM+: P  act=false |s+a+t|=233 (79 ms)
+  fs=1 ft=5 b=3 ROOM+: P  act=false |s+a+t|=141 (44 ms)
+  fs=2 ft=6 b=3 ROOM+: P  act=false |s+a+t|=189 (55 ms)
+  fs=6 ft=6 b=3 ROOM+: P  act=false |s+a+t|=233 (79 ms)
+OR-BOX/miss-e,f DEEP: |S|=5 d=2 J=0 room=4 adm=true gates(jump/box/env)=0/0/0
+  fs=3 ft=3 b=1 SUB: ~  act=false |s+a+t|=1519 (41210 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=2 ft=3 b=1 SUB: ~  act=false |s+a+t|=1019 (10083 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=1 ft=3 b=1 SUB: P  act=false |s+a+t|=813 (1804 ms)
+  fs=2 ft=4 b=1 SUB: P  act=false |s+a+t|=1427 (491 ms)
+  fs=4 ft=4 b=1 SUB: P  act=false |s+a+t|=2335 (1412 ms)
+  fs=4 ft=4 b=2 SUB: P  act=false |s+a+t|=2335 (1406 ms)
+  fs=3 ft=4 b=2 SUB: P  act=false |s+a+t|=1927 (923 ms)
+  fs=1 ft=4 b=2 SUB: P  act=false |s+a+t|=1221 (326 ms)
+  fs=2 ft=5 b=2 SUB: P  act=false |s+a+t|=1651 (570 ms)
+  fs=5 ft=5 b=2 SUB: P  act=false |s+a+t|=2783 (1296 ms)
+  fs=5 ft=5 b=3 SUB: P  act=false |s+a+t|=2783 (1300 ms)
+  fs=4 ft=5 b=3 SUB: P  act=false |s+a+t|=2559 (1451 ms)
+  fs=1 ft=5 b=3 SUB: P  act=false |s+a+t|=1445 (404 ms)
+  fs=2 ft=6 b=3 SUB: P  act=false |s+a+t|=1651 (575 ms)
+  fs=6 ft=6 b=3 SUB: P  act=false |s+a+t|=2783 (1295 ms)
+OR-IN-JUMP/miss-c DEEP: |S|=8 d=1 J=1 room=3 adm=true gates(jump/box/env)=0/0/0
+  fs=3 ft=3 b=1 SUB: P  act=false |s+a+t|=145 (1567 ms)
+  fs=2 ft=3 b=1 SUB: P  act=false |s+a+t|=129 (1270 ms)
+  fs=1 ft=3 b=1 SUB: P  act=false |s+a+t|=99 (569 ms)
+  fs=2 ft=4 b=1 SUB: P  act=false |s+a+t|=129 (1281 ms)
+  fs=4 ft=4 b=1 SUB: P  act=false |s+a+t|=145 (1575 ms)
+  fs=4 ft=4 b=2 SUB: P  act=false |s+a+t|=145 (1575 ms)
+  fs=3 ft=4 b=2 SUB: P  act=false |s+a+t|=145 (1578 ms)
+  fs=1 ft=4 b=2 SUB: P  act=false |s+a+t|=99 (568 ms)
+  fs=2 ft=5 b=2 SUB: P  act=false |s+a+t|=129 (1270 ms)
+  fs=5 ft=5 b=2 SUB: P  act=false |s+a+t|=145 (1582 ms)
+  fs=5 ft=5 b=3 ROOM+: P  act=false |s+a+t|=145 (1581 ms)
+  fs=4 ft=5 b=3 ROOM+: P  act=false |s+a+t|=145 (1572 ms)
+  fs=1 ft=5 b=3 ROOM+: P  act=false |s+a+t|=99 (569 ms)
+  fs=2 ft=6 b=3 ROOM+: P  act=false |s+a+t|=129 (1265 ms)
+  fs=6 ft=6 b=3 ROOM+: P  act=false |s+a+t|=145 (1569 ms)
+OR-IN-JUMP/miss-b,c DEEP: |S|=8 d=2 J=1 room=6 adm=true gates(jump/box/env)=0/0/0
+  fs=3 ft=3 b=1 SUB: P  act=false |s+a+t|=123 (486 ms)
+  fs=2 ft=3 b=1 SUB: P  act=false |s+a+t|=111 (377 ms)
+  fs=1 ft=3 b=1 SUB: P  act=false |s+a+t|=87 (154 ms)
+  fs=2 ft=4 b=1 SUB: P  act=false |s+a+t|=111 (375 ms)
+  fs=4 ft=4 b=1 SUB: P  act=false |s+a+t|=123 (490 ms)
+  fs=4 ft=4 b=2 SUB: P  act=false |s+a+t|=123 (486 ms)
+  fs=3 ft=4 b=2 SUB: P  act=false |s+a+t|=123 (487 ms)
+  fs=1 ft=4 b=2 SUB: P  act=false |s+a+t|=87 (154 ms)
+  fs=2 ft=5 b=2 SUB: P  act=false |s+a+t|=111 (376 ms)
+  fs=5 ft=5 b=2 SUB: P  act=false |s+a+t|=123 (490 ms)
+  fs=5 ft=5 b=3 SUB: P  act=false |s+a+t|=123 (485 ms)
+  fs=4 ft=5 b=3 SUB: P  act=false |s+a+t|=123 (490 ms)
+  fs=1 ft=5 b=3 SUB: P  act=false |s+a+t|=87 (154 ms)
+  fs=2 ft=6 b=3 SUB: P  act=false |s+a+t|=111 (375 ms)
+  fs=6 ft=6 b=3 SUB: P  act=false |s+a+t|=123 (493 ms)
+OR-GATE/miss-f∨c DEEP: |S|=6 d=1 J=2 room=4 adm=true gates(jump/box/env)=0/1/0
+  fs=3 ft=3 b=1 SUB: P  act=true |s+a+t|=1698 (1719 ms)
+  fs=2 ft=3 b=1 SUB: P  act=true |s+a+t|=1012 (871 ms)
+  fs=1 ft=3 b=1 SUB: P  act=true |s+a+t|=659 (713 ms)
+  fs=2 ft=4 b=1 SUB: P  act=true |s+a+t|=1124 (1157 ms)
+  fs=4 ft=4 b=1 SUB: P  act=true |s+a+t|=2394 (2983 ms)
+  fs=4 ft=4 b=2 SUB: P  act=true |s+a+t|=9125 (8429 ms)
+  fs=3 ft=4 b=2 SUB: P  act=true |s+a+t|=5415 (4688 ms)
+  fs=1 ft=4 b=2 SUB: P  act=true |s+a+t|=3427 (3610 ms)
+  fs=2 ft=5 b=2 SUB: P  act=true |s+a+t|=4812 (5924 ms)
+  fs=5 ft=5 b=2 SUB: P  act=true |s+a+t|=14201 (17205 ms)
+  fs=5 ft=5 b=3 SUB: P  act=true |s+a+t|=49292 (43835 ms)
+  fs=4 ft=5 b=3 SUB: P  act=true |s+a+t|=29124 (24369 ms)
+  fs=1 ft=5 b=3 SUB: P  act=true |s+a+t|=19015 (19218 ms)
+  fs=2 ft=6 b=3 SUB: P  act=true |s+a+t|=27092 (33138 ms)
+  fs=6 ft=6 b=3 SUB: SKIP |s+a+t|=82364 > 60000
+OR-GATE/miss-f,c,f∨c DEEP: |S|=6 d=3 J=2 room=12 adm=true gates(jump/box/env)=0/1/0
+  fs=3 ft=3 b=1 SUB: P  act=true |s+a+t|=3346 (191 ms)
+  fs=2 ft=3 b=1 SUB: P  act=true |s+a+t|=1864 (193 ms)
+  fs=1 ft=3 b=1 SUB: P  act=true |s+a+t|=1435 (189 ms)
+  fs=2 ft=4 b=1 SUB: P  act=true |s+a+t|=3096 (2082 ms)
+  fs=4 ft=4 b=1 SUB: P  act=true |s+a+t|=7154 (4498 ms)
+  fs=4 ft=4 b=2 SUB: P  act=true |s+a+t|=17129 (4655 ms)
+  fs=3 ft=4 b=2 SUB: P  act=true |s+a+t|=10303 (2567 ms)
+  fs=1 ft=4 b=2 SUB: P  act=true |s+a+t|=7443 (2552 ms)
+  fs=2 ft=5 b=2 SUB: P  act=true |s+a+t|=14384 (9353 ms)
+  fs=5 ft=5 b=2 SUB: P  act=true |s+a+t|=38109 (18274 ms)
+  fs=5 ft=5 b=3 SUB: SKIP |s+a+t|=89588 > 60000
+  fs=4 ft=5 b=3 SUB: P  act=true |s+a+t|=53864 (13560 ms)
+  fs=1 ft=5 b=3 SUB: P  act=true |s+a+t|=39767 (11348 ms)
+  fs=2 ft=6 b=3 SUB: SKIP |s+a+t|=79256 > 60000
+  fs=6 ft=6 b=3 SUB: SKIP |s+a+t|=207900 > 60000
+OR/miss-e DEEP (r5 i41): |S|=4 d=1 J=0 room=2 adm=true gates(jump/box/env)=0/0/0
+  fs=3 ft=3 b=1 SUB: P  act=false |s+a+t|=93 (27 ms)
+  fs=2 ft=3 b=1 SUB: P  act=false |s+a+t|=85 (24 ms)
+  fs=1 ft=3 b=1 SUB: P  act=false |s+a+t|=71 (16 ms)
+  fs=2 ft=4 b=1 SUB: P  act=false |s+a+t|=85 (25 ms)
+  fs=4 ft=4 b=1 SUB: P  act=false |s+a+t|=93 (27 ms)
+  fs=4 ft=4 b=2 ROOM+: P  act=false |s+a+t|=93 (28 ms)
+  fs=3 ft=4 b=2 ROOM+: P  act=false |s+a+t|=93 (28 ms)
+  fs=1 ft=4 b=2 ROOM+: P  act=false |s+a+t|=71 (16 ms)
+  fs=2 ft=5 b=2 ROOM+: P  act=false |s+a+t|=85 (25 ms)
+  fs=5 ft=5 b=2 ROOM+: P  act=false |s+a+t|=93 (28 ms)
+  fs=5 ft=5 b=3 ROOM+: P  act=false |s+a+t|=93 (28 ms)
+  fs=4 ft=5 b=3 ROOM+: P  act=false |s+a+t|=93 (28 ms)
+  fs=1 ft=5 b=3 ROOM+: P  act=false |s+a+t|=71 (17 ms)
+  fs=2 ft=6 b=3 ROOM+: P  act=false |s+a+t|=85 (25 ms)
+  fs=6 ft=6 b=3 ROOM+: P  act=false |s+a+t|=93 (28 ms)
+OR/miss-e,f DEEP (r5 i42): |S|=4 d=2 J=0 room=4 adm=true gates(jump/box/env)=0/0/0
+  fs=3 ft=3 b=1 SUB: P  act=false |s+a+t|=699 (370 ms)
+  fs=2 ft=3 b=1 SUB: P  act=false |s+a+t|=551 (220 ms)
+  fs=1 ft=3 b=1 SUB: P  act=false |s+a+t|=403 (120 ms)
+  fs=2 ft=4 b=1 SUB: P  act=false |s+a+t|=631 (240 ms)
+  fs=4 ft=4 b=1 SUB: P  act=false |s+a+t|=859 (474 ms)
+  fs=4 ft=4 b=2 SUB: P  act=false |s+a+t|=859 (475 ms)
+  fs=3 ft=4 b=2 SUB: P  act=false |s+a+t|=779 (409 ms)
+  fs=1 ft=4 b=2 SUB: P  act=false |s+a+t|=483 (141 ms)
+  fs=2 ft=5 b=2 SUB: P  act=false |s+a+t|=631 (243 ms)
+  fs=5 ft=5 b=2 SUB: P  act=false |s+a+t|=859 (478 ms)
+  fs=5 ft=5 b=3 SUB: P  act=false |s+a+t|=859 (482 ms)
+  fs=4 ft=5 b=3 SUB: P  act=false |s+a+t|=859 (476 ms)
+  fs=1 ft=5 b=3 SUB: P  act=false |s+a+t|=483 (144 ms)
+  fs=2 ft=6 b=3 SUB: P  act=false |s+a+t|=631 (240 ms)
+  fs=6 ft=6 b=3 SUB: P  act=false |s+a+t|=859 (475 ms)
+OR/miss-D DEEP (r5 i43): |S|=4 d=1 J=0 room=2 adm=true gates(jump/box/env)=0/0/1
+  fs=3 ft=3 b=1 SUB: P  act=false |s+a+t|=378 (115 ms)
+  fs=2 ft=3 b=1 SUB: P  act=false |s+a+t|=318 (83 ms)
+  fs=1 ft=3 b=1 SUB: P  act=false |s+a+t|=233 (61 ms)
+  fs=2 ft=4 b=1 SUB: P  act=false |s+a+t|=334 (88 ms)
+  fs=4 ft=4 b=1 SUB: P  act=false |s+a+t|=410 (128 ms)
+  fs=4 ft=4 b=2 ROOM+: P  act=false |s+a+t|=410 (126 ms)
+  fs=3 ft=4 b=2 ROOM+: P  act=false |s+a+t|=394 (120 ms)
+  fs=1 ft=4 b=2 ROOM+: P  act=false |s+a+t|=249 (67 ms)
+  fs=2 ft=5 b=2 ROOM+: P  act=false |s+a+t|=334 (89 ms)
+  fs=5 ft=5 b=2 ROOM+: P  act=false |s+a+t|=410 (125 ms)
+  fs=5 ft=5 b=3 ROOM+: P  act=false |s+a+t|=410 (125 ms)
+  fs=4 ft=5 b=3 ROOM+: P  act=false |s+a+t|=410 (125 ms)
+  fs=1 ft=5 b=3 ROOM+: P  act=false |s+a+t|=249 (68 ms)
+  fs=2 ft=6 b=3 ROOM+: P  act=false |s+a+t|=334 (89 ms)
+  fs=6 ft=6 b=3 ROOM+: P  act=false |s+a+t|=410 (125 ms)
+== ∨ block done; July deep block ==
+J-JULY ctx=Gk D=p DEEP b=1: |S|=10 d=9 J=5 room=63 adm=true gates(jump/box/env)=0/1/0
+  fs=4 ft=4 b=1 SUB: ~  act=true |s+a+t|=1478 (68827 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=3 ft=4 b=1 SUB: ~  act=true |s+a+t|=1202 (49421 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=1 ft=4 b=1 SUB: ~  act=true |s+a+t|=469 (12124 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=5 ft=5 b=1 SUB: ~  act=true |s+a+t|=1526 (103230 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+J-JULY ctx=Gk D=p DEEP b=2,3: |S|=10 d=9 J=5 room=63 adm=true gates(jump/box/env)=0/1/0
+  fs=4 ft=4 b=2 SUB: ~  act=true |s+a+t|=6587 (202807 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=1 ft=4 b=2 SUB: ~  act=true |s+a+t|=2325 (106643 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=4 ft=4 b=3 SUB: ~  act=true |s+a+t|=15918 (503506 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=1 ft=4 b=3 SUB: ~  act=true |s+a+t|=7245 (294698 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+J-JULY ctx=Gk D=r DEEP b=1: |S|=10 d=9 J=5 room=63 adm=true gates(jump/box/env)=0/1/0
+  fs=4 ft=4 b=1 SUB: ~  act=true |s+a+t|=1534 (81678 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=3 ft=4 b=1 SUB: ~  act=true |s+a+t|=1258 (43876 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=1 ft=4 b=1 SUB: ~  act=true |s+a+t|=497 (15388 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=5 ft=5 b=1 SUB: ~  act=true |s+a+t|=1582 (79862 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+J-JULY ctx=Gk D=r DEEP b=2,3: |S|=10 d=9 J=5 room=63 adm=true gates(jump/box/env)=0/1/0
+  fs=4 ft=4 b=2 SUB: ~  act=true |s+a+t|=6643 (475360 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=1 ft=4 b=2 SUB: ~  act=true |s+a+t|=2353 (105333 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=4 ft=4 b=3 SUB: ~  act=true |s+a+t|=15974 (761205 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=1 ft=4 b=3 SUB: ~  act=true |s+a+t|=7273 (294926 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+J-JULY plain-Sk D=r DEEP b=1: |S|=9 d=8 J=5 room=56 adm=true gates(jump/box/env)=0/1/0
+== round 6, stage 7: stage-6 tail (plain-Sk deep; July D=gk deep) ==
+J-JULY plain-Sk D=r DEEP b=1: |S|=9 d=8 J=5 room=56 adm=true gates(jump/box/env)=0/1/0
+  fs=4 ft=4 b=1 SUB: ~  act=true |s+a+t|=1534 (82326 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=3 ft=4 b=1 SUB: ~  act=true |s+a+t|=1258 (44330 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=1 ft=4 b=1 SUB: ~  act=true |s+a+t|=497 (16004 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=5 ft=5 b=1 SUB: ~  act=true |s+a+t|=1582 (81282 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+J-JULY plain-Sk D=p DEEP b=1: |S|=9 d=8 J=5 room=56 adm=true gates(jump/box/env)=0/1/0
+  fs=4 ft=4 b=1 SUB: ~  act=true |s+a+t|=1478 (68295 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=3 ft=4 b=1 SUB: ~  act=true |s+a+t|=1202 (49450 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=1 ft=4 b=1 SUB: ~  act=true |s+a+t|=469 (11980 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=5 ft=5 b=1 SUB: ~  act=true |s+a+t|=1526 (101336 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+J-JULY ctx=Gk D=gk DEEP b=1: |S|=10 d=9 J=5 room=63 adm=true gates(jump/box/env)=0/1/0
+  fs=4 ft=4 b=1 SUB: ~  act=true |s+a+t|=4334 (671839 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=3 ft=4 b=1 SUB: ~  act=true |s+a+t|=2306 (118341 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=1 ft=4 b=1 SUB: ~  act=true |s+a+t|=1365 (29309 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=5 ft=5 b=1 SUB: ~  act=true |s+a+t|=12790 (1842584 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+J-JULY ctx=Gk D=gk DEEP b=2,3: |S|=10 d=9 J=5 room=63 adm=true gates(jump/box/env)=0/1/0
+  fs=4 ft=4 b=2 SUB: ~  act=true |s+a+t|=10507 (990656 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=1 ft=4 b=2 SUB: ~  act=true |s+a+t|=4285 (179460 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=4 ft=4 b=3 SUB: ~  act=true |s+a+t|=19838 (1646451 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+  fs=1 ft=4 b=3 SUB: ~  act=true |s+a+t|=9205 (411380 ms) [positive stage truncated: the node budget of 20000 ran out (raise Config.findBudget, or set it to none)]
+== stage 7 done ==

@@ -1,0 +1,100 @@
+%% ==========================================================================
+%% Belief in Lax Logic — CPP 2027 skeleton (page-budget instrument first,
+%% submission source second).  Build:
+%%     latexmk -lualatex belief.tex        (TeX Live 2025)
+%% Body is docs/belief-paper-draft.md rev 2, poured via pandoc + fix-ups;
+%% content edits belong in the merge pass (selection doc §2, D2/D5–D9 TODOs
+%% are marked inline in body.tex).
+%%
+%% TAPS NOTE: ACM's production pipeline prefers pdflatex.  This skeleton
+%% compiles under LuaLaTeX for Unicode coverage; the listings `literate'
+%% layer (unicode.tex) is already engine-portable, and the prose layer uses
+%% newunicodechar, which also works under pdflatex — verify TAPS engine
+%% policy before camera-ready.
+%% ==========================================================================
+\documentclass[sigplan,screen,review]{acmart}
+%% CPP submission: add the `anonymous' option if CPP 2027 is double-blind
+%% (check the CFP when it appears).
+
+\usepackage{fancyvrb}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+
+%% Mono font for the Lean listings: DejaVu covers most of the symbol set;
+%% a luaotfload fallback to STIX Two Math fills the rest (⊩, ⊨, ◯ — the
+%% listings `literate' table does NOT fire under LuaLaTeX, see unicode.tex).
+\directlua{luaotfload.add_fallback("monofb",
+  {"file:STIXTwoMath-Regular.otf:mode=node;"})}
+\setmonofont{DejaVu Sans Mono}[Scale=MatchLowercase,
+  RawFeature={fallback=monofb}]
+
+%% Pandoc artefacts.
+\providecommand{\passthrough}[1]{#1}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+%% Listings: Lean source, flexible columns, gentle breaking for the
+%% two-column measure.
+%% Code blocks are fancyvrb Verbatim under the historical environment name.
+%% The listings package is deliberately ABSENT: its scanner reorders
+%% non-ASCII glyphs under LuaLaTeX (measured — a `[◯p]` prints `◯[p]`) and
+%% its breaklines/literate machinery livelocks; plain verbatim + the mono
+%% font with the STIX fallback renders every symbol in order.  Inline code
+%% is \texttt with pour-time escaping (no \lstinline anywhere).  The
+%% pdflatex/TAPS path, if ever needed, reverts to listings + the literate
+%% table kept in unicode.tex.
+\DefineVerbatimEnvironment{lstlisting}{Verbatim}{}
+\fvset{fontsize=\footnotesize,xleftmargin=0.5em}
+%% Long Lean identifiers in prose may break (without hyphen) after an
+%% escaped underscore — the column is narrow and the names are not.
+\renewcommand{\_}{\textunderscore\allowbreak}
+%% Monospace-heavy justified lines: stretch rather than overflow.
+\setlength{\emergencystretch}{2em}
+
+%% acmart predefines theorem/proposition/lemma/corollary/example/definition,
+%% but only late in class setup — extend at begin-document.  Numbering is
+%% within sections so the draft's hand numbering (3.1, 5.1, 6.5, …) is
+%% reproduced by the automatic counters.
+\AtBeginDocument{%
+  \theoremstyle{acmdefinition}%
+  \newtheorem{remark}[theorem]{Remark}%
+  \counterwithin{theorem}{section}}
+
+%% -------------------------------------------------------------- metadata
+\setcopyright{acmlicensed}
+\copyrightyear{2027}
+\acmYear{2027}
+%% TODO: real venue data from the CPP 2027 CFP.
+\acmConference[CPP '27]{Certified Programs and Proofs}{January 2027}{TBD}
+
+\title{Belief in Lax Logic}
+
+\author{Matthew Fairtlough}
+\email{matthew@fairflow.co.uk}
+\affiliation{%
+  \institution{Independent researcher}% TODO(Matthew): affiliation of record
+  \country{United Kingdom}}
+
+%% TODO: refine CCS concepts before submission.
+\ccsdesc[500]{Theory of computation~Modal and temporal logics}
+\ccsdesc[500]{Theory of computation~Constructive mathematics}
+\ccsdesc[300]{Theory of computation~Logic and verification}
+
+\keywords{lax logic, doxastic logic, nuclei, realisability, canonical
+models, decidability, Craig interpolation, Lean, machine-checked proof}
+
+\begin{abstract}
+\input{abstract}
+\end{abstract}
+
+\begin{document}
+\maketitle
+
+\input{body}
+
+\appendix
+\input{appendix}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{../docs/belief}
+
+\end{document}

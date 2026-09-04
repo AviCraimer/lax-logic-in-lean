@@ -1,0 +1,59 @@
+== which route closes the boxed γ-branch at the floor? ==
+
+S1: one live γ-clause   defect = 5
+   A@0(Γ,r)  = r ∨ False
+   A@0(Γ,◯r) = False
+   E@0(Γ)    = True
+    C = z   (2nd hyp weight 3)
+      (a) ⊢ A@0(Γ,r)          : REFUTED!  n=2 ri=[(0, 1)] rm=[(0, 1)] fall=[] val=[(1, r), (0, s), (1, s), (0, z), (1, z)] at 0  [inf=true, conf=true]  (0 ms)
+      (b) ⊢ ◯⊥                : REFUTED!  n=1 ri=[] rm=[] fall=[] val=[(0, r), (0, s), (0, z)] at 0  [inf=true, conf=true]  (0 ms)
+      (b') ⊢ ◯(E@0(Γ)⇢A@0(Γ,◯r)): REFUTED!  n=1 ri=[] rm=[] fall=[] val=[(0, r), (0, s), (0, z)] at 0  [inf=true, conf=true]  (0 ms)
+      (c) ⊢ goal clause of C  : ~ (budget 100000)  (10820 ms)
+      WHOLE obligation        : ~ (budget 100000)  (10815 ms)
+      WHOLE, inf+conf filter  : ~ (budget 100000)  (10734 ms)
+    C = ◯s   (2nd hyp weight 35)
+      (a) ⊢ A@0(Γ,r)          : REFUTED!  n=2 ri=[(0, 1)] rm=[(0, 1)] fall=[] val=[(1, r), (0, s), (1, s)] at 0  [inf=true, conf=true]  (1 ms)
+      (b) ⊢ ◯⊥                : REFUTED!  n=1 ri=[] rm=[] fall=[] val=[(0, r), (0, s)] at 0  [inf=true, conf=true]  (0 ms)
+      (b') ⊢ ◯(E@0(Γ)⇢A@0(Γ,◯r)): REFUTED!  n=1 ri=[] rm=[] fall=[] val=[(0, r), (0, s)] at 0  [inf=true, conf=true]  (0 ms)
+      (c) ⊢ goal clause of C  : ~ (budget 100000)  (9934 ms)
+      WHOLE obligation        : ~ (budget 100000)  (9918 ms)
+      WHOLE, inf+conf filter  : ~ (budget 100000)  (9885 ms)
+S2: two live γ-clauses (◯u ⊃ v survives in s::Γ)   defect = 8
+   A@0(Γ,r)  = r ∨ False
+   A@0(Γ,◯r) = False
+   E@0(Γ)    = True
+    C = z   (2nd hyp weight 27)
+      (a) ⊢ A@0(Γ,r)          : REFUTED!  n=2 ri=[(0, 1)] rm=[(0, 1)] fall=[] val=[(1, r), (0, s), (1, s), (0, z), (1, z)] at 0  [inf=true, conf=true]  (33 ms)
+      (b) ⊢ ◯⊥                : REFUTED!  n=1 ri=[] rm=[] fall=[] val=[(0, r), (0, s), (0, z)] at 0  [inf=true, conf=true]  (5 ms)
+      (b') ⊢ ◯(E@0(Γ)⇢A@0(Γ,◯r)): REFUTED!  n=1 ri=[] rm=[] fall=[] val=[(0, r), (0, s), (0, z)] at 0  [inf=true, conf=true]  (5 ms)
+      (c) ⊢ goal clause of C  : ~ (budget 100000)  (328028 ms)
+      WHOLE obligation        : ~ (budget 100000)  (329186 ms)
+      WHOLE, inf+conf filter  : ~ (budget 100000)  (303605 ms)
+    C = ◯s   (2nd hyp weight 295)
+      (a) ⊢ A@0(Γ,r)          : REFUTED!  n=2 ri=[(0, 1)] rm=[(0, 1)] fall=[] val=[(1, r), (0, s), (1, s)] at 0  [inf=true, conf=true]  (16 ms)
+      (b) ⊢ ◯⊥                : REFUTED!  n=1 ri=[] rm=[] fall=[] val=[(0, r), (0, s)] at 0  [inf=true, conf=true]  (2 ms)
+      (b') ⊢ ◯(E@0(Γ)⇢A@0(Γ,◯r)): REFUTED!  n=1 ri=[] rm=[] fall=[] val=[(0, r), (0, s)] at 0  [inf=true, conf=true]  (1 ms)
+      (c) ⊢ goal clause of C  : ~ (budget 100000)  (309768 ms)
+      WHOLE obligation        : ~ (budget 100000)  (310890 ms)
+      WHOLE, inf+conf filter  : ~ (budget 100000)  (303901 ms)
+S3: two live, the second p-headed   defect = 7
+   A@0(Γ,r)  = r ∨ False
+   A@0(Γ,◯r) = False
+   E@0(Γ)    = True
+    C = z   (2nd hyp weight 25)
+      (a) ⊢ A@0(Γ,r)          : REFUTED!  n=2 ri=[(0, 1)] rm=[(0, 1)] fall=[] val=[(1, r), (0, s), (1, s), (0, z), (1, z)] at 0  [inf=true, conf=true]  (9 ms)
+      (b) ⊢ ◯⊥                : REFUTED!  n=1 ri=[] rm=[] fall=[] val=[(0, r), (0, s), (0, z)] at 0  [inf=true, conf=true]  (2 ms)
+      (b') ⊢ ◯(E@0(Γ)⇢A@0(Γ,◯r)): REFUTED!  n=1 ri=[] rm=[] fall=[] val=[(0, r), (0, s), (0, z)] at 0  [inf=true, conf=true]  (1 ms)
+      (c) ⊢ goal clause of C  : ~ (budget 100000)  (88101 ms)
+      WHOLE obligation        : ~ (budget 100000)  (88502 ms)
+      WHOLE, inf+conf filter  : ~ (budget 100000)  (85242 ms)
+    C = ◯s   (2nd hyp weight 287)
+      (a) ⊢ A@0(Γ,r)          : REFUTED!  n=2 ri=[(0, 1)] rm=[(0, 1)] fall=[] val=[(1, r), (0, s), (1, s)] at 0  [inf=true, conf=true]  (5 ms)
+      (b) ⊢ ◯⊥                : REFUTED!  n=1 ri=[] rm=[] fall=[] val=[(0, r), (0, s)] at 0  [inf=true, conf=true]  (1 ms)
+      (b') ⊢ ◯(E@0(Γ)⇢A@0(Γ,◯r)): REFUTED!  n=1 ri=[] rm=[] fall=[] val=[(0, r), (0, s)] at 0  [inf=true, conf=true]  (0 ms)
+      (c) ⊢ goal clause of C  : ~ (budget 100000)  (84961 ms)
+      WHOLE obligation        : ~ (budget 100000)  (85385 ms)
+      WHOLE, inf+conf filter  : ~ (budget 100000)  (84272 ms)
+
+== done ==
+EXIT=0

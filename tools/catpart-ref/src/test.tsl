@@ -1,0 +1,10 @@
+
+
+B Function: test
+  Categories:
+  1 foo {this is the first category}
+    * bar [single]
+  2 bar {this is the second category}
+    * foo
+    * bar
+EndFunction;

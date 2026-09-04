@@ -1,0 +1,18 @@
+=== CONFIG-COMPLETION probe: 264 models (162 confluent), rung pool 90 ===
+  [heartbeat] iK=0/264 elapsed=734ms visible=[15, 20] completed=[0, 0]
+  [heartbeat] iK=25/264 elapsed=8971ms visible=[519, 547] completed=[0, 0]
+  [heartbeat] iK=50/264 elapsed=14439ms visible=[858, 900] completed=[0, 0]
+  [heartbeat] iK=75/264 elapsed=30605ms visible=[1554, 1624] completed=[0, 0]
+  [heartbeat] iK=100/264 elapsed=41057ms visible=[2026, 2114] completed=[0, 0]
+  [heartbeat] iK=125/264 elapsed=68856ms visible=[2919, 3045] completed=[0, 0]
+=== CONFIG-COMPLETION RESULTS ===
+  cl1={⊥,p,◯⊥,◯p}:
+    pairs: all=4043 vf-VISIBLE=3621 (kv-adds=3564 kv-drops=0 mixed=57)
+    blocking: S0-no-k'=190 S1-no-m'=0 S2-no-m=0 S3-no-u'=3431 S4-no-κ=0
+    COMPLETED=0 | StableWitness-conclusion-holds=0 RankGap-conclusion-holds=0 BOTH-FAIL=0
+  cl3=Sub(◯(◯p⊃p))∪{⊥}∪boxOf:
+    pairs: all=4202 vf-VISIBLE=3741 (kv-adds=3705 kv-drops=0 mixed=36)
+    blocking: S0-no-k'=184 S1-no-m'=0 S2-no-m=0 S3-no-u'=3557 S4-no-κ=0
+    COMPLETED=0 | StableWitness-conclusion-holds=0 RankGap-conclusion-holds=0 BOTH-FAIL=0
+=== done in 80918 ms ===
+EXIT=0

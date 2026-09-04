@@ -1,0 +1,251 @@
+=== b.ii probe, CORRECTED (p-containing closures, p unprotected) ===
+battery: phase A 21 frames (≤4 worlds, ALL p×q decorations) = 487 models; phase B 15 frames (5-world slice + random 4/5-world, p≤8 × q≤3 decorations) = 342 models; phase C 33 frames (deep 6/7-world chains, RN ladders, deep randoms; p≤8 × q≤3) = 774 models; total 1603 models, 1085 mutually confluent (usable as K)
+closure 0 cl1={⊥,p,◯⊥,◯p}: |cl|=4 [⊥,p,◯⊥,◯p]
+closure 1 cl2={⊥,p,q,◯⊥,◯p,◯q}: |cl|=6 [⊥,p,q,◯⊥,◯p,◯q]
+closure 2 cl3=Sub(◯(◯p⊃p))∪{⊥}∪boxOf: |cl|=6 [⊥,p,◯p,(◯p⊃p),◯(◯p⊃p),◯⊥]
+=== SANITY CONTROL: 2-point chain, p at top, q nowhere, cl1 ===
+  tr(0) = {◯p}  tr(1) = {p,◯p}  d=3  stab=0
+      Z_0 = [ (0,0) (0,1) (1,0) (1,1) ]
+  Z_0 total: true (p unprotected: expected true)
+  gate tr(k'=0)=Δ: true
+  gate ⊥∉Δ: true
+  gate Ri m'=0 m=0: true
+  gate Rm m=0 u=1: true
+  gate u=1∉F: true
+  gate (k'=0,m'=0)∈Z_2d+1: true
+  gate (k=0,m=0)∈Z_2d: true
+  gate Ri k'=0 kv=1: true
+  gate (kv=1,u=1)∈Z_2d: true
+  gate Δ⊊tr(kv=1): true
+  gate Rm k=0 κ=0: true
+  gate (κ=0,u=1)∈Z_2d−1: true
+  gate tr(κ=0)=Δ: true
+  gate K mutually confluent: true
+  growth tr(kv)∖Δ = {p}  [p (p-laden)]
+  RmC(Δ,tr(kv)) (◯-anticipation): true
+  conclusion search: found=true sameTraceAnswer=true grownAnswer=true
+  first witness: kb=0 T={◯p} selfReservoir=true kr=0 mr=1
+=== CONTROL PASS ===
+control model battery index: (some 29) (frame #4)
+  [heartbeat] iK=0/1603 pairs=1603 elapsed=206ms configs=[0, 0, 0] failures=[0, 0, 0]
+  [heartbeat] iK=100/1603 pairs=161903 elapsed=1750ms configs=[8935, 8935, 8935] failures=[0, 0, 0]
+  EXAMPLE same-trace-only resolution [cl1={⊥,p,◯⊥,◯p}]:
+    K: n=4 ri=[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)] rm=[(2, 3)] fall=[3] val=[(1, p), (2, p), (3, p)] (frame #10)
+    M: n=3 ri=[(0, 1), (1, 2), (0, 2)] rm=[(1, 2)] fall=[2] val=[] (frame #5)
+    k'=0 k=0 kv=1 κ=0 m'=0 m=0 u=0 d=4 Δ={} tr(kv)={p,◯p}
+    answer kb=0 T={} selfRes=true kr=0 mr=0
+  EXAMPLE same-trace-only resolution [cl2={⊥,p,q,◯⊥,◯p,◯q}]:
+    K: n=4 ri=[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)] rm=[(2, 3)] fall=[3] val=[(1, p), (2, p), (3, p)] (frame #10)
+    M: n=3 ri=[(0, 1), (1, 2), (0, 2)] rm=[(1, 2)] fall=[2] val=[] (frame #5)
+    k'=0 k=0 kv=1 κ=0 m'=0 m=0 u=0 d=6 Δ={} tr(kv)={p,◯p}
+    answer kb=0 T={} selfRes=true kr=0 mr=0
+  EXAMPLE same-trace-only resolution [cl3=Sub(◯(◯p⊃p))∪{⊥}∪boxOf]:
+    K: n=4 ri=[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)] rm=[(2, 3)] fall=[3] val=[(1, p), (2, p), (3, p)] (frame #10)
+    M: n=3 ri=[(0, 1), (1, 2), (0, 2)] rm=[(1, 2)] fall=[2] val=[] (frame #5)
+    k'=0 k=0 kv=1 κ=0 m'=0 m=0 u=0 d=4 Δ={(◯p⊃p),◯(◯p⊃p)} tr(kv)={p,◯p,(◯p⊃p),◯(◯p⊃p)}
+    answer kb=0 T={(◯p⊃p),◯(◯p⊃p)} selfRes=true kr=0 mr=0
+  [heartbeat] iK=200/1603 pairs=282128 elapsed=3253ms configs=[10986, 10986, 10986] failures=[0, 0, 0]
+  [heartbeat] iK=300/1603 pairs=402353 elapsed=5222ms configs=[138240, 135636, 138240] failures=[0, 0, 0]
+  [heartbeat] iK=400/1603 pairs=562653 elapsed=8265ms configs=[438526, 427459, 438526] failures=[0, 0, 0]
+  [heartbeat] iK=500/1603 pairs=665245 elapsed=10955ms configs=[908448, 893475, 908448] failures=[0, 0, 0]
+  [heartbeat] iK=600/1603 pairs=787073 elapsed=14284ms configs=[1262386, 1245460, 1262386] failures=[0, 0, 0]
+  [heartbeat] iK=700/1603 pairs=947373 elapsed=17343ms configs=[1352135, 1335209, 1352135] failures=[0, 0, 0]
+  [heartbeat] iK=800/1603 pairs=1069201 elapsed=20438ms configs=[1557818, 1540892, 1557818] failures=[0, 0, 0]
+  [heartbeat] iK=900/1603 pairs=1191029 elapsed=26689ms configs=[3736036, 3718202, 3736036] failures=[0, 0, 0]
+  [heartbeat] iK=1000/1603 pairs=1351329 elapsed=35351ms configs=[6643392, 6625558, 6643392] failures=[0, 0, 0]
+=== monotonicity (Z_(n+1) ⊆ Z_n) violations: 0 (expect 0) ===
+=== Z-chain stabilisation levels (level: pair count): 0:452715 1:938919 2:341355 3:6266 ===
+=== EMPIRICAL RANKEDNESS (p-free χ ∈ cl agree across Z_{crankC χ}) ===
+  cl1={⊥,p,◯⊥,◯p}: violations both-confluent=0 (expect 0) | M-non-confluent=33190 (allowed: crankC transfer needs both confluent)
+  cl2={⊥,p,q,◯⊥,◯p,◯q}: violations both-confluent=0 (expect 0) | M-non-confluent=71870 (allowed: crankC transfer needs both confluent)
+  cl3=Sub(◯(◯p⊃p))∪{⊥}∪boxOf: violations both-confluent=0 (expect 0) | M-non-confluent=33190 (allowed: crankC transfer needs both confluent)
+=== b.ii CONFIGURATIONS AND THE CONCLUSION TEST ===
+  cl1={⊥,p,◯⊥,◯p}:
+    funnel: ⊥∉Δ k'=6591536 → +m'∈Z_2d+1=5463784 → +k same-tr=16351638 → +m∈Z_2d=29271840 → +u∉F=34698058 → +grown-kv cands=6191913
+    configs=12202223 (M also confluent: 8394677) | RESOLVED=12202223 FAILURES=0 | distinct (Δ,u) cells=549130 failing cells=0
+    LIVE window (2d−1 < stab, financed levels below the fixpoint): configs=0 failures=0
+    answer shapes: same-trace available=12202223 grown available=506573 | same-only=11695650 grown-only=0 both=506573 | first-witness self-reservoir=12202223
+    growth anticipation: RmC(Δ,tr(kv))=506573/12202223 | kv itself is an answer=506573
+    growth composition: pure-p=12202223 mixed=0 pure-protected=0
+    protected growth members: total=0 | crankC ≤ 2d−1: both-confluent=0 (BUG if >0) M-non-confluent=0 | crankC ≥ 2d: 0
+    growth member counts: p:11217861 ◯p:11695650 
+    (d,stab) occupancy at configs: (d=2,stab=0):831 (d=2,stab=1):2564 (d=2,stab=2):408 (d=3,stab=0):388974 (d=3,stab=1):106501 (d=3,stab=2):7295 (d=4,stab=0):9734021 (d=4,stab=1):1813670 (d=4,stab=2):146839 (d=4,stab=3):1120 
+  cl2={⊥,p,q,◯⊥,◯p,◯q}:
+    funnel: ⊥∉Δ k'=6591536 → +m'∈Z_2d+1=5463784 → +k same-tr=14933323 → +m∈Z_2d=29041802 → +u∉F=34437204 → +grown-kv cands=6179522
+    configs=12184389 (M also confluent: 8377085) | RESOLVED=12184389 FAILURES=0 | distinct (Δ,u) cells=548102 failing cells=0
+    LIVE window (2d−1 < stab, financed levels below the fixpoint): configs=0 failures=0
+    answer shapes: same-trace available=12184389 grown available=506573 | same-only=11677816 grown-only=0 both=506573 | first-witness self-reservoir=12184389
+    growth anticipation: RmC(Δ,tr(kv))=506573/12184389 | kv itself is an answer=506573
+    growth composition: pure-p=12184389 mixed=0 pure-protected=0
+    protected growth members: total=0 | crankC ≤ 2d−1: both-confluent=0 (BUG if >0) M-non-confluent=0 | crankC ≥ 2d: 0
+    growth member counts: p:11200027 ◯p:11677816 
+    (d,stab) occupancy at configs: (d=2,stab=0):131 (d=2,stab=1):52 (d=3,stab=0):6094 (d=3,stab=1):5582 (d=3,stab=2):1040 (d=4,stab=0):87986 (d=4,stab=1):7293 (d=4,stab=2):4813 (d=5,stab=0):383580 (d=5,stab=1):103431 (d=5,stab=2):6663 (d=6,stab=0):9629941 (d=6,stab=1):1804669 (d=6,stab=2):141994 (d=6,stab=3):1120 
+  cl3=Sub(◯(◯p⊃p))∪{⊥}∪boxOf:
+    funnel: ⊥∉Δ k'=6591536 → +m'∈Z_2d+1=5463784 → +k same-tr=16329332 → +m∈Z_2d=29271686 → +u∉F=34697904 → +grown-kv cands=6191913
+    configs=12202223 (M also confluent: 8394677) | RESOLVED=12202223 FAILURES=0 | distinct (Δ,u) cells=549130 failing cells=0
+    LIVE window (2d−1 < stab, financed levels below the fixpoint): configs=0 failures=0
+    answer shapes: same-trace available=12202223 grown available=506573 | same-only=11695650 grown-only=0 both=506573 | first-witness self-reservoir=12202223
+    growth anticipation: RmC(Δ,tr(kv))=506573/12202223 | kv itself is an answer=506573
+    growth composition: pure-p=12202223 mixed=0 pure-protected=0
+    protected growth members: total=0 | crankC ≤ 2d−1: both-confluent=0 (BUG if >0) M-non-confluent=0 | crankC ≥ 2d: 0
+    growth member counts: p:11217861 ◯p:11695650 (◯p⊃p):2051108 ◯(◯p⊃p):2528897 
+    (d,stab) occupancy at configs: (d=3,stab=0):831 (d=3,stab=1):2564 (d=3,stab=2):408 (d=4,stab=0):8017429 (d=4,stab=1):1526260 (d=4,stab=2):124714 (d=4,stab=3):1120 (d=6,stab=0):2105566 (d=6,stab=1):393911 (d=6,stab=2):29420 
+=== per (K-frame, M-frame) class table (rows with configs > 0) ===
+  closure cl1={⊥,p,◯⊥,◯p}:
+    K-frame 4 × M-frame 0: configs=4 failures=0
+    K-frame 4 × M-frame 3: configs=9 failures=0
+    K-frame 4 × M-frame 4: configs=27 failures=0
+    K-frame 4 × M-frame 7: configs=49 failures=0
+    K-frame 4 × M-frame 8: configs=25 failures=0
+    K-frame 4 × M-frame 11: configs=80 failures=0
+    K-frame 4 × M-frame 12: configs=55 failures=0
+    K-frame 4 × M-frame 13: configs=25 failures=0
+    K-frame 4 × M-frame 14: configs=126 failures=0
+    K-frame 4 × M-frame 16: configs=180 failures=0
+    K-frame 4 × M-frame 17: configs=110 failures=0
+    K-frame 4 × M-frame 18: configs=150 failures=0
+    K-frame 4 × M-frame 19: configs=144 failures=0
+    K-frame 4 × M-frame 20: configs=84 failures=0
+    K-frame 4 × M-frame 21: configs=126 failures=0
+    K-frame 4 × M-frame 23: configs=114 failures=0
+    K-frame 4 × M-frame 24: configs=96 failures=0
+    K-frame 4 × M-frame 25: configs=24 failures=0
+    K-frame 4 × M-frame 26: configs=48 failures=0
+    K-frame 4 × M-frame 27: configs=72 failures=0
+    K-frame 4 × M-frame 28: configs=48 failures=0
+    K-frame 4 × M-frame 29: configs=168 failures=0
+    K-frame 4 × M-frame 30: configs=24 failures=0
+    K-frame 4 × M-frame 31: configs=104 failures=0
+    K-frame 4 × M-frame 33: configs=72 failures=0
+    K-frame 4 × M-frame 34: configs=104 failures=0
+    K-frame 4 × M-frame 35: configs=200 failures=0
+    K-frame 4 × M-frame 36: configs=245 failures=0
+    K-frame 4 × M-frame 38: configs=217 failures=0
+    K-frame 4 × M-frame 39: configs=301 failures=0
+    K-frame 4 × M-frame 40: configs=217 failures=0
+    K-frame 4 × M-frame 42: configs=360 failures=0
+    K-frame 4 × M-frame 44: configs=192 failures=0
+    K-frame 4 × M-frame 45: configs=248 failures=0
+    K-frame 4 × M-frame 46: configs=224 failures=0
+    K-frame 4 × M-frame 47: configs=232 failures=0
+    K-frame 4 × M-frame 48: configs=72 failures=0
+    K-frame 4 × M-frame 49: configs=248 failures=0
+    K-frame 4 × M-frame 50: configs=320 failures=0
+    K-frame 4 × M-frame 51: configs=440 failures=0
+    K-frame 4 × M-frame 52: configs=424 failures=0
+    K-frame 4 × M-frame 53: configs=24 failures=0
+    K-frame 4 × M-frame 54: configs=104 failures=0
+    K-frame 4 × M-frame 55: configs=72 failures=0
+    K-frame 4 × M-frame 57: configs=48 failures=0
+    K-frame 4 × M-frame 58: configs=240 failures=0
+    K-frame 4 × M-frame 60: configs=96 failures=0
+    K-frame 4 × M-frame 61: configs=24 failures=0
+    K-frame 4 × M-frame 62: configs=224 failures=0
+    K-frame 4 × M-frame 63: configs=48 failures=0
+    … and 1434 more rows
+  closure cl2={⊥,p,q,◯⊥,◯p,◯q}:
+    K-frame 4 × M-frame 0: configs=4 failures=0
+    K-frame 4 × M-frame 3: configs=9 failures=0
+    K-frame 4 × M-frame 4: configs=27 failures=0
+    K-frame 4 × M-frame 7: configs=49 failures=0
+    K-frame 4 × M-frame 8: configs=25 failures=0
+    K-frame 4 × M-frame 11: configs=80 failures=0
+    K-frame 4 × M-frame 12: configs=55 failures=0
+    K-frame 4 × M-frame 13: configs=25 failures=0
+    K-frame 4 × M-frame 14: configs=126 failures=0
+    K-frame 4 × M-frame 16: configs=180 failures=0
+    K-frame 4 × M-frame 17: configs=110 failures=0
+    K-frame 4 × M-frame 18: configs=150 failures=0
+    K-frame 4 × M-frame 19: configs=144 failures=0
+    K-frame 4 × M-frame 20: configs=84 failures=0
+    K-frame 4 × M-frame 21: configs=126 failures=0
+    K-frame 4 × M-frame 23: configs=114 failures=0
+    K-frame 4 × M-frame 24: configs=96 failures=0
+    K-frame 4 × M-frame 25: configs=24 failures=0
+    K-frame 4 × M-frame 26: configs=48 failures=0
+    K-frame 4 × M-frame 27: configs=72 failures=0
+    K-frame 4 × M-frame 28: configs=48 failures=0
+    K-frame 4 × M-frame 29: configs=168 failures=0
+    K-frame 4 × M-frame 30: configs=24 failures=0
+    K-frame 4 × M-frame 31: configs=104 failures=0
+    K-frame 4 × M-frame 33: configs=72 failures=0
+    K-frame 4 × M-frame 34: configs=104 failures=0
+    K-frame 4 × M-frame 35: configs=200 failures=0
+    K-frame 4 × M-frame 36: configs=245 failures=0
+    K-frame 4 × M-frame 38: configs=217 failures=0
+    K-frame 4 × M-frame 39: configs=301 failures=0
+    K-frame 4 × M-frame 40: configs=217 failures=0
+    K-frame 4 × M-frame 42: configs=360 failures=0
+    K-frame 4 × M-frame 44: configs=192 failures=0
+    K-frame 4 × M-frame 45: configs=248 failures=0
+    K-frame 4 × M-frame 46: configs=224 failures=0
+    K-frame 4 × M-frame 47: configs=232 failures=0
+    K-frame 4 × M-frame 48: configs=72 failures=0
+    K-frame 4 × M-frame 49: configs=248 failures=0
+    K-frame 4 × M-frame 50: configs=320 failures=0
+    K-frame 4 × M-frame 51: configs=440 failures=0
+    K-frame 4 × M-frame 52: configs=424 failures=0
+    K-frame 4 × M-frame 53: configs=24 failures=0
+    K-frame 4 × M-frame 54: configs=104 failures=0
+    K-frame 4 × M-frame 55: configs=72 failures=0
+    K-frame 4 × M-frame 57: configs=48 failures=0
+    K-frame 4 × M-frame 58: configs=240 failures=0
+    K-frame 4 × M-frame 60: configs=96 failures=0
+    K-frame 4 × M-frame 61: configs=24 failures=0
+    K-frame 4 × M-frame 62: configs=224 failures=0
+    K-frame 4 × M-frame 63: configs=48 failures=0
+    … and 1434 more rows
+  closure cl3=Sub(◯(◯p⊃p))∪{⊥}∪boxOf:
+    K-frame 4 × M-frame 0: configs=4 failures=0
+    K-frame 4 × M-frame 3: configs=9 failures=0
+    K-frame 4 × M-frame 4: configs=27 failures=0
+    K-frame 4 × M-frame 7: configs=49 failures=0
+    K-frame 4 × M-frame 8: configs=25 failures=0
+    K-frame 4 × M-frame 11: configs=80 failures=0
+    K-frame 4 × M-frame 12: configs=55 failures=0
+    K-frame 4 × M-frame 13: configs=25 failures=0
+    K-frame 4 × M-frame 14: configs=126 failures=0
+    K-frame 4 × M-frame 16: configs=180 failures=0
+    K-frame 4 × M-frame 17: configs=110 failures=0
+    K-frame 4 × M-frame 18: configs=150 failures=0
+    K-frame 4 × M-frame 19: configs=144 failures=0
+    K-frame 4 × M-frame 20: configs=84 failures=0
+    K-frame 4 × M-frame 21: configs=126 failures=0
+    K-frame 4 × M-frame 23: configs=114 failures=0
+    K-frame 4 × M-frame 24: configs=96 failures=0
+    K-frame 4 × M-frame 25: configs=24 failures=0
+    K-frame 4 × M-frame 26: configs=48 failures=0
+    K-frame 4 × M-frame 27: configs=72 failures=0
+    K-frame 4 × M-frame 28: configs=48 failures=0
+    K-frame 4 × M-frame 29: configs=168 failures=0
+    K-frame 4 × M-frame 30: configs=24 failures=0
+    K-frame 4 × M-frame 31: configs=104 failures=0
+    K-frame 4 × M-frame 33: configs=72 failures=0
+    K-frame 4 × M-frame 34: configs=104 failures=0
+    K-frame 4 × M-frame 35: configs=200 failures=0
+    K-frame 4 × M-frame 36: configs=245 failures=0
+    K-frame 4 × M-frame 38: configs=217 failures=0
+    K-frame 4 × M-frame 39: configs=301 failures=0
+    K-frame 4 × M-frame 40: configs=217 failures=0
+    K-frame 4 × M-frame 42: configs=360 failures=0
+    K-frame 4 × M-frame 44: configs=192 failures=0
+    K-frame 4 × M-frame 45: configs=248 failures=0
+    K-frame 4 × M-frame 46: configs=224 failures=0
+    K-frame 4 × M-frame 47: configs=232 failures=0
+    K-frame 4 × M-frame 48: configs=72 failures=0
+    K-frame 4 × M-frame 49: configs=248 failures=0
+    K-frame 4 × M-frame 50: configs=320 failures=0
+    K-frame 4 × M-frame 51: configs=440 failures=0
+    K-frame 4 × M-frame 52: configs=424 failures=0
+    K-frame 4 × M-frame 53: configs=24 failures=0
+    K-frame 4 × M-frame 54: configs=104 failures=0
+    K-frame 4 × M-frame 55: configs=72 failures=0
+    K-frame 4 × M-frame 57: configs=48 failures=0
+    K-frame 4 × M-frame 58: configs=240 failures=0
+    K-frame 4 × M-frame 60: configs=96 failures=0
+    K-frame 4 × M-frame 61: configs=24 failures=0
+    K-frame 4 × M-frame 62: configs=224 failures=0
+    K-frame 4 × M-frame 63: configs=48 failures=0
+    … and 1434 more rows
+=== pairs processed: 1739255 (K confluent × all M) ===
+=== done in 56076 ms ===

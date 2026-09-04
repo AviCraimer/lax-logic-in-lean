@@ -1,0 +1,32 @@
+== the missing link in the boxed γ-branch ==
+
+chain2: Γ = [(◯p) ⊃ r], γ-head ◯p
+   A@0(Γ,◯A) = False
+   E@0(Γ)    = True
+   A@0(Γ,A)  = False
+    (1) A@1(Γ,◯A) ⊢ ◯⊥ [20k]: PROVED  (goal weight 2, 8 ms)
+    (1) A@1(Γ,◯A) ⊢ ◯⊥ [200k]: PROVED  (goal weight 2, 7 ms)
+    (2) E@3(Γ), A@1(Γ,◯A) ⊢ ◯(E@0(Γ) ⇢ A@0(Γ,◯A)) [20k]: ~ (search budget 20000 exhausted)  (goal weight 6, 7088 ms)
+    (2) E@3(Γ), A@1(Γ,◯A) ⊢ ◯(E@0(Γ) ⇢ A@0(Γ,◯A)) [200k]: ~ (search budget 200000 exhausted)  (goal weight 6, 78550 ms)
+    (2) E@4(Γ), A@2(Γ,◯A) ⊢ ◯(E@1(Γ) ⇢ A@1(Γ,◯A)) [20k]: ~ (search budget 20000 exhausted)  (goal weight 232, 12434 ms)
+    (2) E@4(Γ), A@2(Γ,◯A) ⊢ ◯(E@1(Γ) ⇢ A@1(Γ,◯A)) [200k]: ~ (search budget 200000 exhausted)  (goal weight 232, 124679 ms)
+    (3) E@1(Γ), A@1(Γ,◯A) ⊢ A@0(Γ,◯A)  [known REFUTED] [20k]: REFUTED!  (goal weight 1, 0 ms)
+    (3) E@1(Γ), A@1(Γ,◯A) ⊢ A@0(Γ,◯A)  [known REFUTED] [200k]: REFUTED!  (goal weight 1, 0 ms)
+chain3: Γ = [(◯p) ⊃ r], γ-head ◯p
+   A@0(Γ,◯A) = False
+   E@0(Γ)    = True
+   A@0(Γ,A)  = False
+    (1) A@1(Γ,◯A) ⊢ ◯⊥ [20k]: PROVED  (goal weight 2, 8 ms)
+    (1) A@1(Γ,◯A) ⊢ ◯⊥ [200k]: PROVED  (goal weight 2, 8 ms)
+    (2) E@3(Γ), A@1(Γ,◯A) ⊢ ◯(E@0(Γ) ⇢ A@0(Γ,◯A)) [20k]: ~ (search budget 20000 exhausted)  (goal weight 6, 4751 ms)
+    (2) E@3(Γ), A@1(Γ,◯A) ⊢ ◯(E@0(Γ) ⇢ A@0(Γ,◯A)) [200k]: ~ (search budget 200000 exhausted)  (goal weight 6, 49312 ms)
+    (2) E@4(Γ), A@2(Γ,◯A) ⊢ ◯(E@1(Γ) ⇢ A@1(Γ,◯A)) [20k]: ~ (search budget 20000 exhausted)  (goal weight 232, 34262 ms)
+    (2) E@4(Γ), A@2(Γ,◯A) ⊢ ◯(E@1(Γ) ⇢ A@1(Γ,◯A)) [200k]: ~ (search budget 200000 exhausted)  (goal weight 232, 349701 ms)
+    (3) E@1(Γ), A@1(Γ,◯A) ⊢ A@0(Γ,◯A)  [known REFUTED] [20k]: REFUTED!  (goal weight 1, 0 ms)
+    (3) E@1(Γ), A@1(Γ,◯A) ⊢ A@0(Γ,◯A)  [known REFUTED] [200k]: REFUTED!  (goal weight 1, 0 ms)
+
+-- exhaustive search on the two smallest cells (findBudget = none) --
+    (1) chain2 exhaustive [none]: PROVED  (goal weight 2, 8 ms)
+
+== done ==
+EXIT=0

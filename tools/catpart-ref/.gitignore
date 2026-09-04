@@ -1,0 +1,4 @@
+# regenerable outputs
+*.out.frm
+# 1990s SunOS SPARC binary, kept out of git (original at ~/Backup/Sheffield/ml/catpart/catpart0.1)
+catpart0.1

@@ -1,0 +1,21 @@
+== BranchMixedConj probe: maxN=5 closureCap=8000 mode=guarded ==
+-- n=2: 4 rooted models (poset × Rₘ × F) --
+   models 4, (model,U) pairs with U undefinable 2, capped 0, cover-hit pairs 0, BRANCH-MIXED HITS 0, max closure 10 [1 ms]
+-- n=3: 37 rooted models (poset × Rₘ × F) --
+   models 37, (model,U) pairs with U undefinable 40, capped 0, cover-hit pairs 0, BRANCH-MIXED HITS 0, max closure 14 [40 ms]
+-- n=4: 726 rooted models (poset × Rₘ × F) --
+   models 726, (model,U) pairs with U undefinable 1232, capped 0, cover-hit pairs 4, BRANCH-MIXED HITS 0, max closure 133 [4193 ms]
+-- n=5: 28639 rooted models (poset × Rₘ × F) --
+  *** BRANCH-MIXED SEPARATING FORMULA FOUND ***
+      model  : n=5 F={2} Ri: 0↑{0,1,2,3,4} 1↑{1,2} 2↑{2} 3↑{3} 4↑{4} Rm: 0⇝{0} 1⇝{1,2} 2⇝{2} 3⇝{3} 4⇝{4}
+      V(p)   : {1,2,3}
+      D      : [{2}, {0,1,2,3,4}, {1,2}, {2,3,4}, {1,2,3,4}]
+      guards : [{2}, {0,1,2,3,4}, {1,2}, {2,3,4}, {1,2,3,4}]
+      φ      : ((p ⊃ (◯⊥)) ∨ ((p ⊃ ⊥) ⊃ (◯⊥))) ⊃ (((◯⊥) ⊃ ⊥) ∨ ((◯⊥) ∧ p))
+      tuple  : [{0,1,2,3,4}, {2,3,4}, {1,2,3,4}, {1,2,3,4}, {2,3,4}, {1,2,3,4}]
+      Lo     : [{2,3,4}, {2,3,4}, {2,3,4}, {2,3,4}, {2,3,4}]
+      Up     : [{1,2,3,4}, {1,2,3,4}, {1,2,3,4}, {1,2,3,4}, {1,2,3,4}]
+      BLo    : [{2,3,4}, {1,2,3,4}, {1,2,3,4}, {2,3,4}, {1,2,3,4}]
+      BUp    : [{2,3,4}, {2,3,4}, {2,3,4}, {2,3,4}, {2,3,4}]
+      check  : stretch-frame + fork-frame check OK
+-- probe 'branchprobe' stopped at the 1500s cap (rc=143); output above is partial but valid.

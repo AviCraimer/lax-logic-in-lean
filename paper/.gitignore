@@ -1,0 +1,12 @@
+*.aux
+*.log
+*.out
+*.pdf
+!belief.pdf
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.toc
+*.synctex.gz
+body-raw.tex

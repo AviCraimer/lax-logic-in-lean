@@ -1,0 +1,29 @@
+# === round-9 near-empty-context probe (g9z) ===
+# zS piece-closed = true
+# zS2 piece-closed = true
+# defect zS [] = 7 J = 3
+# g9z BD-2  [A@(2,2)([],◯D), E@(2,2)([])] |- A@(2,1)([],◯D) sz=71
+#   P (proved, budget 40000)
+#   TERM (∨R₁ (∨L (◯L (◯R (→R (∨R₁ (→R (→L→ (→R ⊥L) (∨L (→L→ (→R ⊥L) ⊥L) ⊥L))))))) (∨L (◯L (→L→ (→R ⊥L) (∨L (◯L (◯R (→R (∨R₁ (→R (→L→ (→R ⊥L) (∨L (→L→ (→R ⊥L) ⊥L) ⊥L))))))) ⊥L))) ⊥L)))
+# g9z BD-3  [A@(3,2)([],◯D), E@(3,2)([])] |- A@(3,1)([],◯D) sz=199
+#   P (proved, budget 40000)
+#   TERM (∨R₁ (∨L (◯L (◯R (→R (∨R₁ (→R (∨R₁ (∧L (∧L (→L→ (→R ⊥L) (∨L (→L∧ (→L→ (→R ⊥L) (→L∧ (→L→ (→R (→R ⊥L)) (→L→ (→R ⊥L) (∨L init (∨L (∧L ⊥L) (∨L (∧L ⊥L) ⊥L)))))))) ⊥L)))))))))) (∨L (◯L (→L→ (→R ⊥L) (∨L (◯L (◯R (→R (∨R₁ (→R (∨R₁ (∧L (∧L (→L→ (→R ⊥L) (∨L (→L∧ (→L→ (→R ⊥L) (→L∧ (→L→ (→R (→R ⊥L)) (→L→ (→R ⊥L) (∨L init (∨L (∧L ⊥L) (∨L (∧L ⊥L) ⊥L)))))))) ⊥L)))))))))) ⊥L))) ⊥L)))
+# g9z BD-4  [A@(4,2)([],◯D), E@(4,2)([])] |- A@(4,1)([],◯D) sz=555
+#   ~ (quiet, unproved at 40000)
+# g9z BD2-4 [A@(4,3)([],◯D), E@(4,3)([])] |- A@(4,2)([],◯D) sz=863
+#   ~ (quiet, unproved at 40000)
+# g9z ROW-2 [row@2] |- row@1 sz=252
+#   ~ (quiet, unproved at 40000)
+# g9z ROWB-2 [◯row@2] |- ◯row@1 sz=254
+#   ~ (quiet, unproved at 40000)
+# g9z ROW-3 [row@2] |- row@1 sz=512
+#   R! w=0 M={ n := 2, ri := [(0, 1)], rm := [(0, 1)], fall := [], val := [(1, "x"), (1, "y"), (1, "z")] }
+# g9z ROWB-3 [◯row@2] |- ◯row@1 sz=514
+#   ~ (quiet, unproved at 40000)
+# g9z ROW-4 [row@2] |- row@1 sz=616
+#   R! w=0 M={ n := 2, ri := [(0, 1)], rm := [(0, 1)], fall := [], val := [(1, "x"), (1, "y"), (1, "z")] }
+# g9z ROWB-4 [◯row@2] |- ◯row@1 sz=618
+#   ~ (quiet, unproved at 40000)
+# g9z BDγ-3 [A@(3,2)([γ],◯D), E@(3,2)([γ])] |- A@(3,1)([γ],◯D) sz=1666
+#   ~ (quiet, unproved at 40000)
+# g9z BDγ-4 [A@(4,2)([γ],◯D), E@(4,2)([γ])] |- A@(4,1)([γ],◯D) sz=4538

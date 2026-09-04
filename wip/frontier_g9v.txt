@@ -1,0 +1,18 @@
+# === round-9 pin candidates (g9v) ===
+# pieceClosed=true |S|=7 defect=7 J=3 room=35
+# ◯D ∈ S = true
+# BoxDesc fs=ft=3 b=1 sz=199: checkB P3c 0 = false
+# BoxDesc fs=ft=4 b=1 sz=555: checkB P3c 0 = false
+# BoxDesc fs=ft=5 b=1 sz=1075: checkB P3c 0 = true
+# BoxDesc fs=ft=6 b=1 sz=1283: checkB P3c 0 = true
+# GoalRowAbsorb f=3 b=2 c=1 sz=335: checkB P3c 0 = false
+# GoalRowAbsorb f=4 b=2 c=1 sz=595: checkB P3c 0 = true
+# GoalRowAbsorb f=5 b=2 c=1 sz=699: checkB P3c 0 = true
+# CompProd f=3 b=2 c=1 sz=209: checkB P3c 0 = false
+# CompProd f=4 b=2 c=1 sz=565: checkB P3c 0 = false
+# CompProd f=5 b=2 c=1 sz=1085: checkB P3c 0 = true
+# freshRow f=3 sz=512: M2=true P3c=true
+# freshRow f=4 sz=616: M2=true P3c=true
+# unboxed f=4 b=1 sz=519: M2=true
+# unboxed f=5 b=1 sz=623: M2=true
+# === g9v done ===

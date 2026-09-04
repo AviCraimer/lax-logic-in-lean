@@ -1,0 +1,40 @@
+===== THE LADDER IMAGE, 8 RUNGS =====
+
+-- the rungs, and their truth sets in the ladder frame --
+rnSub 0 = False
+          truth set []   weight 1
+rnSub 1 = ◯False
+          truth set [0]   weight 2
+rnSub 2 = (◯False) ⊃ False
+          truth set [1]   weight 4
+rnSub 3 = (◯False) ∨ ((◯False) ⊃ False)
+          truth set [0, 1]   weight 7
+rnSub 4 = ((◯False) ∨ ((◯False) ⊃ False)) ⊃ (◯False)
+          truth set [0, 2]   weight 10
+rnSub 5 = ((◯False) ∨ ((◯False) ⊃ False)) ∨ (((◯False) ∨ ((◯False) ⊃ False)) ⊃ (◯False))
+          truth set [0, 1, 2]   weight 18
+rnSub 6 = (((◯False) ∨ ((◯False) ⊃ False)) ∨ (((◯False) ∨ ((◯False) ⊃ False)) ⊃ (◯False))) ⊃ ((◯False) ∨ ((◯False) ⊃ False))
+          truth set [0, 1, 3]   weight 26
+rnSub 7 = (((◯False) ∨ ((◯False) ⊃ False)) ∨ (((◯False) ∨ ((◯False) ⊃ False)) ⊃ (◯False))) ∨ ((((◯False) ∨ ((◯False) ⊃ False)) ∨ (((◯False) ∨ ((◯False) ⊃ False)) ⊃ (◯False))) ⊃ ((◯False) ∨ ((◯False) ⊃ False)))
+          truth set [0, 1, 2, 3]   weight 45
+rnSub 8 = ((((◯False) ∨ ((◯False) ⊃ False)) ∨ (((◯False) ∨ ((◯False) ⊃ False)) ⊃ (◯False))) ∨ ((((◯False) ∨ ((◯False) ⊃ False)) ∨ (((◯False) ∨ ((◯False) ⊃ False)) ⊃ (◯False))) ⊃ ((◯False) ∨ ((◯False) ⊃ False)))) ⊃ (((◯False) ∨ ((◯False) ⊃ False)) ∨ (((◯False) ∨ ((◯False) ⊃ False)) ⊃ (◯False)))
+          truth set [0, 1, 2, 4]   weight 64
+
+-- (1) ORDER: searcher vs truth-set inclusion (must agree) --
+     rows i, cols j: does rnSub i |- rnSub j ?
+     'Y'/'n' = searcher; '*' marks disagreement with satLe
+  i=0: Y  Y  Y  Y  Y  Y  Y  Y  Y  
+  i=1: n  Y  n  Y  Y  Y  Y  Y  Y  
+  i=2: n  n  Y  Y  n  Y  Y  Y  Y  
+  i=3: n  n  n  Y  n  Y  Y  Y  Y  
+  i=4: n  n  n  n  Y  Y  n  Y  Y  
+  i=5: n  n  n  n  n  Y  n  Y  Y  
+  i=6: n  n  n  n  n  n  Y  Y  n  
+  i=7: n  n  n  n  n  n  n  Y  n  
+  i=8: n  n  n  n  n  ?* n  ?* ?* 
+  disagreements: 3
+
+-- (2) THE BOX COLUMN: box(rnSub n), matched against rungs then dict --
+  box(rnSub 0) : rung 1 | dict q2
+  box(rnSub 1) : rung 1 | dict q2
+  box(rnSub 2) : rung none | dict q5

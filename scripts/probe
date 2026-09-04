@@ -1,0 +1,36 @@
+#!/bin/zsh
+# Run a probe executable under a HARD wall-clock cap.
+#
+#   scripts/probe <seconds> <exe-name> [args...]      > out.txt
+#
+# macOS has no coreutils `timeout`, and every probe in this repo can grind
+# indefinitely: `Config.findBudget` bounds a single search, nothing bounds the
+# RUN.  A probe with 84 cells of which 40 never close will sit at 100% CPU until
+# it is killed by hand — which is exactly what happened between 2026-07-30 and
+# 2026-08-02, when two probes from an abandoned line of work ran for three days.
+#
+# Partial output is the norm and is fine: probes flush after every line, so
+# whatever reached the file before the cap is intact and usable.
+set -u
+if [[ $# -lt 2 ]]; then
+  print -u2 "usage: scripts/probe <seconds> <exe-name> [args...]"
+  exit 2
+fi
+cap=$1; shift
+exe=$1; shift
+bin=".lake/build/bin/$exe"
+if [[ ! -x $bin ]]; then
+  print -u2 "scripts/probe: $bin not built — run: lake build $exe"
+  exit 2
+fi
+$bin "$@" &
+pid=$!
+( sleep "$cap"; kill -TERM $pid 2>/dev/null ) &
+watcher=$!
+wait $pid
+rc=$?
+kill $watcher 2>/dev/null
+if [[ $rc -ne 0 ]]; then
+  printf "%s\n" "-- probe '$exe' stopped at the ${cap}s cap (rc=$rc); output above is partial but valid."
+fi
+exit 0

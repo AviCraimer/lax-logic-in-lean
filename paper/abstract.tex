@@ -1,0 +1,35 @@
+We propose a doxastic reading of Propositional Lax Logic (PLL), the
+intuitionistic modal logic of Fairtlough and Mendler whose single
+modality \ensuremath{\bigcirc} has aspects both of possibility and of necessity: we read
+\ensuremath{\bigcirc M} as ``M is believed'', by a single idealised believer whose belief is
+disciplined by evidence. The reading is defended by a chain of
+machine-checked results. On the negative side, over classical logic the
+reading is empty: on a Boolean algebra every nucleus is closed, so a
+classical belief modality collapses to \ensuremath{\bigcirc M \equiv M \vee a} for a fixed
+proposition a. Over intuitionistic logic belief is rich, and its
+richness is evidential in a precise sense inherited from the constraint
+reading.
+
+The paper\textquotesingle s technical core is a new realisability semantics for PLL
+over the constraint models of the original paper, in which atoms carry
+evidence from a partial applicative structure and the clauses for \ensuremath{\supset} and
+\ensuremath{\bigcirc} differ in how much a realiser is given about the future of the
+inquiry. Three clause families arise --- uniform, strategy, and
+presented-strategy --- and a sequence of separation theorems shows the
+choice determines the logic: rigid evidence validates schemes PLL does
+not prove; strategy evidence restores the countermodels but provably
+cannot support a completeness theorem, by an obstruction inherent in
+strategy evidence; presenting the future at implications yields
+completeness. The countermodels are supplied by a finitisation of the
+original canonical-model construction in which Zorn\textquotesingle s lemma is replaced
+by an iterated appeal to PLL\textquotesingle s own mechanised decision procedure, and
+the resulting models are executable: a verified checker certifies them
+by computation, and each world reads as a belief state --- what is
+believed, and what is promised never to be evidenced.
+
+Every result is formalised in Lean 4; the axiom footprint of each
+theorem is tracked, and the greater part of the development, including
+the entire decoration argument, is choice-free. We conclude with an
+account of the method, in which several of the paper\textquotesingle s results were
+found by the failure, itself provable, of the theorems we first
+attempted.

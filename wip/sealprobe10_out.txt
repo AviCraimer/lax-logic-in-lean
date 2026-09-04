@@ -1,0 +1,32 @@
+== the fresh-antecedent goal branch at target budget 1 ==
+
+S1, C = r ⊃ z: 3 target disjunct(s), weights [70, 20, 23]
+   whole target: ~
+   disjunct 0 (weight 70): ~
+   disjunct 1 (weight 20): REFUTED
+   disjunct 2 (weight 23): REFUTED
+   [the ascent E@2(C₁::Γ) from E@1(C₁::Γ) + ambient]: ~
+S1, C = r ⊃ s: 3 target disjunct(s), weights [70, 20, 23]
+   whole target: PROVED(9)
+   disjunct 0 (weight 70): PROVED(8)
+   disjunct 1 (weight 20): REFUTED
+   disjunct 2 (weight 23): REFUTED
+   [the ascent E@2(C₁::Γ) from E@1(C₁::Γ) + ambient]: ~
+S2, C = r ⊃ z: 5 target disjunct(s), weights [418, 146, 149, 146, 149]
+   whole target: ~
+   disjunct 0 (weight 418): ~
+   disjunct 1 (weight 146): REFUTED
+   disjunct 2 (weight 149): REFUTED
+   disjunct 3 (weight 146): REFUTED
+   disjunct 4 (weight 149): REFUTED
+   [the ascent E@2(C₁::Γ) from E@1(C₁::Γ) + ambient]: ~
+S2, C = r ⊃ s: 5 target disjunct(s), weights [418, 146, 149, 146, 149]
+   whole target: PROVED(9)
+   disjunct 0 (weight 418): PROVED(8)
+   disjunct 1 (weight 146): REFUTED
+   disjunct 2 (weight 149): REFUTED
+   disjunct 3 (weight 146): REFUTED
+   disjunct 4 (weight 149): REFUTED
+   [the ascent E@2(C₁::Γ) from E@1(C₁::Γ) + ambient]: ~
+
+== done ==

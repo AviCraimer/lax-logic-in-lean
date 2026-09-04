@@ -1,0 +1,11 @@
+non-confluent rooted 5-world battery: 11292 models
+  q12 ⊢ q11: REFUTED — M={ n := 5,
+  ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (1, 3), (2, 3)],
+  rm := [(0, 4), (2, 3)],
+  fall := [3],
+  val := [] } w=0  (738 ms)
+  q14 ⊢ q13: no countermodel at 5 worlds, confluent or not  (7481 ms)
+  q8 ⊢ t9: no countermodel at 5 worlds, confluent or not  (4920 ms)
+  q13 ⊢ t9: no countermodel at 5 worlds, confluent or not  (6085 ms)
+  q14 ⊢ t9: no countermodel at 5 worlds, confluent or not  (6330 ms)
+done

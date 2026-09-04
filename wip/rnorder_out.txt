@@ -1,0 +1,38 @@
+===== THE 15 DICTIONARY CLASSES =====
+  q0 = False
+  q1 = True
+  q2 = ◯False
+  q3 = (◯False) ⊃ False
+  q4 = (◯False) ∨ ((◯False) ⊃ False)
+  q5 = ◯((◯False) ⊃ False)
+  q6 = ((◯False) ⊃ False) ⊃ False
+  q7 = ((◯False) ⊃ False) ∨ (((◯False) ⊃ False) ⊃ False)
+  q8 = (◯((◯False) ⊃ False)) ⊃ ((◯False) ∨ ((◯False) ⊃ False))
+  q9 = (◯((◯False) ⊃ False)) ∨ (((◯False) ⊃ False) ⊃ False)
+  q10 = (((◯False) ⊃ False) ⊃ False) ⊃ (◯False)
+  q11 = (((◯False) ⊃ False) ⊃ False) ∨ ((((◯False) ⊃ False) ⊃ False) ⊃ (◯False))
+  q12 = ◯(((◯False) ⊃ False) ∨ (((◯False) ⊃ False) ⊃ False))
+  q13 = ◯((◯((◯False) ⊃ False)) ⊃ ((◯False) ∨ ((◯False) ⊃ False)))
+  q14 = ((((◯False) ⊃ False) ⊃ False) ⊃ (◯False)) ⊃ (◯((◯False) ⊃ False))
+
+===== ORDER MATRIX: rows i, cols j -- does q_i |- q_j ? =====
+     j: 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14
+  i=0: Y  Y  Y  Y  Y  Y  Y  Y  Y  Y  Y  Y  Y  Y  Y 
+  i=1: n  Y  n  n  n  n  n  n  ?  n  n  ?  n  ?  n 
+  i=2: n  Y  Y  n  Y  Y  Y  Y  Y  Y  Y  Y  Y  Y  Y 
+  i=3: n  Y  n  Y  Y  Y  n  Y  Y  Y  Y  Y  Y  Y  Y 
+  i=4: n  Y  n  n  Y  Y  n  Y  Y  Y  Y  Y  Y  Y  Y 
+  i=5: n  Y  n  n  ?  Y  n  ?  ?  Y  Y  Y  Y  Y  Y 
+  i=6: n  Y  n  n  n  n  Y  Y  Y  Y  n  Y  Y  Y  Y 
+  i=7: n  Y  n  n  n  n  n  Y  Y  Y  n  Y  Y  Y  Y 
+  i=8: n  Y  n  n  n  n  n  n  Y  n  n  ?  n  Y  n 
+  i=9: n  Y  n  n  n  n  n  ?  ?  Y  n  Y  Y  Y  Y 
+  i=10: n  Y  n  n  n  n  n  n  ?  n  Y  Y  n  ?  n 
+  i=11: n  Y  n  n  n  n  n  n  ?  n  n  Y  n  ?  n 
+  i=12: n  Y  n  n  n  n  n  ?  ?  ?  n  ?  Y  Y  Y 
+  i=13: n  Y  n  n  n  n  n  n  ?  n  n  ?  n  Y  n 
+  i=14: n  Y  n  n  n  n  n  ?  ?  ?  n  ?  ?  ?  Y 
+
+===== IMAGE OF h : p |-> box bot =====
+  which dictionary classes are Rieger-Nishimura rungs?
+  q0: rung 0

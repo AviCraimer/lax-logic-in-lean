@@ -1,0 +1,52 @@
+G Function: fileinfo
+Categories:
+  1 lines_in_file
+    * zero lines	[single]
+    * one line		[property notempty,oneline] [single]
+    * two lines		[property notempty,twoline] [single]
+    * longer		[property notempty,longfile]
+  2 order_of_file
+    * Not applicable
+    * in alphabetic order	   [if notempty] [single]
+    * in reverse alphabetic order  [if notempty] [single]
+    * random order		   [if notempty] [property normal]
+  3 empty_lines_in_file
+    * zero empty lines		  [if not(notempty)] [single]
+    * one empty line at beginning [if (notempty)and(not(oneline))] [single]
+    * one empty line at end	  [if (notempty)and(not(oneline))] [single]
+    * many empty lines		  [if longfile]
+  4 number_of_words
+    * zero words	[property nowords] [single]
+    * one word		[if notempty] [property oneword] [single]
+    * two words		[if notempty] [property twowords] [single]
+    * many words	[if notempty] [property wordful]
+  5 number_of_sentences
+    * zero sentences	[single]
+    * one sentence	[if ((wordful)or(twowords))or(oneword)] [single]
+    * two sentences	[if (wordful)or(twowords)] [single]
+    * many sentences	[if wordful]
+  6 hyphens
+    * no hyphens 
+    * mid word hyphens		[if wordful]
+    * end of word hyphens	[if wordful]
+    * beginning of word hyphens [if wordful]
+    * end of line hyphens	[if wordful]
+  7 quotes
+    * no quotes 
+    * quoted words		[if wordful]
+  8 apostrophes
+    * no apostrophes
+    * apostrophe ess		[if wordful]
+    * elision apostrophe	[if wordful]
+    * ess apostrophe		[if wordful]
+  9 other_punctuation
+    * no punctuation
+    * sentence ending punctuation only	[if wordful]
+    * different punctuation		[if wordful]
+  10 most_frequent_word
+     * zero occurrences		[if nowords]
+     * one occurrence		[if ((oneword)or(twowords))or(wordful)]
+     * two occurrences		[if (twowords)or(wordful)]
+     * many occurrences		[if wordful]
+     * over 100 occurrences	[if wordful] [single]
+EndFunction;

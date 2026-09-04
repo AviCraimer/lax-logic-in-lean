@@ -1,0 +1,35 @@
+A Function: find
+  Categories:
+  1 pattern_size
+    * empty[property empty] 
+    * single character[property nonempty]
+    * many characters[property nonempty] 
+    * longer than any line in the file[error]
+  2 quoting
+    * pattern is quoted[property quoted]
+    * pattern is not quoted[if nonempty]
+    * pattern is improperly quoted[error]
+  3 embedded_blanks 
+    * no embedded blanks[if nonempty]
+    * one embedded blank[if (nonempty) and (quoted)]
+    * several embedded blanks[if (nonempty) and (quoted)]
+    * not applicable[if empty]
+  4 embedded_quotes
+    * no embedded quotes[if nonempty]
+    * one embedded quote[if nonempty]
+    * several embedded quotes[if nonempty][single]
+    * not applicable[if empty]
+  5 file_name
+    * good file name               
+    * no file with this name[error]
+    * omitted[error]
+  6 number_of_occurrences_of_pattern_in_file
+    * none[if nonempty] [single]
+    * exactly one[if nonempty] [property match]
+    * more than one[if nonempty] [property match]
+    * not applicable[if empty]
+  7 pattern_occurrences_on_target_line
+    * one[if match]
+    * more than one[if match] [single]
+    * not applicable[if not(match)]
+EndFunction;

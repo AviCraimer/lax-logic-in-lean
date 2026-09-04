@@ -1,0 +1,59 @@
+=== MwitResidue probe: witness-form residue, modes G (gfp family) and R (ranked family, POnly, both confluent) ===
+closure cl1={⊥,p,◯⊥,◯p}: |cl|=4
+closure cl2={⊥,p,q,◯⊥,◯p,◯q}: |cl|=6
+closure cl3=Sub(◯(◯p⊃p))∪{⊥}∪boxOf: |cl|=6
+ψ-pool[cl1={⊥,p,◯⊥,◯p}]: ⊥ | p | ◯⊥ | ◯p | (⊥⊃⊥) | (◯⊥⊃⊥) | (◯⊥∨(◯⊥⊃⊥)) | ((◯⊥⊃⊥)⊃⊥) | ((◯⊥∨(◯⊥⊃⊥))∨((◯⊥⊃⊥)⊃⊥)) | (((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥)) | (((◯⊥∨(◯⊥⊃⊥))∨((◯⊥⊃⊥)⊃⊥))∨(((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥))) | ((((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥))⊃((◯⊥⊃⊥)⊃⊥)) | q
+ψ-pool[cl2={⊥,p,q,◯⊥,◯p,◯q}]: ⊥ | p | q | ◯⊥ | ◯p | ◯q | (⊥⊃⊥) | (◯⊥⊃⊥) | (◯⊥∨(◯⊥⊃⊥)) | ((◯⊥⊃⊥)⊃⊥) | ((◯⊥∨(◯⊥⊃⊥))∨((◯⊥⊃⊥)⊃⊥)) | (((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥)) | (((◯⊥∨(◯⊥⊃⊥))∨((◯⊥⊃⊥)⊃⊥))∨(((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥))) | ((((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥))⊃((◯⊥⊃⊥)⊃⊥))
+ψ-pool[cl3=Sub(◯(◯p⊃p))∪{⊥}∪boxOf]: ⊥ | p | ◯p | (◯p⊃p) | ◯(◯p⊃p) | ◯⊥ | (⊥⊃⊥) | (◯⊥⊃⊥) | (◯⊥∨(◯⊥⊃⊥)) | ((◯⊥⊃⊥)⊃⊥) | ((◯⊥∨(◯⊥⊃⊥))∨((◯⊥⊃⊥)⊃⊥)) | (((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥)) | (((◯⊥∨(◯⊥⊃⊥))∨((◯⊥⊃⊥)⊃⊥))∨(((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥))) | ((((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥))⊃((◯⊥⊃⊥)⊃⊥)) | q
+vf pool (ranked link): (⊥⊃⊥)(c1) | ⊥(c0) | ◯⊥(c2) | (◯⊥⊃⊥)(c3) | (◯⊥∨(◯⊥⊃⊥))(c3) | ((◯⊥⊃⊥)⊃⊥)(c4) | ((◯⊥∨(◯⊥⊃⊥))∨((◯⊥⊃⊥)⊃⊥))(c4) | (((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥))(c5) | (((◯⊥∨(◯⊥⊃⊥))∨((◯⊥⊃⊥)⊃⊥))∨(((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥)))(c5) | ((((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥))⊃((◯⊥⊃⊥)⊃⊥))(c6) | ((((◯⊥∨(◯⊥⊃⊥))∨((◯⊥⊃⊥)⊃⊥))∨(((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥)))∨((((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥))⊃((◯⊥⊃⊥)⊃⊥)))(c6) | (((((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥))⊃((◯⊥⊃⊥)⊃⊥))⊃(((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥)))(c7) | (((((◯⊥∨(◯⊥⊃⊥))∨((◯⊥⊃⊥)⊃⊥))∨(((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥)))∨((((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥))⊃((◯⊥⊃⊥)⊃⊥)))∨(((((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥))⊃((◯⊥⊃⊥)⊃⊥))⊃(((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥))))(c7) | ((((((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥))⊃((◯⊥⊃⊥)⊃⊥))⊃(((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥)))⊃((((◯⊥⊃⊥)⊃⊥)⊃(◯⊥⊃⊥))⊃((◯⊥⊃⊥)⊃⊥)))(c8)
+=== SANITY CONTROL (mode G): 2-chain, p at top, cl1, ψ=p ===
+  gate tr(k'=0)=Δ ∧ ⊥∉Δ: true
+  gate (k'=0,m'=0)∈Z_2d+1 ∧ (k=0,m=0)∈Z_2d: true
+  gate Rm 0 1 ∧ u'=1∉F ∧ 1⊨p: true
+  gate kv=1: Ri 0 1 ∧ (1,1)∈Z_2d ∧ tr grows: true
+  gate κ=0: Rm 0 0 ∧ (0,1)∈Z_2d−1 ∧ tr(0)=Δ: true
+  gate K mutually confluent: true
+  answer at the given witness u'=1: found=true kb=0 T={◯p}
+=== CONTROL PASS ===
+=== MODE R: 569 models ===
+  [R heartbeat] iK=0/569 pairs=362 elapsed=781ms configs=[0, 0, 0] fails=[0, 0, 0]
+  [R heartbeat] iK=100/569 pairs=30770 elapsed=68716ms configs=[253297, 253297, 253297] fails=[0, 0, 0]
+  [R heartbeat] iK=300/569 pairs=92310 elapsed=277433ms configs=[2425699, 2425699, 2425699] fails=[0, 0, 0]
+  [R heartbeat] iK=400/569 pairs=108962 elapsed=332887ms configs=[4090264, 4090264, 4090264] fails=[0, 0, 0]
+=== MODE R RESULTS (pairs=131044, monoViol=0) ===
+  Z stabilisation histogram: 2:131044 
+  cl1={⊥,p,◯⊥,◯p}:
+    configs=4314267 (live window: 0) | (config,ψ) instances=30580137 (p-free ψ: 25839734)
+    GIVEN=30580137 (p-free 25839734) | OTHER=0 (p-free 0; via top 0) | FAIL=0 (p-free 0; live 0)
+  cl2={⊥,p,q,◯⊥,◯p,◯q}:
+    configs=4314267 (live window: 0) | (config,ψ) instances=30580614 (p-free ψ: 25840211)
+    GIVEN=30580614 (p-free 25840211) | OTHER=0 (p-free 0; via top 0) | FAIL=0 (p-free 0; live 0)
+  cl3=Sub(◯(◯p⊃p))∪{⊥}∪boxOf:
+    configs=4314267 (live window: 0) | (config,ψ) instances=38862752 (p-free ψ: 25839734)
+    GIVEN=38862752 (p-free 25839734) | OTHER=0 (p-free 0; via top 0) | FAIL=0 (p-free 0; live 0)
+=== MODE R done in 412341 ms ===
+=== MODE G: 1603 models ===
+  [G heartbeat] iK=0/1603 pairs=1603 elapsed=1726ms configs=[0, 0, 0] fails=[0, 0, 0]
+  [G heartbeat] iK=100/1603 pairs=161903 elapsed=154620ms configs=[8935, 8935, 8935] fails=[0, 0, 0]
+  [G heartbeat] iK=200/1603 pairs=282128 elapsed=271131ms configs=[10986, 10986, 10986] fails=[0, 0, 0]
+  [G heartbeat] iK=300/1603 pairs=402353 elapsed=389355ms configs=[138240, 135636, 138240] fails=[0, 0, 0]
+  [G heartbeat] iK=400/1603 pairs=562653 elapsed=551573ms configs=[438526, 427459, 438526] fails=[0, 0, 0]
+  [G heartbeat] iK=500/1603 pairs=665245 elapsed=651710ms configs=[908448, 893475, 908448] fails=[0, 0, 0]
+  [G heartbeat] iK=600/1603 pairs=787073 elapsed=769990ms configs=[1262386, 1245460, 1262386] fails=[0, 0, 0]
+  [G heartbeat] iK=700/1603 pairs=947373 elapsed=926555ms configs=[1352135, 1335209, 1352135] fails=[0, 0, 0]
+  [G heartbeat] iK=800/1603 pairs=1069201 elapsed=1046469ms configs=[1557818, 1540892, 1557818] fails=[0, 0, 0]
+  [G heartbeat] iK=900/1603 pairs=1191029 elapsed=1168712ms configs=[3736036, 3718202, 3736036] fails=[0, 0, 0]
+  [G heartbeat] iK=1000/1603 pairs=1351329 elapsed=1328770ms configs=[6643392, 6625558, 6643392] fails=[0, 0, 0]
+=== MODE G RESULTS (pairs=1739255, monoViol=0) ===
+  Z stabilisation histogram: 0:452715 1:938919 2:341355 3:6266 
+  cl1={⊥,p,◯⊥,◯p}:
+    configs=12202223 (live window: 0) | (config,ψ) instances=85533844 (p-free ψ: 73112585)
+    GIVEN=85533844 (p-free 73112585) | OTHER=0 (p-free 0; via top 0) | FAIL=0 (p-free 0; live 0)
+  cl2={⊥,p,q,◯⊥,◯p,◯q}:
+    configs=12184389 (live window: 0) | (config,ψ) instances=85495139 (p-free ψ: 73100738)
+    GIVEN=85495139 (p-free 73100738) | OTHER=0 (p-free 0; via top 0) | FAIL=0 (p-free 0; live 0)
+  cl3=Sub(◯(◯p⊃p))∪{⊥}∪boxOf:
+    configs=12202223 (live window: 0) | (config,ψ) instances=108903819 (p-free ψ: 73112585)
+    GIVEN=108903819 (p-free 73112585) | OTHER=0 (p-free 0; via top 0) | FAIL=0 (p-free 0; live 0)
+=== MODE G done in 1710657 ms ===
+EXIT=0

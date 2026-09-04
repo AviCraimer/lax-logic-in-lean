@@ -1,0 +1,14 @@
+{ This test specification is primarily designed to test
+  the commenting features of the catpart testing tool.
+  Note that nested comments are _not_ allowed.
+}
+{ but several comments _are_ allowed }
+A {the identifying letter} Function: {a key word} comment {the name}
+  Categories: {the categories follow}
+{same-line comments should be ok anywhere} 1 foo {the category name}
+    * {comments also ok here} choice a [error]
+    * choice b {ok here?} [property b] {and here?}
+  2 bar
+ {the bar category} * choice c [if b]{sneaky comment}[property c]
+    * choice d
+EndFunction; { A trailing comment on a newline probably causes a syntax error }

@@ -1,0 +1,63 @@
+== the blocked branch obligations, as sequents ==
+
+chain2: Γ = [(◯p) ⊃ r], γ-clause ◯p ⊃ r
+  C = z = z
+    BOXED (GammaPairFloorBox)  find=20000 emitCap=0: ~ (search budget 20000 exhausted)  (goal weight 22, 1286 ms)
+    BOXED (GammaPairFloorBox)  find=200000 emitCap=0: ~ (search budget 200000 exhausted)  (goal weight 22, 18416 ms)
+    BOXED (GammaPairFloorBox)  find=200000 emitCap=14: ~ (search budget 200000 exhausted)  (goal weight 22, 18269 ms)
+    PLAIN (GammaPairFloorA, control)  find=20000 emitCap=0: PROVED  (goal weight 22, 82 ms)
+    PLAIN (GammaPairFloorA, control)  find=200000 emitCap=0: PROVED  (goal weight 22, 83 ms)
+    PLAIN (GammaPairFloorA, control)  find=200000 emitCap=14: PROVED  (goal weight 22, 83 ms)
+  C = a2 = s
+    BOXED (GammaPairFloorBox)  find=20000 emitCap=0: ~ (search budget 20000 exhausted)  (goal weight 22, 1365 ms)
+    BOXED (GammaPairFloorBox)  find=200000 emitCap=0: ~ (search budget 200000 exhausted)  (goal weight 22, 18893 ms)
+    BOXED (GammaPairFloorBox)  find=200000 emitCap=14: ~ (search budget 200000 exhausted)  (goal weight 22, 18874 ms)
+    PLAIN (GammaPairFloorA, control)  find=20000 emitCap=0: PROVED  (goal weight 22, 85 ms)
+    PLAIN (GammaPairFloorA, control)  find=200000 emitCap=0: PROVED  (goal weight 22, 98 ms)
+    PLAIN (GammaPairFloorA, control)  find=200000 emitCap=14: PROVED  (goal weight 22, 85 ms)
+  C = ◯a2 = ◯s
+    BOXED (GammaPairFloorBox)  find=20000 emitCap=0: ~ (search budget 20000 exhausted)  (goal weight 112, 1657 ms)
+    BOXED (GammaPairFloorBox)  find=200000 emitCap=0: ~ (search budget 200000 exhausted)  (goal weight 112, 17137 ms)
+    BOXED (GammaPairFloorBox)  find=200000 emitCap=14: ~ (search budget 200000 exhausted)  (goal weight 112, 17188 ms)
+    PLAIN (GammaPairFloorA, control)  find=20000 emitCap=0: PROVED  (goal weight 112, 62 ms)
+    PLAIN (GammaPairFloorA, control)  find=200000 emitCap=0: PROVED  (goal weight 112, 61 ms)
+    PLAIN (GammaPairFloorA, control)  find=200000 emitCap=14: PROVED  (goal weight 112, 63 ms)
+  C = goalPiece = ((◯r) ⊃ s) ⊃ z
+    BOXED (GammaPairFloorBox)  find=20000 emitCap=0: ~ (search budget 20000 exhausted)  (goal weight 490, 2849 ms)
+    BOXED (GammaPairFloorBox)  find=200000 emitCap=0: ~ (search budget 200000 exhausted)  (goal weight 490, 28927 ms)
+    BOXED (GammaPairFloorBox)  find=200000 emitCap=14: ~ (search budget 200000 exhausted)  (goal weight 490, 28965 ms)
+    PLAIN (GammaPairFloorA, control)  find=20000 emitCap=0: ~ (search budget 20000 exhausted)  (goal weight 490, 1134 ms)
+    PLAIN (GammaPairFloorA, control)  find=200000 emitCap=0: ~ (search budget 200000 exhausted)  (goal weight 490, 10907 ms)
+    PLAIN (GammaPairFloorA, control)  find=200000 emitCap=14: ~ (search budget 200000 exhausted)  (goal weight 490, 11146 ms)
+chain3: Γ = [(◯p) ⊃ r], γ-clause ◯p ⊃ r
+  C = z = z
+    BOXED (GammaPairFloorBox)  find=20000 emitCap=0: ~ (search budget 20000 exhausted)  (goal weight 22, 1336 ms)
+    BOXED (GammaPairFloorBox)  find=200000 emitCap=0: ~ (search budget 200000 exhausted)  (goal weight 22, 18857 ms)
+    BOXED (GammaPairFloorBox)  find=200000 emitCap=14: ~ (search budget 200000 exhausted)  (goal weight 22, 18636 ms)
+    PLAIN (GammaPairFloorA, control)  find=20000 emitCap=0: PROVED  (goal weight 22, 101 ms)
+    PLAIN (GammaPairFloorA, control)  find=200000 emitCap=0: PROVED  (goal weight 22, 88 ms)
+    PLAIN (GammaPairFloorA, control)  find=200000 emitCap=14: PROVED  (goal weight 22, 87 ms)
+  C = a3 = t
+    BOXED (GammaPairFloorBox)  find=20000 emitCap=0: ~ (search budget 20000 exhausted)  (goal weight 22, 1373 ms)
+    BOXED (GammaPairFloorBox)  find=200000 emitCap=0: ~ (search budget 200000 exhausted)  (goal weight 22, 19186 ms)
+    BOXED (GammaPairFloorBox)  find=200000 emitCap=14: ~ (search budget 200000 exhausted)  (goal weight 22, 19109 ms)
+    PLAIN (GammaPairFloorA, control)  find=20000 emitCap=0: PROVED  (goal weight 22, 89 ms)
+    PLAIN (GammaPairFloorA, control)  find=200000 emitCap=0: PROVED  (goal weight 22, 89 ms)
+    PLAIN (GammaPairFloorA, control)  find=200000 emitCap=14: PROVED  (goal weight 22, 89 ms)
+  C = ◯a3 = ◯t
+    BOXED (GammaPairFloorBox)  find=20000 emitCap=0: ~ (search budget 20000 exhausted)  (goal weight 112, 1695 ms)
+    BOXED (GammaPairFloorBox)  find=200000 emitCap=0: ~ (search budget 200000 exhausted)  (goal weight 112, 17424 ms)
+    BOXED (GammaPairFloorBox)  find=200000 emitCap=14: ~ (search budget 200000 exhausted)  (goal weight 112, 17404 ms)
+    PLAIN (GammaPairFloorA, control)  find=20000 emitCap=0: PROVED  (goal weight 112, 64 ms)
+    PLAIN (GammaPairFloorA, control)  find=200000 emitCap=0: PROVED  (goal weight 112, 64 ms)
+    PLAIN (GammaPairFloorA, control)  find=200000 emitCap=14: PROVED  (goal weight 112, 64 ms)
+  C = goalPiece = ((◯s) ⊃ t) ⊃ z
+    BOXED (GammaPairFloorBox)  find=20000 emitCap=0: ~ (search budget 20000 exhausted)  (goal weight 490, 3352 ms)
+    BOXED (GammaPairFloorBox)  find=200000 emitCap=0: ~ (search budget 200000 exhausted)  (goal weight 490, 30388 ms)
+    BOXED (GammaPairFloorBox)  find=200000 emitCap=14: ~ (search budget 200000 exhausted)  (goal weight 490, 30560 ms)
+    PLAIN (GammaPairFloorA, control)  find=20000 emitCap=0: ~ (search budget 20000 exhausted)  (goal weight 490, 1359 ms)
+    PLAIN (GammaPairFloorA, control)  find=200000 emitCap=0: ~ (search budget 200000 exhausted)  (goal weight 490, 11442 ms)
+    PLAIN (GammaPairFloorA, control)  find=200000 emitCap=14: ~ (search budget 200000 exhausted)  (goal weight 490, 11462 ms)
+
+== done ==
+EXIT=0

@@ -7,7 +7,7 @@ inductive PLLFormula where
 | or (a: PLLFormula)(b: PLLFormula)
 | ifThen (antecedant: PLLFormula)(consequent: PLLFormula)
 | somehow (a: PLLFormula)
-deriving Inhabited, DecidableEq, BEq
+deriving Inhabited, DecidableEq
 
 open Std (Format)
 namespace PLLFormula
@@ -143,10 +143,10 @@ def toString (F: PLLFormula) : String :=
 (stripParens printF) F where printF (F: PLLFormula) :=
   match F with
   | prop s  =>  s
-  | falsePLL =>  "False"
+  | falsePLL =>  "⊥"
   | and p q => addParens (printF p  ++  " ∧ " ++ printF q )
   | or p q => addParens (printF p  ++  " ∨ " ++ printF q )
-  | ifThen falsePLL falsePLL =>  "True"
+  | ifThen falsePLL falsePLL =>  "⊤"
   | ifThen p q => addParens (printF p  ++  " ⊃ " ++ printF q ) -- Symbol shortcut is \ssup
   | somehow p => addParens ( "◯" ++ printF p )
 

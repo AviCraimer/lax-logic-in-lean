@@ -1,0 +1,523 @@
+\fvset{fontsize=\scriptsize,xleftmargin=0.3em}  % appendix listings: reference material
+%% Appendices A–E per docs/belief-paper-selection.md §4, distilled from
+%% docs/pll-formalisation-ledger.md Part II and the library sources.
+%% Everything displayed as Lean is verbatim from the artefact at the commit
+%% recorded in the ledger; audits are quoted from the in-file
+%% #guard_msgs-pinned #print axioms runs.  Audit key: none ⊂ [propext] ⊂
+%% [propext, Quot.sound] (no choice) ⊂ clean = [propext, Classical.choice,
+%% Quot.sound]; ‡ marks statements whose Mathlib vocabulary is
+%% choice-tainted at definition level (Section 9).
+
+\section{The Mechanised Base}\label{app:base}
+
+This appendix reproduces, verbatim from the artefact, the definitions a
+reader must accept as formalising the intended notions, and the exact
+statements of the audited theorems of Section 2.
+
+\subsection{Language and natural deduction}
+
+\begin{lstlisting}
+inductive PLLFormula where
+  | prop (constantName : String)
+  | falsePLL
+  | and (a b : PLLFormula)
+  | or (a b : PLLFormula)
+  | ifThen (antecedant consequent : PLLFormula)
+  | somehow (a : PLLFormula)   -- the lax modality ◯
+\end{lstlisting}
+
+\noindent \texttt{notPLL}/\texttt{truePLL} are the defined
+\ensuremath{\lnot}/\ensuremath{\top}. Contexts are lists; the identity rule is
+membership-based, so weakening, exchange and contraction are admissible
+(\texttt{LaxND.rename}), not structural:
+
+\begin{lstlisting}
+inductive LaxND : List PLLFormula → PLLFormula → Type
+  | iden      {Γ φ}   (h : φ ∈ Γ) : LaxND Γ φ
+  | falsoElim {Γ} (φ) (p : LaxND Γ .falsePLL) : LaxND Γ φ
+  | impIntro  {Γ φ ψ} (p : LaxND (φ :: Γ) ψ) :
+      LaxND Γ (.ifThen φ ψ)
+  | impElim   {Γ φ ψ} (p₁ : LaxND Γ (.ifThen φ ψ))
+      (p₂ : LaxND Γ φ) : LaxND Γ ψ
+  | andIntro  {Γ φ ψ} (p₁ : LaxND Γ φ)
+      (p₂ : LaxND Γ ψ) : LaxND Γ (.and φ ψ)
+  | andElim1  {Γ φ ψ} (p : LaxND Γ (.and φ ψ)) : LaxND Γ φ
+  | andElim2  {Γ φ ψ} (p : LaxND Γ (.and φ ψ)) : LaxND Γ ψ
+  | orIntro1  {Γ φ ψ} (p : LaxND Γ φ) : LaxND Γ (.or φ ψ)
+  | orIntro2  {Γ φ ψ} (p : LaxND Γ ψ) : LaxND Γ (.or φ ψ)
+  | orElim    {Γ φ ψ χ} (p₀ : LaxND Γ (.or φ ψ))
+      (p₁ : LaxND (φ :: Γ) χ)
+      (p₂ : LaxND (ψ :: Γ) χ) : LaxND Γ χ
+  | laxIntro  {Γ φ}   (p : LaxND Γ φ) :
+      LaxND Γ (.somehow φ)
+  | laxElim   {Γ φ ψ} (p₁ : LaxND Γ (.somehow φ))
+      (p₂ : LaxND (φ :: Γ) (.somehow ψ)) :
+      LaxND Γ (.somehow ψ)
+\end{lstlisting}
+
+\noindent The two lax rules are the parent paper's
+\ensuremath{\bigcirc}I/\ensuremath{\bigcirc}E; provability of \ensuremath{\varphi} is
+\texttt{Nonempty (LaxND [] \ensuremath{\varphi})}. The IPL fragment is its own
+judgement (\texttt{IPLND}: the same rules minus the two lax ones), and
+conservativity holds in erasure and classic forms (audits
+\texttt{[propext, Quot.sound]}):
+
+\begin{lstlisting}
+theorem conservativity_prop {Γ φ} (p : LaxND Γ φ) :
+    IPLND (Γ.map erase) (erase φ)
+
+theorem conservativity_IPL {Γ φ} (hφ : isIPL φ)
+    (hΓ : ∀ ψ ∈ Γ, isIPL ψ) (p : LaxND Γ φ) :
+    IPLND Γ φ
+\end{lstlisting}
+
+\subsection{Sequent calculus, cut elimination, Hilbert system}
+
+The G3-style, height-indexed, cut-free calculus (principal formulas
+kept in the context):
+
+\begin{lstlisting}
+inductive SCh : Nat → List PLLFormula → PLLFormula → Prop
+  | init  {n Γ a}     (h : PLLFormula.prop a ∈ Γ) :
+      SCh n Γ (.prop a)
+  | botL  {n Γ C}     (h : PLLFormula.falsePLL ∈ Γ) :
+      SCh n Γ C
+  | andR  {n Γ A B}   : SCh n Γ A → SCh n Γ B →
+      SCh (n+1) Γ (A.and B)
+  | andL  {n Γ A B C} (h : A.and B ∈ Γ) :
+      SCh n (A :: B :: Γ) C → SCh (n+1) Γ C
+  | orR1  {n Γ A B}   : SCh n Γ A → SCh (n+1) Γ (A.or B)
+  | orR2  {n Γ A B}   : SCh n Γ B → SCh (n+1) Γ (A.or B)
+  | orL   {n Γ A B C} (h : A.or B ∈ Γ) :
+      SCh n (A :: Γ) C → SCh n (B :: Γ) C → SCh (n+1) Γ C
+  | impR  {n Γ A B}   : SCh n (A :: Γ) B →
+      SCh (n+1) Γ (A.ifThen B)
+  | impL  {n Γ A B C} (h : A.ifThen B ∈ Γ) :
+      SCh n Γ A → SCh n (B :: Γ) C → SCh (n+1) Γ C
+  | laxR  {n Γ A}     : SCh n Γ A → SCh (n+1) Γ (A.somehow)
+  | laxL  {n Γ A B}   (h : A.somehow ∈ Γ) :
+      SCh n (A :: Γ) (B.somehow) → SCh (n+1) Γ (B.somehow)
+
+def SC (Γ : List PLLFormula) (C : PLLFormula) : Prop :=
+  ∃ n, SCh n Γ C
+\end{lstlisting}
+
+\begin{lstlisting}
+theorem SC.cut {Γ A C}
+    (h₁ : SC Γ A) (h₂ : SC (A :: Γ) C) : SC Γ C
+
+theorem cutElimination {Γ C} :
+    Nonempty (LaxND Γ C) ↔ SC Γ C
+
+theorem disjunction_property {A B}
+    (h : Nonempty (LaxND [] (A.or B))) :
+    Nonempty (LaxND [] A) ∨ Nonempty (LaxND [] B)
+
+theorem somehow_reflection {A}
+    (h : Nonempty (LaxND [] (A.somehow))) :
+    Nonempty (LaxND [] A)
+\end{lstlisting}
+
+\noindent All audit \texttt{[propext, Quot.sound]}. The Hilbert system
+has the three \ensuremath{\bigcirc}-schemes of Section 1 over the standard IPC
+schemes, with \texttt{hd\_iff\_ND} (audit \texttt{[propext]}) the
+equivalence with natural deduction.
+
+\subsection{Constraint semantics}
+
+\begin{lstlisting}
+structure ConstraintModel where
+  W : Type
+  Ri : W → W → Prop        -- intuitionistic accessibility
+  Rm : W → W → Prop        -- constraint accessibility
+  F : Set W                -- fallible worlds
+  V : String → Set W
+  refl_i : ∀ w, Ri w w
+  trans_i : ∀ {w v u}, Ri w v → Ri v u → Ri w u
+  refl_m : ∀ w, Rm w w
+  trans_m : ∀ {w v u}, Rm w v → Rm v u → Rm w u
+  sub_mi : ∀ {w v}, Rm w v → Ri w v
+  hered_F : ∀ {w v}, Ri w v → w ∈ F → v ∈ F
+  hered_V : ∀ {a w v}, Ri w v → w ∈ V a → v ∈ V a
+  full_F : ∀ {a w}, w ∈ F → w ∈ V a
+
+def force (C : ConstraintModel) : C.W → PLLFormula → Prop
+  | w, .prop a     => w ∈ C.V a
+  | w, .falsePLL   => w ∈ C.F
+  | w, .and φ ψ    => C.force w φ ∧ C.force w ψ
+  | w, .or φ ψ     => C.force w φ ∨ C.force w ψ
+  | w, .ifThen φ ψ =>
+      ∀ v, C.Ri w v → C.force v φ → C.force v ψ
+  | w, .somehow φ  =>
+      ∀ v, C.Ri w v → ∃ u, C.Rm v u ∧ C.force u φ
+
+theorem soundness    {Γ φ} (p : LaxND Γ φ) : Γ ⊨- φ
+theorem completeness {Γ φ} (h : Γ ⊨- φ) :
+    Nonempty (LaxND Γ φ)
+\end{lstlisting}
+
+\noindent \texttt{soundness} audits \texttt{[propext]};
+\texttt{completeness} is the parent's Zorn construction, clean-classical
+and kept as the foil for Section 6.2. The three countermodels of the
+parent's Fig.~3 are explicit finite models, \texttt{decide}-checkable:
+\texttt{not\_provable\_not\_somehow\_false},
+\texttt{not\_provable\_somehow\_or\_dist},
+\texttt{not\_provable\_imp\_somehow\_dist}.
+
+\subsection{Decidability, and the repaired calculus}
+
+The terminating calculus \texttt{G4c} (with height-indexed form
+\texttt{G4h}) is the repaired \texttt{G4iLL\ensuremath{{}''}}; the published
+calculus is provably incomplete for PLL:
+
+\begin{lstlisting}
+def Fa : PLLFormula :=
+  ((prop "p").somehow).ifThen (prop "r")
+def Ga : PLLFormula := Fa.ifThen (prop "p").somehow
+
+theorem sep_SC :                    -- PLL derives it
+  SC [Ga.somehow, Fa] (prop "r")
+theorem sep_not_G4 :                -- G4iLL cannot
+  ¬ G4 [Ga.somehow, Fa] (prop "r")
+\end{lstlisting}
+
+\noindent (Neither contraction nor cut is admissible in the published
+system: \texttt{contraction\_not\_admissible},
+\texttt{cut\_not\_admissible}.) The repaired calculus proves exactly the
+PLL sequents, and a loop-checked, fuel-bounded backward search decides
+it — all \texttt{[propext, Quot.sound]}, no choice, and kernel-honest
+(no \texttt{native\_decide} anywhere in the chain):
+
+\begin{lstlisting}
+theorem G4c.equiv_tm {Γ φ} : G4c Γ φ ↔ Nonempty (Tm Γ φ)
+
+instance decidableG4c (Γ C) : Decidable (G4c Γ C)
+instance decidablePLL (Γ φ) : Decidable (Nonempty (Tm Γ φ))
+\end{lstlisting}
+
+\subsection{Craig interpolation}\label{app:craig}
+
+By a Maehara induction over \texttt{SCh}; the working atom bookkeeping
+is built on a choice-free finite-set toolkit, so the primary statements
+audit \texttt{[propext, Quot.sound]}:
+
+\begin{lstlisting}
+theorem craig_interpolation' {Γ₁ Γ₂ C}
+    (h : SC (Γ₁ ++ Γ₂) C) :
+    ∃ I : PLLFormula,
+      SC Γ₁ I ∧ SC (I :: Γ₂) C ∧
+      I.atoms ⊆ atomsList Γ₁ ∧
+      I.atoms ⊆ finUnion (atomsList Γ₂) C.atoms
+
+theorem craig_implication' {A B} (h : SC [] (A.ifThen B)) :
+    ∃ I : PLLFormula,
+      SC [] (A.ifThen I) ∧ SC [] (I.ifThen B) ∧
+      I.atoms ⊆ A.atoms ∧ I.atoms ⊆ B.atoms
+\end{lstlisting}
+
+\noindent The Mathlib-phrased forms, with the shared atoms stated
+through the lattice \ensuremath{\cap} and \ensuremath{\cup}, are
+kept as two-line wrappers, clean‡ by statement vocabulary alone. The
+lax \ensuremath{\bigcirc} contributes exactly one twist to the textbook
+induction: when the principal formula \ensuremath{\bigcirc}A sits in
+\ensuremath{\Gamma{}_{1}}, the premise interpolant is \emph{boxed},
+I \ensuremath{\mapsto} \ensuremath{\bigcirc}I --- forced because \ensuremath{\bigcirc}L
+fires only at a \ensuremath{\bigcirc}-shaped succedent.
+
+\section{Evidence and the Clause Families}\label{app:evidence}
+
+The equipment of Section 4, in full:
+
+\begin{lstlisting}
+structure Pca where
+  Carrier : Type
+  app : Carrier → Carrier → Option Carrier
+  pair : Carrier → Carrier → Carrier
+  fst : Carrier → Carrier
+  snd : Carrier → Carrier
+  tag : Bool → Carrier → Carrier
+  untag : Carrier → Bool × Carrier
+  fst_pair : ∀ a b, fst (pair a b) = a
+  snd_pair : ∀ a b, snd (pair a b) = b
+  untag_tag : ∀ i a, untag (tag i a) = (i, a)
+
+structure Evidence (P : Pca) (C : ConstraintModel) where
+  E : String → C.W → Set P.Carrier
+  hered_E : ∀ {s w v}, C.Ri w v → E s w ⊆ E s v
+  full_E : ∀ {s w}, w ∈ C.F → ∀ x, x ∈ E s w
+\end{lstlisting}
+
+Uniform realisability, in full (\texttt{realU}; every world-quantified
+clause carries the fallibility guard):
+
+\begin{lstlisting}
+def realU (P : Pca) {C} (Ev : Evidence P C) :
+    PLLFormula → P.Carrier → C.W → Prop
+  | .prop s, x, w => w ∈ C.F ∨ x ∈ Ev.E s w
+  | .falsePLL, _x, w => w ∈ C.F
+  | .and φ ψ, x, w =>
+      w ∈ C.F ∨ (realU P Ev φ (P.fst x) w ∧
+                 realU P Ev ψ (P.snd x) w)
+  | .or φ ψ, x, w =>
+      w ∈ C.F ∨
+        ((P.untag x).1 = false ∧
+          realU P Ev φ (P.untag x).2 w)
+      ∨ ((P.untag x).1 = true ∧
+          realU P Ev ψ (P.untag x).2 w)
+  | .ifThen φ ψ, x, w =>
+      ∀ v, C.Ri w v → v ∈ C.F ∨
+        (∀ b, realU P Ev φ b v →
+          ∃ y, P.app x b = some y ∧ realU P Ev ψ y v)
+  | .somehow φ, x, w =>
+      ∀ v, C.Ri w v → v ∈ C.F ∨
+        (∃ u, C.Rm v u ∧ realU P Ev φ x u)
+\end{lstlisting}
+
+Strategy realisability \texttt{realS} differs at \ensuremath{\bigcirc} alone
+(the clause displayed in Section 4): the realiser is applied to the
+code \ensuremath{\kappa} v of the presented future and must \emph{name} its
+constraint-witness. Presented-strategy realisability \texttt{realP}
+differs from \texttt{realS} at \ensuremath{\supset} alone (also displayed in
+Section 4): the realiser receives the pair of the presented world-code
+and the argument. Heredity along R\ensuremath{{}_{i}} and fallible saturation are
+theorems for all three relations (\texttt{realU\_hered},
+\texttt{realS\_hered}, \texttt{realU\_of\_fallible},
+\texttt{realS\_of\_fallible} — axiom-free — and their \texttt{realP}
+analogues).
+
+The separations of Theorem~\ref{thm:separations}, as mechanised:
+
+\begin{lstlisting}
+theorem bite_uniform_split :
+    modelOrSplit.force W3.r
+      (somehow ((prop "A").or (prop "B"))) ∧
+    ∀ x : ℕ,
+      ¬ realU natPca (fullEvidence natPca modelOrSplit)
+          (somehow ((prop "A").or (prop "B"))) x W3.r
+
+theorem uniform_dist_valid
+    (P : Pca) {C} (Ev : Evidence P C) (I : P.Carrier)
+    (hI : ∀ b, P.app I b = some b)
+    (φ ψ : PLLFormula) (w : C.W) :
+    realU P Ev
+      ((somehow (φ.or ψ)).ifThen
+        ((somehow φ).or (somehow ψ))) I w
+
+theorem impdist_not_uniform (I : P.Carrier)
+    (hI : ∀ b, P.app I b = some b) (e : P.Carrier) :
+    ¬ realU P (EvChain P)
+        (((somehow (prop "A")).ifThen
+            (somehow (prop "B"))).ifThen
+          (somehow ((prop "A").ifThen (prop "B"))))
+        e W3.r
+\end{lstlisting}
+
+\noindent (\texttt{uniform\_dist\_valid} is axiom-free.) The strategy
+pair \texttt{strategy\_realises\_obAB} / \texttt{strategy\_dist\_refuted}
+is stated for any structure whose application satisfies three equations
+packaging the case-splitting strategy, and instantiated over the
+\ensuremath{\mathbb{N}}-pairing structure
+(\texttt{strategy\_realises\_obAB\_split},
+\texttt{strategy\_dist\_refuted\_split}).
+
+The obstruction frame, as checker data, and the obstruction
+(audit \texttt{[propext, Quot.sound]}):
+
+\begin{lstlisting}
+abbrev obsM : FinCM :=
+  { n := 3, ri := [(0, 1), (0, 2)], rm := [], fall := [],
+    val := [(1, "p"), (2, "q"), (1, "t"), (2, "t")] }
+
+theorem realS_fullness_obstruction
+    (P : Pca) (κ : obsC.W → P.Carrier)
+    (htab : ∀ g : obsC.W → P.Carrier,
+      ∃ s, ∀ i, P.app s (κ i) = some (g i)) :
+    ¬ ∃ Ev : Evidence P obsC,
+      (∀ (a : String) (w : obsC.W),
+        ∀ x ∈ Ev.E a w, w ∈ obsC.V a) ∧
+      (∀ (φ : PLLFormula) (w : obsC.W),
+        obsC.force w φ → ∃ x, x ⊩ˢ[Ev, κ, w] φ)
+\end{lstlisting}
+
+The extraction results cited in Section 7: combinatory completeness for
+structures with k/s (\texttt{Poly.abs\_spec},
+\texttt{[propext, Quot.sound]}), and soundness-with-extraction
+\texttt{extract\_sound} (uniform) and \texttt{extractS\_sound}
+(strategy): a natural-deduction derivation compiles to a polynomial
+whose value realises the conclusion wherever the context is realised.
+
+\section{The Finite Canonical Model}\label{app:canonical}
+
+Theories are triples; promises are guarded by \ensuremath{\bigcirc}:
+
+\begin{lstlisting}
+structure FTheory where
+  val  : Finset PLLFormula   -- validated (believed)
+  fal  : Finset PLLFormula   -- falsified here
+  mfal : Finset PLLFormula   -- promised: falsified at
+                             --   every Rₘ-successor
+
+-- Consistent ⟨V, F, M⟩ iff for no finite
+-- Ds ⊆ F, Ts ⊆ M (jointly nonempty):
+--   V ⊢ ⋁Ds ∨ ◯(⋁Ts)
+\end{lstlisting}
+
+Consistency of a finite triple collapses to its worst case — one
+derivability question, decided by \texttt{decidablePLL}
+(\texttt{cons\_iff\_rep}, \texttt{[propext, Quot.sound]}; the
+\texttt{Finset.toList}-phrased form \texttt{cons\_iff\_check} is its
+clean‡ wrapper) — and the Lindenbaum construction is a decided fold:
+
+\begin{lstlisting}
+noncomputable def extendStep
+    (T : FTheory) (φ : PLLFormula) : FTheory :=
+  if (T.insVal φ).Cons
+  then T.insVal φ else T.insFal φ
+
+theorem lindenbaum {cl : Finset PLLFormula} {T : FTheory}
+    (hT : T.Cons) (hIn : InCl cl T) :
+    ∃ T', T.le T' ∧ MaxIn cl T' ∧ T'.mfal = T.mfal
+\end{lstlisting}
+
+\noindent \texttt{MaxIn cl T} — totality over the closure — is the
+finite surrogate for maximality; the else-branch of the fold is safe by
+the extension dichotomy \texttt{cons\_insVal\_or\_insFal}, and the fold
+never writes to the promises, an equality the truth lemma uses twice.
+
+\begin{lstlisting}
+def canonFin (cl : Finset PLLFormula) :
+    ConstraintModel where
+  W  := {T : FTheory // MaxIn cl T}
+  Ri T T' := T.1.val ⊆ T'.1.val
+  Rm T T' := T.1.val ⊆ T'.1.val ∧ T.1.mfal ⊆ T'.1.mfal
+  F  := {T | falsePLL ∈ T.1.val}
+  V a := {T | prop a ∉ cl ∨ prop a ∈ T.1.val}
+
+theorem truth_lemma {cl} (hcl : SubClosed cl) :
+    ∀ (φ : PLLFormula), φ ∈ cl → ∀ T : (canonFin cl).W,
+      (φ ∈ T.1.val → (canonFin cl).force T φ) ∧
+        (φ ∈ T.1.fal → ¬ (canonFin cl).force T φ)
+
+theorem emitter_completeness
+    {Γ : List PLLFormula} {C : PLLFormula}
+    (h : ¬ Nonempty (LaxND Γ C)) :
+    ∃ (M : FinCM) (w : Nat),
+      FinCM.checkB M w Γ C = true
+\end{lstlisting}
+
+\noindent All \texttt{[propext, Quot.sound]}. The three Lindenbaum
+extensions of the truth lemma are exactly the parent's, with the
+start-triples carried over unchanged (Section 6.2).
+
+Finally, the two decoration witnesses elided from the proof of
+Theorem~\ref{thm:adequacy-fullness}. At \ensuremath{\vee}, fullness computes
+the branch by running the executable forcing of the left disjunct:
+
+\begin{lstlisting}
+fun w =>
+  if M.forceB w.1 φ = true
+  then P.tag false (witφ w)
+  else P.tag true (witψ w)
+\end{lstlisting}
+
+\noindent If the test succeeds, the left inductive fullness supplies the
+payload; if it fails while the disjunction is forced, the failed
+computation refutes the left disjunct outright, so the right one is
+forced. At \ensuremath{\bigcirc}, fullness tabulates a bounded search of the
+finite frame:
+
+\begin{lstlisting}
+fun v => match (List.finRange M.n).find?
+    (fun u => M.rmB v.1 u.1 && M.forceB u.1 φ) with
+  | some u => P.pair (κ u) (witφ u)
+  | none   => P.pair (κ v) (witφ v)  -- unreachable
+                                     --   when obliged
+\end{lstlisting}
+
+\noindent When \ensuremath{\bigcirc\varphi} is forced, the \ensuremath{\forall\exists}
+clause guarantees the search succeeds; the default branch exists only to
+make the function total.
+
+\section{The Term Calculus}\label{app:terms}
+
+The proof-term calculus \texttt{Tm} (intrinsically typed, the
+computational lambda-calculus over the natural deduction of
+Appendix~\ref{app:base}), its full one-step reduction \texttt{Step}
+(\ensuremath{\beta} for every connective together with the monadic
+\texttt{let}-associativity law), strong normalisation \texttt{SNt} and
+normal forms \texttt{Nf} are a full calculus, pointed to rather than
+reproduced. The audited statements:
+
+\begin{lstlisting}
+theorem strong_normalisation {Γ φ} (t : Tm Γ φ) : SNt t
+
+def Tm.normalize {Γ φ} (t : Tm Γ φ) : Tm Γ φ
+theorem Tm.normalize_spec {Γ φ} (t : Tm Γ φ) :
+    Steps t t.normalize ∧ Nf t.normalize
+\end{lstlisting}
+
+\noindent Strong normalisation is by Lindley--Stark
+\ensuremath{\top\top}-lifting~\cite{LindleyStark2005} --- the \ensuremath{\beta}-fragment
+alone admits ordinary Tait reducibility, but the artefact also proves,
+by two machine-checked terms, that the \ensuremath{\beta}- and associativity
+fragments do not compose by any syntactic argument (each creates
+redexes of the other), so the semantic method is needed. Confluence is
+Newman's lemma~\cite{Newman1942} from strong normalisation
+(\texttt{local\_confluence}, \texttt{confluence}), whence uniqueness of
+normal forms and decidability of conversion by the normaliser
+(\texttt{normal\_form\_unique}, \texttt{conv\_iff\_normalize\_eq});
+Proposition~\ref{prop:mueta} is \texttt{mu\_eta\_not\_mutually\_inverse}
+(the complete four-term reduction graph of \ensuremath{\eta} \ensuremath{\circ}
+\ensuremath{\mu}, \texttt{[propext]} alone) together with
+\texttt{eta\_mu\_not\_conv\_id} (via confluence).
+
+\section{Artefact Guide}\label{app:artefact}
+
+The artefact is a Lean 4 (v4.31.0, Mathlib-based) library; \texttt{lake
+build} checks every result, including the pinned axiom audits — each
+named theorem carries \texttt{\#print axioms} under
+\texttt{\#guard\_msgs}, so the build fails if any audit drifts. There
+are no \texttt{sorry}s in the library and no \texttt{native\_decide} on
+any claimed result.
+
+\medskip
+\noindent Orientation, by the sections of this paper:
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lll}
+result & Lean name & audit \\
+\hline
+cut elimination & \texttt{cutElimination} & [p,Q] \\
+disjunction property & \texttt{disjunction\_property} & [p,Q] \\
+\ensuremath{\bigcirc}-reflection & \texttt{somehow\_reflection} & [p,Q] \\
+conservativity over IPL & \texttt{conservativity\_IPL} & [p,Q] \\
+strong normalisation (\ensuremath{\beta} + assoc) & \texttt{strong\_normalisation} & clean \\
+decidability (parent Thm 2.8) & \texttt{decidablePLL} & [p,Q] \\
+published G4iLL incomplete & \texttt{sep\_not\_G4} & [propext] \\
+Craig interpolation & \texttt{craig\_interpolation'} & [p,Q] \\
+Kleene--Brouwer well-foundedness & \texttt{wellFounded\_kb} & none \\
+collapse, N(B) \ensuremath{\cong} B & \texttt{nucleus\_eq\_sup\_bot}, \texttt{nucleusOrderIsoBot} & clean \\
+open = closed iff EM at a & \texttt{em\_of\_openNucleus\_eq\_...} & clean \\
+infinite closed fragment & \texttt{closed\_lax\_infinite} & clean \\
+context completeness & \texttt{Ctx.thm6}, \texttt{Ctx.corollary10} & clean \\
+doxastic profile & \texttt{BeliefIdealisation}/\texttt{Normality}/\texttt{Falsum} & clean \\
+3-chain enumeration & \texttt{chain3\_card} (+ separation) & clean \\
+the separations & \texttt{BeliefRealisability.lean} & see file \\
+the obstruction & \texttt{realS\_fullness\_obstruction} & [p,Q] \\
+adequacy + fullness & \texttt{realP\_adequate\_and\_full} & [p,Q] \\
+refutation lemma (closed form) & \texttt{realP\_refutes\_sequent\_tbl} & [p,Q] \\
+decided Lindenbaum, truth lemma & \texttt{lindenbaum}, \texttt{truth\_lemma} & [p,Q] \\
+emitter completeness & \texttt{emitter\_completeness} & [p,Q] \\
+\textbf{the crown} & \texttt{derivable\_iff\_no\_realP\_refutation} & [p,Q] \\
+idempotence \ensuremath{\ne} isomorphism & \texttt{mu\_eta\_not\_mutually\_inverse} & [propext] \\
+\end{tabular}}
+\end{center}
+
+\medskip
+\noindent A statement-level ledger (every named result, its location and
+its measured audit, with the definitions reproduced verbatim) and
+line-level annotated walk-throughs of the three central proofs
+accompany the artefact.

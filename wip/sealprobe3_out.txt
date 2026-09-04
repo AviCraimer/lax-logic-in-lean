@@ -1,0 +1,53 @@
+== boxed γ-branch with a γ-head that is NOT the eliminated variable ==
+
+S1 (p-free γ-clause only): Γ = [(◯r) ⊃ s], γ-head ◯r, defect = 5
+   A@0(Γ,◯r) = False
+   A@0(Γ,r)  = r ∨ False
+   E@0(Γ)    = True
+  C = z
+    BOXED, unfiltered   : ~ (search budget 4000 exhausted)  (452 ms)
+    BOXED, infallible   : ~ (search budget 4000 exhausted)  (375 ms)
+    BOXED, inf+confluent: ~ (search budget 4000 exhausted)  (377 ms)
+    PLAIN (control)     : PROVED  (187 ms)
+  C = s
+    BOXED, unfiltered   : ~ (search budget 4000 exhausted)  (382 ms)
+    BOXED, infallible   : ~ (search budget 4000 exhausted)  (355 ms)
+    BOXED, inf+confluent: ~ (search budget 4000 exhausted)  (359 ms)
+    PLAIN (control)     : PROVED  (89 ms)
+  C = ◯s
+    BOXED, unfiltered   : ~ (search budget 4000 exhausted)  (407 ms)
+    BOXED, infallible   : ~ (search budget 4000 exhausted)  (385 ms)
+    BOXED, inf+confluent: ~ (search budget 4000 exhausted)  (397 ms)
+    PLAIN (control)     : ~ (search budget 20000 exhausted)  (819 ms)
+  C = r
+    BOXED, unfiltered   : ~ (search budget 4000 exhausted)  (366 ms)
+    BOXED, infallible   : ~ (search budget 4000 exhausted)  (353 ms)
+    BOXED, inf+confluent: ~ (search budget 4000 exhausted)  (366 ms)
+    PLAIN (control)     : PROVED  (226 ms)
+S2 (both a p-headed and an r-headed γ-clause): Γ = [(◯r) ⊃ s], γ-head ◯r, defect = 7
+   A@0(Γ,◯r) = False
+   A@0(Γ,r)  = r ∨ False
+   E@0(Γ)    = True
+  C = z
+    BOXED, unfiltered   : ~ (search budget 4000 exhausted)  (450 ms)
+    BOXED, infallible   : ~ (search budget 4000 exhausted)  (382 ms)
+    BOXED, inf+confluent: ~ (search budget 4000 exhausted)  (376 ms)
+    PLAIN (control)     : PROVED  (189 ms)
+  C = s
+    BOXED, unfiltered   : ~ (search budget 4000 exhausted)  (386 ms)
+    BOXED, infallible   : ~ (search budget 4000 exhausted)  (358 ms)
+    BOXED, inf+confluent: ~ (search budget 4000 exhausted)  (356 ms)
+    PLAIN (control)     : PROVED  (88 ms)
+  C = ◯s
+    BOXED, unfiltered   : ~ (search budget 4000 exhausted)  (403 ms)
+    BOXED, infallible   : ~ (search budget 4000 exhausted)  (387 ms)
+    BOXED, inf+confluent: ~ (search budget 4000 exhausted)  (395 ms)
+    PLAIN (control)     : ~ (search budget 20000 exhausted)  (828 ms)
+  C = r
+    BOXED, unfiltered   : ~ (search budget 4000 exhausted)  (372 ms)
+    BOXED, infallible   : ~ (search budget 4000 exhausted)  (353 ms)
+    BOXED, inf+confluent: ~ (search budget 4000 exhausted)  (356 ms)
+    PLAIN (control)     : PROVED  (236 ms)
+
+== done ==
+EXIT=0

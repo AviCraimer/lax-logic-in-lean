@@ -1,0 +1,68 @@
+===== (A) THE RUNGS HAVE SMALL REPRESENTATIVES =====
+  rnSub 0 = q0  (bot)          : EQUIVALENT
+  rnSub 1 = q2  (box bot)      : EQUIVALENT
+  rnSub 2 = q3  (not box bot)  : EQUIVALENT
+  rnSub 3 = q4  (Obot v ~Obot) : EQUIVALENT
+  rnSub 4 = q6  (~~Obot)       : EQUIVALENT
+  rnSub 5 = q7  (~Obot v ~~Obot): EQUIVALENT
+  rnSub 6 = q10 (~~Obot > Obot): EQUIVALENT
+  rnSub 7 = q11 (q6 v q10)     : EQUIVALENT
+
+===== (B) THE BOX COLUMN, on the small forms =====
+  where does box send each rung?
+  box(rnSub 0) = box bot       : q2
+  box(rnSub 1) = box box bot   : q2
+  box(rnSub 2) = box ~Obot     : q5
+  box(rnSub 3) = box(Obot v ~Obot): q5
+  box(rnSub 4) = box ~~Obot    : q6
+  box(rnSub 5) = box q7        : q12
+  box(rnSub 6) = box q10       : q10
+  box(rnSub 7) = box q11       : OUTSIDE the 15 representatives
+
+===== (C) THE QUESTION ASKED, reduced =====
+  box(rnSub4 v rnSub3) -> (box rnSub4 v box rnSub3)
+  reduces to    box q7 -> (box q6 v box q4)
+  is box q7 |- box q6 v box q4 ?: ?
+  the closed form, |- distr q6 q4: ?
+
+===== (D) DISTRIBUTION over the small rung representatives =====
+  |- box(A v B) -> (box A v box B)   for A,B among the rung reps
+  distr r1=q2 r1=q2: PROVED(9)
+  distr r1=q2 r2=q3: PROVED(11)
+  distr r1=q2 r3=q4: PROVED(17)
+  distr r1=q2 r4=q6: PROVED(19)
+  distr r1=q2 r5=q7: PROVED(26)
+  distr r1=q2 r6=q10: PROVED(25)
+  distr r2=q3 r1=q2: PROVED(11)
+  distr r2=q3 r2=q3: PROVED(12)
+  distr r2=q3 r3=q4: PROVED(17)
+  distr r2=q3 r4=q6: ?
+  distr r2=q3 r5=q7: PROVED(26)
+  distr r2=q3 r6=q10: PROVED(30)
+  distr r3=q4 r1=q2: PROVED(17)
+  distr r3=q4 r2=q3: PROVED(19)
+  distr r3=q4 r3=q4: PROVED(23)
+  distr r3=q4 r4=q6: ?
+  distr r3=q4 r5=q7: PROVED(32)
+  distr r3=q4 r6=q10: PROVED(33)
+  distr r4=q6 r1=q2: PROVED(19)
+  distr r4=q6 r2=q3: ?
+  distr r4=q6 r3=q4: ?
+  distr r4=q6 r4=q6: PROVED(24)
+  distr r4=q6 r5=q7: PROVED(31)
+  distr r4=q6 r6=q10: ?
+  distr r5=q7 r1=q2: PROVED(26)
+  distr r5=q7 r2=q3: PROVED(26)
+  distr r5=q7 r3=q4: PROVED(32)
+  distr r5=q7 r4=q6: PROVED(31)
+  distr r5=q7 r5=q7: PROVED(37)
+  distr r5=q7 r6=q10: ?
+  distr r6=q10 r1=q2: PROVED(25)
+  distr r6=q10 r2=q3: PROVED(30)
+  distr r6=q10 r3=q4: PROVED(33)
+  distr r6=q10 r4=q6: ?
+  distr r6=q10 r5=q7: ?
+  distr r6=q10 r6=q10: PROVED(40)
+
+===== done =====
+EXIT=0

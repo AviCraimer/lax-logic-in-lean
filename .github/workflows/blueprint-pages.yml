@@ -1,0 +1,75 @@
+# Reusable Blueprint Pages build, adapted from verso-blueprint's
+# project_template.  Differences from upstream:
+#   * lakefile.toml, not lakefile.lean, in the cache keys
+#   * 'lake exe cache get' before building, so mathlib comes from the
+#     Azure cache rather than being compiled
+#   * the harness steps are dropped (not used here)
+#   * scripts/ci-pages.sh bypasses `vbp`, whose target is derived from the
+#     package name (`lax-logic`) rather than the blueprint library
+name: Blueprint Pages Reusable
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ${{ github.repository }}-blueprint-pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build Blueprint Site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/configure-pages@v6
+      - name: Install elan
+        run: |
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Restore Lake package cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            .lake/packages
+          key: ${{ runner.os }}-lake-packages-v1-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}
+          restore-keys: |
+            ${{ runner.os }}-lake-packages-v1-
+      - name: Restore Lean build cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            .lake/build/lib
+            .lake/build/ir
+          key: ${{ runner.os }}-lean-build-v1-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml', '**/*.lean') }}
+          restore-keys: |
+            ${{ runner.os }}-lean-build-v1-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml') }}-
+            ${{ runner.os }}-lean-build-v1-
+      - name: Show tool versions
+        run: |
+          lean --version
+          lake --version
+      - name: Fetch mathlib cache
+        run: lake exe cache get || true
+      - name: Build Blueprint site
+        run: ./scripts/ci-pages.sh
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: _out/site/html-multi
+
+  deploy:
+    name: Deploy Pages
+    if: github.event_name != 'pull_request'
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

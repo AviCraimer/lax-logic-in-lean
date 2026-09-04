@@ -1,1 +1,9 @@
 /.lake
+LaxLogic/Verso_manual.pdf
+*.code-workspace
+.claude/settings.local.json
+.dep/
+
+# scripts/md2eml.py output — regenerable mail drafts, don't track
+# (the Message-ID and Date change on every run).
+*.eml

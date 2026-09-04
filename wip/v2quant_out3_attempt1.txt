@@ -1,0 +1,174 @@
+=== cross-route probe: rank-bounded ∀p/∃p on the old harness ===
+(rev 2026-07-25: sweep battery 24 frames; scan findBudget 2000, unknown=skip; final match tests findBudget 40000)
+  [dict] round 1: 3 classes
+  [dict] round 2: 4 classes
+  [dict] round 3: 7 classes
+  [dict] round 4: 11 classes
+  [dict] round 5: 15 classes
+  [dict] round 6: 15 classes
+dictionary: 15 classes (crank ≤ 9, 6 rounds)
+  class crank≤0: False
+  class crank≤0: True
+  class crank≤2: ◯False
+  class crank≤3: (◯False) ⊃ False
+  class crank≤3: (◯False) ∨ ((◯False) ⊃ False)
+  class crank≤5: ◯((◯False) ⊃ False)
+  class crank≤4: ((◯False) ⊃ False) ⊃ False
+  class crank≤4: ((◯False) ⊃ False) ∨ (((◯False) ⊃ False) ⊃ False)
+  class crank≤6: (◯((◯False) ⊃ False)) ⊃ ((◯False) ∨ ((◯False) ⊃ False))
+  class crank≤5: (◯((◯False) ⊃ False)) ∨ (((◯False) ⊃ False) ⊃ False)
+  class crank≤5: (((◯False) ⊃ False) ⊃ False) ⊃ (◯False)
+  class crank≤5: (((◯False) ⊃ False) ⊃ False) ∨ ((((◯False) ⊃ False) ⊃ False) ⊃ (◯False))
+  class crank≤6: ◯(((◯False) ⊃ False) ∨ (((◯False) ⊃ False) ⊃ False))
+  class crank≤8: ◯((◯((◯False) ⊃ False)) ⊃ ((◯False) ∨ ((◯False) ⊃ False)))
+  class crank≤6: ((((◯False) ⊃ False) ⊃ False) ⊃ (◯False)) ⊃ (◯((◯False) ⊃ False))
+--- ◯p   (ν = 2, 2ν+1 = 5) ---
+    [scan] crank≤0  D = False
+      ∀-side D⊢φ: proved (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤0  D = True
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: proved (0ms)
+    [scan] crank≤2  D = ◯False
+      ∀-side D⊢φ: proved (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤3  D = (◯False) ⊃ False
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤3  D = (◯False) ∨ ((◯False) ⊃ False)
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤5  D = ◯((◯False) ⊃ False)
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤4  D = ((◯False) ⊃ False) ⊃ False
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤4  D = ((◯False) ⊃ False) ∨ (((◯False) ⊃ False) ⊃ False)
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤6  D = (◯((◯False) ⊃ False)) ⊃ ((◯False) ∨ ((◯False) ⊃ False))
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: unknown (0ms)
+    [scan] crank≤5  D = (◯((◯False) ⊃ False)) ∨ (((◯False) ⊃ False) ⊃ False)
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤5  D = (((◯False) ⊃ False) ⊃ False) ⊃ (◯False)
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤5  D = (((◯False) ⊃ False) ⊃ False) ∨ ((((◯False) ⊃ False) ⊃ False) ⊃ (◯False))
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: unknown (0ms)
+    [scan] crank≤6  D = ◯(((◯False) ⊃ False) ∨ (((◯False) ⊃ False) ⊃ False))
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤8  D = ◯((◯((◯False) ⊃ False)) ⊃ ((◯False) ∨ ((◯False) ⊃ False)))
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: unknown (0ms)
+    [scan] crank≤6  D = ((((◯False) ⊃ False) ⊃ False) ⊃ (◯False)) ⊃ (◯((◯False) ⊃ False))
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+  [SKIPS] ∀-side unknown disjuncts skipped: 0, ∃-side: 3
+  r=0: ∀=False  ∃=True  enters:[False]
+  r=1: ∀=False (=)  ∃=True (=)  enters:[]
+  r=2: ∀=◯False (CLIMB: new⊢old REFUTED(countermodel), old⊢new proved)  ∃=True (=)  enters:[◯False]
+  r=3: ∀=◯False (=)  ∃=True (=)  enters:[]
+  r=4: ∀=◯False (=)  ∃=True (=)  enters:[]
+  r=5: ∀=◯False (=)  ∃=True (=)  enters:[]
+  r=6: ∀=◯False (=)  ∃=True (=)  enters:[]
+  r=7: ∀=◯False (=)  ∃=True (=)  enters:[]
+  r=8: ∀=◯False (=)  ∃=True (=)  enters:[]
+  r=9: ∀=◯False (=)  ∃=True (=)  enters:[]
+  ∀-value class at r=9: ◯False (crank≤2)
+  ∃-value class at r=9: True (crank≤0)
+--- ¬p   (ν = 2, 2ν+1 = 5) ---
+    [scan] crank≤0  D = False
+      ∀-side D⊢φ: proved (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤0  D = True
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: proved (0ms)
+    [scan] crank≤2  D = ◯False
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤3  D = (◯False) ⊃ False
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤3  D = (◯False) ∨ ((◯False) ⊃ False)
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤5  D = ◯((◯False) ⊃ False)
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤4  D = ((◯False) ⊃ False) ⊃ False
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤4  D = ((◯False) ⊃ False) ∨ (((◯False) ⊃ False) ⊃ False)
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤6  D = (◯((◯False) ⊃ False)) ⊃ ((◯False) ∨ ((◯False) ⊃ False))
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: unknown (0ms)
+    [scan] crank≤5  D = (◯((◯False) ⊃ False)) ∨ (((◯False) ⊃ False) ⊃ False)
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤5  D = (((◯False) ⊃ False) ⊃ False) ⊃ (◯False)
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤5  D = (((◯False) ⊃ False) ⊃ False) ∨ ((((◯False) ⊃ False) ⊃ False) ⊃ (◯False))
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: unknown (0ms)
+    [scan] crank≤6  D = ◯(((◯False) ⊃ False) ∨ (((◯False) ⊃ False) ⊃ False))
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤8  D = ◯((◯((◯False) ⊃ False)) ⊃ ((◯False) ∨ ((◯False) ⊃ False)))
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: unknown (0ms)
+    [scan] crank≤6  D = ((((◯False) ⊃ False) ⊃ False) ⊃ (◯False)) ⊃ (◯((◯False) ⊃ False))
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+  [SKIPS] ∀-side unknown disjuncts skipped: 0, ∃-side: 3
+  r=0: ∀=False  ∃=True  enters:[False]
+  r=1: ∀=False (=)  ∃=True (=)  enters:[]
+  r=2: ∀=False (=)  ∃=True (=)  enters:[]
+  r=3: ∀=False (=)  ∃=True (=)  enters:[]
+  r=4: ∀=False (=)  ∃=True (=)  enters:[]
+  r=5: ∀=False (=)  ∃=True (=)  enters:[]
+  r=6: ∀=False (=)  ∃=True (=)  enters:[]
+  r=7: ∀=False (=)  ∃=True (=)  enters:[]
+  r=8: ∀=False (=)  ∃=True (=)  enters:[]
+  r=9: ∀=False (=)  ∃=True (=)  enters:[]
+  ∀-value class at r=9: False (crank≤0)
+  ∃-value class at r=9: True (crank≤0)
+--- p∨¬p   (ν = 2, 2ν+1 = 5) ---
+    [scan] crank≤0  D = False
+      ∀-side D⊢φ: proved (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤0  D = True
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: proved (0ms)
+    [scan] crank≤2  D = ◯False
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤3  D = (◯False) ⊃ False
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤3  D = (◯False) ∨ ((◯False) ⊃ False)
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤5  D = ◯((◯False) ⊃ False)
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤4  D = ((◯False) ⊃ False) ⊃ False
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤4  D = ((◯False) ⊃ False) ∨ (((◯False) ⊃ False) ⊃ False)
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤6  D = (◯((◯False) ⊃ False)) ⊃ ((◯False) ∨ ((◯False) ⊃ False))
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: unknown (0ms)
+    [scan] crank≤5  D = (◯((◯False) ⊃ False)) ∨ (((◯False) ⊃ False) ⊃ False)
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤5  D = (((◯False) ⊃ False) ⊃ False) ⊃ (◯False)
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤5  D = (((◯False) ⊃ False) ⊃ False) ∨ ((((◯False) ⊃ False) ⊃ False) ⊃ (◯False))
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: unknown (0ms)
+    [scan] crank≤6  D = ◯(((◯False) ⊃ False) ∨ (((◯False) ⊃ False) ⊃ False))
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤8  D = ◯((◯((◯False) ⊃ False)) ⊃ ((◯False) ∨ ((◯False) ⊃ False)))
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: unknown (0ms)
+    [scan] crank≤6  D = ((((◯False) ⊃ False) ⊃ False) ⊃ (◯False)) ⊃ (◯((◯False) ⊃ False))
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+  [SKIPS] ∀-side unknown disjuncts skipped: 0, ∃-side: 3
+  r=0: ∀=False  ∃=True  enters:[False]
+  r=1: ∀=False (=)  ∃=True (=)  enters:[]
+  r=2: ∀=False (=)  ∃=True (=)  enters:[]
+  r=3: ∀=False (=)  ∃=True (=)  enters:[]
+  r=4: ∀=False (=)  ∃=True (=)  enters:[]
+  r=5: ∀=False (=)  ∃=True (=)  enters:[]
+  r=6: ∀=False (=)  ∃=True (=)  enters:[]
+  r=7: ∀=False (=)  ∃=True (=)  enters:[]
+  r=8: ∀=False (=)  ∃=True (=)  enters:[]
+  r=9: ∀=False (=)  ∃=True (=)  enters:[]
+  ∀-value class at r=9: False (crank≤0)
+  ∃-value class at r=9: True (crank≤0)
+--- ◯(◯p⊃p) [GAP ROW]   (ν = 4, 2ν+1 = 9) ---
+    [scan] crank≤0  D = False
+      ∀-side D⊢φ: proved (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤0  D = True
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: proved (0ms)
+    [scan] crank≤2  D = ◯False
+      ∀-side D⊢φ: proved (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤3  D = (◯False) ⊃ False
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤3  D = (◯False) ∨ ((◯False) ⊃ False)
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤5  D = ◯((◯False) ⊃ False)
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤4  D = ((◯False) ⊃ False) ⊃ False
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤4  D = ((◯False) ⊃ False) ∨ (((◯False) ⊃ False) ⊃ False)
+      ∀-side D⊢φ: REFUTED(countermodel) (0ms)   ∃-side φ⊢D: REFUTED(countermodel) (0ms)
+    [scan] crank≤6  D = (◯((◯False) ⊃ False)) ⊃ ((◯False) ∨ ((◯False) ⊃ False))

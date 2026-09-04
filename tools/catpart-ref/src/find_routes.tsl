@@ -1,0 +1,29 @@
+B Function: find_routes
+  Categories :
+  1 town_a
+    * length 0
+    * length 1
+    * length 2
+    * length 3 or more
+  2 town_b
+    * length 0
+    * length 1
+    * length 2
+    * length 3 or more
+  3 exist_a
+    * exists         [property a_exist]
+    * no_exist
+  4 exist_b
+    * exists         [property b_exist]
+    * no_exist
+  5 exist_route_ab
+    * no_exist             [if (a_exist) and (b_exist)] [property no_route]
+    * direct route exists   [if (a_exist) and (b_exist)]
+    * indirect route exists [if (a_exist) and (b_exist)]
+  6 multi_min_route
+    * one route             [if ((a_exist) and (b_exist)) and not(no_route)]
+    * more than one route   [if ((a_exist) and (b_exist)) and (not(no_route) and not(one_route))]
+  7 multi_diff_route
+    * only one route exists        [if ((a_exist) and (b_exist)) and not(no_route)] [property one_route]
+    * many different length routes [if ((a_exist) and (b_exist)) and not(no_route)]
+EndFunction;

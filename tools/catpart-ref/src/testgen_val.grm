@@ -1,0 +1,151 @@
+(* testgen_val.grm : sample grammar file for A7 assignment 3(ii).
+ This file describes the grammar of a sample
+ programming language (simple expressions), and defines the result
+ of parsing these expressions by giving an abstract value to each
+ parsed terminal or non-terminal *)
+
+(* This is what I want to do but I suspect ML won't let me:
+
+   type Categ  = {param_name: string, choices: Choice list}
+   type Choice = {ch_name: string, maybe_cond: Cond Option,
+	          maybe_property: string list Option,
+		  maybe_flag: Flag Option}
+*)
+
+open Absyn;
+type result = result
+type 'a Option = 'a Option
+
+%%
+%name testgen
+%header (functor testgenLrValsFun (structure Token : TOKEN
+			           structure Absyn : ABSYN ) : testgen_LRVALS)
+
+%term
+    EOF | CAP of string | COLON | SEMICOLON | NEWLINE
+  | VAR of string | STAR of string
+  | SINGLE | ERROR 
+  | PROPERTY | IF
+  | OR | AND | NOT
+  | FUN | ENDFUN | PARAMS | ENVS
+  | COMMA
+  | LRBR | RRBR
+  | LSQBR | RSQBR
+  | NUMBER of int
+
+%nonterm
+    start of testgen Option
+  | func_spec of testgen
+  | param_specs of Categ list
+  | params of Categ list
+  | one_param of Categ
+  | param_name of string
+  | env_specs of Categ list
+  | envs of Categ list
+  | one_env of Categ
+  | env_name of string
+  | choices of Choice list
+  | choice of Choice
+  | ch_name of string
+  | maybe_modifiers of Modifiers
+  | cond of Cond
+  | property of string
+  | log_op of Binop
+  | properties of string list
+  | flag of Flag
+
+%start start
+%eop EOF SEMICOLON
+%pos int
+%verbose
+%pure
+%noshift EOF 
+
+%value VAR ("a")
+%value NUMBER (0)
+%%
+
+start    : func_spec (Some func_spec)
+	 | (None)
+
+func_spec : CAP FUN COLON VAR NEWLINE param_specs env_specs ENDFUN
+            SEMICOLON NEWLINE
+            (F{fun_letter=CAP, fun_name=VAR,
+               param_specs=param_specs, env_specs=env_specs})
+
+param_specs : PARAMS COLON NEWLINE params (params)
+            | ([])
+
+params : one_param params (one_param :: params)
+       | ([])
+
+one_param : NUMBER param_name NEWLINE choices
+	    (Cat{categ_no=NUMBER, categ_name=param_name, choices=choices})
+
+param_name : VAR (VAR)
+
+env_specs : ENVS COLON NEWLINE envs (envs)
+            | ([])
+
+envs : one_env envs (one_env :: envs)
+       | ([])
+
+one_env : NUMBER env_name NEWLINE choices
+          (Cat{categ_no=NUMBER, categ_name=env_name, choices=choices})
+
+env_name : VAR (VAR)
+
+choices : choice ([choice])
+	| choice choices (choice :: choices)
+
+choice  : ch_name maybe_modifiers NEWLINE
+          (Ch{ch_name=ch_name,maybe_modifiers=maybe_modifiers})
+	  
+ch_name : STAR (STAR) 
+
+maybe_modifiers :
+    LSQBR IF cond RSQBR LSQBR PROPERTY properties RSQBR LSQBR flag RSQBR
+    (M{maybe_cond=Some cond,
+       maybe_properties=Some properties,
+       maybe_flag=Some flag})
+ |  LSQBR IF cond RSQBR LSQBR PROPERTY properties RSQBR
+    (M{maybe_cond=Some cond,
+       maybe_properties=Some properties,
+       maybe_flag=None})
+ |  LSQBR IF cond RSQBR LSQBR flag RSQBR
+    (M{maybe_cond=Some cond,
+       maybe_properties=None,
+       maybe_flag=Some flag})
+ |  LSQBR IF cond RSQBR
+    (M{maybe_cond=Some cond,
+       maybe_properties=None,
+       maybe_flag=None})
+ |  LSQBR PROPERTY properties RSQBR LSQBR flag RSQBR
+    (M{maybe_cond=None,
+       maybe_properties=Some properties,
+       maybe_flag=Some flag})
+ |  LSQBR PROPERTY properties RSQBR 
+    (M{maybe_cond=None,
+       maybe_properties=Some properties,
+       maybe_flag=None})
+ |  LSQBR flag RSQBR
+    (M{maybe_cond=None,
+       maybe_properties=None,
+       maybe_flag=Some flag})
+ |  (M{maybe_cond=None,
+       maybe_properties=None,
+       maybe_flag=None})
+
+cond : property (Prop property)
+     | NOT LRBR cond RRBR (Not cond)
+     | LRBR cond RRBR log_op LRBR cond RRBR (Binary(log_op, cond1, cond2))
+
+log_op : AND (And) | OR (Or)
+
+properties : property ([property])
+	   | property COMMA properties (property :: properties)
+
+property : VAR (VAR)
+
+flag : ERROR (Error) | SINGLE (Single)
+

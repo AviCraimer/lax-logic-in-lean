@@ -1,0 +1,40 @@
+  cAnd_5_15 -> 4 (27370ms)
+  [written] gen2/cAnd_5_15.cell
+  ?? cAnd_8_15: OPEN [15] (240289ms)
+  [written] gen2/cAnd_8_15.cell
+  !! cAnd_11_13: NEW CLASS (all 19 eliminated) (94233ms)
+  [written] gen2/cAnd_11_13.cell
+  ?? cAnd_13_15: OPEN [15] (292692ms)
+  [written] gen2/cAnd_13_15.cell
+  ?? cOr_3_15: OPEN [15] (197673ms)
+  [written] gen2/cOr_3_15.cell
+  ?? cOr_6_14: OPEN [14] (102939ms)
+  [written] gen2/cOr_6_14.cell
+  ?? cOr_8_11: OPEN [1] (29289ms)
+  [written] gen2/cOr_8_11.cell
+  !! cOr_9_15: NEW CLASS (all 19 eliminated) (86871ms)
+  [written] gen2/cOr_9_15.cell
+  ?? cOr_11_14: OPEN [1] (31346ms)
+  [written] gen2/cOr_11_14.cell
+  ?? cOr_14_15: OPEN [13] (237529ms)
+  [written] gen2/cOr_14_15.cell
+  !! cImp_8_4: NEW CLASS (all 19 eliminated) (176724ms)
+  [written] gen2/cImp_8_4.cell
+  !! cImp_8_14: NEW CLASS (all 19 eliminated) (12472ms)
+  [written] gen2/cImp_8_14.cell
+  ?? cImp_10_9: OPEN [14] (271110ms)
+  [written] gen2/cImp_10_9.cell
+  ?? cImp_11_8: OPEN [8] (420954ms)
+  [written] gen2/cImp_11_8.cell
+  !! cImp_12_7: NEW CLASS (all 19 eliminated) (194383ms)
+  [written] gen2/cImp_12_7.cell
+  !! cImp_13_9: NEW CLASS (all 19 eliminated) (92991ms)
+  [written] gen2/cImp_13_9.cell
+  !! cImp_14_7: NEW CLASS (all 19 eliminated) (244459ms)
+  [written] gen2/cImp_14_7.cell
+  cImp_15_0 -> 0 (0ms)
+  [written] gen2/cImp_15_0.cell
+  cImp_15_8 -> 1 (61051ms)
+  [written] gen2/cImp_15_8.cell
+  !! cBox_11: NEW CLASS (all 19 eliminated) (7345ms)
+  [written] gen2/cBox_11.cell

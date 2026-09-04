@@ -1,0 +1,43 @@
+{
+  "repo": "..",
+  "corpora": [
+    "corpora/laxlogic.json"
+  ],
+  "index": {
+    "roots": [
+      {
+        "path": "../LaxLogic",
+        "label": "laxlogic"
+      },
+      {
+        "path": "../FRJ",
+        "label": "laxlogic"
+      },
+      {
+        "path": "../FRJO",
+        "label": "laxlogic"
+      },
+      {
+        "path": "../BiLax",
+        "label": "laxlogic"
+      },
+      {
+        "path": "../Reject",
+        "label": "laxlogic"
+      },
+      {
+        "path": "../Rewrite",
+        "label": "laxlogic"
+      }
+    ],
+    "port": 8081
+  },
+  "exclude": [
+    "wip",
+    "Archive",
+    "archive",
+    ".claude",
+    ".lake",
+    ".git"
+  ]
+}

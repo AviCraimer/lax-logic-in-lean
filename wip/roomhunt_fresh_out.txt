@@ -1,0 +1,99 @@
+== roomhunt, stage fresh ==
+fresh-impgate: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false
+   S  = [(p ⊃ r) ⊃ z, z]
+   Γ  = [(p ⊃ r) ⊃ z]
+   g  = (r ⊃ z) ⊃ y   [imp-goal, fresh antecedent (not itself gated)]
+   gates = [((p⊃r)⊃z, false)]
+fresh-impgate: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false
+   S  = [(p ⊃ r) ⊃ z, z]
+   Γ  = [(p ⊃ r) ⊃ z]
+   g  = (r ⊃ z) ⊃ z   [imp-goal, fresh antecedent (not itself gated)]
+   gates = [((p⊃r)⊃z, false)]
+fresh-impgate: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false
+   S  = [(p ⊃ r) ⊃ z, z]
+   Γ  = [(p ⊃ r) ⊃ z]
+   g  = (r ⊃ z) ⊃ (◯y)   [imp-goal, fresh antecedent (not itself gated)]
+   gates = [((p⊃r)⊃z, false)]
+fresh-impgate: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false
+   S  = [(p ⊃ r) ⊃ z, z]
+   Γ  = [(p ⊃ r) ⊃ z]
+   g  = (r ⊃ z) ⊃ ((r ⊃ z) ⊃ y)   [imp-goal, fresh antecedent (not itself gated)]
+   gates = [((p⊃r)⊃z, false)]
+fresh-closed: |S|=5 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false
+   S  = [(p ⊃ r) ⊃ z, p ⊃ r, p, r, z]
+   Γ  = [(p ⊃ r) ⊃ z, p ⊃ r, p, r]
+   g  = (r ⊃ z) ⊃ y   [imp-goal, fresh antecedent (not itself gated)]
+   gates = [((p⊃r)⊃z, false)]
+fresh-closed: |S|=5 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false
+   S  = [(p ⊃ r) ⊃ z, p ⊃ r, p, r, z]
+   Γ  = [(p ⊃ r) ⊃ z, p ⊃ r, p, r]
+   g  = (r ⊃ z) ⊃ z   [imp-goal, fresh antecedent (not itself gated)]
+   gates = [((p⊃r)⊃z, false)]
+fresh-closed: |S|=5 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false
+   S  = [(p ⊃ r) ⊃ z, p ⊃ r, p, r, z]
+   Γ  = [(p ⊃ r) ⊃ z, p ⊃ r, p, r]
+   g  = (r ⊃ z) ⊃ (◯y)   [imp-goal, fresh antecedent (not itself gated)]
+   gates = [((p⊃r)⊃z, false)]
+fresh-boxed: |S|=6 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false
+   S  = [(p ⊃ r) ⊃ (◯w), p ⊃ r, p, r, ◯w, w]
+   Γ  = [(p ⊃ r) ⊃ (◯w), p ⊃ r, p, r, w]
+   g  = (r ⊃ (◯w)) ⊃ y   [imp-goal, fresh antecedent (not itself gated)]
+   gates = [((p⊃r)⊃◯w, false)]
+fresh-boxed: |S|=6 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false
+   S  = [(p ⊃ r) ⊃ (◯w), p ⊃ r, p, r, ◯w, w]
+   Γ  = [(p ⊃ r) ⊃ (◯w), p ⊃ r, p, r, w]
+   g  = (r ⊃ (◯w)) ⊃ (◯w)   [imp-goal, fresh antecedent (not itself gated)]
+   gates = [((p⊃r)⊃◯w, false)]
+fresh-boxed: |S|=6 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false
+   S  = [(p ⊃ r) ⊃ (◯w), p ⊃ r, p, r, ◯w, w]
+   Γ  = [(p ⊃ r) ⊃ (◯w), p ⊃ r, p, r, w]
+   g  = (r ⊃ (◯w)) ⊃ (◯y)   [imp-goal, fresh antecedent (not itself gated)]
+   gates = [((p⊃r)⊃◯w, false)]
+fresh-double: |S|=3 defect=1 J=2 room=4 hbox=true liveGates=0 blind=false
+   S  = [(p ⊃ r) ⊃ z, ((◯p) ⊃ r) ⊃ z, z]
+   Γ  = [(p ⊃ r) ⊃ z, ((◯p) ⊃ r) ⊃ z]
+   g  = (r ⊃ z) ⊃ y   [imp-goal, fresh antecedent (not itself gated)]
+   gates = [((p⊃r)⊃z, false), ((◯p⊃r)⊃z, false)]
+fresh-double: |S|=3 defect=1 J=2 room=4 hbox=true liveGates=0 blind=false
+   S  = [(p ⊃ r) ⊃ z, ((◯p) ⊃ r) ⊃ z, z]
+   Γ  = [(p ⊃ r) ⊃ z, ((◯p) ⊃ r) ⊃ z]
+   g  = (r ⊃ z) ⊃ ((r ⊃ z) ⊃ y)   [imp-goal, fresh antecedent (not itself gated)]
+   gates = [((p⊃r)⊃z, false), ((◯p⊃r)⊃z, false)]
+-- room window, adaptive fuel --
+fresh-impgate: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false  g=(r ⊃ z) ⊃ y
+   fuel=5 c=3: ~ active=true |A@c|=821 room=3 LIVE (405 ms)
+   fuel=6 c=3: ~ active=true |A@c|=1349 room=3 LIVE (729 ms)
+   fuel=8 c=3: ~ active=true |A@c|=1549 room=3 LIVE (2507 ms)
+   fuel=10 c=3: ~ active=true |A@c|=1549 room=3 LIVE (2854 ms)
+   fuel=6 c=4: ~ active=true |A@c|=2381 room=3 LIVE (944 ms)
+   fuel=7 c=4: ~ active=true |A@c|=4125 room=3 LIVE (2025 ms)
+   fuel=9 c=4: ~ active=true |A@c|=5109 room=3 LIVE (7483 ms)
+   fuel=11 c=4: ~ active=true |A@c|=5117 room=3 LIVE (9162 ms)
+   fuel=7 c=5: ~ active=true |A@c|=6749 room=3 LIVE (2433 ms)
+   fuel=8 c=5: ~ active=true |A@c|=12293 room=3 LIVE (5379 ms)
+   fuel=10 c=5: ~ active=true |A@c|=16693 room=3 LIVE (22451 ms)
+   fuel=12 c=5: ~ active=true |A@c|=16861 room=3 LIVE (29645 ms)
+fresh-impgate: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false  g=(r ⊃ z) ⊃ z
+   fuel=5 c=3: ~ active=true |A@c|=821 room=3 LIVE (251 ms)
+   fuel=6 c=3: ~ active=true |A@c|=1349 room=3 LIVE (309 ms)
+   fuel=8 c=3: ~ active=true |A@c|=1549 room=3 LIVE (720 ms)
+   fuel=10 c=3: ~ active=true |A@c|=1549 room=3 LIVE (777 ms)
+   fuel=6 c=4: ~ active=true |A@c|=2381 room=3 LIVE (524 ms)
+   fuel=7 c=4: ~ active=true |A@c|=4125 room=3 LIVE (843 ms)
+   fuel=9 c=4: ~ active=true |A@c|=5109 room=3 LIVE (2005 ms)
+   fuel=11 c=4: ~ active=true |A@c|=5117 room=3 LIVE (2411 ms)
+   fuel=7 c=5: ~ active=true |A@c|=6749 room=3 LIVE (1162 ms)
+   fuel=8 c=5: ~ active=true |A@c|=12293 room=3 LIVE (2006 ms)
+   fuel=10 c=5: ~ active=true |A@c|=16693 room=3 LIVE (6015 ms)
+   fuel=12 c=5: ~ active=true |A@c|=16861 room=3 LIVE (7173 ms)
+fresh-impgate: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false  g=(r ⊃ z) ⊃ (◯y)
+   fuel=5 c=3: ~ active=true |A@c|=2088 room=3 LIVE (895 ms)
+   fuel=6 c=3: ~ active=true |A@c|=3588 room=3 LIVE (1747 ms)
+   fuel=8 c=3: ~ active=true |A@c|=4668 room=3 LIVE (6450 ms)
+   fuel=10 c=3: ~ active=true |A@c|=4676 room=3 LIVE (8082 ms)
+   fuel=6 c=4: ~ active=true |A@c|=5880 room=3 LIVE (1872 ms)
+   fuel=7 c=4: ~ active=true |A@c|=10704 room=3 LIVE (4309 ms)
+   fuel=9 c=4: ~ active=true |A@c|=15064 room=3 LIVE (18558 ms)
+   fuel=11 c=4: ~ active=true |A@c|=15228 room=3 LIVE (26119 ms)
+   fuel=7 c=5: ~ active=true |A@c|=16476 room=3 LIVE (4407 ms)
+   fuel=8 c=5: ~ active=true |A@c|=31488 room=3 LIVE (11552 ms)

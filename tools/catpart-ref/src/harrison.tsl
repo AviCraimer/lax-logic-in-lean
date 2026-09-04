@@ -1,0 +1,29 @@
+A Function: find_route
+  Categories :
+  1 memory
+    * not enough memory			[error]
+    * enough free memory		[property free_mem]
+  2 departure
+    * blank				[error]
+    * exists				[property depart_ok]
+    * non existant			[error]
+  3 destination
+    * blank				[error]
+    * exists				[property dest_ok]
+    * non existant			[error]
+  4 validity
+    * route exists			[if (depart_ok) and (dest_ok)] [property route_exists]
+    * route does not exist		[if (depart_ok) and (dest_ok)] [property no_route_exists]
+  5 route_returned
+    * route returned			[if (depart_ok) and (dest_ok)] [property route_found]
+    * no route returned			[if (depart_ok) and (dest_ok)] [property no_route_found]
+  6 result
+    * right route found			[if (route_exists) and (route_found)] [property right_route]
+    * no route found			[if (no_route_exists) and (no_route_found)] [property no_route]
+    * wrong route found			[if (route_exists) and (route_found)]
+    * found non existent route		[if (no_route_exists) and (route_found)]
+    * failed to find route		[if (route_exists) and (no_route_found)]
+  7 distance
+    * right distance			[if right_route]
+    * wrong distance			[if right_route]
+EndFunction;

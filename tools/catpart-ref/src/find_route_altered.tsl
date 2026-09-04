@@ -1,0 +1,16 @@
+B Function: find_route
+  Categories :
+  1	town_name
+	*	good town name			
+	*	no town with this name		
+	*	omitted				
+  2	town_route
+	*	one route determined		
+	*	more than one route determined	
+  3	total_route_distance
+	*	no route_distance provided	
+	*	route_distance provided		
+  4	number_of_town_route_details_to_be_read
+	*	none				[single]
+	*	one or more			[single]
+  EndFunction;

@@ -1,0 +1,91 @@
+# === round-9 candidate replay over the enlarged corpus ===
+# PASS Z0 (control: goal row to comp 0, expect hits): replay: 1382 records, 557 agree, 825 changed (825 new hits), 0 unregenerable
+#   d1-atom/1000: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "a"), (0, "b")] }
+#   d1-atom/1001: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "a"), (0, "b")] }
+#   d1-atom/1002: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "a"), (0, "b")] }
+#   d1-atom/1003: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "a"), (0, "b")] }
+#   d1-atom/1004: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "a"), (0, "b")] }
+#   d1-atom/1005: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "a"), (0, "b")] }
+#   d1-atom/1006: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "a"), (0, "b")] }
+#   d1-atom/1011: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "b")] }
+#   d1-atom/1012: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "b")] }
+#   d1-atom/1013: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "b")] }
+#   d1-atom/1014: quiet -> R! w=0 M={ n := 2, ri := [(0, 1)], rm := [(0, 1)], fall := [], val := [(1, "b")] }
+#   d1-atom/1015: quiet -> R! w=0 M={ n := 2, ri := [(0, 1)], rm := [(0, 1)], fall := [], val := [(1, "b")] }
+#   d1-atom/1017: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "b"), (0, "a")] }
+#   d1-atom/1018: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "b"), (0, "a")] }
+#   d1-atom/1019: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "b"), (0, "a")] }
+#   d1-atom/1020: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "b"), (0, "a")] }
+#   d1-atom/1021: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "b"), (0, "a")] }
+#   d1-atom/1022: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "b"), (0, "a")] }
+#   d1-atom/1023: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "b"), (0, "a")] }
+#   d1-atom/1024: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "b"), (0, "a")] }
+#   d1-atom/1026: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "b"), (0, "a")] }
+#   d1-atom/1027: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "b"), (0, "a")] }
+#   d1-atom/1028: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "b"), (0, "a")] }
+#   d1-atom/1029: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "b"), (0, "a")] }
+#   d1-atom/1030: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "b"), (0, "a")] }
+#   d1-atom/1031: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "b"), (0, "a")] }
+#   d1-atom/1032: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "b"), (0, "a")] }
+#   d1-atom/1033: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "b"), (0, "a")] }
+#   d1-atom/1038: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "c")] }
+#   d1-atom/1039: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "c")] }
+#   d1-atom/1040: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "c")] }
+#   d1-atom/1041: quiet -> R! w=0 M={ n := 2, ri := [(0, 1)], rm := [(0, 1)], fall := [], val := [(1, "c")] }
+#   d1-atom/1042: quiet -> R! w=0 M={ n := 2, ri := [(0, 1)], rm := [(0, 1)], fall := [], val := [(1, "c")] }
+#   d1-atom/1044: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "a"), (0, "c")] }
+#   d1-atom/1045: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "a"), (0, "c")] }
+#   d1-atom/1046: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "a"), (0, "c")] }
+#   d1-atom/1047: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "a"), (0, "c")] }
+#   d1-atom/1048: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "a"), (0, "c")] }
+#   d1-atom/1049: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "a"), (0, "c")] }
+#   d1-atom/1050: quiet -> R! w=0 M={ n := 1, ri := [], rm := [], fall := [], val := [(0, "a"), (0, "c")] }
+# PASS F2 (RESIDUE: fresh-row descent, c=1): replay: 1382 records, 1363 agree, 19 changed (19 new hits), 0 unregenerable
+#   g9-bare/26001: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "a"), (2, "b"), (2, "c")] }
+#   g9-bare/26002: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "a"), (2, "b"), (2, "c")] }
+#   g9-bare/26003: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "a"), (2, "b"), (2, "c")] }
+#   g9-bare/26010: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "b"), (2, "c"), (2, "d")] }
+#   g9-bare/26011: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "b"), (2, "c"), (2, "d")] }
+#   g9-bare/26012: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "b"), (2, "c"), (2, "d")] }
+#   g9-bare/26019: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "a"), (2, "b"), (2, "c")] }
+#   g9-bare/26020: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "a"), (2, "b"), (2, "c")] }
+#   g9-bare/26021: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "a"), (2, "b"), (2, "c")] }
+#   g9-bareF/29000: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "c"), (2, "d"), (2, "a")] }
+#   g9-bareF/29007: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "c"), (2, "d"), (2, "a")] }
+#   g9-bareF/29008: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "c"), (2, "d"), (2, "a")] }
+#   g9-bareF/29009: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "c"), (2, "d"), (2, "a")] }
+#   g9-bareF/29016: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "d"), (2, "a"), (2, "b")] }
+#   g9-bareF/29017: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "d"), (2, "a"), (2, "b")] }
+#   g9-bareF/29018: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "d"), (2, "a"), (2, "b")] }
+#   g9-bareFG/30015: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "r"), (2, "s"), (2, "t")] }
+#   g9-bareFG/30016: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "r"), (2, "s"), (2, "t")] }
+#   g9-bareFG/30017: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "r"), (2, "s"), (2, "t")] }
+# PASS F1 (RESIDUE: fresh-row descent, c=b-1): replay: 1382 records, 1372 agree, 10 changed (10 new hits), 0 unregenerable
+#   g9-bareF/29000: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "c"), (2, "d"), (2, "a")] }
+#   g9-bareF/29007: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "c"), (2, "d"), (2, "a")] }
+#   g9-bareF/29008: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "c"), (2, "d"), (2, "a")] }
+#   g9-bareF/29009: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "c"), (2, "d"), (2, "a")] }
+#   g9-bareF/29016: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "d"), (2, "a"), (2, "b")] }
+#   g9-bareF/29017: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "d"), (2, "a"), (2, "b")] }
+#   g9-bareF/29018: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "d"), (2, "a"), (2, "b")] }
+#   g9-bareFG/30015: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "r"), (2, "s"), (2, "t")] }
+#   g9-bareFG/30016: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "r"), (2, "s"), (2, "t")] }
+#   g9-bareFG/30017: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "r"), (2, "s"), (2, "t")] }
+# PASS Fp (CONTROL: present-antecedent row descent, c=1): replay: 1382 records, 1382 agree, 0 changed (0 new hits), 0 unregenerable
+# PASS BD (Round4.BoxDesc: [src, amb] |- tgt): replay: 1382 records, 1378 agree, 4 changed (4 new hits), 0 unregenerable
+#   g9-bareF/29001: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "c"), (2, "d"), (2, "a")] }
+#   g9-bareF/29010: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "c"), (2, "d"), (2, "a")] }
+#   g9-bareF/29019: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "d"), (2, "a"), (2, "b")] }
+#   g9-bareFG/30018: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "r"), (2, "s"), (2, "t")] }
+# PASS W2 (GoalRowAbsorb, c=1): replay: 1382 records, 1372 agree, 10 changed (10 new hits), 0 unregenerable
+#   g9-bareF/29000: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "c"), (2, "d"), (2, "a")] }
+#   g9-bareF/29007: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "c"), (2, "d"), (2, "a")] }
+#   g9-bareF/29008: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "c"), (2, "d"), (2, "a")] }
+#   g9-bareF/29009: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "c"), (2, "d"), (2, "a")] }
+#   g9-bareF/29016: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "d"), (2, "a"), (2, "b")] }
+#   g9-bareF/29017: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "d"), (2, "a"), (2, "b")] }
+#   g9-bareF/29018: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "d"), (2, "a"), (2, "b")] }
+#   g9-bareFG/30015: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "r"), (2, "s"), (2, "t")] }
+#   g9-bareFG/30016: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "r"), (2, "s"), (2, "t")] }
+#   g9-bareFG/30017: quiet -> R! w=0 M={ n := 3, ri := [(0, 1), (1, 2), (0, 2)], rm := [(1, 2)], fall := [], val := [(2, "r"), (2, "s"), (2, "t")] }
+# --- run stopped at the cap after pass W2; passes W1/X2/P2 and the round-8-battery contrast passes not reached.  The contrast is recorded at the instance level in wip/frontier_g9x.txt: the ROUND-8 battery is QUIET on the very BoxDesc cell (f=5 and f=6, b=1, Gamma=[]) that P3c refutes. ---

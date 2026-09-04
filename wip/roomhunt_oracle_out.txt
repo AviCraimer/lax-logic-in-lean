@@ -1,0 +1,29 @@
+== roomhunt, stage oracle ==
+p (E): pinned = ⊤  [prescribed budget = 19]
+   b=0: |T b|=3  SETTLED
+   b=1: |T b|=3  SETTLED
+   b=2: |T b|=3  SETTLED
+   b=3: |T b|=3  SETTLED
+box p (E): pinned = ⊤  [prescribed budget = 33]
+   b=0: |T b|=8  SETTLED
+   b=1: |T b|=8  SETTLED
+   b=2: |T b|=8  SETTLED
+   b=3: |T b|=8  SETTLED
+box p > p (E): pinned = ⊤  [prescribed budget = 51]
+   b=0: |T b|=3  SETTLED
+   b=1: |T b|=20  SETTLED
+   b=2: |T b|=263  SETTLED
+   b=3: |T b|=1772  SETTLED
+exLadder (E): pinned = (◯⊥) ∨ ((◯⊥) ⊃ ⊥)  [prescribed budget = 163]
+   b=0: |T b|=26  NOT-YET (certified strict)
+   b=1: |T b|=47  SETTLED
+   b=2: |T b|=262  undecided-at-budget
+   b=3: |T b|=1615  undecided-at-budget
+phiMix (E): pinned = ((◯⊥) ⊃ ⊥) ⊃ ⊥  [prescribed budget = 201]
+   b=0: |T b|=38  SETTLED
+   b=1: |T b|=200  undecided-at-budget
+   b=2: |T b|=1074  undecided-at-budget
+   b=3: |T b|=5208  undecided-at-budget
+phiStar (E): pinned = ((◯⊥) ⊃ ⊥) ⊃ ⊥  [prescribed budget = 339]
+   b=0: |T b|=591  undecided-at-budget
+   b=1: |T b|=16498  undecided-at-budget

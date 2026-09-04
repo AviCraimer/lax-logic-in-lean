@@ -1,0 +1,158 @@
+== roomhunt, stage defect ==
+defI1: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=1 blind=false
+   S  = [(p ⊃ r) ⊃ d0, d0]
+   Γ  = [(p ⊃ r) ⊃ d0, r ⊃ d0]
+   g  = z   [goal not b-gated]
+   gates = [((p⊃r)⊃d0, true)]
+defI1: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=1 blind=false
+   S  = [(p ⊃ r) ⊃ d0, d0]
+   Γ  = [(p ⊃ r) ⊃ d0, r ⊃ d0]
+   g  = y   [goal not b-gated]
+   gates = [((p⊃r)⊃d0, true)]
+defI1: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=1 blind=false
+   S  = [(p ⊃ r) ⊃ d0, d0]
+   Γ  = [(p ⊃ r) ⊃ d0, r ⊃ d0]
+   g  = ◯y   [BOX-GOAL (b-gated: goal disjunct + truncation)]
+   gates = [((p⊃r)⊃d0, true)]
+defO1: |S|=2 defect=1 J=2 room=4 hbox=true liveGates=1 blind=false
+   S  = [(◯p) ⊃ d0, d0]
+   Γ  = [(◯p) ⊃ d0]
+   g  = z   [goal not b-gated]
+   gates = [(◯p⊃d0, true)]
+defO1: |S|=2 defect=1 J=2 room=4 hbox=true liveGates=1 blind=false
+   S  = [(◯p) ⊃ d0, d0]
+   Γ  = [(◯p) ⊃ d0]
+   g  = y   [goal not b-gated]
+   gates = [(◯p⊃d0, true)]
+defO1: |S|=2 defect=1 J=2 room=4 hbox=true liveGates=1 blind=false
+   S  = [(◯p) ⊃ d0, d0]
+   Γ  = [(◯p) ⊃ d0]
+   g  = ◯y   [BOX-GOAL (b-gated: goal disjunct + truncation)]
+   gates = [(◯p⊃d0, true)]
+defI2: |S|=4 defect=2 J=1 room=6 hbox=true liveGates=2 blind=false
+   S  = [(p ⊃ r) ⊃ d0, (p ⊃ r) ⊃ d1, d0, d1]
+   Γ  = [(p ⊃ r) ⊃ d0, (p ⊃ r) ⊃ d1, r ⊃ d0, r ⊃ d1]
+   g  = z   [goal not b-gated]
+   gates = [((p⊃r)⊃d0, true), ((p⊃r)⊃d1, true)]
+defI2: |S|=4 defect=2 J=1 room=6 hbox=true liveGates=2 blind=false
+   S  = [(p ⊃ r) ⊃ d0, (p ⊃ r) ⊃ d1, d0, d1]
+   Γ  = [(p ⊃ r) ⊃ d0, (p ⊃ r) ⊃ d1, r ⊃ d0, r ⊃ d1]
+   g  = y   [goal not b-gated]
+   gates = [((p⊃r)⊃d0, true), ((p⊃r)⊃d1, true)]
+defI2: |S|=4 defect=2 J=1 room=6 hbox=true liveGates=2 blind=false
+   S  = [(p ⊃ r) ⊃ d0, (p ⊃ r) ⊃ d1, d0, d1]
+   Γ  = [(p ⊃ r) ⊃ d0, (p ⊃ r) ⊃ d1, r ⊃ d0, r ⊃ d1]
+   g  = ◯y   [BOX-GOAL (b-gated: goal disjunct + truncation)]
+   gates = [((p⊃r)⊃d0, true), ((p⊃r)⊃d1, true)]
+defO2: |S|=4 defect=2 J=2 room=8 hbox=true liveGates=2 blind=false
+   S  = [(◯p) ⊃ d0, (◯p) ⊃ d1, d0, d1]
+   Γ  = [(◯p) ⊃ d0, (◯p) ⊃ d1]
+   g  = z   [goal not b-gated]
+   gates = [(◯p⊃d0, true), (◯p⊃d1, true)]
+defO2: |S|=4 defect=2 J=2 room=8 hbox=true liveGates=2 blind=false
+   S  = [(◯p) ⊃ d0, (◯p) ⊃ d1, d0, d1]
+   Γ  = [(◯p) ⊃ d0, (◯p) ⊃ d1]
+   g  = y   [goal not b-gated]
+   gates = [(◯p⊃d0, true), (◯p⊃d1, true)]
+defO2: |S|=4 defect=2 J=2 room=8 hbox=true liveGates=2 blind=false
+   S  = [(◯p) ⊃ d0, (◯p) ⊃ d1, d0, d1]
+   Γ  = [(◯p) ⊃ d0, (◯p) ⊃ d1]
+   g  = ◯y   [BOX-GOAL (b-gated: goal disjunct + truncation)]
+   gates = [(◯p⊃d0, true), (◯p⊃d1, true)]
+defI3: |S|=6 defect=3 J=1 room=9 hbox=true liveGates=3 blind=false
+   S  = [(p ⊃ r) ⊃ d0, (p ⊃ r) ⊃ d1, (p ⊃ r) ⊃ d2, d0, d1, d2]
+   Γ  = [(p ⊃ r) ⊃ d0, (p ⊃ r) ⊃ d1, (p ⊃ r) ⊃ d2, r ⊃ d0, r ⊃ d1, r ⊃ d2]
+   g  = z   [goal not b-gated]
+   gates = [((p⊃r)⊃d0, true), ((p⊃r)⊃d1, true), ((p⊃r)⊃d2, true)]
+defI3: |S|=6 defect=3 J=1 room=9 hbox=true liveGates=3 blind=false
+   S  = [(p ⊃ r) ⊃ d0, (p ⊃ r) ⊃ d1, (p ⊃ r) ⊃ d2, d0, d1, d2]
+   Γ  = [(p ⊃ r) ⊃ d0, (p ⊃ r) ⊃ d1, (p ⊃ r) ⊃ d2, r ⊃ d0, r ⊃ d1, r ⊃ d2]
+   g  = y   [goal not b-gated]
+   gates = [((p⊃r)⊃d0, true), ((p⊃r)⊃d1, true), ((p⊃r)⊃d2, true)]
+defI3: |S|=6 defect=3 J=1 room=9 hbox=true liveGates=3 blind=false
+   S  = [(p ⊃ r) ⊃ d0, (p ⊃ r) ⊃ d1, (p ⊃ r) ⊃ d2, d0, d1, d2]
+   Γ  = [(p ⊃ r) ⊃ d0, (p ⊃ r) ⊃ d1, (p ⊃ r) ⊃ d2, r ⊃ d0, r ⊃ d1, r ⊃ d2]
+   g  = ◯y   [BOX-GOAL (b-gated: goal disjunct + truncation)]
+   gates = [((p⊃r)⊃d0, true), ((p⊃r)⊃d1, true), ((p⊃r)⊃d2, true)]
+defO3: |S|=6 defect=3 J=2 room=12 hbox=true liveGates=3 blind=false
+   S  = [(◯p) ⊃ d0, (◯p) ⊃ d1, (◯p) ⊃ d2, d0, d1, d2]
+   Γ  = [(◯p) ⊃ d0, (◯p) ⊃ d1, (◯p) ⊃ d2]
+   g  = z   [goal not b-gated]
+   gates = [(◯p⊃d0, true), (◯p⊃d1, true), (◯p⊃d2, true)]
+defO3: |S|=6 defect=3 J=2 room=12 hbox=true liveGates=3 blind=false
+   S  = [(◯p) ⊃ d0, (◯p) ⊃ d1, (◯p) ⊃ d2, d0, d1, d2]
+   Γ  = [(◯p) ⊃ d0, (◯p) ⊃ d1, (◯p) ⊃ d2]
+   g  = y   [goal not b-gated]
+   gates = [(◯p⊃d0, true), (◯p⊃d1, true), (◯p⊃d2, true)]
+defO3: |S|=6 defect=3 J=2 room=12 hbox=true liveGates=3 blind=false
+   S  = [(◯p) ⊃ d0, (◯p) ⊃ d1, (◯p) ⊃ d2, d0, d1, d2]
+   Γ  = [(◯p) ⊃ d0, (◯p) ⊃ d1, (◯p) ⊃ d2]
+   g  = ◯y   [BOX-GOAL (b-gated: goal disjunct + truncation)]
+   gates = [(◯p⊃d0, true), (◯p⊃d1, true), (◯p⊃d2, true)]
+defI1: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=1 blind=false  goalgate=[goal not b-gated]
+   fuel=4 c=2: ~ active=true |A@c|=207 room=3 vacuous (236 ms)
+   fuel=4 c=3: ~ active=true |A@c|=407 room=3 LIVE (270 ms)
+   fuel=4 c=4: ~ active=false |A@c|=479 room=3 LIVE (268 ms)
+   fuel=6 c=2: ~ active=true |A@c|=227 room=3 vacuous (870 ms)
+   fuel=6 c=3: ~ active=true |A@c|=767 room=3 LIVE (1436 ms)
+   fuel=6 c=4: ~ active=true |A@c|=2059 room=3 LIVE (1785 ms)
+   fuel=8 c=2: ~ active=true |A@c|=227 room=3 vacuous (902 ms)
+   fuel=8 c=3: ~ active=true |A@c|=771 room=3 LIVE (2753 ms)
+   fuel=8 c=4: ~ active=true |A@c|=2551 room=3 LIVE (7339 ms)
+defI1: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=1 blind=false  goalgate=[goal not b-gated]
+   fuel=4 c=2: ~ active=true |A@c|=207 room=3 vacuous (238 ms)
+   fuel=4 c=3: ~ active=true |A@c|=407 room=3 LIVE (258 ms)
+   fuel=4 c=4: ~ active=false |A@c|=479 room=3 LIVE (261 ms)
+   fuel=6 c=2: ~ active=true |A@c|=227 room=3 vacuous (858 ms)
+   fuel=6 c=3: ~ active=true |A@c|=767 room=3 LIVE (1446 ms)
+   fuel=6 c=4: ~ active=true |A@c|=2059 room=3 LIVE (1828 ms)
+   fuel=8 c=2: ~ active=true |A@c|=227 room=3 vacuous (904 ms)
+   fuel=8 c=3: ~ active=true |A@c|=771 room=3 LIVE (2754 ms)
+   fuel=8 c=4: ~ active=true |A@c|=2551 room=3 LIVE (7314 ms)
+defI1: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=1 blind=false  goalgate=[BOX-GOAL (b-gated: goal disjunct + truncation)]
+   fuel=4 c=2: ~ active=true |A@c|=974 room=3 vacuous (750 ms)
+   fuel=4 c=3: ~ active=true |A@c|=1674 room=3 LIVE (737 ms)
+   fuel=4 c=4: ~ active=false |A@c|=1926 room=3 LIVE (731 ms)
+   fuel=6 c=2: ~ active=true |A@c|=1230 room=3 vacuous (2216 ms)
+   fuel=6 c=3: ~ active=true |A@c|=3690 room=3 LIVE (3335 ms)
+   fuel=6 c=4: ~ active=true |A@c|=8638 room=3 LIVE (3948 ms)
+   fuel=8 c=2: ~ active=true |A@c|=1230 room=3 vacuous (2643 ms)
+   fuel=8 c=3: ~ active=true |A@c|=3898 room=3 LIVE (7421 ms)
+   fuel=8 c=4: ~ active=true |A@c|=12506 room=3 LIVE (17335 ms)
+defO1: |S|=2 defect=1 J=2 room=4 hbox=true liveGates=1 blind=false  goalgate=[goal not b-gated]
+   fuel=4 c=3: P active=true |A@c|=1216 room=4 vacuous (82 ms)
+   fuel=4 c=4: P active=false |A@c|=2883 room=4 LIVE (79 ms)
+   fuel=4 c=5: P active=false |A@c|=2883 room=4 LIVE (81 ms)
+   fuel=6 c=3: P active=true |A@c|=1588 room=4 vacuous (524 ms)
+   fuel=6 c=4: P active=true |A@c|=9415 room=4 LIVE (1046 ms)
+   fuel=6 c=5: P active=true |A@c|=36552 room=4 LIVE (1233 ms)
+   fuel=8 c=3: P active=true |A@c|=1588 room=4 vacuous (517 ms)
+   fuel=8 c=4: P active=true |A@c|=10351 room=4 LIVE (2010 ms)
+   fuel=8 c=5: P active=true |A@c|=64732 room=4 LIVE (7620 ms)
+defO1: |S|=2 defect=1 J=2 room=4 hbox=true liveGates=1 blind=false  goalgate=[goal not b-gated]
+   fuel=4 c=3: P active=true |A@c|=1216 room=4 vacuous (82 ms)
+   fuel=4 c=4: P active=false |A@c|=2883 room=4 LIVE (80 ms)
+   fuel=4 c=5: P active=false |A@c|=2883 room=4 LIVE (86 ms)
+   fuel=6 c=3: P active=true |A@c|=1588 room=4 vacuous (515 ms)
+   fuel=6 c=4: P active=true |A@c|=9415 room=4 LIVE (1045 ms)
+   fuel=6 c=5: P active=true |A@c|=36552 room=4 LIVE (1241 ms)
+   fuel=8 c=3: P active=true |A@c|=1588 room=4 vacuous (515 ms)
+   fuel=8 c=4: P active=true |A@c|=10351 room=4 LIVE (1996 ms)
+   fuel=8 c=5: P active=true |A@c|=64732 room=4 LIVE (7681 ms)
+defO1: |S|=2 defect=1 J=2 room=4 hbox=true liveGates=1 blind=false  goalgate=[BOX-GOAL (b-gated: goal disjunct + truncation)]
+   fuel=4 c=3: ~ active=true |A@c|=4338 room=4 vacuous (640 ms)
+   fuel=4 c=4: ~ active=false |A@c|=8749 room=4 LIVE (630 ms)
+   fuel=4 c=5: ~ active=false |A@c|=8749 room=4 LIVE (627 ms)
+   fuel=6 c=3: ~ active=true |A@c|=7094 room=4 vacuous (3405 ms)
+   fuel=6 c=4: ~ active=true |A@c|=37093 room=4 LIVE (7808 ms)
+   fuel=6 c=5: ~ active=true |A@c|=122502 room=4 LIVE (14782 ms)
+   fuel=8 c=3: ~ active=true |A@c|=7190 room=4 vacuous (4707 ms)
+   fuel=8 c=4: ~ active=true |A@c|=46109 room=4 LIVE (21391 ms)
+   fuel=8 c=5: ~ active=true |A@c|=272178 room=4 LIVE (80463 ms)
+defI2: |S|=4 defect=2 J=1 room=6 hbox=true liveGates=2 blind=false  goalgate=[goal not b-gated]
+   fuel=4 c=5: ~ active=false |A@c|=7107 room=6 vacuous (7548 ms)
+   fuel=4 c=6: ~ active=false |A@c|=7107 room=6 LIVE (7388 ms)
+   fuel=4 c=7: ~ active=false |A@c|=7107 room=6 LIVE (7332 ms)
+   fuel=6 c=5: ~ active=true |A@c|=166643 room=6 vacuous (239584 ms)
+   fuel=6 c=6: ~ active=false |A@c|=185075 room=6 LIVE (240678 ms)
+-- probe 'roomhunt' stopped at the 800s cap (rc=143); output above is partial but valid.

@@ -1,0 +1,135 @@
+(* catpart_val.grm : 
+ This file describes the grammar of the test specification language
+ for category partition testing, and defines the result
+ of parsing specifications by giving an abstract value to each
+ parsed terminal or non-terminal *)
+
+(* This is what I want to do but I suspect ML won't let me:
+
+   type Categ  = {param_name: string, choices: Choice list}
+   type Choice = {ch_name: string, maybe_cond: Cond Option,
+	          maybe_property: string list Option,
+		  maybe_flag: Flag Option}
+*)
+
+open Absyn;
+type result = result
+type 'a Option = 'a Option
+
+%%
+%name catpart
+%header (functor catpartLrValsFun (structure Token : TOKEN
+			           structure Absyn : ABSYN ) : catpart_LRVALS)
+
+%term
+    EOF | CAP of string | COLON | SEMICOLON | NEWLINE
+  | VAR of string | STAR 
+  | SINGLE | ERROR 
+  | PROPERTY | IF
+  | OR | AND | NOT
+  | FUN | ENDFUN | CATEGORIES
+  | COMMA
+  | LRBR | RRBR
+  | LSQBR | RSQBR
+  | NUMBER of int
+
+%nonterm
+    start of catpart Option
+  | func_spec of catpart
+  | categ_specs of Categ list
+  | categs of Categ list
+  | one_categ of Categ
+  | categ_name of string
+  | choices of Choice list
+  | choice of Choice
+  | ch_name of string
+  | maybe_modifiers of Modifiers
+  | cond of Cond
+  | property of string
+  | log_op of Binop
+  | properties of string list
+  | flag of Flag
+
+%start start
+%eop EOF SEMICOLON
+%pos int
+%verbose
+%pure
+%noshift EOF 
+
+%value VAR ("a")
+%value NUMBER (0)
+%%
+
+start    : func_spec (Some func_spec)
+	 | (None)
+
+func_spec : CAP FUN COLON VAR NEWLINE categ_specs  ENDFUN
+            SEMICOLON NEWLINE
+            (F{fun_letter=CAP, fun_name=VAR, categ_specs=categ_specs})
+
+categ_specs : CATEGORIES COLON NEWLINE categs (categs)
+            | ([])
+
+categs : one_categ categs (one_categ :: categs)
+	| ([])
+
+one_categ : NUMBER categ_name NEWLINE choices
+	    (Cat{categ_no=NUMBER, categ_name=categ_name, choices=choices})
+
+categ_name : VAR (VAR)
+
+choices : choice ([choice])
+	| choice choices (choice :: choices)
+
+choice  : STAR ch_name maybe_modifiers NEWLINE
+          (Ch{ch_name=ch_name,maybe_modifiers=maybe_modifiers})
+
+ch_name : VAR (VAR)
+	  
+maybe_modifiers :
+    LSQBR IF cond RSQBR LSQBR PROPERTY properties RSQBR LSQBR flag RSQBR
+    (M{maybe_cond=Some cond,
+       maybe_properties=Some properties,
+       maybe_flag=Some flag})
+ |  LSQBR IF cond RSQBR LSQBR PROPERTY properties RSQBR
+    (M{maybe_cond=Some cond,
+       maybe_properties=Some properties,
+       maybe_flag=None})
+ |  LSQBR IF cond RSQBR LSQBR flag RSQBR
+    (M{maybe_cond=Some cond,
+       maybe_properties=None,
+       maybe_flag=Some flag})
+ |  LSQBR IF cond RSQBR
+    (M{maybe_cond=Some cond,
+       maybe_properties=None,
+       maybe_flag=None})
+ |  LSQBR PROPERTY properties RSQBR LSQBR flag RSQBR
+    (M{maybe_cond=None,
+       maybe_properties=Some properties,
+       maybe_flag=Some flag})
+ |  LSQBR PROPERTY properties RSQBR 
+    (M{maybe_cond=None,
+       maybe_properties=Some properties,
+       maybe_flag=None})
+ |  LSQBR flag RSQBR
+    (M{maybe_cond=None,
+       maybe_properties=None,
+       maybe_flag=Some flag})
+ |  (M{maybe_cond=None,
+       maybe_properties=None,
+       maybe_flag=None})
+
+cond : property (Prop property)
+     | NOT LRBR cond RRBR (Not cond)
+     | LRBR cond RRBR log_op LRBR cond RRBR (Binary(log_op, cond1, cond2))
+
+log_op : AND (And) | OR (Or)
+
+properties : property ([property])
+	   | property COMMA properties (property :: properties)
+
+property : VAR (VAR)
+
+flag : ERROR (Error) | SINGLE (Single)
+

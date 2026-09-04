@@ -1,0 +1,10 @@
+  !! cAnd_13_14: NEW CLASS (all 16 eliminated) (225868ms)
+  [written] gen2/cAnd_13_14.cell
+  !! cImp_14_13: NEW CLASS (all 16 eliminated) (50050ms)
+  [written] gen2/cImp_14_13.cell
+  !! cOr_10_14: NEW CLASS (all 16 eliminated) (35606ms)
+  [written] gen2/cOr_10_14.cell
+  !! cOr_14_15: NEW CLASS (all 16 eliminated) (49985ms)
+  [written] gen2/cOr_14_15.cell
+  ?? cOr_8_12: OPEN [13] (72558ms)
+  [written] gen2/cOr_8_12.cell

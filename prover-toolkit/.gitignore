@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+corpora/items.jsonl
+leansearch/index.jsonl

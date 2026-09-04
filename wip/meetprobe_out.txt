@@ -1,0 +1,23 @@
+m = q5 ∧ q6 = (◯((◯⊥) ⊃ ⊥)) ∧ (((◯⊥) ⊃ ⊥) ⊃ ⊥)
+
+consistency:  m ⊢ ⊥ : REFUTED[n=2,ri=[(0, 1)],rm=[(0, 1)],F=[1],w=0]
+density:  ⊢ ¬¬m : REFUTED[n=1,ri=[],rm=[],F=[],w=0]
+guard ⊢ m : REFUTED[n=1,ri=[],rm=[],F=[],w=0]
+
+identity against the 15:
+  m ⊢ q0: REFUTED[n=2,ri=[(0, 1)],rm=[(0, 1)],F=[1],w=0]   q0 ⊢ m: PROVED(1)
+  m ⊢ q1: PROVED(2)   q1 ⊢ m: REFUTED[n=1,ri=[],rm=[],F=[],w=0]
+  m ⊢ q2: PROVED(9)   q2 ⊢ m: PROVED(7)
+  m ⊢ q3: REFUTED[n=2,ri=[(0, 1)],rm=[(0, 1)],F=[1],w=0]   q3 ⊢ m: REFUTED[n=1,ri=[],rm=[],F=[],w=0]
+  m ⊢ q4: PROVED(10)   q4 ⊢ m: REFUTED[n=1,ri=[],rm=[],F=[],w=0]
+  m ⊢ q5: PROVED(7)   q5 ⊢ m: REFUTED[n=1,ri=[],rm=[],F=[],w=0]
+  m ⊢ q6: PROVED(10)   q6 ⊢ m: REFUTED[n=3,ri=[(0, 1), (1, 2), (0, 2)],rm=[(1, 2)],F=[2],w=0]
+  m ⊢ q7: PROVED(11)   q7 ⊢ m: REFUTED[n=1,ri=[],rm=[],F=[],w=0]
+  m ⊢ q8: PROVED(13)   q8 ⊢ m: REFUTED[n=1,ri=[],rm=[],F=[],w=0]
+  m ⊢ q9: PROVED(8)   q9 ⊢ m: REFUTED[n=1,ri=[],rm=[],F=[],w=0]
+  m ⊢ q10: PROVED(10)   q10 ⊢ m: REFUTED[n=1,ri=[],rm=[],F=[],w=0]
+  m ⊢ q11: PROVED(11)   q11 ⊢ m: REFUTED[n=1,ri=[],rm=[],F=[],w=0]
+  m ⊢ q12: PROVED(12)   q12 ⊢ m: REFUTED[n=1,ri=[],rm=[],F=[],w=0]
+  m ⊢ q13: PROVED(14)   q13 ⊢ m: REFUTED[n=1,ri=[],rm=[],F=[],w=0]
+  m ⊢ q14: PROVED(19)   q14 ⊢ m: REFUTED[n=1,ri=[],rm=[],F=[],w=0]
+done

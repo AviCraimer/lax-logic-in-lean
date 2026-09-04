@@ -1,0 +1,22 @@
+== the floor branch at a boxed goal: route table ==
+
+S1, C = ◯s: 2 case(s), 3 target disjunct(s) of weights [29, 40, 43]
+   whole obligation: ~
+   case 0 (weight 11) reaches: NOTHING
+   case 1 (weight 21) reaches: NOTHING
+S1, C = r ⊃ s: 1 case(s), 3 target disjunct(s) of weights [70, 20, 23]
+   whole obligation: PROVED(9)
+   case 0 (weight 13) reaches: 0:PROVED(8)
+S2, C = ◯s: 4 case(s), 5 target disjunct(s) of weights [146, 300, 303, 300, 303]
+   whole obligation: ~
+   case 0 (weight 35) reaches: NOTHING
+   case 1 (weight 49) reaches: NOTHING
+   case 2 (weight 55) reaches: NOTHING
+   case 3 (weight 151) reaches: NOTHING
+S2, C = r ⊃ s: 3 case(s), 5 target disjunct(s) of weights [418, 146, 149, 146, 149]
+   whole obligation: PROVED(9)
+   case 0 (weight 85) reaches: 0:PROVED(8)
+   case 1 (weight 23) reaches: 0:PROVED(8), 3:PROVED(16)
+   case 2 (weight 29) reaches: 0:PROVED(8)
+
+== done ==

@@ -1,0 +1,5 @@
+1
+cImp_15_11
+theorem cImp_15_11 : Interd (q15.ifThen q11) q1 :=
+  ⟨topD,
+   (ofG4 (.impR (.orR2 (.impR (.impLOr (A := q5) (B := q6) (D := q4) (.tail _ (.head _)) (.impLImp (A := q3) (B := q0) (D := q4) (.tail _ (.head _)) (.impR (.impLLax (A := q3) (B := q4) (.tail _ (.tail _ (.head _))) (.impR (.impLLaxLax (A := q0) (B := q0) (X := q0) (.tail _ (.head _)) (.head _) (.botL (.head _)) (.botL (.head _)))) (.impLImp (A := q2) (B := q0) (D := q0) (.tail _ (.tail _ (.tail _ (.tail _ (.tail _ (.head _)))))) (.impR (.impLLaxLax (A := q0) (B := q0) (X := q0) (.tail _ (.tail _ (.tail _ (.head _)))) (.head _) (.botL (.head _)) (.botL (.head _)))) (.botL (.head _))))) (.orL (A := q2) (B := q3) (.head _) (.laxL (A := q0) (.head _) (.botL (.head _))) (.laxR (.impLImp (A := q2) (B := q0) (D := q0) (.tail _ (.tail _ (.tail _ (.tail _ (.head _))))) (.impR (.impLLaxLax (A := q0) (B := q0) (X := q0) (.tail _ (.tail _ (.head _))) (.head _) (.botL (.head _)) (.botL (.head _)))) (.botL (.head _)))))))))))⟩

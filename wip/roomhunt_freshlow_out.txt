@@ -1,0 +1,90 @@
+== roomhunt, stage freshlow ==
+fresh-impgate: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false  g=(r ⊃ z) ⊃ y
+   fuel=3 c=0: P active=true room=3 vacuous
+   fuel=5 c=0: ~ active=true room=3 vacuous
+   fuel=4 c=1: ~ active=true room=3 vacuous
+   fuel=6 c=1: ~ active=true room=3 vacuous
+   fuel=5 c=2: ~ active=true room=3 vacuous
+   fuel=7 c=2: ~ active=true room=3 vacuous
+fresh-impgate: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false  g=(r ⊃ z) ⊃ z
+   fuel=3 c=0: P active=true room=3 vacuous
+   fuel=5 c=0: ~ active=true room=3 vacuous
+   fuel=4 c=1: ~ active=true room=3 vacuous
+   fuel=6 c=1: ~ active=true room=3 vacuous
+   fuel=5 c=2: ~ active=true room=3 vacuous
+   fuel=7 c=2: ~ active=true room=3 vacuous
+fresh-impgate: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false  g=(r ⊃ z) ⊃ (◯y)
+   fuel=3 c=0: R! active=true room=3 vacuous
+   fuel=5 c=0: R! active=true room=3 vacuous
+   fuel=4 c=1: ~ active=true room=3 vacuous
+   fuel=6 c=1: ~ active=true room=3 vacuous
+   fuel=5 c=2: ~ active=true room=3 vacuous
+   fuel=7 c=2: ~ active=true room=3 vacuous
+fresh-impgate: |S|=2 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false  g=(r ⊃ z) ⊃ ((r ⊃ z) ⊃ y)
+   fuel=3 c=0: R! active=true room=3 vacuous
+   fuel=5 c=0: R! active=true room=3 vacuous
+   fuel=4 c=1: ~ active=true room=3 vacuous
+   fuel=6 c=1: ~ active=true room=3 vacuous
+   fuel=5 c=2: ~ active=true room=3 vacuous
+   fuel=7 c=2: ~ active=true room=3 vacuous
+fresh-closed: |S|=5 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false  g=(r ⊃ z) ⊃ y
+   fuel=3 c=0: P active=true room=3 vacuous
+   fuel=5 c=0: P active=true room=3 vacuous
+   fuel=4 c=1: ~ active=true room=3 vacuous
+   fuel=6 c=1: ~ active=true room=3 vacuous
+   fuel=5 c=2: P active=true room=3 vacuous
+   fuel=7 c=2: ~ active=true room=3 vacuous
+fresh-closed: |S|=5 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false  g=(r ⊃ z) ⊃ z
+   fuel=3 c=0: P active=true room=3 vacuous
+   fuel=5 c=0: P active=true room=3 vacuous
+   fuel=4 c=1: P active=true room=3 vacuous
+   fuel=6 c=1: P active=true room=3 vacuous
+   fuel=5 c=2: P active=true room=3 vacuous
+   fuel=7 c=2: P active=true room=3 vacuous
+fresh-closed: |S|=5 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false  g=(r ⊃ z) ⊃ (◯y)
+   fuel=3 c=0: R! active=true room=3 vacuous
+   fuel=5 c=0: R! active=true room=3 vacuous
+   fuel=4 c=1: ~ active=true room=3 vacuous
+   fuel=6 c=1: ~ active=true room=3 vacuous
+   fuel=5 c=2: ~ active=true room=3 vacuous
+   fuel=7 c=2: ~ active=true room=3 vacuous
+fresh-boxed: |S|=6 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false  g=(r ⊃ (◯w)) ⊃ y
+   fuel=3 c=0: P active=true room=3 vacuous
+   fuel=5 c=0: P active=true room=3 vacuous
+   fuel=4 c=1: ~ active=true room=3 vacuous
+   fuel=6 c=1: ~ active=true room=3 vacuous
+   fuel=5 c=2: P active=true room=3 vacuous
+   fuel=7 c=2: ~ active=true room=3 vacuous
+fresh-boxed: |S|=6 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false  g=(r ⊃ (◯w)) ⊃ (◯w)
+   fuel=3 c=0: R! active=true room=3 vacuous
+   fuel=5 c=0: R! active=true room=3 vacuous
+   fuel=4 c=1: P active=true room=3 vacuous
+   fuel=6 c=1: P active=true room=3 vacuous
+   fuel=5 c=2: P active=true room=3 vacuous
+   fuel=7 c=2: P active=true room=3 vacuous
+fresh-boxed: |S|=6 defect=1 J=1 room=3 hbox=true liveGates=0 blind=false  g=(r ⊃ (◯w)) ⊃ (◯y)
+   fuel=3 c=0: R! active=true room=3 vacuous
+   fuel=5 c=0: R! active=true room=3 vacuous
+   fuel=4 c=1: ~ active=true room=3 vacuous
+   fuel=6 c=1: ~ active=true room=3 vacuous
+   fuel=5 c=2: ~ active=true room=3 vacuous
+   fuel=7 c=2: ~ active=true room=3 vacuous
+fresh-double: |S|=3 defect=1 J=2 room=4 hbox=true liveGates=0 blind=false  g=(r ⊃ z) ⊃ y
+   fuel=3 c=0: P active=true room=4 vacuous
+   fuel=5 c=0: ~ active=true room=4 vacuous
+   fuel=4 c=1: ~ active=true room=4 vacuous
+   fuel=6 c=1: ~ active=true room=4 vacuous
+   fuel=5 c=2: ~ active=true room=4 vacuous
+   fuel=7 c=2: ~ active=true room=4 vacuous
+   fuel=6 c=3: ~ active=true room=4 vacuous
+   fuel=8 c=3: ~ active=true room=4 vacuous
+fresh-double: |S|=3 defect=1 J=2 room=4 hbox=true liveGates=0 blind=false  g=(r ⊃ z) ⊃ ((r ⊃ z) ⊃ y)
+   fuel=3 c=0: R! active=true room=4 vacuous
+   fuel=5 c=0: R! active=true room=4 vacuous
+   fuel=4 c=1: ~ active=true room=4 vacuous
+   fuel=6 c=1: ~ active=true room=4 vacuous
+   fuel=5 c=2: ~ active=true room=4 vacuous
+   fuel=7 c=2: ~ active=true room=4 vacuous
+   fuel=6 c=3: ~ active=true room=4 vacuous
+   fuel=8 c=3: ~ active=true room=4 vacuous
+== done ==

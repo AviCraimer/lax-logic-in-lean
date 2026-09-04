@@ -1,0 +1,8 @@
+0
+cImp_13_11
+/-- REFUTED CELL (new class): certified ≤5-world countermodels
+eliminate EVERY candidate — this combination is not interderivable
+with any of the 16 representatives, so the enlarged closure FAILS
+here.  The stated collapse (to q0, a placeholder) is FALSE; the
+`sorry` records the failure point. -/
+theorem cImp_13_11 : Interd (q13.ifThen q11) q0 := sorry

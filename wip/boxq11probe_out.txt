@@ -1,0 +1,24 @@
+battery size: 1459
+
+== candidate q11 (fixed point?) ==
+  ◯q11 ⊢ q11: OPEN (no 5-world countermodel, searcher inconclusive)  (597 ms)
+  (q11 ⊢ ◯q11 is the unit, free)
+
+== candidate q13 ==
+  ◯q11 ⊢ q13: REFUTED at 5 worlds — M={ n := 5,
+  ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (1, 3), (1, 4), (2, 3), (4, 3)],
+  rm := [(1, 2), (4, 3)],
+  fall := [3],
+  val := [] } w=0  (370 ms)
+  q13 ⊢ ◯q11: REFUTED at 5 worlds — M={ n := 5, ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (1, 3), (2, 3)], rm := [(2, 3)], fall := [3], val := [] } w=0  (78 ms)
+
+== placement ==
+  ◯q11 ⊢ q12: REFUTED at 5 worlds — M={ n := 5, ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2)], rm := [(1, 2)], fall := [2], val := [] } w=0  (6 ms)
+  q12 ⊢ ◯q11: PROVED (24 nodes)
+paste: (.laxL (.head _) (.laxR (.orL (.head _) (.orR2 (.impR (.laxR (.impLImp (.head _) (.impR (.impLImp (.tail _ (.tail _ (.head _))) (.impLLaxLax (.tail _ (.tail _ (.tail _ (.tail _ (.head _))))) (.tail _ (.head _)) (.botL (.head _)) (.botL (.head _))) (.botL (.head _)))) (.botL (.head _)))))) (.orR1 (.impR (.impLLaxLax (.head _) (.tail _ (.tail _ (.tail _ (.head _)))) (.impLImp (.tail _ (.tail _ (.head _))) (.impR (.impLLaxLax (.tail _ (.tail _ (.tail _ (.head _)))) (.head _) (.botL (.head _)) (.botL (.head _)))) (.botL (.head _))) (.botL (.head _))))))))  (593 ms)
+  ◯q11 ⊢ q9 : REFUTED at 5 worlds — M={ n := 5, ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2)], rm := [(1, 2)], fall := [2], val := [] } w=0  (5 ms)
+  q9 ⊢ ◯q11 : PROVED (20 nodes)
+paste: (.laxR (.orL (.head _) (.orR2 (.impR (.laxL (.tail _ (.head _)) (.laxR (.impLImp (.tail _ (.head _)) (.impR (.impLLaxLax (.tail _ (.tail _ (.head _))) (.head _) (.botL (.head _)) (.botL (.head _)))) (.botL (.head _))))))) (.orR1 (.impR (.impLImp (.tail _ (.head _)) (.impR (.impLLaxLax (.tail _ (.tail _ (.head _))) (.head _) (.botL (.head _)) (.botL (.head _)))) (.botL (.head _)))))))  (583 ms)
+  ◯q11 ⊢ q14: REFUTED at 5 worlds — M={ n := 5, ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2)], rm := [(1, 2)], fall := [2], val := [] } w=0  (6 ms)
+  q14 ⊢ ◯q11: REFUTED at 5 worlds — M={ n := 5, ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (1, 3), (2, 3)], rm := [(2, 3)], fall := [3], val := [] } w=0  (82 ms)
+done

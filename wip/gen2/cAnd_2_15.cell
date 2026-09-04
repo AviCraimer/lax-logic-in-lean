@@ -1,0 +1,5 @@
+2
+cAnd_2_15
+theorem cAnd_2_15 : Interd (q2.and q15) q2 :=
+  ⟨(ofG4 (.andL (A := q2) (B := q15) (.head _) (.laxL (A := q0) (.head _) (.botL (.head _))))),
+   (ofG4 (.andR (.laxL (A := q0) (.head _) (.botL (.head _))) (.impR (.orR1 (.laxL (A := q0) (.tail _ (.head _)) (.botL (.head _)))))))⟩

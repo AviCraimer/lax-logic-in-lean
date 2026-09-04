@@ -1,0 +1,13 @@
+== boxed goal with a ◯χ in the context ==
+
+Γ = [◯r⊃s, ◯w]  (boxed member LIVE): 3 case(s), 5 target disjunct(s), weights [385, 203, 266, 524, 339]
+   whole obligation: ~
+   case 0 (weight 23) reaches: NOTHING
+   case 1 (weight 55) reaches: NOTHING
+   case 2 (weight 101) reaches: NOTHING
+Γ = [◯r⊃s]        (control): 2 case(s), 3 target disjunct(s), weights [29, 40, 43]
+   whole obligation: ~
+   case 0 (weight 11) reaches: NOTHING
+   case 1 (weight 21) reaches: NOTHING
+
+== done ==

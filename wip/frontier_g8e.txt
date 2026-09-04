@@ -1,0 +1,14 @@
+# === round-8 witness instances, re-ordered (g8e) ===
+# g8e Skb-X  [gsrc, amb] |- gclause@1 sz=2578
+#   ~ (quiet, unproved at 40000)
+# g8e S3-X c=3  [gsrc, amb] |- gclause@3 sz=82907
+#   P (proved, budget 40000)
+#   TERM (◯R (→R (∨R₁ (→R (∨R₁ (∧L (∧L (∧L init))))))))
+# g8e S3-X c=1  [gsrc, amb] |- gclause@1 sz=75487
+#   P (proved, budget 40000)
+#   TERM (◯R (→R (∨R₁ (→R (∨R₁ (∧L (∧L (∧L init))))))))
+# g8e S3-W c=3  [gsrc, amb] |- tgt@3 sz=115749
+#   P (proved, budget 40000)
+#   TERM (∨R₁ (◯R (→R (∨R₁ (→R (∨R₁ (∧L (∧L (∧L init)))))))))
+# g8e S3-W c=1  [gsrc, amb] |- tgt@1 sz=75915
+# === g8e stopped at end of round (S3-W c=1 in flight; S3-P and Skb gap-2 rows not run) ===

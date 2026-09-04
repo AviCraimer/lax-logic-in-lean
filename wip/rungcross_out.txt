@@ -1,0 +1,25 @@
+===== rungs 8-13 against the seven off-ladder classes =====
+  Y(k) = derivable, proof of k nodes
+  n[Nw] = refuted by an N-world countermodel ('conf' = mutually confluent,
+          so it refutes PCLL too)
+  ?     = search cut off; asserts nothing
+
+-- rung 8  (weight 28) --
+   rung 8 |- q1: Y(2)    q1 |- rung 8: n[4w,conf]  rung < class   (1 ms)
+   rung 8 |- q5: n[3w,conf]    q5 |- rung 8: ?   (1237 ms)
+   rung 8 |- q8: Y(27)    q8 |- rung 8: n[4w,conf]  rung < class   (5 ms)
+   rung 8 |- q9: ?    q9 |- rung 8: ?   (7163 ms)
+   rung 8 |- q12: ?    q12 |- rung 8: ?   (3547 ms)
+   rung 8 |- q13: Y(28)    q13 |- rung 8: n[4w,conf]  rung < class   (6 ms)
+   rung 8 |- q14: Y(38)    q14 |- rung 8: ?  rung < class   (8616 ms)
+
+-- rung 9  (weight 45) --
+   rung 9 |- q1: Y(2)    q1 |- rung 9: ?  rung < class   (3161 ms)
+   rung 9 |- q5: n[3w,conf]    q5 |- rung 9: Y(11)  class < rung   (1 ms)
+   rung 9 |- q8: ?    q8 |- rung 9: ?   (93881 ms)
+   rung 9 |- q9: n[4w,conf]    q9 |- rung 9: Y(20)  class < rung   (1 ms)
+   rung 9 |- q12: n[4w,conf]    q12 |- rung 9: ?   (5273 ms)
+   rung 9 |- q13: ?    q13 |- rung 9: ?   (8129642 ms)
+   rung 9 |- q14: n[4w,conf]    q14 |- rung 9: ?   (52644 ms)
+
+-- rung 10  (weight 62) --

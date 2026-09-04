@@ -1,0 +1,5 @@
+1
+cImp_3_15
+theorem cImp_3_15 : Interd (q3.ifThen q15) q1 :=
+  ⟨topD,
+   (ofG4 (.impR (.impR (.orR2 (.impR (.orL (A := q5) (B := q6) (.tail _ (.head _)) (.impLLaxLax (A := q0) (B := q0) (X := q3) (.tail _ (.tail _ (.tail _ (.head _)))) (.head _) (.laxL (A := q0) (.tail _ (.tail _ (.head _))) (.botL (.head _))) (.botL (.head _))) (.impLImp (A := q2) (B := q0) (D := q0) (.head _) (.impLLaxLax (A := q0) (B := q0) (X := q0) (.tail _ (.tail _ (.tail _ (.tail _ (.head _))))) (.tail _ (.tail _ (.head _))) (.botL (.head _)) (.botL (.head _))) (.botL (.head _)))))))))⟩

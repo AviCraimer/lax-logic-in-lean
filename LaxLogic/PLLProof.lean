@@ -84,8 +84,11 @@ def  isValid (proof:  PLLProof) : Prop :=
   | emptyProof => True
   -- Any axiom step is valid
   | axiomStep prev _  => isValid prev
-  -- Modus ponens is valid if both the antecedant and the consequent at in the previous steps.
-  | modusPonens prev conditional => conditional.antecedant ∈ prev.formulas ∧ conditional.val ∈ prev.formulas
+  -- Modus ponens is valid if the previous steps are valid and both the
+  -- antecedant and the conditional are in the previous steps.
+  -- (previously `isValid prev` was not required, so stacked modus-ponens
+  --  steps could launder unjustified formulas — e.g. ⊢ falsePLL passed)
+  | modusPonens prev conditional => isValid prev ∧ conditional.antecedant ∈ prev.formulas ∧ conditional.val ∈ prev.formulas
 
 @[simp]
 def  isEmpty (proof:  PLLProof):= proof = emptyProof
@@ -180,7 +183,7 @@ def test1 (A: PLLFormula): PLLProof :=
   PLLProof.fromInstructions steps
 
 lemma test1b (A: PLLFormula) : ¬ (test1 A).isEmpty := by
-simp [isEmpty, test1, fromInstructions, fromInstructions.fromReverse]
+  simp [isEmpty, test1, fromInstructions, fromInstructions.fromReverse]
 
 def A := prop ("A")
 #eval PLLProof.NonEmpty.conclusion ⟨ (test1 A), by exact test1b A⟩

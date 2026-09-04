@@ -1,0 +1,436 @@
+== stage 1: calibration + J=0 room-2 band ==
+CALIB(unboxed r4p3): R! as expected, w=0 (18 ms)
+ATOM/miss-e  D=e (control): |S|=2 d=1 J=0 room=2 adm=true gates(jump/box/env)=0/0/1
+  fs=4 ft=4 b=2: ~  act=false |s+a+t|=264 (72 ms)
+  fs=3 ft=4 b=2: ~  act=false |s+a+t|=264 (69 ms)
+  fs=1 ft=4 b=2: ~  act=false |s+a+t|=173 (27 ms)
+  fs=2 ft=5 b=2: ~  act=false |s+a+t|=238 (56 ms)
+  fs=5 ft=5 b=2: ~  act=false |s+a+t|=264 (80 ms)
+  fs=5 ft=5 b=3: ~  act=false |s+a+t|=264 (65 ms)
+  fs=4 ft=5 b=3: ~  act=false |s+a+t|=264 (63 ms)
+  fs=1 ft=5 b=3: ~  act=false |s+a+t|=173 (25 ms)
+  fs=2 ft=6 b=3: ~  act=false |s+a+t|=238 (56 ms)
+  fs=6 ft=6 b=3: ~  act=false |s+a+t|=264 (63 ms)
+ATOMp/miss-p D=p (control): |S|=2 d=1 J=0 room=2 adm=true gates(jump/box/env)=0/0/1
+  fs=4 ft=4 b=2: ~  act=false |s+a+t|=226 (60 ms)
+  fs=3 ft=4 b=2: ~  act=false |s+a+t|=226 (60 ms)
+  fs=1 ft=4 b=2: ~  act=false |s+a+t|=153 (30 ms)
+  fs=2 ft=5 b=2: ~  act=false |s+a+t|=210 (49 ms)
+  fs=5 ft=5 b=2: ~  act=false |s+a+t|=226 (60 ms)
+  fs=5 ft=5 b=3: ~  act=false |s+a+t|=226 (61 ms)
+  fs=4 ft=5 b=3: ~  act=false |s+a+t|=226 (60 ms)
+  fs=1 ft=5 b=3: ~  act=false |s+a+t|=153 (30 ms)
+  fs=2 ft=6 b=3: ~  act=false |s+a+t|=210 (49 ms)
+  fs=6 ft=6 b=3: ~  act=false |s+a+t|=226 (61 ms)
+BB/miss-e    D=◯e: |S|=3 d=1 J=0 room=2 adm=true gates(jump/box/env)=0/0/1
+  fs=4 ft=4 b=2: P  act=false |s+a+t|=992 (25 ms)
+  fs=3 ft=4 b=2: P  act=false |s+a+t|=900 (39 ms)
+  fs=1 ft=4 b=2: P  act=false |s+a+t|=537 (5 ms)
+  fs=2 ft=5 b=2: P  act=false |s+a+t|=668 (13 ms)
+  fs=5 ft=5 b=2: P  act=false |s+a+t|=992 (25 ms)
+  fs=5 ft=5 b=3: P  act=false |s+a+t|=992 (24 ms)
+  fs=4 ft=5 b=3: P  act=false |s+a+t|=992 (26 ms)
+  fs=1 ft=5 b=3: P  act=false |s+a+t|=537 (5 ms)
+  fs=2 ft=6 b=3: P  act=false |s+a+t|=668 (14 ms)
+  fs=6 ft=6 b=3: P  act=false |s+a+t|=992 (26 ms)
+BB/miss-◯e   D=◯e: |S|=3 d=1 J=0 room=2 adm=true gates(jump/box/env)=0/0/1
+  fs=4 ft=4 b=2: P  act=false |s+a+t|=1030 (5 ms)
+  fs=3 ft=4 b=2: P  act=false |s+a+t|=938 (4 ms)
+  fs=1 ft=4 b=2: P  act=false |s+a+t|=557 (3 ms)
+  fs=2 ft=5 b=2: P  act=false |s+a+t|=694 (7 ms)
+  fs=5 ft=5 b=2: P  act=false |s+a+t|=1030 (4 ms)
+  fs=5 ft=5 b=3: P  act=false |s+a+t|=1030 (5 ms)
+  fs=4 ft=5 b=3: P  act=false |s+a+t|=1030 (5 ms)
+  fs=1 ft=5 b=3: P  act=false |s+a+t|=557 (3 ms)
+  fs=2 ft=6 b=3: P  act=false |s+a+t|=694 (7 ms)
+  fs=6 ft=6 b=3: P  act=false |s+a+t|=1030 (4 ms)
+BB/miss-◯◯e  D=◯e: |S|=3 d=1 J=0 room=2 adm=true gates(jump/box/env)=0/0/0
+  fs=4 ft=4 b=2: P  act=false |s+a+t|=185 (2 ms)
+  fs=3 ft=4 b=2: P  act=false |s+a+t|=185 (2 ms)
+  fs=1 ft=4 b=2: P  act=false |s+a+t|=117 (2 ms)
+  fs=2 ft=5 b=2: P  act=false |s+a+t|=165 (5 ms)
+  fs=5 ft=5 b=2: P  act=false |s+a+t|=185 (2 ms)
+  fs=5 ft=5 b=3: P  act=false |s+a+t|=185 (2 ms)
+  fs=4 ft=5 b=3: P  act=false |s+a+t|=185 (2 ms)
+  fs=1 ft=5 b=3: P  act=false |s+a+t|=117 (1 ms)
+  fs=2 ft=6 b=3: P  act=false |s+a+t|=165 (5 ms)
+  fs=6 ft=6 b=3: P  act=false |s+a+t|=185 (2 ms)
+BBp/miss-p   D=◯p: |S|=3 d=1 J=0 room=2 adm=true gates(jump/box/env)=0/0/1
+  fs=4 ft=4 b=2: ~  act=false |s+a+t|=858 (220 ms)
+  fs=3 ft=4 b=2: ~  act=false |s+a+t|=794 (188 ms)
+  fs=1 ft=4 b=2: P  act=false |s+a+t|=469 (21 ms)
+  fs=2 ft=5 b=2: ~  act=false |s+a+t|=596 (76 ms)
+  fs=5 ft=5 b=2: ~  act=false |s+a+t|=858 (202 ms)
+  fs=5 ft=5 b=3: ~  act=false |s+a+t|=858 (201 ms)
+  fs=4 ft=5 b=3: ~  act=false |s+a+t|=858 (202 ms)
+  fs=1 ft=5 b=3: P  act=false |s+a+t|=469 (22 ms)
+  fs=2 ft=6 b=3: ~  act=false |s+a+t|=596 (77 ms)
+  fs=6 ft=6 b=3: ~  act=false |s+a+t|=858 (204 ms)
+OR/miss-e    D=e∨f: |S|=4 d=1 J=0 room=2 adm=true gates(jump/box/env)=0/0/0
+  fs=4 ft=4 b=2: P  act=false |s+a+t|=93 (27 ms)
+  fs=3 ft=4 b=2: P  act=false |s+a+t|=93 (27 ms)
+  fs=1 ft=4 b=2: P  act=false |s+a+t|=71 (15 ms)
+  fs=2 ft=5 b=2: P  act=false |s+a+t|=85 (23 ms)
+  fs=5 ft=5 b=2: P  act=false |s+a+t|=93 (25 ms)
+  fs=5 ft=5 b=3: P  act=false |s+a+t|=93 (30 ms)
+  fs=4 ft=5 b=3: P  act=false |s+a+t|=93 (26 ms)
+  fs=1 ft=5 b=3: P  act=false |s+a+t|=71 (15 ms)
+  fs=2 ft=6 b=3: P  act=false |s+a+t|=85 (23 ms)
+  fs=6 ft=6 b=3: P  act=false |s+a+t|=93 (26 ms)
+OR/miss-D    D=e∨f: |S|=4 d=1 J=0 room=2 adm=true gates(jump/box/env)=0/0/1
+  fs=4 ft=4 b=2: P  act=false |s+a+t|=410 (117 ms)
+  fs=3 ft=4 b=2: P  act=false |s+a+t|=394 (112 ms)
+  fs=1 ft=4 b=2: P  act=false |s+a+t|=249 (63 ms)
+  fs=2 ft=5 b=2: P  act=false |s+a+t|=334 (84 ms)
+  fs=5 ft=5 b=2: P  act=false |s+a+t|=410 (117 ms)
+  fs=5 ft=5 b=3: P  act=false |s+a+t|=410 (118 ms)
+  fs=4 ft=5 b=3: P  act=false |s+a+t|=410 (118 ms)
+  fs=1 ft=5 b=3: P  act=false |s+a+t|=249 (62 ms)
+  fs=2 ft=6 b=3: P  act=false |s+a+t|=334 (81 ms)
+  fs=6 ft=6 b=3: P  act=false |s+a+t|=410 (117 ms)
+== stage 1 done ==
+== stage 2: jump-shaped bodies, room-3 band ==
+JB/miss-c    D=(a⊃b)⊃c: |S|=7 d=1 J=1 room=3 adm=true gates(jump/box/env)=1/0/0
+  fs=5 ft=5 b=3: P  act=true |s+a+t|=10387 (6647 ms)
+  fs=4 ft=5 b=3: P  act=true |s+a+t|=7211 (4659 ms)
+  fs=1 ft=5 b=3: P  act=true |s+a+t|=4711 (3302 ms)
+  fs=2 ft=6 b=3: P  act=true |s+a+t|=6797 (5571 ms)
+  fs=6 ft=6 b=3: P  act=true |s+a+t|=16707 (13367 ms)
+  fs=6 ft=6 b=4: P  act=true |s+a+t|=29741 (18956 ms)
+  fs=5 ft=6 b=4: P  act=true |s+a+t|=20487 (12960 ms)
+  fs=1 ft=6 b=4: P  act=true |s+a+t|=13715 (9764 ms)
+  fs=2 ft=7 b=4: P  act=true |s+a+t|=20531 (17066 ms)
+  fs=7 ft=7 b=4: SKIP |s+a+t|=50399 > 30000
+JB/miss-D    D=(a⊃b)⊃c: |S|=7 d=1 J=1 room=3 adm=true gates(jump/box/env)=0/0/1
+  fs=5 ft=5 b=3: P  act=false |s+a+t|=586 (762 ms)
+  fs=4 ft=5 b=3: P  act=false |s+a+t|=586 (767 ms)
+  fs=1 ft=5 b=3: P  act=false |s+a+t|=339 (401 ms)
+  fs=2 ft=6 b=3: P  act=false |s+a+t|=438 (508 ms)
+  fs=6 ft=6 b=3: P  act=false |s+a+t|=586 (757 ms)
+  fs=6 ft=6 b=4: P  act=false |s+a+t|=586 (755 ms)
+  fs=5 ft=6 b=4: P  act=false |s+a+t|=586 (760 ms)
+  fs=1 ft=6 b=4: P  act=false |s+a+t|=339 (397 ms)
+  fs=2 ft=7 b=4: P  act=false |s+a+t|=438 (506 ms)
+  fs=7 ft=7 b=4: P  act=false |s+a+t|=586 (756 ms)
+JB/miss-boxD D=(a⊃b)⊃c: |S|=7 d=1 J=1 room=3 adm=true gates(jump/box/env)=0/0/0
+  fs=5 ft=5 b=3: P  act=false |s+a+t|=145 (183 ms)
+  fs=4 ft=5 b=3: P  act=false |s+a+t|=145 (182 ms)
+  fs=1 ft=5 b=3: P  act=false |s+a+t|=99 (103 ms)
+  fs=2 ft=6 b=3: P  act=false |s+a+t|=129 (154 ms)
+  fs=6 ft=6 b=3: P  act=false |s+a+t|=145 (180 ms)
+  fs=6 ft=6 b=4: P  act=false |s+a+t|=145 (181 ms)
+  fs=5 ft=6 b=4: P  act=false |s+a+t|=145 (179 ms)
+  fs=1 ft=6 b=4: P  act=false |s+a+t|=99 (103 ms)
+  fs=2 ft=7 b=4: P  act=false |s+a+t|=129 (154 ms)
+  fs=7 ft=7 b=4: P  act=false |s+a+t|=145 (181 ms)
+JBp/miss-c   D=(p⊃b)⊃c: |S|=7 d=1 J=1 room=3 adm=true gates(jump/box/env)=1/0/0
+  fs=5 ft=5 b=3: P  act=true |s+a+t|=8715 (706 ms)
+  fs=4 ft=5 b=3: P  act=true |s+a+t|=6107 (549 ms)
+  fs=1 ft=5 b=3: P  act=true |s+a+t|=3887 (399 ms)
+  fs=2 ft=6 b=3: P  act=true |s+a+t|=5359 (803 ms)
+  fs=6 ft=6 b=3: P  act=true |s+a+t|=13273 (1665 ms)
+  fs=6 ft=6 b=4: P  act=true |s+a+t|=24467 (1766 ms)
+  fs=5 ft=6 b=4: P  act=true |s+a+t|=16985 (1328 ms)
+  fs=1 ft=6 b=4: P  act=true |s+a+t|=11061 (1012 ms)
+  fs=2 ft=7 b=4: P  act=true |s+a+t|=15657 (2133 ms)
+  fs=7 ft=7 b=4: SKIP |s+a+t|=39115 > 30000
+JB2/miss-c   D=◯((a⊃b)⊃c): |S|=8 d=1 J=1 room=3 adm=true gates(jump/box/env)=1/0/0
+  fs=5 ft=5 b=3: ~  act=true |s+a+t|=17191 (15574 ms)
+  fs=4 ft=5 b=3: ~  act=true |s+a+t|=11895 (10781 ms)
+  fs=1 ft=5 b=3: ~  act=true |s+a+t|=7857 (6917 ms)
+  fs=2 ft=6 b=3: P  act=true |s+a+t|=11809 (9846 ms)
+  fs=6 ft=6 b=3: P  act=true |s+a+t|=29219 (22407 ms)
+  fs=6 ft=6 b=4: SKIP |s+a+t|=46077 > 30000
+  fs=5 ft=6 b=4: SKIP |s+a+t|=31695 > 30000
+  fs=1 ft=6 b=4: P  act=true |s+a+t|=21265 (14641 ms)
+  fs=2 ft=7 b=4: SKIP |s+a+t|=33959 > 30000
+  fs=7 ft=7 b=4: SKIP |s+a+t|=83907 > 30000
+JB2/miss-◯E  D=◯((a⊃b)⊃c): |S|=8 d=1 J=1 room=3 adm=true gates(jump/box/env)=0/0/1
+  fs=5 ft=5 b=3: P  act=false |s+a+t|=2038 (2723 ms)
+  fs=4 ft=5 b=3: P  act=false |s+a+t|=1886 (2475 ms)
+  fs=1 ft=5 b=3: P  act=false |s+a+t|=1065 (1395 ms)
+  fs=2 ft=6 b=3: P  act=false |s+a+t|=1222 (1500 ms)
+  fs=6 ft=6 b=3: P  act=false |s+a+t|=2038 (2730 ms)
+  fs=6 ft=6 b=4: P  act=false |s+a+t|=2038 (2744 ms)
+  fs=5 ft=6 b=4: P  act=false |s+a+t|=2038 (2735 ms)
+  fs=1 ft=6 b=4: P  act=false |s+a+t|=1065 (1390 ms)
+  fs=2 ft=7 b=4: P  act=false |s+a+t|=1222 (1474 ms)
+  fs=7 ft=7 b=4: P  act=false |s+a+t|=2038 (2739 ms)
+== stage 2 done ==
+== stage 3: gate band + defect 2 ==
+GATE/miss-c  D=a, ◯a⊃c: |S|=4 d=1 J=2 room=4 adm=true gates(jump/box/env)=0/1/0
+  fs=6 ft=6 b=4: SKIP |s+a+t|=232519 > 40000
+  fs=5 ft=6 b=4: SKIP |s+a+t|=137963 > 40000
+  fs=1 ft=6 b=4: SKIP |s+a+t|=90575 > 40000
+  fs=2 ft=7 b=4: SKIP |s+a+t|=133360 > 40000
+  fs=7 ft=7 b=4: SKIP |s+a+t|=401535 > 40000
+  fs=7 ft=7 b=5: SKIP |s+a+t|=1240370 > 40000
+  fs=6 ft=7 b=5: SKIP |s+a+t|=733884 > 40000
+  fs=1 ft=7 b=5: SKIP |s+a+t|=496743 > 40000
+  fs=2 ft=8 b=5: SKIP |s+a+t|=780392 > 40000
+  fs=8 ft=8 b=5: SKIP |s+a+t|=2280602 > 40000
+GATE/miss-c  D=a⊃b, ◯(a⊃b)⊃c: |S|=6 d=1 J=2 room=4 adm=true gates(jump/box/env)=0/1/0
+  fs=6 ft=6 b=4: SKIP |s+a+t|=424227 > 40000
+  fs=5 ft=6 b=4: SKIP |s+a+t|=244632 > 40000
+  fs=1 ft=6 b=4: SKIP |s+a+t|=177664 > 40000
+  fs=2 ft=7 b=4: SKIP |s+a+t|=368530 > 40000
+  fs=7 ft=7 b=4: SKIP |s+a+t|=1019191 > 40000
+  fs=7 ft=7 b=5: SKIP |s+a+t|=2496618 > 40000
+  fs=6 ft=7 b=5: SKIP |s+a+t|=1446889 > 40000
+  fs=1 ft=7 b=5: SKIP |s+a+t|=1082262 > 40000
+  fs=2 ft=8 b=5: SKIP |s+a+t|=2438827 > 40000
+  fs=8 ft=8 b=5: SKIP |s+a+t|=6450637 > 40000
+BB2/miss-e,f d=2 J=0: |S|=5 d=2 J=0 room=4 adm=true gates(jump/box/env)=0/0/2
+  fs=6 ft=6 b=4: P  act=false |s+a+t|=8435 (3274 ms)
+  fs=5 ft=6 b=4: P  act=false |s+a+t|=8435 (3302 ms)
+  fs=1 ft=6 b=4: P  act=false |s+a+t|=4285 (1510 ms)
+  fs=2 ft=7 b=4: P  act=false |s+a+t|=4581 (1555 ms)
+  fs=7 ft=7 b=4: P  act=false |s+a+t|=8435 (3296 ms)
+  fs=7 ft=7 b=5: P  act=false |s+a+t|=8435 (3286 ms)
+  fs=6 ft=7 b=5: P  act=false |s+a+t|=8435 (3288 ms)
+  fs=1 ft=7 b=5: P  act=false |s+a+t|=4285 (1542 ms)
+  fs=2 ft=8 b=5: P  act=false |s+a+t|=4581 (1595 ms)
+  fs=8 ft=8 b=5: P  act=false |s+a+t|=8435 (3303 ms)
+OR/miss-e,f  d=2 (or-growth live): |S|=4 d=2 J=0 room=4 adm=true gates(jump/box/env)=0/0/0
+  fs=6 ft=6 b=4: ~  act=false |s+a+t|=859 (312 ms)
+  fs=5 ft=6 b=4: ~  act=false |s+a+t|=859 (312 ms)
+  fs=1 ft=6 b=4: ~  act=false |s+a+t|=483 (115 ms)
+  fs=2 ft=7 b=4: ~  act=false |s+a+t|=631 (171 ms)
+  fs=7 ft=7 b=4: ~  act=false |s+a+t|=859 (305 ms)
+  fs=7 ft=7 b=5: ~  act=false |s+a+t|=859 (307 ms)
+  fs=6 ft=7 b=5: ~  act=false |s+a+t|=859 (302 ms)
+  fs=1 ft=7 b=5: ~  act=false |s+a+t|=483 (113 ms)
+  fs=2 ft=8 b=5: ~  act=false |s+a+t|=631 (166 ms)
+  fs=8 ft=8 b=5: ~  act=false |s+a+t|=859 (302 ms)
+JB/miss-b,c  d=2: |S|=7 d=2 J=1 room=6 adm=true gates(jump/box/env)=1/0/0
+  fs=8 ft=8 b=6: SKIP |s+a+t|=1179541 > 40000
+  fs=7 ft=8 b=6: SKIP |s+a+t|=792883 > 40000
+  fs=1 ft=8 b=6: SKIP |s+a+t|=597843 > 40000
+  fs=2 ft=9 b=6: SKIP |s+a+t|=1287921 > 40000
+  fs=9 ft=9 b=6: SKIP |s+a+t|=2809559 > 40000
+  fs=9 ft=9 b=7: SKIP |s+a+t|=3653101 > 40000
+  fs=8 ft=9 b=7: SKIP |s+a+t|=2470413 > 40000
+  fs=1 ft=9 b=7: SKIP |s+a+t|=1873293 > 40000
+  fs=2 ft=10 b=7: SKIP |s+a+t|=4160507 > 40000
+  fs=10 ft=10 b=7: SKIP |s+a+t|=8885811 > 40000
+GATE/miss-a,c d=2: |S|=4 d=2 J=2 room=8 adm=true gates(jump/box/env)=0/1/1
+== battery B: gate towers, max density ==
+TOWER1/miss-z  D=X=a⊃b (jump+box gates): |S|=8 d=1 J=2 room=4 adm=true gates(jump/box/env)=1/1/0
+  fs=6 ft=6 b=4: SKIP |s+a+t|=2184523 > 60000
+  fs=5 ft=6 b=4: SKIP |s+a+t|=1177733 > 60000
+  fs=1 ft=6 b=4: SKIP |s+a+t|=879617 > 60000
+  fs=2 ft=7 b=4: SKIP |s+a+t|=1974878 > 60000
+  fs=7 ft=7 b=4: SKIP |s+a+t|=5750351 > 60000
+  fs=7 ft=7 b=5: SKIP |s+a+t|=17217708 > 60000
+  fs=6 ft=7 b=5: SKIP |s+a+t|=9331808 > 60000
+  fs=1 ft=7 b=5: SKIP |s+a+t|=7148627 > 60000
+  fs=2 ft=8 b=5: SKIP |s+a+t|=17436784 > 60000
+== battery B: gate towers, max density ==
+TOWER1/miss-z  D=X=a⊃b (jump+box gates): |S|=8 d=1 J=2 room=4 adm=true gates(jump/box/env)=1/1/0
+  fs=6 ft=6 b=4: SKIP |s+a+t|=2184523 > 60000
+  fs=5 ft=6 b=4: SKIP |s+a+t|=1177733 > 60000
+  fs=1 ft=6 b=4: SKIP |s+a+t|=879617 > 60000
+  fs=2 ft=7 b=4: SKIP |s+a+t|=1974878 > 60000
+  fs=7 ft=7 b=4: SKIP |s+a+t|=5750351 > 60000
+  fs=7 ft=7 b=5: SKIP |s+a+t|=17217708 > 60000
+  fs=6 ft=7 b=5: SKIP |s+a+t|=9331808 > 60000
+  fs=1 ft=7 b=5: SKIP |s+a+t|=7148627 > 60000
+  fs=2 ft=8 b=5: SKIP |s+a+t|=17436784 > 60000
+  fs=8 ft=8 b=5: SKIP |s+a+t|=48748882 > 60000
+TOWER1p/miss-z D=X=p⊃b (elim var in jump goal): |S|=8 d=1 J=2 room=4 adm=true gates(jump/box/env)=1/1/0
+  fs=6 ft=6 b=4: SKIP |s+a+t|=1997411 > 60000
+  fs=5 ft=6 b=4: SKIP |s+a+t|=1075643 > 60000
+  fs=1 ft=6 b=4: SKIP |s+a+t|=790167 > 60000
+  fs=2 ft=7 b=4: SKIP |s+a+t|=1677978 > 60000
+  fs=7 ft=7 b=4: SKIP |s+a+t|=5003629 > 60000
+  fs=7 ft=7 b=5: SKIP |s+a+t|=15744006 > 60000
+  fs=6 ft=7 b=5: SKIP |s+a+t|=8512754 > 60000
+  fs=1 ft=7 b=5: SKIP |s+a+t|=6427235 > 60000
+== stage 4: July family at its own room ==
+JULY-sat/miss-r D=r (atom): |S|=10 d=1 J=5 room=7 adm=true gates(jump/box/env)=0/1/1
+  fs=4 ft=4 b=7: ~  act=false |s+a+t|=47537 (17638 ms)
+  fs=3 ft=4 b=7: ~  act=false |s+a+t|=31186 (10832 ms)
+  fs=1 ft=4 b=7: ~  act=false |s+a+t|=27242 (8396 ms)
+  fs=4 ft=5 b=7: SKIP |s+a+t|=156793 > 60000
+  fs=5 ft=5 b=7: SKIP |s+a+t|=238752 > 60000
+  fs=4 ft=4 b=8: ~  act=false |s+a+t|=47537 (17803 ms)
+  fs=3 ft=4 b=8: ~  act=false |s+a+t|=31186 (10933 ms)
+  fs=1 ft=4 b=8: ~  act=false |s+a+t|=27242 (8440 ms)
+  fs=4 ft=5 b=8: SKIP |s+a+t|=156793 > 60000
+  fs=5 ft=5 b=8: SKIP |s+a+t|=238752 > 60000
+JULY-sat/miss-r D=p (elim var): |S|=10 d=1 J=5 room=7 adm=true gates(jump/box/env)=0/1/1
+  fs=4 ft=4 b=7: ~  act=false |s+a+t|=47633 (15489 ms)
+  fs=3 ft=4 b=7: ~  act=false |s+a+t|=31282 (9626 ms)
+  fs=1 ft=4 b=7: ~  act=false |s+a+t|=27290 (8191 ms)
+  fs=4 ft=5 b=7: SKIP |s+a+t|=156889 > 60000
+  fs=5 ft=5 b=7: SKIP |s+a+t|=238848 > 60000
+  fs=4 ft=4 b=8: ~  act=false |s+a+t|=47633 (15528 ms)
+  fs=3 ft=4 b=8: ~  act=false |s+a+t|=31282 (9660 ms)
+  fs=1 ft=4 b=8: ~  act=false |s+a+t|=27290 (7991 ms)
+  fs=4 ft=5 b=8: SKIP |s+a+t|=156889 > 60000
+  fs=5 ft=5 b=8: SKIP |s+a+t|=238848 > 60000
+JULY-sat/miss-r D=gk: |S|=10 d=1 J=5 room=7 adm=true gates(jump/box/env)=0/1/1
+  fs=4 ft=4 b=7: P  act=false |s+a+t|=49797 (2670 ms)
+  fs=3 ft=4 b=7: P  act=false |s+a+t|=32534 (2239 ms)
+  fs=1 ft=4 b=7: P  act=false |s+a+t|=28372 (1355 ms)
+  fs=4 ft=5 b=7: SKIP |s+a+t|=163377 > 60000
+  fs=5 ft=5 b=7: SKIP |s+a+t|=249660 > 60000
+  fs=4 ft=4 b=8: P  act=false |s+a+t|=49797 (2688 ms)
+  fs=3 ft=4 b=8: P  act=false |s+a+t|=32534 (2244 ms)
+  fs=1 ft=4 b=8: P  act=false |s+a+t|=28372 (1370 ms)
+  fs=4 ft=5 b=8: SKIP |s+a+t|=163377 > 60000
+  fs=5 ft=5 b=8: SKIP |s+a+t|=249660 > 60000
+JULY-sat/miss-s D=gk: |S|=10 d=1 J=5 room=7 adm=true gates(jump/box/env)=0/1/0
+  fs=4 ft=4 b=7: P  act=false |s+a+t|=26025 (11887 ms)
+  fs=3 ft=4 b=7: P  act=false |s+a+t|=16834 (7677 ms)
+  fs=1 ft=4 b=7: P  act=false |s+a+t|=14706 (6644 ms)
+  fs=4 ft=5 b=7: SKIP |s+a+t|=90755 > 60000
+  fs=5 ft=5 b=7: SKIP |s+a+t|=142272 > 60000
+  fs=4 ft=4 b=8: P  act=false |s+a+t|=26025 (11792 ms)
+  fs=3 ft=4 b=8: P  act=false |s+a+t|=16834 (7588 ms)
+  fs=1 ft=4 b=8: P  act=false |s+a+t|=14706 (6746 ms)
+  fs=4 ft=5 b=8: SKIP |s+a+t|=90755 > 60000
+  fs=5 ft=5 b=8: SKIP |s+a+t|=142272 > 60000
+JULY@room    ctx=Gk d=9 D=gk: |S|=10 d=9 J=5 room=63 adm=true gates(jump/box/env)=0/1/0
+  fs=4 ft=4 b=63: ~  act=false |s+a+t|=24249 (10234 ms)
+  fs=3 ft=4 b=63: ~  act=false |s+a+t|=15506 (4761 ms)
+  fs=1 ft=4 b=63: ~  act=false |s+a+t|=13616 (4037 ms)
+  fs=4 ft=5 b=63: SKIP |s+a+t|=88017 > 60000
+  fs=5 ft=5 b=63: SKIP |s+a+t|=140168 > 60000
+  fs=4 ft=4 b=64: ~  act=false |s+a+t|=24249 (10414 ms)
+  fs=3 ft=4 b=64: ~  act=false |s+a+t|=15506 (4848 ms)
+  fs=1 ft=4 b=64: ~  act=false |s+a+t|=13616 (4061 ms)
+  fs=4 ft=5 b=64: SKIP |s+a+t|=88017 > 60000
+  fs=5 ft=5 b=64: SKIP |s+a+t|=140168 > 60000
+== stage 4 done ==
+== battery C: ◯⊥ body + deep-search controls ==
+TOWER1/miss-z,⊥ D=⊥ (◯⊥ body) d=2: |S|=10 d=2 J=2 room=8 adm=true gates(jump/box/env)=1/1/1
+  fs=4 ft=4 b=8: SKIP |s+a+t|=319421 > 60000
+  fs=3 ft=4 b=8: SKIP |s+a+t|=199501 > 60000
+  fs=1 ft=4 b=8: SKIP |s+a+t|=184051 > 60000
+  fs=4 ft=5 b=8: SKIP |s+a+t|=1724450 > 60000
+  fs=5 ft=5 b=8: SKIP |s+a+t|=2755482 > 60000
+  fs=4 ft=4 b=9: SKIP |s+a+t|=319421 > 60000
+  fs=3 ft=4 b=9: SKIP |s+a+t|=199501 > 60000
+  fs=1 ft=4 b=9: SKIP |s+a+t|=184051 > 60000
+  fs=4 ft=5 b=9: SKIP |s+a+t|=1724450 > 60000
+  fs=5 ft=5 b=9: SKIP |s+a+t|=2755482 > 60000
+ATOM/miss-e  D=e (control): |S|=2 d=1 J=0 room=2 adm=true gates(jump/box/env)=0/0/1
+  fs=4 ft=4 b=2: ~  act=false |s+a+t|=264 (10409 ms)
+  fs=3 ft=4 b=2: ~  act=false |s+a+t|=264 (10457 ms)
+  fs=1 ft=4 b=2: P  act=false |s+a+t|=173 (71 ms)
+  fs=2 ft=5 b=2: P  act=false |s+a+t|=238 (1609 ms)
+  fs=5 ft=5 b=2: ~  act=false |s+a+t|=264 (10541 ms)
+  fs=5 ft=5 b=3: ~  act=false |s+a+t|=264 (10691 ms)
+  fs=4 ft=5 b=3: ~  act=false |s+a+t|=264 (10646 ms)
+  fs=1 ft=5 b=3: P  act=false |s+a+t|=173 (70 ms)
+  fs=2 ft=6 b=3: P  act=false |s+a+t|=238 (1545 ms)
+  fs=6 ft=6 b=3: ~  act=false |s+a+t|=264 (11028 ms)
+ATOMp/miss-p D=p (control): |S|=2 d=1 J=0 room=2 adm=true gates(jump/box/env)=0/0/1
+  fs=4 ft=4 b=2: P  act=false |s+a+t|=226 (162 ms)
+  fs=3 ft=4 b=2: P  act=false |s+a+t|=226 (159 ms)
+  fs=1 ft=4 b=2: P  act=false |s+a+t|=153 (34 ms)
+  fs=2 ft=5 b=2: P  act=false |s+a+t|=210 (1891 ms)
+  fs=5 ft=5 b=2: P  act=false |s+a+t|=226 (161 ms)
+  fs=5 ft=5 b=3: P  act=false |s+a+t|=226 (157 ms)
+  fs=4 ft=5 b=3: P  act=false |s+a+t|=226 (158 ms)
+  fs=1 ft=5 b=3: P  act=false |s+a+t|=153 (34 ms)
+  fs=2 ft=6 b=3: P  act=false |s+a+t|=210 (2005 ms)
+  fs=6 ft=6 b=3: P  act=false |s+a+t|=226 (162 ms)
+== battery C done ==
+== battery D: deep hunt on the unsettled cells ==
+JB2/miss-c DEEP: |S|=8 d=1 J=1 room=3 adm=true gates(jump/box/env)=1/0/0
+  fs=5 ft=5 b=3: ~  act=true |s+a+t|=17191 (82619 ms)
+  fs=4 ft=5 b=3: ~  act=true |s+a+t|=11895 (54018 ms)
+  fs=1 ft=5 b=3: ~  act=true |s+a+t|=7857 (31557 ms)
+  fs=2 ft=6 b=3: P  act=true |s+a+t|=11809 (23765 ms)
+  fs=6 ft=6 b=3: P  act=true |s+a+t|=29219 (54516 ms)
+  fs=6 ft=6 b=4: P  act=true |s+a+t|=46077 (71312 ms)
+  fs=5 ft=6 b=4: P  act=true |s+a+t|=31695 (51282 ms)
+  fs=1 ft=6 b=4: P  act=true |s+a+t|=21265 (35479 ms)
+  fs=2 ft=7 b=4: P  act=true |s+a+t|=33959 (65426 ms)
+  fs=7 ft=7 b=4: P  act=true |s+a+t|=83907 (146106 ms)
+JB/miss-c DEEP (7,7) b=4: |S|=7 d=1 J=1 room=3 adm=true gates(jump/box/env)=1/0/0
+  fs=6 ft=6 b=4: P  act=true |s+a+t|=29741 (46233 ms)
+  fs=5 ft=6 b=4: P  act=true |s+a+t|=20487 (31830 ms)
+  fs=1 ft=6 b=4: P  act=true |s+a+t|=13715 (23255 ms)
+  fs=2 ft=7 b=4: P  act=true |s+a+t|=20531 (40592 ms)
+  fs=7 ft=7 b=4: P  act=true |s+a+t|=50399 (90996 ms)
+== battery D done ==
+== battery E: ⊃◯-gate band, raised cap ==
+GATE/miss-c D=a RAISED-CAP: |S|=4 d=1 J=2 room=4 adm=true gates(jump/box/env)=0/1/0
+  fs=6 ft=6 b=4: P  act=true |s+a+t|=232519 (21575 ms)
+  fs=5 ft=6 b=4: P  act=true |s+a+t|=137963 (13709 ms)
+  fs=1 ft=6 b=4: P  act=true |s+a+t|=90575 (11455 ms)
+  fs=2 ft=7 b=4: P  act=true |s+a+t|=133360 (29283 ms)
+  fs=7 ft=7 b=4: P  act=true |s+a+t|=401535 (70188 ms)
+GATE/miss-c D=a⊃b RAISED-CAP: |S|=6 d=1 J=2 room=4 adm=true gates(jump/box/env)=0/1/0
+  fs=6 ft=6 b=4: P  act=true |s+a+t|=424227 (220280 ms)
+  fs=5 ft=6 b=4: P  act=true |s+a+t|=244632 (125646 ms)
+  fs=1 ft=6 b=4: P  act=true |s+a+t|=177664 (102617 ms)
+  fs=2 ft=7 b=4: P  act=true |s+a+t|=368530 (246335 ms)
+  fs=7 ft=7 b=4: SKIP |s+a+t|=1019191 > 460000
+OR/miss-e,f DEEP: |S|=4 d=2 J=0 room=4 adm=true gates(jump/box/env)=0/0/0
+  fs=6 ft=6 b=4: P  act=false |s+a+t|=859 (466 ms)
+  fs=5 ft=6 b=4: P  act=false |s+a+t|=859 (463 ms)
+  fs=1 ft=6 b=4: P  act=false |s+a+t|=483 (138 ms)
+  fs=2 ft=7 b=4: P  act=false |s+a+t|=631 (234 ms)
+  fs=7 ft=7 b=4: P  act=false |s+a+t|=859 (463 ms)
+  fs=7 ft=7 b=5: P  act=false |s+a+t|=859 (461 ms)
+  fs=6 ft=7 b=5: P  act=false |s+a+t|=859 (469 ms)
+  fs=1 ft=7 b=5: P  act=false |s+a+t|=483 (137 ms)
+  fs=2 ft=8 b=5: P  act=false |s+a+t|=631 (235 ms)
+  fs=8 ft=8 b=5: P  act=false |s+a+t|=859 (465 ms)
+== battery E done ==
+== battery F: towers at truncating fuels ==
+TOWER1/miss-z TRUNC: |S|=8 d=1 J=2 room=4 adm=true gates(jump/box/env)=1/1/0
+  fs=4 ft=4 b=4: SKIP |s+a+t|=96505 > 60000
+  fs=3 ft=4 b=4: SKIP |s+a+t|=61302 > 60000
+  fs=1 ft=4 b=4: P  act=false |s+a+t|=55680 (13154 ms)
+  fs=4 ft=5 b=4: SKIP |s+a+t|=316772 > 60000
+  fs=5 ft=5 b=4: SKIP |s+a+t|=574063 > 60000
+  fs=4 ft=4 b=5: SKIP |s+a+t|=96505 > 60000
+  fs=3 ft=4 b=5: SKIP |s+a+t|=61302 > 60000
+  fs=1 ft=4 b=5: P  act=false |s+a+t|=55680 (13202 ms)
+  fs=4 ft=5 b=5: SKIP |s+a+t|=447047 > 60000
+  fs=5 ft=5 b=5: SKIP |s+a+t|=704338 > 60000
+TOWER1p/miss-z TRUNC: |S|=8 d=1 J=2 room=4 adm=true gates(jump/box/env)=1/1/0
+  fs=4 ft=4 b=4: SKIP |s+a+t|=92533 > 60000
+  fs=3 ft=4 b=4: P  act=false |s+a+t|=58800 (1215 ms)
+  fs=1 ft=4 b=4: P  act=false |s+a+t|=53400 (1192 ms)
+  fs=4 ft=5 b=4: SKIP |s+a+t|=297886 > 60000
+  fs=5 ft=5 b=4: SKIP |s+a+t|=544229 > 60000
+  fs=4 ft=4 b=5: SKIP |s+a+t|=92533 > 60000
+  fs=3 ft=4 b=5: P  act=false |s+a+t|=58800 (1211 ms)
+  fs=1 ft=4 b=5: P  act=false |s+a+t|=53400 (1198 ms)
+  fs=4 ft=5 b=5: SKIP |s+a+t|=428161 > 60000
+  fs=5 ft=5 b=5: SKIP |s+a+t|=674504 > 60000
+TOWER1/miss-z D=◯X TRUNC: |S|=9 d=1 J=2 room=4 adm=true gates(jump/box/env)=1/1/0
+  fs=4 ft=4 b=4: SKIP |s+a+t|=110345 > 60000
+  fs=3 ft=4 b=4: SKIP |s+a+t|=69418 > 60000
+  fs=1 ft=4 b=4: SKIP |s+a+t|=62600 > 60000
+  fs=4 ft=5 b=4: SKIP |s+a+t|=368772 > 60000
+  fs=5 ft=5 b=4: SKIP |s+a+t|=664223 > 60000
+  fs=4 ft=4 b=5: SKIP |s+a+t|=110345 > 60000
+  fs=3 ft=4 b=5: SKIP |s+a+t|=69418 > 60000
+  fs=1 ft=4 b=5: SKIP |s+a+t|=62600 > 60000
+  fs=4 ft=5 b=5: SKIP |s+a+t|=499047 > 60000
+  fs=5 ft=5 b=5: SKIP |s+a+t|=794498 > 60000
+TOWER2/miss-z TRUNC: |S|=10 d=1 J=3 room=5 adm=true gates(jump/box/env)=1/2/0
+  fs=4 ft=4 b=5: SKIP |s+a+t|=623341 > 60000
+  fs=3 ft=4 b=5: SKIP |s+a+t|=385338 > 60000
+  fs=1 ft=4 b=5: SKIP |s+a+t|=365187 > 60000
+  fs=4 ft=5 b=5: SKIP |s+a+t|=4921688 > 60000
+  fs=5 ft=5 b=5: SKIP |s+a+t|=7961926 > 60000
+  fs=4 ft=4 b=6: SKIP |s+a+t|=623341 > 60000
+  fs=3 ft=4 b=6: SKIP |s+a+t|=385338 > 60000
+  fs=1 ft=4 b=6: SKIP |s+a+t|=365187 > 60000
+  fs=4 ft=5 b=6: SKIP |s+a+t|=4921688 > 60000
+  fs=5 ft=5 b=6: SKIP |s+a+t|=7961926 > 60000
+== battery F done ==
+== battery G: escalation on residual cells ==
+JB2/miss-c ESC (5,5) b=3: |S|=8 d=1 J=1 room=3 adm=true gates(jump/box/env)=1/0/0
+  fs=5 ft=5 b=3: ~  act=true |s+a+t|=17191 (402822 ms)
+JB2/miss-c ESC (1,5) b=3: |S|=8 d=1 J=1 room=3 adm=true gates(jump/box/env)=1/0/0
+  fs=1 ft=5 b=3: ~  act=true |s+a+t|=7857 (125622 ms)
+== battery G done ==

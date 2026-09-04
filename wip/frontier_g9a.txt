@@ -1,0 +1,8 @@
+# === round-9 fresh-row witnesses (g9a) ===
+# g9a Ak-ASC  [E@(2,1)(C₁::Gk), amb@3] |- E@(2,2)(C₁::Gk) sz=1716
+#   ~ (quiet, unproved at 40000)
+# g9a Ak-ASC4 [E@(2,1)(C₁::Gk), amb@4] |- E@(2,2)(C₁::Gk) sz=3383
+#   ~ (quiet, unproved at 40000)
+# g9a Fk-1   [freshRow@2, amb@3] |- freshRow@1 sz=2166
+#   ~ (quiet, unproved at 40000)
+# g9a Fk-1g  [freshRow@2, E@(3,0)(Gk), amb@3] |- freshRow@1 sz=2169

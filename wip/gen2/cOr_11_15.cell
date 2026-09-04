@@ -1,0 +1,7 @@
+11
+cOr_11_15
+/-- OPEN CELL: candidates [11] neither proved (searcher + cut-chains
+through all 19 representatives) nor refuted (countermodel batteries
+including the exhaustive ≤5-world sweep).  Sorried at the first open
+candidate. -/
+theorem cOr_11_15 : Interd (q11.or q15) q11 := sorry

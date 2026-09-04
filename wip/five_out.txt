@@ -1,0 +1,105 @@
+=== 25 open cells against 1459 rooted 5-world models ===
+
+REFUTED  q5 |- q7   at world 0 of  { n := 5,
+  ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (3, 2), (4, 2)],
+  rm := [(0, 1), (3, 2), (4, 2)],
+  fall := [2],
+  val := [] }
+         [mutually confluent: true]   (29 ms)
+REFUTED  q5 |- q8   at world 0 of  { n := 5,
+  ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (3, 2), (4, 2)],
+  rm := [(0, 1), (3, 2), (4, 2)],
+  fall := [2],
+  val := [] }
+         [mutually confluent: true]   (34 ms)
+REFUTED  q8 |- q11   at world 0 of  { n := 5, ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (1, 3), (2, 3)], rm := [(2, 3)], fall := [3], val := [] }
+         [mutually confluent: true]   (67 ms)
+REFUTED  q9 |- q8   at world 0 of  { n := 5,
+  ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (3, 2), (4, 2)],
+  rm := [(0, 1), (3, 2), (4, 2)],
+  fall := [2],
+  val := [] }
+         [mutually confluent: true]   (37 ms)
+REFUTED  q10 |- q8   at world 0 of  { n := 5,
+  ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (3, 2), (4, 2)],
+  rm := [(0, 1), (3, 2), (4, 2)],
+  fall := [2],
+  val := [] }
+         [mutually confluent: true]   (38 ms)
+REFUTED  q10 |- q13   at world 0 of  { n := 5,
+  ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (1, 3), (1, 4), (2, 3), (4, 3)],
+  rm := [(1, 2), (4, 3)],
+  fall := [3],
+  val := [] }
+         [mutually confluent: true]   (374 ms)
+REFUTED  q11 |- q8   at world 0 of  { n := 5,
+  ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (3, 2), (4, 2)],
+  rm := [(0, 1), (3, 2), (4, 2)],
+  fall := [2],
+  val := [] }
+         [mutually confluent: true]   (38 ms)
+REFUTED  q11 |- q13   at world 0 of  { n := 5,
+  ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (1, 3), (1, 4), (2, 3), (4, 3)],
+  rm := [(1, 2), (4, 3)],
+  fall := [3],
+  val := [] }
+         [mutually confluent: true]   (360 ms)
+REFUTED  q12 |- q8   at world 0 of  { n := 5,
+  ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (3, 2), (4, 2)],
+  rm := [(0, 1), (3, 2), (4, 2)],
+  fall := [2],
+  val := [] }
+         [mutually confluent: true]   (35 ms)
+no 5-world countermodel: q12 |- q11   (547 ms)
+REFUTED  q13 |- q11   at world 0 of  { n := 5, ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (1, 3), (2, 3)], rm := [(2, 3)], fall := [3], val := [] }
+         [mutually confluent: true]   (75 ms)
+REFUTED  q14 |- q8   at world 0 of  { n := 5,
+  ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (3, 2), (4, 2)],
+  rm := [(0, 1), (3, 2), (4, 2)],
+  fall := [2],
+  val := [] }
+         [mutually confluent: true]   (47 ms)
+REFUTED  q14 |- q11   at world 0 of  { n := 5, ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (1, 3), (2, 3)], rm := [(2, 3)], fall := [3], val := [] }
+         [mutually confluent: true]   (79 ms)
+no 5-world countermodel: q14 |- q13   (1167 ms)
+REFUTED  q5 |- t8   at world 0 of  { n := 5,
+  ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (3, 2), (4, 2)],
+  rm := [(0, 1), (3, 2), (4, 2)],
+  fall := [2],
+  val := [] }
+         [mutually confluent: true]   (42 ms)
+REFUTED  t8 |- q9   at world 0 of  { n := 5, ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (1, 3), (2, 3)], rm := [(2, 3)], fall := [3], val := [] }
+         [mutually confluent: true]   (77 ms)
+REFUTED  q9 |- t8   at world 0 of  { n := 5,
+  ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (3, 2), (4, 2)],
+  rm := [(0, 1), (3, 2), (4, 2)],
+  fall := [2],
+  val := [] }
+         [mutually confluent: true]   (41 ms)
+REFUTED  t8 |- q12   at world 0 of  { n := 5, ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (1, 3), (2, 3)], rm := [(2, 3)], fall := [3], val := [] }
+         [mutually confluent: true]   (77 ms)
+REFUTED  q12 |- t8   at world 0 of  { n := 5,
+  ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (3, 2), (4, 2)],
+  rm := [(0, 1), (3, 2), (4, 2)],
+  fall := [2],
+  val := [] }
+         [mutually confluent: true]   (42 ms)
+REFUTED  t9 |- q8   at world 0 of  { n := 5,
+  ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (3, 2), (4, 2)],
+  rm := [(0, 1), (3, 2), (4, 2)],
+  fall := [2],
+  val := [] }
+         [mutually confluent: true]   (43 ms)
+no 5-world countermodel: q8 |- t9   (758 ms)
+REFUTED  t9 |- q13   at world 0 of  { n := 5,
+  ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2), (1, 3), (1, 4), (2, 3), (4, 3)],
+  rm := [(1, 2), (4, 3)],
+  fall := [3],
+  val := [] }
+         [mutually confluent: true]   (400 ms)
+no 5-world countermodel: q13 |- t9   (937 ms)
+REFUTED  t9 |- q14   at world 0 of  { n := 5, ri := [(0, 1), (0, 2), (0, 3), (0, 4), (1, 2)], rm := [(1, 2)], fall := [2], val := [] }
+         [mutually confluent: true]   (6 ms)
+no 5-world countermodel: q14 |- t9   (998 ms)
+
+=== 20 of 25 cells refuted at five worlds ===

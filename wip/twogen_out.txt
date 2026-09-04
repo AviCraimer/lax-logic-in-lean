@@ -1,0 +1,29 @@
+=== realisable (F, G) pairs for (◯⊥, ◯¬◯⊥) ===
+
+n = 3: 405 models, 6 distinct (F,G) pairs (of 64 bit-pairs); F ⊆ G violations: 0
+        F = G in 2 of them, F ⊊ G in 4
+        F=[false, false, false]  G=[true, true, true]
+        F=[false, false, true]  G=[true, true, true]
+        F=[false, true, false]  G=[true, true, true]
+        F=[false, true, true]  G=[true, true, true]
+        F=[true, true, true]  G=[true, true, true]
+        F=[false, true, true]  G=[false, true, true]
+n = 4: 21303 models, 16 distinct (F,G) pairs (of 256 bit-pairs); F ⊆ G violations: 0
+        F = G in 5 of them, F ⊊ G in 11
+        F=[false, false, false, false]  G=[true, true, true, true]
+        F=[false, false, false, true]  G=[true, true, true, true]
+        F=[false, false, true, false]  G=[true, true, true, true]
+        F=[false, false, true, true]  G=[true, true, true, true]
+        F=[false, true, false, false]  G=[true, true, true, true]
+        F=[false, true, false, true]  G=[true, true, true, true]
+        F=[false, true, true, false]  G=[true, true, true, true]
+        F=[false, true, true, true]  G=[true, true, true, true]
+        F=[true, true, true, true]  G=[true, true, true, true]
+        F=[false, false, true, true]  G=[false, true, true, true]
+        F=[false, true, true, true]  G=[false, true, true, true]
+        F=[false, true, false, true]  G=[false, true, true, true]
+        F=[false, true, true, false]  G=[false, true, true, true]
+        F=[false, true, true, false]  G=[false, true, true, false]
+        F=[false, true, false, true]  G=[false, true, false, true]
+        F=[false, false, true, true]  G=[false, false, true, true]
+-- probe 'twogen' stopped at the 420s cap (rc=143); output above is partial but valid.

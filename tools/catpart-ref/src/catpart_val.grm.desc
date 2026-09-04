@@ -1,0 +1,765 @@
+
+state 0:
+
+	start : . func_spec 
+	start : .  (reduce by rule 1)
+
+	CAP	shift 2
+
+	start	goto 70
+	func_spec	goto 1
+
+	.	reduce by rule 1
+
+
+state 1:
+
+	start : func_spec .  (reduce by rule 0)
+
+
+
+	.	reduce by rule 0
+
+
+state 2:
+
+	func_spec : CAP . FUN COLON VAR NEWLINE categ_specs ENDFUN SEMICOLON NEWLINE 
+
+	FUN	shift 3
+
+
+	.	error
+
+
+state 3:
+
+	func_spec : CAP FUN . COLON VAR NEWLINE categ_specs ENDFUN SEMICOLON NEWLINE 
+
+	COLON	shift 4
+
+
+	.	error
+
+
+state 4:
+
+	func_spec : CAP FUN COLON . VAR NEWLINE categ_specs ENDFUN SEMICOLON NEWLINE 
+
+	VAR	shift 5
+
+
+	.	error
+
+
+state 5:
+
+	func_spec : CAP FUN COLON VAR . NEWLINE categ_specs ENDFUN SEMICOLON NEWLINE 
+
+	NEWLINE	shift 6
+
+
+	.	error
+
+
+state 6:
+
+	func_spec : CAP FUN COLON VAR NEWLINE . categ_specs ENDFUN SEMICOLON NEWLINE 
+
+	CATEGORIES	shift 8
+
+	categ_specs	goto 7
+
+	.	reduce by rule 4
+
+
+state 7:
+
+	func_spec : CAP FUN COLON VAR NEWLINE categ_specs . ENDFUN SEMICOLON NEWLINE 
+
+	ENDFUN	shift 9
+
+
+	.	error
+
+
+state 8:
+
+	categ_specs : CATEGORIES . COLON NEWLINE categs 
+
+	COLON	shift 10
+
+
+	.	error
+
+
+state 9:
+
+	func_spec : CAP FUN COLON VAR NEWLINE categ_specs ENDFUN . SEMICOLON NEWLINE 
+
+	SEMICOLON	shift 11
+
+
+	.	error
+
+
+state 10:
+
+	categ_specs : CATEGORIES COLON . NEWLINE categs 
+
+	NEWLINE	shift 12
+
+
+	.	error
+
+
+state 11:
+
+	func_spec : CAP FUN COLON VAR NEWLINE categ_specs ENDFUN SEMICOLON . NEWLINE 
+
+	NEWLINE	shift 13
+
+
+	.	error
+
+
+state 12:
+
+	categ_specs : CATEGORIES COLON NEWLINE . categs 
+
+	NUMBER	shift 16
+
+	categs	goto 15
+	one_categ	goto 14
+
+	.	reduce by rule 6
+
+
+state 13:
+
+	func_spec : CAP FUN COLON VAR NEWLINE categ_specs ENDFUN SEMICOLON NEWLINE .  (reduce by rule 2)
+
+
+
+	.	reduce by rule 2
+
+
+state 14:
+
+	categs : one_categ . categs 
+
+	NUMBER	shift 16
+
+	categs	goto 17
+	one_categ	goto 14
+
+	.	reduce by rule 6
+
+
+state 15:
+
+	categ_specs : CATEGORIES COLON NEWLINE categs .  (reduce by rule 3)
+
+
+
+	.	reduce by rule 3
+
+
+state 16:
+
+	one_categ : NUMBER . categ_name NEWLINE choices 
+
+	VAR	shift 19
+
+	categ_name	goto 18
+
+	.	error
+
+
+state 17:
+
+	categs : one_categ categs .  (reduce by rule 5)
+
+
+
+	.	reduce by rule 5
+
+
+state 18:
+
+	one_categ : NUMBER categ_name . NEWLINE choices 
+
+	NEWLINE	shift 20
+
+
+	.	error
+
+
+state 19:
+
+	categ_name : VAR .  (reduce by rule 8)
+
+
+
+	.	reduce by rule 8
+
+
+state 20:
+
+	one_categ : NUMBER categ_name NEWLINE . choices 
+
+	STAR	shift 23
+
+	choices	goto 22
+	choice	goto 21
+
+	.	error
+
+
+state 21:
+
+	choices : choice .  (reduce by rule 9)
+	choices : choice . choices 
+
+	STAR	shift 23
+
+	choices	goto 24
+	choice	goto 21
+
+	.	reduce by rule 9
+
+
+state 22:
+
+	one_categ : NUMBER categ_name NEWLINE choices .  (reduce by rule 7)
+
+
+
+	.	reduce by rule 7
+
+
+state 23:
+
+	choice : STAR . ch_name maybe_modifiers NEWLINE 
+
+	VAR	shift 26
+
+	ch_name	goto 25
+
+	.	error
+
+
+state 24:
+
+	choices : choice choices .  (reduce by rule 10)
+
+
+
+	.	reduce by rule 10
+
+
+state 25:
+
+	choice : STAR ch_name . maybe_modifiers NEWLINE 
+
+	LSQBR	shift 28
+
+	maybe_modifiers	goto 27
+
+	.	reduce by rule 20
+
+
+state 26:
+
+	ch_name : VAR .  (reduce by rule 12)
+
+
+
+	.	reduce by rule 12
+
+
+state 27:
+
+	choice : STAR ch_name maybe_modifiers . NEWLINE 
+
+	NEWLINE	shift 29
+
+
+	.	error
+
+
+state 28:
+
+	maybe_modifiers : LSQBR . IF cond RSQBR LSQBR PROPERTY properties RSQBR LSQBR flag RSQBR 
+	maybe_modifiers : LSQBR . IF cond RSQBR LSQBR PROPERTY properties RSQBR 
+	maybe_modifiers : LSQBR . IF cond RSQBR LSQBR flag RSQBR 
+	maybe_modifiers : LSQBR . IF cond RSQBR 
+	maybe_modifiers : LSQBR . PROPERTY properties RSQBR LSQBR flag RSQBR 
+	maybe_modifiers : LSQBR . PROPERTY properties RSQBR 
+	maybe_modifiers : LSQBR . flag RSQBR 
+
+	SINGLE	shift 34
+	ERROR	shift 33
+	PROPERTY	shift 32
+	IF	shift 31
+
+	flag	goto 30
+
+	.	error
+
+
+state 29:
+
+	choice : STAR ch_name maybe_modifiers NEWLINE .  (reduce by rule 11)
+
+
+
+	.	reduce by rule 11
+
+
+state 30:
+
+	maybe_modifiers : LSQBR flag . RSQBR 
+
+	RSQBR	shift 35
+
+
+	.	error
+
+
+state 31:
+
+	maybe_modifiers : LSQBR IF . cond RSQBR LSQBR PROPERTY properties RSQBR LSQBR flag RSQBR 
+	maybe_modifiers : LSQBR IF . cond RSQBR LSQBR PROPERTY properties RSQBR 
+	maybe_modifiers : LSQBR IF . cond RSQBR LSQBR flag RSQBR 
+	maybe_modifiers : LSQBR IF . cond RSQBR 
+
+	VAR	shift 40
+	NOT	shift 39
+	LRBR	shift 38
+
+	cond	goto 37
+	property	goto 36
+
+	.	error
+
+
+state 32:
+
+	maybe_modifiers : LSQBR PROPERTY . properties RSQBR LSQBR flag RSQBR 
+	maybe_modifiers : LSQBR PROPERTY . properties RSQBR 
+
+	VAR	shift 40
+
+	property	goto 42
+	properties	goto 41
+
+	.	error
+
+
+state 33:
+
+	flag : ERROR .  (reduce by rule 29)
+
+
+
+	.	reduce by rule 29
+
+
+state 34:
+
+	flag : SINGLE .  (reduce by rule 30)
+
+
+
+	.	reduce by rule 30
+
+
+state 35:
+
+	maybe_modifiers : LSQBR flag RSQBR .  (reduce by rule 19)
+
+
+
+	.	reduce by rule 19
+
+
+state 36:
+
+	cond : property .  (reduce by rule 21)
+
+
+
+	.	reduce by rule 21
+
+
+state 37:
+
+	maybe_modifiers : LSQBR IF cond . RSQBR LSQBR PROPERTY properties RSQBR LSQBR flag RSQBR 
+	maybe_modifiers : LSQBR IF cond . RSQBR LSQBR PROPERTY properties RSQBR 
+	maybe_modifiers : LSQBR IF cond . RSQBR LSQBR flag RSQBR 
+	maybe_modifiers : LSQBR IF cond . RSQBR 
+
+	RSQBR	shift 43
+
+
+	.	error
+
+
+state 38:
+
+	cond : LRBR . cond RRBR log_op LRBR cond RRBR 
+
+	VAR	shift 40
+	NOT	shift 39
+	LRBR	shift 38
+
+	cond	goto 44
+	property	goto 36
+
+	.	error
+
+
+state 39:
+
+	cond : NOT . LRBR cond RRBR 
+
+	LRBR	shift 45
+
+
+	.	error
+
+
+state 40:
+
+	property : VAR .  (reduce by rule 28)
+
+
+
+	.	reduce by rule 28
+
+
+state 41:
+
+	maybe_modifiers : LSQBR PROPERTY properties . RSQBR LSQBR flag RSQBR 
+	maybe_modifiers : LSQBR PROPERTY properties . RSQBR 
+
+	RSQBR	shift 46
+
+
+	.	error
+
+
+state 42:
+
+	properties : property .  (reduce by rule 26)
+	properties : property . COMMA properties 
+
+	COMMA	shift 47
+
+
+	.	reduce by rule 26
+
+
+state 43:
+
+	maybe_modifiers : LSQBR IF cond RSQBR . LSQBR PROPERTY properties RSQBR LSQBR flag RSQBR 
+	maybe_modifiers : LSQBR IF cond RSQBR . LSQBR PROPERTY properties RSQBR 
+	maybe_modifiers : LSQBR IF cond RSQBR . LSQBR flag RSQBR 
+	maybe_modifiers : LSQBR IF cond RSQBR .  (reduce by rule 16)
+
+	LSQBR	shift 48
+
+
+	.	reduce by rule 16
+
+
+state 44:
+
+	cond : LRBR cond . RRBR log_op LRBR cond RRBR 
+
+	RRBR	shift 49
+
+
+	.	error
+
+
+state 45:
+
+	cond : NOT LRBR . cond RRBR 
+
+	VAR	shift 40
+	NOT	shift 39
+	LRBR	shift 38
+
+	cond	goto 50
+	property	goto 36
+
+	.	error
+
+
+state 46:
+
+	maybe_modifiers : LSQBR PROPERTY properties RSQBR . LSQBR flag RSQBR 
+	maybe_modifiers : LSQBR PROPERTY properties RSQBR .  (reduce by rule 18)
+
+	LSQBR	shift 51
+
+
+	.	reduce by rule 18
+
+
+state 47:
+
+	properties : property COMMA . properties 
+
+	VAR	shift 40
+
+	property	goto 42
+	properties	goto 52
+
+	.	error
+
+
+state 48:
+
+	maybe_modifiers : LSQBR IF cond RSQBR LSQBR . PROPERTY properties RSQBR LSQBR flag RSQBR 
+	maybe_modifiers : LSQBR IF cond RSQBR LSQBR . PROPERTY properties RSQBR 
+	maybe_modifiers : LSQBR IF cond RSQBR LSQBR . flag RSQBR 
+
+	SINGLE	shift 34
+	ERROR	shift 33
+	PROPERTY	shift 54
+
+	flag	goto 53
+
+	.	error
+
+
+state 49:
+
+	cond : LRBR cond RRBR . log_op LRBR cond RRBR 
+
+	OR	shift 57
+	AND	shift 56
+
+	log_op	goto 55
+
+	.	error
+
+
+state 50:
+
+	cond : NOT LRBR cond . RRBR 
+
+	RRBR	shift 58
+
+
+	.	error
+
+
+state 51:
+
+	maybe_modifiers : LSQBR PROPERTY properties RSQBR LSQBR . flag RSQBR 
+
+	SINGLE	shift 34
+	ERROR	shift 33
+
+	flag	goto 59
+
+	.	error
+
+
+state 52:
+
+	properties : property COMMA properties .  (reduce by rule 27)
+
+
+
+	.	reduce by rule 27
+
+
+state 53:
+
+	maybe_modifiers : LSQBR IF cond RSQBR LSQBR flag . RSQBR 
+
+	RSQBR	shift 60
+
+
+	.	error
+
+
+state 54:
+
+	maybe_modifiers : LSQBR IF cond RSQBR LSQBR PROPERTY . properties RSQBR LSQBR flag RSQBR 
+	maybe_modifiers : LSQBR IF cond RSQBR LSQBR PROPERTY . properties RSQBR 
+
+	VAR	shift 40
+
+	property	goto 42
+	properties	goto 61
+
+	.	error
+
+
+state 55:
+
+	cond : LRBR cond RRBR log_op . LRBR cond RRBR 
+
+	LRBR	shift 62
+
+
+	.	error
+
+
+state 56:
+
+	log_op : AND .  (reduce by rule 24)
+
+
+
+	.	reduce by rule 24
+
+
+state 57:
+
+	log_op : OR .  (reduce by rule 25)
+
+
+
+	.	reduce by rule 25
+
+
+state 58:
+
+	cond : NOT LRBR cond RRBR .  (reduce by rule 22)
+
+
+
+	.	reduce by rule 22
+
+
+state 59:
+
+	maybe_modifiers : LSQBR PROPERTY properties RSQBR LSQBR flag . RSQBR 
+
+	RSQBR	shift 63
+
+
+	.	error
+
+
+state 60:
+
+	maybe_modifiers : LSQBR IF cond RSQBR LSQBR flag RSQBR .  (reduce by rule 15)
+
+
+
+	.	reduce by rule 15
+
+
+state 61:
+
+	maybe_modifiers : LSQBR IF cond RSQBR LSQBR PROPERTY properties . RSQBR LSQBR flag RSQBR 
+	maybe_modifiers : LSQBR IF cond RSQBR LSQBR PROPERTY properties . RSQBR 
+
+	RSQBR	shift 64
+
+
+	.	error
+
+
+state 62:
+
+	cond : LRBR cond RRBR log_op LRBR . cond RRBR 
+
+	VAR	shift 40
+	NOT	shift 39
+	LRBR	shift 38
+
+	cond	goto 65
+	property	goto 36
+
+	.	error
+
+
+state 63:
+
+	maybe_modifiers : LSQBR PROPERTY properties RSQBR LSQBR flag RSQBR .  (reduce by rule 17)
+
+
+
+	.	reduce by rule 17
+
+
+state 64:
+
+	maybe_modifiers : LSQBR IF cond RSQBR LSQBR PROPERTY properties RSQBR . LSQBR flag RSQBR 
+	maybe_modifiers : LSQBR IF cond RSQBR LSQBR PROPERTY properties RSQBR .  (reduce by rule 14)
+
+	LSQBR	shift 66
+
+
+	.	reduce by rule 14
+
+
+state 65:
+
+	cond : LRBR cond RRBR log_op LRBR cond . RRBR 
+
+	RRBR	shift 67
+
+
+	.	error
+
+
+state 66:
+
+	maybe_modifiers : LSQBR IF cond RSQBR LSQBR PROPERTY properties RSQBR LSQBR . flag RSQBR 
+
+	SINGLE	shift 34
+	ERROR	shift 33
+
+	flag	goto 68
+
+	.	error
+
+
+state 67:
+
+	cond : LRBR cond RRBR log_op LRBR cond RRBR .  (reduce by rule 23)
+
+
+
+	.	reduce by rule 23
+
+
+state 68:
+
+	maybe_modifiers : LSQBR IF cond RSQBR LSQBR PROPERTY properties RSQBR LSQBR flag . RSQBR 
+
+	RSQBR	shift 69
+
+
+	.	error
+
+
+state 69:
+
+	maybe_modifiers : LSQBR IF cond RSQBR LSQBR PROPERTY properties RSQBR LSQBR flag RSQBR .  (reduce by rule 13)
+
+
+
+	.	reduce by rule 13
+
+
+state 70:
+
+
+	EOF	accept
+	SEMICOLON	accept
+
+
+	.	error
+
+52 of 137 action table entries left after compaction
+33 goto table entries

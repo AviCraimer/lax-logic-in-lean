@@ -1,0 +1,5 @@
+== is the boxed γ-branch obligation true?  small fuel, complete stages ==
+
+S1 (one live γ-clause)  defect = 4
+   fuel = 2   (hypothesis weight 460, goal weight 24)
+      whole, bounded  (find 20k, emitCap 0) : ~ (budget 20000)  (1439 ms)

@@ -1,0 +1,6 @@
+B Function: flagtest
+  Categories:
+  1 cat1
+    * choice_a [single]
+    * choice_b
+EndFunction;

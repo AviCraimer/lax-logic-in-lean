@@ -1,0 +1,5 @@
+4
+cAnd_4_15
+theorem cAnd_4_15 : Interd (q4.and q15) q4 :=
+  ⟨(ofG4 (.andL (A := q4) (B := q15) (.head _) (.orL (A := q2) (B := q3) (.head _) (.orR1 (.laxL (A := q0) (.head _) (.botL (.head _)))) (.orR2 (.impR (.impLLaxLax (A := q0) (B := q0) (X := q0) (.tail _ (.head _)) (.head _) (.botL (.head _)) (.botL (.head _)))))))),
+   (ofG4 (.andR (.orL (A := q2) (B := q3) (.head _) (.orR1 (.laxL (A := q0) (.head _) (.botL (.head _)))) (.orR2 (.impR (.impLLaxLax (A := q0) (B := q0) (X := q0) (.tail _ (.head _)) (.head _) (.botL (.head _)) (.botL (.head _)))))) (.impR (.orL (A := q5) (B := q6) (.head _) (.orL (A := q2) (B := q3) (.tail _ (.tail _ (.head _))) (.orR1 (.laxL (A := q0) (.head _) (.botL (.head _)))) (.orR2 (.impR (.impLLaxLax (A := q0) (B := q0) (X := q0) (.tail _ (.head _)) (.head _) (.botL (.head _)) (.botL (.head _)))))) (.orR1 (.orL (A := q2) (B := q3) (.tail _ (.tail _ (.head _))) (.laxL (A := q0) (.head _) (.botL (.head _))) (.laxR (.impLImp (A := q2) (B := q0) (D := q0) (.tail _ (.head _)) (.impR (.impLLaxLax (A := q0) (B := q0) (X := q0) (.tail _ (.tail _ (.head _))) (.head _) (.botL (.head _)) (.botL (.head _)))) (.botL (.head _))))))))))⟩

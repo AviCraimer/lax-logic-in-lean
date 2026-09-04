@@ -1,0 +1,73 @@
+# ui-confluence: refilter + backward-audit results  (2026-07-21)
+# harness wip/confl_core.lean (confluentB = decidable MutuallyConfluent, PLLFrames.lean:224),
+# driven by conflrun/conflaudit.  Sanity passes reproduce the pinned unrestricted numbers exactly.
+
+## REFILTER (conflrun)
+########## SAMVAL same-trace refilter ##########
+### variable-free battery: 264 models, 158 mutually confluent
+### one-atom battery: 650 models, 393 mutually confluent
+=== one-atom CONFLUENT: 70 formulas, 393 models, 3 closures ===
+=== one-atom CONFLUENT: agreeing pairs=709431 trivial i-moves=191044 ===
+=== one-atom CONFLUENT cl=[⊥,q]: needed=1074 FAILURES=324 ===
+=== one-atom CONFLUENT cl=[⊥,q,◯q]: needed=365 FAILURES=44 ===
+=== one-atom CONFLUENT cl=Sub(◯q⊃q)+⊥: needed=309 FAILURES=12 ===
+=== variable-free CONFLUENT: 90 formulas, 158 models, 3 closures ===
+=== variable-free CONFLUENT: agreeing pairs=232221 trivial i-moves=93612 ===
+=== variable-free CONFLUENT cl=[⊥]: needed=101 FAILURES=0 ===
+=== variable-free CONFLUENT cl=[⊥,◯⊥]: needed=1 FAILURES=0 ===
+=== variable-free CONFLUENT cl=[⊥,◯⊥,¬◯⊥]: needed=0 FAILURES=0 ===
+########## MFORTH forth-m / fallible-pair refilter ##########
+### mforth battery: 264 frames, 158 mutually confluent
+=== mforth CONFLUENT: 90 formulas, 158 frames ===
+=== mforth CONFLUENT: agreeing pairs=232221 forth-m candidates=0 fallible-pair failures=0 ===
+########## SANITY (unrestricted, must reproduce pinned numbers) ##########
+=== mforth UNRESTRICTED (target 746108 / 0 / 22506): 90 formulas, 264 frames ===
+=== mforth UNRESTRICTED (target 746108 / 0 / 22506): agreeing pairs=746108 forth-m candidates=0 fallible-pair failures=22506 ===
+=== one-atom UNRESTRICTED (target 499 / 44 / 12): 70 formulas, 650 models, 3 closures ===
+=== one-atom UNRESTRICTED (target 499 / 44 / 12): agreeing pairs=2377307 trivial i-moves=994565 ===
+=== one-atom UNRESTRICTED (target 499 / 44 / 12) cl=[⊥,q]: needed=2962 FAILURES=499 ===
+=== one-atom UNRESTRICTED (target 499 / 44 / 12) cl=[⊥,q,◯q]: needed=2078 FAILURES=44 ===
+=== one-atom UNRESTRICTED (target 499 / 44 / 12) cl=Sub(◯q⊃q)+⊥: needed=1964 FAILURES=12 ===
+
+## sample confluent-class same-trace failure witnesses:
+  !!FAIL[cl=[⊥,q]]: M=(n=4 ri=[(0, 1), (0, 2), (2, 3), (0, 3)] rm=[(2, 3)] fall=[3] val=[]) w=0 v=1  vs  N=(n=3 ri=[(0, 1), (1, 2), (0, 2)] rm=[(1, 2)] fall=[2] val=[]) w'=0
+  !!FAIL[cl=[⊥,q,◯q]]: M=(n=4 ri=[(0, 1), (0, 2), (2, 3), (0, 3)] rm=[(2, 3)] fall=[3] val=[]) w=0 v=1  vs  N=(n=3 ri=[(0, 1), (1, 2), (0, 2)] rm=[(1, 2)] fall=[2] val=[]) w'=0
+  !!FAIL[cl=[⊥,q]]: M=(n=4 ri=[(0, 1), (0, 2), (2, 3), (0, 3)] rm=[(2, 3)] fall=[3] val=[]) w=0 v=1  vs  N=(n=3 ri=[(0, 1), (1, 2), (0, 2)] rm=[(1, 2)] fall=[2] val=[(2, q)]) w'=0
+  !!FAIL[cl=[⊥,q,◯q]]: M=(n=4 ri=[(0, 1), (0, 2), (2, 3), (0, 3)] rm=[(2, 3)] fall=[3] val=[]) w=0 v=1  vs  N=(n=3 ri=[(0, 1), (1, 2), (0, 2)] rm=[(1, 2)] fall=[2] val=[(2, q)]) w'=0
+
+## BACKWARD AUDIT + confluence-gated value re-checks (conflaudit)
+## defaultFrames (Search battery, in order):
+  CONFLUENT      defaultFrames[0]  (n=1 ri=[] rm=[] fall=[])
+  CONFLUENT      defaultFrames[1]  (n=1 ri=[] rm=[] fall=[0])
+  CONFLUENT      defaultFrames[2]  (n=2 ri=[(0, 1)] rm=[(0, 1)] fall=[1])
+  CONFLUENT      defaultFrames[3]  (n=2 ri=[(0, 1)] rm=[] fall=[1])
+  CONFLUENT      defaultFrames[4]  (n=2 ri=[(0, 1)] rm=[(0, 1)] fall=[])
+  CONFLUENT      defaultFrames[5]  (n=3 ri=[(0, 1), (1, 2), (0, 2)] rm=[(1, 2)] fall=[2])
+  CONFLUENT      defaultFrames[6]  (n=3 ri=[(0, 1), (1, 2), (0, 2)] rm=[(0, 1), (1, 2), (0, 2)] fall=[2])
+  CONFLUENT      defaultFrames[7]  (n=4 ri=[(0, 1), (0, 2), (2, 3), (0, 3)] rm=[(2, 3)] fall=[3])
+  NOT-CONFLUENT  defaultFrames[8]  (n=3 ri=[(0, 1), (0, 2)] rm=[(0, 2)] fall=[2])
+  CONFLUENT      defaultFrames[9]  (n=4 ri=[(0, 1), (0, 2), (0, 3), (1, 3), (2, 3)] rm=[(1, 3), (2, 3)] fall=[3])
+  CONFLUENT      defaultFrames[10]  (n=4 ri=[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)] rm=[(2, 3)] fall=[3])
+## named gadgets:
+  CONFLUENT      oneW (one-world classical)  (n=1 ri=[] rm=[] fall=[])
+  NOT-CONFLUENT  modelOrSplit (F&M Fig.3 middle)  (n=3 ri=[(0, 1), (0, 2)] rm=[(0, 1), (0, 2)] fall=[])
+  CONFLUENT      modelFallible (F&M Fig.3 left)  (n=2 ri=[(0, 1)] rm=[(0, 1)] fall=[1])
+  CONFLUENT      modelNoImpDist (F&M Fig.3 right)  (n=3 ri=[(0, 1), (1, 2), (0, 2)] rm=[(1, 2)] fall=[])
+  CONFLUENT      chainF (fall-zigzag refuter)  (n=2 ri=[(0, 1)] rm=[] fall=[1])
+  CONFLUENT      chainFM (weak-escape refuter)  (n=2 ri=[(0, 1)] rm=[(0, 1)] fall=[1])
+  NOT-CONFLUENT  forkF (pair-escape refuter)  (n=3 ri=[(0, 1), (0, 2)] rm=[(0, 2)] fall=[2])
+  NOT-CONFLUENT  battery fork ⟨3,[01,02],[02],[2]⟩  (n=3 ri=[(0, 1), (0, 2)] rm=[(0, 2)] fall=[2])
+  CONFLUENT      frontier 4-chain ⟨4,…,[23],[3]⟩  (n=4 ri=[(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)] rm=[(2, 3)] fall=[3])
+  CONFLUENT      gadget ⟨3,[01,12,02],[12],[]⟩  (n=3 ri=[(0, 1), (1, 2), (0, 2)] rm=[(1, 2)] fall=[])
+  CONFLUENT      gadget ⟨4,…,[23],[]⟩  (n=4 ri=[(0, 1), (1, 2), (2, 3), (0, 2), (0, 3), (1, 3)] rm=[(2, 3)] fall=[])
+  CONFLUENT      lobTower over oneW (adjoin_reaches_lob)  (n=3 ri=[(0, 1), (0, 2), (2, 1)] rm=[(2, 1)] fall=[])
+## extension oracle value re-checks (confluence-gated):
+  em: ⊢? (q ∨ ¬q)  →  REFUTED-in-extension (confluent countermodel n=2 ri=[(0, 1)] rm=[(0, 1)] fall=[] val=[(1, q)] at w=0)
+  em: ⊢? (◯⊥ ∨ ¬◯⊥)  →  REFUTED-in-extension (confluent countermodel n=3 ri=[(0, 1), (1, 2), (0, 2)] rm=[(1, 2)] fall=[2] val=[] at w=0)
+  box-imp: ⊢? (◯q ⊃ q)  →  REFUTED-in-extension (confluent countermodel n=2 ri=[(0, 1)] rm=[(0, 1)] fall=[1] val=[(1, q)] at w=0)
+  box-imp: ⊢? (◯◯⊥ ⊃ ◯⊥)  →  PROVED-in-extension
+  lob: ◯(◯q⊃q) ⊢? ◯⊥  →  REFUTED-in-extension (confluent countermodel n=1 ri=[] rm=[] fall=[] val=[] at w=0)
+  lob: ⊢? ◯(◯q⊃q)  →  REFUTED-in-extension (confluent countermodel n=3 ri=[(0, 1), (1, 2), (0, 2)] rm=[(1, 2)] fall=[2] val=[(2, q)] at w=0)
+  lob holds-half: ◯⊥ ⊢? ◯(◯q⊃q)  →  PROVED-in-extension
+  frontier: (((q⊃◯⊥)⊃q)⊃q) ⊢? ◯⊥  →  REFUTED-in-extension (confluent countermodel n=1 ri=[] rm=[] fall=[] val=[] at w=0)
+  frontier: ⊢? (((q⊃◯⊥)⊃q)⊃q)  →  REFUTED-in-extension (confluent countermodel n=2 ri=[(0, 1)] rm=[(0, 1)] fall=[] val=[(1, q)] at w=0)

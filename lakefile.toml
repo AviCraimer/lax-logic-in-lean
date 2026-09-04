@@ -8,8 +8,386 @@ pp.unicode.fun = true # pretty-prints `fun a ↦ b`
 autoImplicit = false
 
 [[require]]
+name = "VersoBlueprint"
+git = "https://github.com/leanprover/verso-blueprint"
+rev = "v4.31.0"
+
+[[require]]
 name = "mathlib"
 scope = "leanprover-community"
+rev = "v4.31.0"
 
 [[lean_lib]]
 name = "LaxLogic"
+
+# Historical note: on v4.22.0-rc3 the `laxrun` binary segfaulted at startup
+# (cache-shipped C IR miscompile in Mathlib.Data.Set.Basic; full analysis in
+# Main.lean's history).  FIXED by the v4.31.0 toolchain bump (adopted here,
+# 2026-07-19): native executables build and run; `scripts/laxrun.sh` remains
+# as an interpreter fallback.
+[[lean_exe]]
+name = "laxrun"
+root = "Main"
+
+# Shared wip modules that other wip files import (lake resolves imports
+# only against declared targets; exe roots alone don't cover imports).
+[[lean_lib]]
+name = "wipshared"
+globs = ["wip.oracle2", "wip.semui_ctx_core", "wip.samval_probe",
+         "wip.mforth_probe", "wip.confl_core", "wip.G4conf", "wip.crankC", "wip.witTripleC", "wip.canonFinC", "wip.residueGrowth", "wip.stabilise", "wip.rnDictBase", "wip.rnDict", "wip.rnDictRefute", "wip.bandStabilise", "wip.bandM", "wip.rnc_probe", "wip.rncCert", "wip.rncCertPos",
+         "wip.rnSep", "wip.rnSepColl", "wip.rnDict2Hand", "wip.rnDict2", "wip.rnDictRefute2", "wip.rnSpawnColl",
+         "wip.witOut", "wip.bandW", "wip.rankedM", "wip.rnEmbed", "wip.bandRefute", "wip.semSpecW", "wip.rankedResidue", "wip.rankGapPoint", "wip.mwit_complete", "wip.starve", "wip.g4confGap", "wip.cascadeBox", "wip.ascRefute", "wip.descent2",
+         "wip.floorRefute", "wip.goalDesc", "wip.envDesc", "wip.sealRefute", "wip.jumpPinned", "wip.pinnedFacts", "wip.boxedBranchS1", "wip.atomForce", "wip.floorImp", "wip.freshAnt", "wip.boxedS1b", "wip.boxedOnPath", "wip.boxSnd", "wip.boxSndTight", "wip.floorGoals", "wip.ladder8", "wip.ladderdistr", "wip.rncCells", "wip.rungPinned", "wip.fiveWorld", "wip.twogenStmt", "wip.secondgen", "wip.embedNeg", "wip.overlap", "wip.offImage", "wip.boxTop", "wip.boxq11", "wip.chainStrict", "wip.chainOff", "wip.rnClass", "wip.rnClassify", "wip.laxNeg", "wip.omegaFix", "wip.gapWidth", "wip.families", "wip.connect", "wip.seeds", "wip.gap2", "wip.uiObstruct", "wip.witness", "wip.rungbound", "wip.floor", "wip.wlanding", "wip.collapse", "wip.gzSchema", "wip.postui", "wip.coverfail", "wip.phistar", "wip.guardstretch", "wip.mixedfail", "wip.branchdia", "wip.paramfork", "wip.phispade", "wip.nfcorrect", "wip.towerkit", "wip.towerpin", "wip.towercircle", "wip.toweratoms",
+         "wip.depth", "wip.depth2", "wip.depth3", "wip.schemeext", "wip.classical", "wip.linear",
+         "wip.negFour", "wip.negFourDistinct", "wip.polarity", "wip.hunts"]
+
+# The two-sided decision tool (countermodel-first; wip/oracle2.lean) and its
+# one-sided baseline, compiled — the native oracle route.
+[[lean_exe]]
+name = "oracle2"
+root = "wip.oracle2_run"
+
+[[lean_exe]]
+name = "o2base"
+root = "wip.oracle2_baseline"
+
+# The constraint-commutation probe (route doc §0(j)), compiled.
+[[lean_exe]]
+name = "ctxprobe"
+root = "wip.semui_ctx_probe"
+
+# The frame-relative fallibility-prediction probe (route doc §0(j)).
+[[lean_exe]]
+name = "ctxrel"
+root = "wip.semui_ctx_rel"
+
+# Certifier: failed commutation rows → checkB-verified countermodels.
+[[lean_exe]]
+name = "ctxcert"
+root = "wip.semui_ctx_cert"
+
+# The constraint-pool experiment (variant saturations).
+[[lean_exe]]
+name = "poolprobe"
+root = "wip.semui_pool"
+
+# The certified reconstruction-law sweep.
+[[lean_exe]]
+name = "lawsweep"
+root = "wip.semui_lawsweep"
+
+# Reproduction of the large-object harness claims.
+[[lean_exe]]
+name = "weightrepro"
+root = "wip.semui_repro"
+
+# Frontier-row investigation.
+[[lean_exe]]
+name = "frontrow"
+root = "wip.frontier_row"
+
+# ◯-free fragment vs IPC agreement sweep.
+[[lean_exe]]
+name = "ofreesweep"
+root = "wip.ofree_sweep"
+
+# One-◯ two-variable fragment: values + tower coverage.
+[[lean_exe]]
+name = "oneboxsweep"
+root = "wip.onebox_sweep"
+
+# Description-realisability probe: canonical triples + the gfp on
+# battery instances.
+[[lean_exe]]
+name = "descprobe"
+root = "wip.desc_probe"
+
+# Direct ∀-residue probe: small-variant search per (frame, x).
+[[lean_exe]]
+name = "residprobe"
+root = "wip.resid_probe"
+
+# Rank-bounded join test for the gap row.
+[[lean_exe]]
+name = "rankjoin"
+root = "wip.rank_join"
+
+# forth-m from fragment-agreement probe.
+[[lean_exe]]
+name = "mforthprobe"
+root = "wip.mforth_probe"
+
+# same-trace no-descent probe (amalgamation same-theory ◯-case).
+[[lean_exe]]
+name = "samvalprobe"
+root = "wip.samval_probe"
+
+# cross-route probe: rank-bounded quantifiers in the old 1-pv harness.
+[[lean_exe]]
+name = "v2quant"
+root = "wip.v2quant_probe"
+
+# ui-confluence branch: the refilter driver (same-trace + forth-m
+# passes; unrestricted sanity reproductions and the mutually-confluent
+# restriction) and the backward audit (gadget confluence + the
+# confluence-gated extension oracle).  Both drive the `main`-free
+# shared core `wip.confl_core`.
+[[lean_exe]]
+name = "conflrun"
+root = "wip.confl_run"
+
+[[lean_exe]]
+name = "conflaudit"
+root = "wip.confl_audit"
+
+# b.ii configuration probe (amalgamation ◯-case residue; R1/R2 resolution).
+[[lean_exe]]
+name = "biiprobe"
+root = "wip.bii_probe"
+
+# b.ii probe, corrected: p-containing closures, p unprotected, full conclusion test.
+[[lean_exe]]
+name = "biipprobe"
+root = "wip.bii_p_probe"
+
+# RN dictionary certificate generator (discover-then-pin).
+[[lean_exe]]
+name = "rnDictGen"
+root = "wip.rnDictGen"
+
+# RNC probe: PCLL quotient of the variable-free dictionary (confluent refutations).
+[[lean_exe]]
+name = "rncprobe"
+root = "wip.rnc_probe"
+
+# MwitResidue probe: witness-form residue (modes G/R), re-aim of biipprobe.
+[[lean_exe]]
+name = "mwitprobe"
+root = "wip.mwit_probe"
+
+# Deep-model MwitResidue/RankGap probe: lifted ladder truncations.
+[[lean_exe]]
+name = "mwitdeep"
+root = "wip.mwit_deep"
+
+# Config-completion probe: which hypothesis protects kvInvisible.
+[[lean_exe]]
+name = "mwitcomplete"
+root = "wip.mwit_complete"
+
+# Budget extraction: shape-coverage instrument + minimal certified budget
+# of the low-band descent over chains of budget-gated pieces.
+[[lean_exe]]
+name = "budgetfit"
+root = "wip.budgetfit"
+
+# Boundary-movement probe: does the budget wall climb with the size of the
+# space?  The ascent at every chain position, and the descent at jump goals.
+[[lean_exe]]
+name = "ascprobe"
+root = "wip.ascprobe"
+
+# Positive-side probe at the low-budget jump-goal cells that decide whether
+# a goal-shape budget law can finance the descent's recursion.
+[[lean_exe]]
+name = "jumpprobe"
+root = "wip.jumpprobe"
+
+# The two blocked branch obligations of the descent, handed to the oracle as
+# ordinary sequents (PROGRESS §85's residue).
+[[lean_exe]]
+name = "sealprobe"
+root = "wip.sealprobe"
+
+# The missing link in the boxed γ-branch: the ◯⊥ collapse route.
+[[lean_exe]]
+name = "sealprobe2"
+root = "wip.sealprobe2"
+
+# Targeted refutation: the boxed γ-branch with a γ-head that is not the
+# eliminated variable (PROGRESS §86's prediction).
+[[lean_exe]]
+name = "sealprobe3"
+root = "wip.sealprobe3"
+
+# Which of the three routes closes the boxed γ-branch at the floor?
+[[lean_exe]]
+name = "sealprobe4"
+root = "wip.sealprobe4"
+
+# Is the boxed γ-branch obligation itself true?  Small fuel, complete stages.
+[[lean_exe]]
+name = "sealprobe5"
+root = "wip.sealprobe5"
+
+# Case-splitting the boxed γ-branch on its second component.
+[[lean_exe]]
+name = "sealprobe6"
+root = "wip.sealprobe6"
+
+# Route table for the floor branch at a boxed / ⊃-shaped goal.
+[[lean_exe]]
+name = "sealprobe7"
+root = "wip.sealprobe7"
+
+# Is the floor branch at a boxed goal true?  Exhaustive stages at small fuel.
+[[lean_exe]]
+name = "sealprobe8"
+root = "wip.sealprobe8"
+
+# The boxed goal with a ◯χ in the context: is the extra env family the route?
+[[lean_exe]]
+name = "sealprobe9"
+root = "wip.sealprobe9"
+
+# The fresh-antecedent goal branch at target budget 1, disjunct by disjunct.
+[[lean_exe]]
+name = "sealprobe10"
+root = "wip.sealprobe10"
+
+# Does the fresh-antecedent branch need the ∃-ascent?
+[[lean_exe]]
+name = "sealprobe11"
+root = "wip.sealprobe11"
+
+# The boxed floor branch at a search budget that can actually find it.
+[[lean_exe]]
+name = "sealprobe12"
+root = "wip.sealprobe12"
+
+# The boxed floor branch at C = ◯A, the goal the descent actually reaches.
+[[lean_exe]]
+name = "sealprobe13"
+root = "wip.sealprobe13"
+
+# The ladder image for 8 rungs: order, ◯ column, distribution table.
+[[lean_exe]]
+name = "ladder8probe"
+root = "wip.ladder8probe"
+
+# The ◯ column on the ladder + the distribution question.
+[[lean_exe]]
+name = "ladderbox"
+root = "wip.ladderbox"
+
+# Ladder questions on small dictionary equivalents.
+[[lean_exe]]
+name = "ladderfast"
+root = "wip.ladderfast"
+
+# Escalated attack on the open cell the distribution question reduces to.
+[[lean_exe]]
+name = "ladderdeep"
+root = "wip.ladderdeep"
+
+# The order on the 15 dictionary classes + image of h, for the diagram.
+[[lean_exe]]
+name = "rnorder"
+root = "wip.rnorder"
+
+# Are rungs 8+ new classes beyond the 15-class dictionary?
+[[lean_exe]]
+name = "rungnew"
+root = "wip.rungnew"
+
+# Generator: harvest the PCLL closure cells from rnc_c_out into certificates.
+[[lean_exe]]
+name = "rncHarvest"
+root = "wip.rncHarvest"
+
+# Cross-relate rungs 8-13 with the seven off-ladder dictionary classes.
+[[lean_exe]]
+name = "rungcross"
+root = "wip.rungcross"
+
+# Generator: pin the rung/dictionary cross-relations into one file.
+[[lean_exe]]
+name = "rungPin"
+root = "wip.rungPin"
+
+# Open cells against the exhaustive rooted 5-world battery.
+[[lean_exe]]
+name = "five"
+root = "wip.five"
+
+# Which (◯⊥, ◯¬◯⊥) valuations are realisable?
+[[lean_exe]]
+name = "twogen"
+root = "wip.twogen"
+
+# The meet q5 ∧ q6 — candidate fresh seed.
+[[lean_exe]]
+name = "meetprobe"
+root = "wip.meetprobe"
+
+# What is ◯q11? Candidates and placement.
+[[lean_exe]]
+name = "boxq11probe"
+root = "wip.boxq11probe"
+
+# Open cells vs the non-confluent 5-world battery.
+[[lean_exe]]
+name = "nonconf"
+root = "wip.nonconf"
+
+# ∃-side one-variable UI-witness hunt: scout (sizes + timings).
+[[lean_exe]]
+name = "wscout"
+root = "wip.wscout"
+
+# ∃-side one-variable UI-witness hunt: the mechanical sweep.
+[[lean_exe]]
+name = "wsweep"
+root = "wip.wsweep"
+
+# CoverConj: is the p-valuation replaceable by a variable-free one?
+# Exhaustive product-subalgebra search over small rooted constraint models.
+[[lean_exe]]
+name = "coverprobe"
+root = "wip.coverprobe"
+
+# After coverConj_false: is ¬¬◯⊥ the post-interpolant of φ★?
+[[lean_exe]]
+name = "interpprobe"
+root = "wip.interpprobe"
+
+# MixedCoverConj / GuardedMixedConj: product-subalgebra search with
+# LoG/UpG coordinates per guard; stretch-frame cross-check per hit.
+[[lean_exe]]
+name = "mixedprobe"
+root = "wip.mixedprobe"
+
+# Parameterised fork frontier: product-subalgebra search with BLo/BUp
+# coordinates; fork-frame cross-check and `verify` mode.
+[[lean_exe]]
+name = "branchprobe"
+root = "wip.branchprobe"
+
+# Parameterised-fork frontier probe: two-phase (subalgebra candidates,
+# then explicit stretch/fork frames per guard/triple); found φ♠.
+[[lean_exe]]
+name = "pforkprobe"
+root = "wip.pforkprobe"
+
+# Cross-campaign test: the syntactic tower's quantifier tables (itpE/itpA,
+# packaged as existsP/forallP) run on the semantic ladder's pinned battery.
+# (wip/towerpack.lean is deliberately unregistered: it imports the
+# root-level tower modules, built standalone via LEAN_PATH.)
+[[lean_exe]]
+name = "towertest"
+root = "wip.towertest"
+
+# ---------------------------------------------------------------------------
+# `pstates` — the proof-state recorder and replay viewer (tools/proofstates/).
+# Elaborates a .lean file, walks Lean's own info trees, and writes a
+# self-contained HTML page that replays every tactic step with its goals
+# before and after.  `supportInterpreter` is required because the tool runs
+# the Lean frontend, which uses the interpreter for elaborators.
+[[lean_lib]]
+name = "proofstates"
+globs = ["tools.proofstates.Recorder", "tools.proofstates.Html"]
+
+[[lean_exe]]
+name = "pstates"
+root = "tools.proofstates.Main"
+supportInterpreter = true

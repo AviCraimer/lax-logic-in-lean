@@ -1,0 +1,16 @@
+B Function: find_route
+  Categories :
+  1	town_name
+	*	good town name			[property Found]
+	*	no town with this name		[property NonFound]
+	*	omitted				[property NonFound]
+  2	town_route
+	*	one route determined		[property Route]
+	*	more than one route determined	[if Found][single]
+  3	total_route_distance
+	*	no route_distance provided	[error]
+	*	route_distance provided		[if (Found) and (Route)][single]
+  4	number_of_town_route_details_to_be_read
+	*	none				[if NonFound][single]
+	*	one or more			[if NonFound][single]
+  EndFunction;

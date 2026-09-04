@@ -1,0 +1,7 @@
+A Function: test3
+  Categories:
+  1 foo
+    * bar [if ((fred) and (sheila)) and (sarah)][property bar]
+  2 bar
+    * foo [if not(bad)][property fred, sheila, sarah]
+EndFunction;

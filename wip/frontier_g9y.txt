@@ -1,0 +1,20 @@
+# === round-9 BoxDesc-at-Γ=[] propagation check (g9y) ===
+# ROW f=1: [row2]|-row1 refuted=false  [row3]|-row1 refuted=false  [row3]|-row2 refuted=false
+# ROW f=2: [row2]|-row1 refuted=false  [row3]|-row1 refuted=false  [row3]|-row2 refuted=false
+# ROW f=3: [row2]|-row1 refuted=true  [row3]|-row1 refuted=true  [row3]|-row2 refuted=false
+# ROW f=4: [row2]|-row1 refuted=true  [row3]|-row1 refuted=true  [row3]|-row2 refuted=false
+# ROW f=5: [row2]|-row1 refuted=true  [row3]|-row1 refuted=true  [row3]|-row2 refuted=false
+# BD f=3 b=1 sz=199: refuted=false
+# BD f=4 b=1 sz=555: refuted=false
+# BD f=5 b=1 sz=1075: refuted=false
+# BD f=6 b=1 sz=1283: refuted=false
+# BD f=7 b=1 sz=1283: refuted=false
+# BD f=4 b=2: refuted=false
+# BD f=5 b=2: refuted=false
+# BD f=6 b=2: refuted=false
+# BD f=7 b=2: refuted=false
+# UNBOXED f=3 b=1: refuted=false
+# UNBOXED f=4 b=1: refuted=true
+# UNBOXED f=5 b=1: refuted=true
+# UNBOXED f=6 b=1: refuted=true
+# === g9y done ===

@@ -1,0 +1,12 @@
+\begin{tikzpicture}[every node/.style={circle,draw,minimum size=9mm,inner sep=1pt}]
+  \node[label=above:{\scriptsize $\varnothing$}] (w0) at (2.80,0.00) {$w_{0}$};
+  \node[label=above:{\scriptsize $\varnothing$},label=below:{\scriptsize $\oslash\,p, \bigcirc p$}] (w1) at (6.60,0.00) {$w_{1}$};
+  \node[double,double distance=1.5pt,draw=red!70!black,label=above:{\scriptsize $\bigcirc p$}] (w2) at (4.70,2.50) {$w_{2}$};
+  \node[label=above:{\scriptsize $\bigcirc p, p$}] (w3) at (4.70,5.00) {$w_{3}$};
+  \node[fill=black,text=white] (w4) at (4.70,7.20) {$w_{4}$};
+  \draw[-{Stealth}] (w0) -- (w2);
+  \draw[-{Stealth},dashed,gray] (w1) -- (w2);
+  \draw[-{Stealth}] (w2) -- (w3);
+  \draw[-{Stealth}] (w3) -- (w4);
+  \draw[thin,gray!50] (w0) -- (w1);
+\end{tikzpicture}

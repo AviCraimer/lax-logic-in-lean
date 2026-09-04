@@ -1,0 +1,9 @@
+[
+  {"repo": "/Users/matthew/Lean/Sources/lax-logic-in-lean", "file": "LaxLogic/PLLKripke.lean",      "group": "soundness"},
+  {"repo": "/Users/matthew/Lean/Sources/lax-logic-in-lean", "file": "LaxLogic/PLLNDCore.lean",      "group": "nd-core"},
+  {"repo": "/Users/matthew/Lean/Sources/lax-logic-in-lean", "file": "LaxLogic/PLLFormula.lean",     "group": "syntax"},
+  {"repo": "/Users/matthew/Lean/Sources/lax-logic-in-lean", "file": "LaxLogic/LJF.lean",            "group": "ljf-measure"},
+  {"repo": "/Users/matthew/Lean/Sources/lax-logic-in-lean", "file": "LaxLogic/LJFComplete.lean",    "group": "completeness"},
+  {"repo": "/Users/matthew/Lean/Sources/lax-logic-in-lean", "file": "LaxLogic/PLLG4ipComplete.lean","group": "completeness"},
+  {"repo": "/Users/matthew/Lean/Sources/lax-logic-in-lean", "file": "FRJ/Erase.lean",               "group": "conservativity"}
+]

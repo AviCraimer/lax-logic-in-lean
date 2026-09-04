@@ -1,0 +1,163 @@
+== does the budget boundary move with the size of the space? ==
+
+-- §1 the ambient-relative existential ascent, X at each chain position --
+   hyps: E@(c+1)(Γ) [fuel fl+1],  E@c(X::Γ) [fuel fl]
+   goal: E@(c+1)(X::Γ) [fuel fl]
+chain2: |S|=10 |jumpGoals|=5 blind=false
+   k=0: Γ=[] X=(◯p) ⊃ r  (defect=9)
+        c0: R!  (goal weight 28, 0 ms)
+        c1: ~  (goal weight 269, 55 ms)
+        c2: ~  (goal weight 1334, 347 ms)
+        c3: ~  (goal weight 3177, 750 ms)
+   k=0  c0:R! c1:~ c2:~ c3:~   boundary=1
+   k=1: Γ=[(◯p) ⊃ r] X=(◯r) ⊃ s  liveGates(X::Γ)=2 defect=8
+        c0: R!  (goal weight 195, 0 ms)
+        c1: R!  (goal weight 5281, 1 ms)
+        c2: ~  (goal weight 26285, 1678 ms)
+        c3: ~  (goal weight 48969, 5404 ms)
+   k=1  c0:R! c1:R! c2:~ c3:~   boundary=2
+chain3: |S|=13 |jumpGoals|=7 blind=false
+   k=0: Γ=[] X=(◯p) ⊃ r  (defect=12)
+        c0: R!  (goal weight 28, 0 ms)
+        c1: ~  (goal weight 269, 50 ms)
+        c2: ~  (goal weight 1718, 384 ms)
+        c3: ~  (goal weight 7387, 1928 ms)
+   k=0  c0:R! c1:~ c2:~ c3:~   boundary=1
+   k=1: Γ=[(◯p) ⊃ r] X=(◯r) ⊃ s  liveGates(X::Γ)=2 defect=11
+        c0: R!  (goal weight 195, 0 ms)
+        c1: R!  (goal weight 7217, 3 ms)
+        c2: ~  (goal weight 69829, 2402 ms)
+        c3: ~  (goal weight 277501, 12716 ms)
+   k=1  c0:R! c1:R! c2:~ c3:~   boundary=2
+   k=2: Γ=[(◯p) ⊃ r, (◯r) ⊃ s] X=(◯s) ⊃ t  liveGates(X::Γ)=3 defect=10
+        c0: R!  (goal weight 1570, 0 ms)
+        c1: R!  (goal weight 116853, 61 ms)
+        c2: SKIP (goal weight 922858)
+        c3: SKIP (goal weight 2746039)
+   k=2  c0:R! c1:R! c2:~ c3:~   boundary=2
+chain4: |S|=16 |jumpGoals|=9 blind=false
+   k=0: Γ=[] X=(◯p) ⊃ r  (defect=15)
+        c0: R!  (goal weight 28, 0 ms)
+        c1: ~  (goal weight 269, 50 ms)
+        c2: ~  (goal weight 1790, 491 ms)
+        c3: ~  (goal weight 10439, 1964 ms)
+   k=0  c0:R! c1:~ c2:~ c3:~   boundary=1
+   k=1: Γ=[(◯p) ⊃ r] X=(◯r) ⊃ s  liveGates(X::Γ)=2 defect=14
+        c0: R!  (goal weight 195, 0 ms)
+        c1: R!  (goal weight 7217, 3 ms)
+        c2: ~  (goal weight 107213, 3019 ms)
+        c3: SKIP (goal weight 792441)
+   k=1  c0:R! c1:R! c2:~ c3:~   boundary=2
+   k=2: Γ=[(◯p) ⊃ r, (◯r) ⊃ s] X=(◯s) ⊃ t  liveGates(X::Γ)=3 defect=13
+        c0: R!  (goal weight 1570, 1 ms)
+        c1: R!  (goal weight 178709, 134 ms)
+        c2: SKIP (goal weight 2772858)
+        c3: SKIP (goal weight 16198391)
+   k=2  c0:R! c1:R! c2:~ c3:~   boundary=2
+   k=3: Γ=[(◯p) ⊃ r, (◯r) ⊃ s, (◯s) ⊃ t] X=(◯t) ⊃ u  liveGates(X::Γ)=4 defect=12
+        c0: R!  (goal weight 15505, 1 ms)
+        c1: SKIP (goal weight 2874329)
+        c2: SKIP (goal weight 32683397)
+        c3: SKIP (goal weight 139570901)
+   k=3  c0:R! c1:~ c2:~ c3:~   boundary=1
+
+-- §2 the ascent on the ⊃⊃-gated chain --
+chainII1: |S|=8 |jumpGoals|=1
+   k=0: |Γ|=3 X=(p ⊃ r) ⊃ s  liveGates(X::Γ)=1
+        c0: R!  (goal weight 111, 0 ms)
+        c1: ~  (goal weight 338, 120 ms)
+        c2: ~  (goal weight 560, 221 ms)
+        c3: ~  (goal weight 640, 210 ms)
+   k=0  c0:R! c1:~ c2:~ c3:~   boundary=1
+chainII2: |S|=13 |jumpGoals|=2
+   k=0: |Γ|=5 X=(p ⊃ r) ⊃ s  liveGates(X::Γ)=1
+        c0: R!  (goal weight 2290, 0 ms)
+        c1: ~  (goal weight 6879, 4119 ms)
+        c2: ~  (goal weight 11065, 4411 ms)
+        c3: ~  (goal weight 12543, 4322 ms)
+   k=0  c0:R! c1:~ c2:~ c3:~   boundary=1
+   k=1: |Γ|=6 X=(s ⊃ t) ⊃ u  liveGates(X::Γ)=2
+        c0: ~  (goal weight 3774, 2241 ms)
+        c1: ~  (goal weight 21004, 9758 ms)
+        c2: ~  (goal weight 51444, 18509 ms)
+        c3: ~  (goal weight 73442, 20711 ms)
+   k=1  c0:~ c1:~ c2:~ c3:~   boundary=0 (no certified failure at any probed budget)
+
+-- §3 the descent at JUMP GOALS (the goals the recursion enters) --
+chain2: defect=9 |jumpGoals|=5 PRODUCT-law=63  liveGates=1
+   goal=a0 = p
+        c0: P  (goal weight 1, 0 ms)
+        c1: P  (goal weight 16, 1 ms)
+        c2: P  (goal weight 257, 2 ms)
+        c3: P  (goal weight 1322, 3 ms)
+   goal=a0  c0:P c1:P c2:P c3:P   boundary=0 (no certified failure at any probed budget)
+   goal=◯a0 = ◯p
+        c0: R!  (goal weight 1, 0 ms)
+        c1: ~  (goal weight 202, 120 ms)
+        c2: ~  (goal weight 1169, 282 ms)
+        c3: ~  (goal weight 4708, 639 ms)
+   goal=◯a0  c0:R! c1:~ c2:~ c3:~   boundary=1
+   goal=a1 = r
+        c0: P  (goal weight 3, 0 ms)
+        c1: P  (goal weight 22, 2 ms)
+        c2: P  (goal weight 263, 5 ms)
+        c3: P  (goal weight 1328, 6 ms)
+   goal=a1  c0:P c1:P c2:P c3:P   boundary=0 (no certified failure at any probed budget)
+   goal=◯a1 = ◯r
+        c0: R!  (goal weight 1, 0 ms)
+        c1: ~  (goal weight 230, 144 ms)
+        c2: ~  (goal weight 1197, 610 ms)
+        c3: ~  (goal weight 4736, 555 ms)
+   goal=◯a1  c0:R! c1:~ c2:~ c3:~   boundary=1
+   goal=last⊃ = (◯r) ⊃ s
+        c0: ~  (goal weight 51, 68 ms)
+        c1: ~  (goal weight 318, 441 ms)
+        c2: ~  (goal weight 1859, 761 ms)
+        c3: ~  (goal weight 3854, 1050 ms)
+   goal=last⊃  c0:~ c1:~ c2:~ c3:~   boundary=0 (no certified failure at any probed budget)
+chain3: defect=12 |jumpGoals|=7 PRODUCT-law=108  liveGates=1
+   goal=a0 = p
+        c0: P  (goal weight 1, 0 ms)
+        c1: P  (goal weight 16, 1 ms)
+        c2: P  (goal weight 257, 5 ms)
+        c3: P  (goal weight 1706, 10 ms)
+   goal=a0  c0:P c1:P c2:P c3:P   boundary=0 (no certified failure at any probed budget)
+   goal=◯a0 = ◯p
+        c0: R!  (goal weight 1, 1 ms)
+        c1: ~  (goal weight 202, 185 ms)
+        c2: ~  (goal weight 1241, 544 ms)
+        c3: ~  (goal weight 6992, 1680 ms)
+   goal=◯a0  c0:R! c1:~ c2:~ c3:~   boundary=1
+   goal=a1 = r
+        c0: P  (goal weight 3, 0 ms)
+        c1: P  (goal weight 22, 2 ms)
+        c2: P  (goal weight 263, 8 ms)
+        c3: P  (goal weight 1712, 20 ms)
+   goal=a1  c0:P c1:P c2:P c3:P   boundary=0 (no certified failure at any probed budget)
+   goal=◯a1 = ◯r
+        c0: R!  (goal weight 1, 0 ms)
+        c1: ~  (goal weight 230, 142 ms)
+        c2: ~  (goal weight 1269, 1023 ms)
+        c3: ~  (goal weight 7020, 2150 ms)
+   goal=◯a1  c0:R! c1:~ c2:~ c3:~   boundary=1
+   goal=a2 = s
+        c0: P  (goal weight 3, 0 ms)
+        c1: P  (goal weight 22, 8 ms)
+        c2: P  (goal weight 263, 34 ms)
+        c3: P  (goal weight 1712, 69 ms)
+   goal=a2  c0:P c1:P c2:P c3:P   boundary=0 (no certified failure at any probed budget)
+   goal=◯a2 = ◯s
+        c0: R!  (goal weight 1, 0 ms)
+        c1: ~  (goal weight 230, 208 ms)
+        c2: ~  (goal weight 1269, 1231 ms)
+        c3: ~  (goal weight 7020, 2327 ms)
+   goal=◯a2  c0:R! c1:~ c2:~ c3:~   boundary=1
+   goal=last⊃ = (◯s) ⊃ t
+        c0: ~  (goal weight 63, 339 ms)
+        c1: ~  (goal weight 986, 3058 ms)
+        c2: ~  (goal weight 9051, 5585 ms)
+        c3: ~  (goal weight 27553, 5005 ms)
+   goal=last⊃  c0:~ c1:~ c2:~ c3:~   boundary=0 (no certified failure at any probed budget)
+
+== done ==
+EXIT=0

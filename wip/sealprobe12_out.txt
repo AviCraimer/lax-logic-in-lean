@@ -1,0 +1,27 @@
+== the boxed floor branch at 200k and 2M ==
+
+S1, C = ◯s: 2 case(s), 3 target disjunct(s)
+   whole obligation [200000]: ~
+   ⊢ goal clause    [200000]: ~
+   case 0 [200000] reaches: NOTHING
+   case 1 [200000] reaches: NOTHING
+   whole obligation [2000000]: ~
+   ⊢ goal clause    [2000000]: ~
+   case 0 [2000000] reaches: NOTHING
+   case 1 [2000000] reaches: NOTHING
+S2, C = ◯s: 4 case(s), 5 target disjunct(s)
+   whole obligation [200000]: ~
+   ⊢ goal clause    [200000]: ~
+   case 0 [200000] reaches: NOTHING
+   case 1 [200000] reaches: NOTHING
+   case 2 [200000] reaches: NOTHING
+   case 3 [200000] reaches: NOTHING
+   whole obligation [2000000]: ~
+   ⊢ goal clause    [2000000]: ~
+   case 0 [2000000] reaches: NOTHING
+   case 1 [2000000] reaches: NOTHING
+   case 2 [2000000] reaches: NOTHING
+   case 3 [2000000] reaches: NOTHING
+
+== done ==
+EXIT=0

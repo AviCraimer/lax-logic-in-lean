@@ -1,0 +1,9 @@
+
+
+B Function: test
+  Categories:
+  1 foo {this is the first category}
+  2 bar {this is the second category}
+    * foo [property free]
+    * bar [property free]
+EndFunction;
